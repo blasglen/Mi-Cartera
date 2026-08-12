@@ -427,6 +427,18 @@ function extractPrice(o) {
   if (typeof o.px_bid === "number" && typeof o.px_ask === "number") return (o.px_bid + o.px_ask) / 2;
   return null;
 }
+
+// Los bonos en ley extranjera (AL/GD) cotizan "cada 100 de nominal" y en dólares
+// (ej: 84,59 = US$0,8459 por unidad), mientras que nuestro costo de compra (avgCost)
+// está guardado en pesos por unidad. Para poder comparar precio actual vs costo hay
+// que llevar el precio en vivo a la misma base: pesos por unidad.
+// Confirmado con datos reales del usuario (Balanz: GD38 a u$s0,8466/unidad).
+function liveAdjustedPrice(holding, livePrices, fx) {
+  const raw = livePrices[holding.name];
+  if (raw == null) return holding.price; // sin dato en vivo, se mantiene el estimado
+  if (holding.cat === "Bonos") return (raw / 100) * fx;
+  return raw;
+}
 async function fetchLivePrices() {
   const endpoints = ["arg_stocks", "arg_bonds", "arg_cedears"];
   const results = await Promise.allSettled(
@@ -597,7 +609,7 @@ export default function InvestmentDashboard() {
   const current = SERIES[SERIES.length - 1];
   const yesterday = SERIES[SERIES.length - 2];
 
-  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: livePrices[h.name] ?? h.price })), [livePrices]);
+  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx) })), [livePrices, fx]);
 
   const byBroker = brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker));
   const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
@@ -995,7 +1007,7 @@ function BuscarView({ fx, f, C, livePrices }) {
   const coupons = COUPON_SCHEDULE[selected.symbol] || [];
   const events = CORPORATE_EVENTS[selected.symbol] || [];
   const held = consolidateByName(HOLDINGS.filter((h) => h.name === selected.symbol))[0];
-  if (held) held.price = livePrices[held.name] ?? held.price;
+  if (held) held.price = liveAdjustedPrice(held, livePrices, fx);
   const heldQty = held?.qty || 0;
   const symbolTrades = MOVIMIENTOS.filter((m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta")).sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   const today = SERIES[SERIES.length - 1].date;
