@@ -567,6 +567,94 @@ async function fetchAssetHistory(type, ticker) {
   return null;
 }
 
+// --- Reconstrucción de histórico real de la cartera --------------------
+// Cruza tus movimientos reales (sabemos cuánto tenías de cada activo en cada
+// fecha) con el histórico de precio real de cada uno (data912/CoinGecko), y
+// suma día por día. Los activos sin histórico real disponible (ej: fondos como
+// CONIOLA, o cualquiera que data912 no cubra) aportan su valor actual "plano"
+// hacia atrás -- no es ideal, pero es mejor que inventar una caminata aleatoria,
+// y queda claramente marcado cuántos activos entraron con datos reales.
+
+function buildQtyTimeline(ticker) {
+  const trades = MOVIMIENTOS.filter((m) => m.activo === ticker && (m.tipo === "Compra" || m.tipo === "Venta"))
+    .slice()
+    .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  return (date) => {
+    let q = 0;
+    for (const t of trades) {
+      if (t.fecha > date) break;
+      q += (t.tipo === "Compra" ? 1 : -1) * t.cantidad;
+    }
+    return q;
+  };
+}
+
+function priceAt(historyMap, sortedDates, date) {
+  if (historyMap[date] != null) return historyMap[date];
+  // fecha exacta no encontrada -- usa el último precio conocido anterior
+  let lo = 0, hi = sortedDates.length - 1, ans = null;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (sortedDates[mid] <= date) { ans = sortedDates[mid]; lo = mid + 1; }
+    else hi = mid - 1;
+  }
+  return ans ? historyMap[ans] : null;
+}
+
+async function fetchHistoryForTicker(h, fx) {
+  const typeMap = { Acciones: "stocks", CEDEARs: "cedears", Bonos: "bonds" };
+  try {
+    if (COINGECKO_IDS[h.name]) {
+      const usdHistory = await fetchCryptoHistoryUsd(h.name, 365);
+      return usdHistory ? usdHistory.map((p) => ({ date: p.date, price: p.price * fx })) : null;
+    }
+    if (typeMap[h.cat]) {
+      const raw = await fetchAssetHistory(typeMap[h.cat], h.name);
+      return raw ? raw.map((p) => ({ date: p.date, price: h.cat === "Bonos" ? p.price / 100 : p.price })) : null;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+async function buildRealPortfolioHistory(holdings, fx, onProgress) {
+  const uniqueTickers = [...new Map(holdings.map((h) => [h.name, h])).values()];
+  const results = await Promise.allSettled(uniqueTickers.map((h) => fetchHistoryForTicker(h, fx)));
+
+  const days = 365;
+  const today = new Date();
+  const dates = [];
+  for (let i = days; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    dates.push(d.toISOString().slice(0, 10));
+  }
+
+  let tickersWithRealData = 0;
+  const perTicker = uniqueTickers.map((h, i) => {
+    const r = results[i];
+    const qtyAt = buildQtyTimeline(h.name);
+    if (r.status === "fulfilled" && r.value && r.value.length > 1) {
+      tickersWithRealData++;
+      const historyMap = {};
+      for (const p of r.value) historyMap[p.date] = p.price;
+      const sortedDates = Object.keys(historyMap).sort();
+      return { ticker: h.name, real: true, valueAt: (date) => qtyAt(date) * (priceAt(historyMap, sortedDates, date) ?? h.price) };
+    }
+    // sin histórico real: usa el precio actual "plano" hacia atrás
+    return { ticker: h.name, real: false, valueAt: (date) => qtyAt(date) * h.price };
+  });
+
+  const points = dates.map((date) => ({
+    date,
+    total: perTicker.reduce((s, t) => s + t.valueAt(date), 0),
+  }));
+
+  if (onProgress) onProgress({ tickersWithRealData, tickersTotal: uniqueTickers.length });
+  return points;
+}
+
 const BROKERS = [
   { name: "Balanz", status: "conectado", tipo: "Import manual (Excel)" },
   { name: "IOL", status: "conectado", tipo: "API" },
@@ -672,6 +760,16 @@ export default function InvestmentDashboard() {
   const [livePrices, setLivePrices] = useState({});
   const [liveCatalog, setLiveCatalog] = useState([]);
   const [cryptoUsd, setCryptoUsd] = useState({});
+  const [realPortfolioHistory, setRealPortfolioHistory] = useState(null);
+  const [historyCoverage, setHistoryCoverage] = useState(null);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    buildRealPortfolioHistory(HOLDINGS, 1245, (cov) => { if (!cancelled) setHistoryCoverage(cov); })
+      .then((points) => { if (!cancelled && points.length > 1) setRealPortfolioHistory(points); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
   const [liveStatus, setLiveStatus] = useState("cargando"); // cargando | ok | error
 
   React.useEffect(() => {
@@ -716,9 +814,10 @@ export default function InvestmentDashboard() {
   // para que su último punto coincida exactamente con este valor real, y respeta el
   // filtro de broker seleccionado.
   const realCurrentTotal = byBroker.reduce((s, h) => s + h.qty * h.price, 0);
-  const seriesLastFull = SERIES[SERIES.length - 1].total;
+  const baseSeries = realPortfolioHistory && realPortfolioHistory.length > 1 ? realPortfolioHistory : SERIES;
+  const seriesLastFull = baseSeries[baseSeries.length - 1].total;
   const scale = seriesLastFull > 0 ? realCurrentTotal / seriesLastFull : 1;
-  const scaledSeries = useMemo(() => SERIES.map((p) => ({ ...p, total: p.total * scale })), [scale]);
+  const scaledSeries = useMemo(() => baseSeries.map((p) => ({ ...p, total: p.total * scale })), [scale, baseSeries]);
 
   const { from, to } = useMemo(() => {
     if (useCustom && customFrom && customTo) return { from: customFrom, to: customTo };
@@ -1042,6 +1141,11 @@ export default function InvestmentDashboard() {
                     </span>
                   </div>
                 )}
+                <div style={{ fontSize: 10, color: realPortfolioHistory ? C.gain : C.faint, paddingBottom: 4 }}>
+                  {realPortfolioHistory
+                    ? `Histórico real: ${historyCoverage?.tickersWithRealData ?? 0} de ${historyCoverage?.tickersTotal ?? 0} activos con precio real por fecha (el resto usa su precio actual hacia atrás).`
+                    : "Buscando histórico real por activo… mientras tanto se muestra una estimación."}
+                </div>
               </div>
 
               <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "minmax(220px, 260px) 1fr", gap: 12, marginTop: 20, alignItems: "stretch" }}>
