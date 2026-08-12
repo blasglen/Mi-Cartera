@@ -328,6 +328,31 @@ const ASSET_UNIVERSE = [
   { symbol: "USDT", name: "Tether", cat: "Cripto", ccy: "ARS", seed: 34, base: 1245 },
 ];
 
+function hashSeed(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) % 9973;
+  return 200 + h;
+}
+
+// Cualquier ticker que esté en tus tenencias reales pero no esté en el catálogo de
+// arriba se agrega automáticamente, para que "Buscar activo" siempre encuentre lo
+// que tenés en cartera (aunque el gráfico de precio siga siendo simulado).
+const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "CEDEARs" };
+const AUTO_ASSETS = [...new Set(HOLDINGS.map((h) => h.name))]
+  .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
+  .map((t) => {
+    const h = HOLDINGS.find((x) => x.name === t);
+    return {
+      symbol: t,
+      name: t,
+      cat: HOLDINGS_CAT_TO_SEARCH_CAT[h.cat] || "CEDEARs",
+      ccy: "ARS",
+      seed: hashSeed(t),
+      base: h.price || h.avgCost || 100,
+    };
+  });
+const ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+
 const CHART_RANGES = [
   { label: "1S", days: 7 },
   { label: "1M", days: 30 },
@@ -546,6 +571,8 @@ const LIGHT = {
 
 export default function InvestmentDashboard() {
   const [view, setView] = useState("inicio");
+  const [jumpSymbol, setJumpSymbol] = useState(null);
+  const goToAsset = (symbol) => { setJumpSymbol(symbol); setView("buscar"); };
   const [collapsed, setCollapsed] = useState(false);
   const [themeMode, setThemeMode] = useState("dark");
   const C = themeMode === "dark" ? DARK : LIGHT;
@@ -590,6 +617,21 @@ export default function InvestmentDashboard() {
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
+  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx) })), [livePrices, fx]);
+
+  const byBroker = brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker));
+  const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
+
+  // Valor real de la cartera filtrada, calculado directo de las tenencias con precio
+  // en vivo -- esta es la fuente de verdad. El histórico (SERIES) sigue siendo una
+  // caminata simulada porque no tenemos valuaciones diarias reales, pero se reescala
+  // para que su último punto coincida exactamente con este valor real, y respeta el
+  // filtro de broker seleccionado.
+  const realCurrentTotal = byBroker.reduce((s, h) => s + h.qty * h.price, 0);
+  const seriesLastFull = SERIES[SERIES.length - 1].total;
+  const scale = seriesLastFull > 0 ? realCurrentTotal / seriesLastFull : 1;
+  const scaledSeries = useMemo(() => SERIES.map((p) => ({ ...p, total: p.total * scale })), [scale]);
+
   const { from, to } = useMemo(() => {
     if (useCustom && customFrom && customTo) return { from: customFrom, to: customTo };
     const preset = RANGE_PRESETS[rangeIdx];
@@ -605,11 +647,11 @@ export default function InvestmentDashboard() {
     return { from: fromDate.toISOString().slice(0, 10), to: last.date };
   }, [rangeIdx, useCustom, customFrom, customTo]);
 
-  const rangeStartPoint = SERIES.find((p) => p.date >= from) || SERIES[0];
-  const rangeEndPoint = [...SERIES].reverse().find((p) => p.date <= to) || SERIES[SERIES.length - 1];
+  const rangeStartPoint = scaledSeries.find((p) => p.date >= from) || scaledSeries[0];
+  const rangeEndPoint = [...scaledSeries].reverse().find((p) => p.date <= to) || scaledSeries[scaledSeries.length - 1];
   const pnlAbs = rangeEndPoint.total - rangeStartPoint.total;
   const pnlPct = pct(rangeEndPoint.total, rangeStartPoint.total);
-  const chartData = SERIES.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
+  const chartData = scaledSeries.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
   const chartTrades = MOVIMIENTOS.filter(
     (m) => (m.tipo === "Compra" || m.tipo === "Venta") && m.fecha >= chartData[0]?.date && m.fecha <= chartData[chartData.length - 1]?.date
   ).map((m) => {
@@ -617,25 +659,11 @@ export default function InvestmentDashboard() {
     return { ...m, y: point ? point.total : null };
   }).filter((m) => m.y != null);
 
-  const current = SERIES[SERIES.length - 1];
-  const yesterday = SERIES[SERIES.length - 2];
+  const current = scaledSeries[scaledSeries.length - 1];
+  const yesterday = scaledSeries[scaledSeries.length - 2];
 
-  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx) })), [livePrices, fx]);
-
-  const byBroker = brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker));
-  const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
-
-  // Proporción de la cartera filtrada sobre el total, usada para escalar el histórico
-  // mock (una vez conectado el import real, cada broker va a tener su propia serie).
-  const shareOfTotal =
-    brokerFilter.length === 0
-      ? 1
-      : holdingsLive.reduce((s, h) => s + h.qty * h.price, 0) === 0
-      ? 1
-      : byBroker.reduce((s, h) => s + h.qty * h.price, 0) / holdingsLive.reduce((s, h) => s + h.qty * h.price, 0);
-
-  const currentTotal = current.total * shareOfTotal;
-  const yesterdayTotal = yesterday.total * shareOfTotal;
+  const currentTotal = realCurrentTotal;
+  const yesterdayTotal = yesterday.total;
   const dayAbs = currentTotal - yesterdayTotal;
   const dayPct = pct(currentTotal, yesterdayTotal);
 
@@ -869,6 +897,12 @@ export default function InvestmentDashboard() {
                           stroke={C.bg}
                           strokeWidth={1.5}
                           isFront
+                          shape={(props) => (
+                            <g style={{ cursor: "pointer" }}>
+                              <circle cx={props.cx} cy={props.cy} r={4} fill={t.tipo === "Compra" ? C.gain : C.loss} stroke={C.bg} strokeWidth={1.5} />
+                              <title>{`${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`}</title>
+                            </g>
+                          )}
                         />
                       ))}
                     </AreaChart>
@@ -972,7 +1006,13 @@ export default function InvestmentDashboard() {
                           const p = pct(value, cost);
                           const enVivo = livePrices[h.name] != null;
                           return (
-                            <tr key={h.name} style={{ borderTop: `1px solid ${C.rowLine}` }}>
+                            <tr
+                              key={h.name}
+                              onClick={() => goToAsset(h.name)}
+                              style={{ borderTop: `1px solid ${C.rowLine}`, cursor: "pointer" }}
+                              onMouseEnter={(e) => (e.currentTarget.style.background = C.rowLine)}
+                              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                            >
                               <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
@@ -994,7 +1034,7 @@ export default function InvestmentDashboard() {
           )}
 
           {view === "importar" && <ImportarView C={C} />}
-          {view === "buscar" && <BuscarView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
@@ -1005,9 +1045,9 @@ export default function InvestmentDashboard() {
   );
 }
 
-function BuscarView({ fx, f, C, livePrices }) {
+function BuscarView({ fx, f, C, livePrices, initialSymbol }) {
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState(ASSET_UNIVERSE[0]);
+  const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
   const [tick, setTick] = useState(0);
   const [posExpanded, setPosExpanded] = useState(false);
@@ -1020,8 +1060,8 @@ function BuscarView({ fx, f, C, livePrices }) {
 
   const results =
     query.trim() === ""
-      ? ASSET_UNIVERSE
-      : ASSET_UNIVERSE.filter(
+      ? ASSET_UNIVERSE_FULL
+      : ASSET_UNIVERSE_FULL.filter(
           (a) => a.symbol.toLowerCase().includes(query.toLowerCase()) || a.name.toLowerCase().includes(query.toLowerCase())
         );
 
@@ -1154,6 +1194,12 @@ function BuscarView({ fx, f, C, livePrices }) {
                   stroke={C.bg}
                   strokeWidth={2}
                   isFront
+                  shape={(props) => (
+                    <g style={{ cursor: "pointer" }}>
+                      <circle cx={props.cx} cy={props.cy} r={5} fill={t.tipo === "Compra" ? C.gain : C.loss} stroke={C.bg} strokeWidth={2} />
+                      <title>{`${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`}</title>
+                    </g>
+                  )}
                 />
               ))}
             </AreaChart>
