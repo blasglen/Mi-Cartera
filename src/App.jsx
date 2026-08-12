@@ -111,7 +111,7 @@ const HOLDINGS = [
   { name: "SPY", cat: "CEDEARs", qty: 48.0, avgCost: 11889.75, price: 11587.04, broker: "Bull Market", manual: false },
   { name: "BBAR", cat: "Acciones", qty: 10.0, avgCost: 4718.55, price: 5667.03, broker: "Bull Market", manual: false },
   { name: "GGAL", cat: "Acciones", qty: 14.0, avgCost: 4531.8, price: 4683.43, broker: "Bull Market", manual: false },
-  { name: "CONIOLA", cat: "Fondos", qty: 1676.82, avgCost: 112.05, price: 116.92, broker: "Bull Market", manual: false },
+  { name: "CONIOLA", cat: "Fondos", qty: 1676.82, avgCost: 112.05, price: 152.26, broker: "Bull Market", manual: false },
   { name: "NVDA", cat: "CEDEARs", qty: 34.0, avgCost: 8790.7, price: 9771.57, broker: "IOL", manual: false },
   { name: "META", cat: "CEDEARs", qty: 4.0, avgCost: 24474.69, price: 27535.98, broker: "IOL", manual: false },
   { name: "MELI", cat: "CEDEARs", qty: 8.0, avgCost: 18870.08, price: 21992.32, broker: "IOL", manual: false },
@@ -470,20 +470,26 @@ function liveAdjustedPrice(holding, livePrices, fx) {
   return raw;
 }
 async function fetchLivePrices() {
-  const endpoints = ["arg_stocks", "arg_bonds", "arg_cedears"];
+  const endpoints = [
+    { path: "arg_stocks", cat: "Acciones AR" },
+    { path: "arg_bonds", cat: "Bonos" },
+    { path: "arg_cedears", cat: "CEDEARs" },
+  ];
   const results = await Promise.allSettled(
-    endpoints.map((e) => fetchWithTimeout(`https://data912.com/live/${e}`).then((r) => r.json()))
+    endpoints.map((e) => fetchWithTimeout(`https://data912.com/live/${e.path}`).then((r) => r.json()))
   );
   const prices = {};
-  for (const r of results) {
-    if (r.status !== "fulfilled" || !Array.isArray(r.value)) continue;
+  const catalog = [];
+  results.forEach((r, i) => {
+    if (r.status !== "fulfilled" || !Array.isArray(r.value)) return;
     for (const item of r.value) {
       const sym = extractSymbol(item);
       const price = extractPrice(item);
       if (sym && price) prices[sym] = price;
+      if (sym) catalog.push({ symbol: sym, cat: endpoints[i].cat });
     }
-  }
-  return prices;
+  });
+  return { prices, catalog };
 }
 
 const BROKERS = [
@@ -573,6 +579,7 @@ export default function InvestmentDashboard() {
   const [view, setView] = useState("inicio");
   const [jumpSymbol, setJumpSymbol] = useState(null);
   const goToAsset = (symbol) => { setJumpSymbol(symbol); setView("buscar"); };
+  const [hoverDot, setHoverDot] = useState(null); // { x, y, text } en píxeles del gráfico
   const [collapsed, setCollapsed] = useState(false);
   const [themeMode, setThemeMode] = useState("dark");
   const C = themeMode === "dark" ? DARK : LIGHT;
@@ -588,6 +595,7 @@ export default function InvestmentDashboard() {
 
   const [liveFxRates, setLiveFxRates] = useState(null); // null hasta que carguen
   const [livePrices, setLivePrices] = useState({});
+  const [liveCatalog, setLiveCatalog] = useState([]);
   const [liveStatus, setLiveStatus] = useState("cargando"); // cargando | ok | error
 
   React.useEffect(() => {
@@ -598,8 +606,9 @@ export default function InvestmentDashboard() {
         if (fxRes.status === "fulfilled" && Object.keys(fxRes.value).length > 0) {
           setLiveFxRates(fxRes.value);
         }
-        if (pxRes.status === "fulfilled" && Object.keys(pxRes.value).length > 0) {
-          setLivePrices(pxRes.value);
+        if (pxRes.status === "fulfilled" && pxRes.value.prices && Object.keys(pxRes.value.prices).length > 0) {
+          setLivePrices(pxRes.value.prices);
+          setLiveCatalog(pxRes.value.catalog || []);
         }
         const gotFx = fxRes.status === "fulfilled" && Object.keys(fxRes.value || {}).length > 0;
         setLiveStatus(gotFx ? "ok" : "error");
@@ -653,7 +662,11 @@ export default function InvestmentDashboard() {
   const pnlPct = pct(rangeEndPoint.total, rangeStartPoint.total);
   const chartData = scaledSeries.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
   const chartTrades = MOVIMIENTOS.filter(
-    (m) => (m.tipo === "Compra" || m.tipo === "Venta") && m.fecha >= chartData[0]?.date && m.fecha <= chartData[chartData.length - 1]?.date
+    (m) =>
+      (m.tipo === "Compra" || m.tipo === "Venta") &&
+      (brokerFilter.length === 0 || brokerFilter.includes(m.broker)) &&
+      m.fecha >= chartData[0]?.date &&
+      m.fecha <= chartData[chartData.length - 1]?.date
   ).map((m) => {
     const point = chartData.find((p) => p.date === m.fecha) || [...chartData].reverse().find((p) => p.date <= m.fecha);
     return { ...m, y: point ? point.total : null };
@@ -873,7 +886,7 @@ export default function InvestmentDashboard() {
                   </div>
                 )}
 
-                <div style={{ height: 190, marginTop: 4 }}>
+                <div style={{ height: 190, marginTop: 4, position: "relative" }}>
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
                       <defs>
@@ -887,26 +900,56 @@ export default function InvestmentDashboard() {
                       <YAxis hide domain={["auto", "auto"]} />
                       <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Valor"]} />
                       <Area type="monotone" dataKey="total" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
-                      {chartTrades.map((t, i) => (
-                        <ReferenceDot
-                          key={i}
-                          x={t.fecha}
-                          y={t.y}
-                          r={4}
-                          fill={t.tipo === "Compra" ? C.gain : C.loss}
-                          stroke={C.bg}
-                          strokeWidth={1.5}
-                          isFront
-                          shape={(props) => (
-                            <g style={{ cursor: "pointer" }}>
-                              <circle cx={props.cx} cy={props.cy} r={4} fill={t.tipo === "Compra" ? C.gain : C.loss} stroke={C.bg} strokeWidth={1.5} />
-                              <title>{`${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`}</title>
-                            </g>
-                          )}
-                        />
-                      ))}
+                      {chartTrades.map((t, i) => {
+                        const text = `${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`;
+                        return (
+                          <ReferenceDot
+                            key={i}
+                            x={t.fecha}
+                            y={t.y}
+                            r={4}
+                            fill={t.tipo === "Compra" ? C.gain : C.loss}
+                            stroke={C.bg}
+                            strokeWidth={1.5}
+                            isFront
+                            shape={(props) => (
+                              <g
+                                style={{ cursor: "pointer" }}
+                                onMouseEnter={() => setHoverDot({ x: props.cx, y: props.cy, text })}
+                                onMouseLeave={() => setHoverDot(null)}
+                              >
+                                {/* hitbox invisible más grande, más fácil de acertar con el mouse */}
+                                <circle cx={props.cx} cy={props.cy} r={10} fill="transparent" />
+                                <circle cx={props.cx} cy={props.cy} r={4} fill={t.tipo === "Compra" ? C.gain : C.loss} stroke={C.bg} strokeWidth={1.5} />
+                              </g>
+                            )}
+                          />
+                        );
+                      })}
                     </AreaChart>
                   </ResponsiveContainer>
+                  {hoverDot && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: hoverDot.x,
+                        top: hoverDot.y - 10,
+                        transform: "translate(-50%, -100%)",
+                        background: C.bg,
+                        border: `1px solid ${C.border}`,
+                        borderRadius: 6,
+                        padding: "4px 8px",
+                        fontSize: 11,
+                        color: C.text,
+                        whiteSpace: "nowrap",
+                        pointerEvents: "none",
+                        zIndex: 10,
+                      }}
+                      className="tabular"
+                    >
+                      {hoverDot.text}
+                    </div>
+                  )}
                 </div>
                 {chartTrades.length > 0 && (
                   <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginTop: 4, paddingBottom: 4 }}>
@@ -991,9 +1034,9 @@ export default function InvestmentDashboard() {
                     <thead>
                       <tr style={{ color: C.faint, textAlign: "left" }}>
                         <th style={{ padding: "10px 18px", fontWeight: 500 }}>Activo</th>
+                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Valor actual</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Cantidad</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Precio</th>
-                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Valor actual</th>
                         <th style={{ padding: "10px 18px", fontWeight: 500, textAlign: "right" }}>P&amp;L</th>
                       </tr>
                     </thead>
@@ -1014,6 +1057,7 @@ export default function InvestmentDashboard() {
                               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                             >
                               <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
                                 <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
@@ -1021,7 +1065,6 @@ export default function InvestmentDashboard() {
                                   {f(h.price)}
                                 </span>
                               </td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
                               <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: p >= 0 ? C.gain : C.loss }}>{p >= 0 ? "+" : ""}{p.toFixed(1)}%</td>
                             </tr>
                           );
@@ -1034,7 +1077,7 @@ export default function InvestmentDashboard() {
           )}
 
           {view === "importar" && <ImportarView C={C} />}
-          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} initialSymbol={jumpSymbol} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} liveCatalog={liveCatalog} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
@@ -1045,12 +1088,13 @@ export default function InvestmentDashboard() {
   );
 }
 
-function BuscarView({ fx, f, C, livePrices, initialSymbol }) {
+function BuscarView({ fx, f, C, livePrices, liveCatalog, initialSymbol }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
   const [tick, setTick] = useState(0);
   const [posExpanded, setPosExpanded] = useState(false);
+  const [hoverDot, setHoverDot] = useState(null);
 
   // Simula actualización en vivo: cada 3s "late" el último precio un poco.
   React.useEffect(() => {
@@ -1058,12 +1102,22 @@ function BuscarView({ fx, f, C, livePrices, initialSymbol }) {
     return () => clearInterval(id);
   }, []);
 
+  // Universo completo: catálogo base + tus tenencias + todo lo que devuelva data912
+  // en vivo (así "Nike", "Coca-Cola", etc. aparecen aunque no los tengas en cartera).
+  const fullCatalog = useMemo(() => {
+    const known = new Set(ASSET_UNIVERSE_FULL.map((a) => a.symbol));
+    const fromLive = (liveCatalog || [])
+      .filter((c) => !known.has(c.symbol))
+      .map((c) => ({ symbol: c.symbol, name: c.symbol, cat: c.cat, ccy: "ARS", seed: hashSeed(c.symbol), base: livePrices[c.symbol] || 100 }));
+    return [...ASSET_UNIVERSE_FULL, ...fromLive];
+  }, [liveCatalog]);
+
   const results =
     query.trim() === ""
-      ? ASSET_UNIVERSE_FULL
-      : ASSET_UNIVERSE_FULL.filter(
+      ? []
+      : fullCatalog.filter(
           (a) => a.symbol.toLowerCase().includes(query.toLowerCase()) || a.name.toLowerCase().includes(query.toLowerCase())
-        );
+        ).slice(0, 30);
 
   const series = useMemo(() => genPriceSeries(selected.seed, selected.base, 400, selected.cat === "Cripto" ? 0.035 : 0.016), [selected]);
   const liveJitter = useMemo(() => {
@@ -1129,7 +1183,11 @@ function BuscarView({ fx, f, C, livePrices, initialSymbol }) {
             {a.symbol} <span style={{ opacity: 0.7 }}>· {a.cat}</span>
           </button>
         ))}
-        {results.length === 0 && <span style={{ fontSize: 13, color: C.faint }}>No encontramos nada con ese nombre.</span>}
+        {results.length === 0 && (
+          <span style={{ fontSize: 13, color: C.faint }}>
+            {query.trim() === "" ? "Escribí para buscar entre acciones, CEDEARs, bonos y más." : "No encontramos nada con ese nombre."}
+          </span>
+        )}
       </div>
 
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "20px" }}>
@@ -1170,7 +1228,7 @@ function BuscarView({ fx, f, C, livePrices, initialSymbol }) {
           </div>
         </div>
 
-        <div style={{ height: 220 }}>
+        <div style={{ height: 220, position: "relative" }}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={sliced} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
               <defs>
@@ -1184,26 +1242,55 @@ function BuscarView({ fx, f, C, livePrices, initialSymbol }) {
               <YAxis hide domain={["auto", "auto"]} />
               <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Precio"]} />
               <Area type="monotone" dataKey="price" stroke={abs >= 0 ? C.gain : C.loss} strokeWidth={2} fill="url(#fillAsset)" />
-              {trades.map((t, i) => (
-                <ReferenceDot
-                  key={i}
-                  x={t.fecha}
-                  y={t.y}
-                  r={5}
-                  fill={t.tipo === "Compra" ? C.gain : C.loss}
-                  stroke={C.bg}
-                  strokeWidth={2}
-                  isFront
-                  shape={(props) => (
-                    <g style={{ cursor: "pointer" }}>
-                      <circle cx={props.cx} cy={props.cy} r={5} fill={t.tipo === "Compra" ? C.gain : C.loss} stroke={C.bg} strokeWidth={2} />
-                      <title>{`${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`}</title>
-                    </g>
-                  )}
-                />
-              ))}
+              {trades.map((t, i) => {
+                const text = `${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`;
+                return (
+                  <ReferenceDot
+                    key={i}
+                    x={t.fecha}
+                    y={t.y}
+                    r={5}
+                    fill={t.tipo === "Compra" ? C.gain : C.loss}
+                    stroke={C.bg}
+                    strokeWidth={2}
+                    isFront
+                    shape={(props) => (
+                      <g
+                        style={{ cursor: "pointer" }}
+                        onMouseEnter={() => setHoverDot({ x: props.cx, y: props.cy, text })}
+                        onMouseLeave={() => setHoverDot(null)}
+                      >
+                        <circle cx={props.cx} cy={props.cy} r={11} fill="transparent" />
+                        <circle cx={props.cx} cy={props.cy} r={5} fill={t.tipo === "Compra" ? C.gain : C.loss} stroke={C.bg} strokeWidth={2} />
+                      </g>
+                    )}
+                  />
+                );
+              })}
             </AreaChart>
           </ResponsiveContainer>
+          {hoverDot && (
+            <div
+              className="tabular"
+              style={{
+                position: "absolute",
+                left: hoverDot.x,
+                top: hoverDot.y - 12,
+                transform: "translate(-50%, -100%)",
+                background: C.bg,
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                padding: "4px 8px",
+                fontSize: 11,
+                color: C.text,
+                whiteSpace: "nowrap",
+                pointerEvents: "none",
+                zIndex: 10,
+              }}
+            >
+              {hoverDot.text}
+            </div>
+          )}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, flexWrap: "wrap", gap: 8 }}>
           <div style={{ fontSize: 11, color: C.faint }}>
