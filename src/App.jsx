@@ -781,13 +781,17 @@ export default function InvestmentDashboard() {
   const [realPortfolioHistory, setRealPortfolioHistory] = useState(null);
   const [historyCoverage, setHistoryCoverage] = useState(null);
 
-  React.useEffect(() => {
-    let cancelled = false;
-    buildRealPortfolioHistory(HOLDINGS, 1245, (cov) => { if (!cancelled) setHistoryCoverage(cov); })
-      .then((points) => { if (!cancelled && points.length > 1) setRealPortfolioHistory(points); })
-      .catch(() => {});
-    return () => { cancelled = true; };
-  }, []);
+  // Desactivado: pedir el histórico de los ~40 tickers de la cartera de una
+  // saturaba a data912 y terminaba bloqueando incluso los precios en vivo (que
+  // sí funcionan bien). El histórico real por activo individual, en Buscar
+  // activo, sigue andando -- es mucho más liviano porque es de a uno.
+  // React.useEffect(() => {
+  //   let cancelled = false;
+  //   buildRealPortfolioHistory(HOLDINGS, 1245, (cov) => { if (!cancelled) setHistoryCoverage(cov); })
+  //     .then((points) => { if (!cancelled && points.length > 1) setRealPortfolioHistory(points); })
+  //     .catch(() => {});
+  //   return () => { cancelled = true; };
+  // }, []);
   const [liveStatus, setLiveStatus] = useState("cargando"); // cargando | ok | error
 
   React.useEffect(() => {
@@ -1159,10 +1163,10 @@ export default function InvestmentDashboard() {
                     </span>
                   </div>
                 )}
-                <div style={{ fontSize: 10, color: realPortfolioHistory ? C.gain : C.faint, paddingBottom: 4 }}>
-                  {realPortfolioHistory
-                    ? `Histórico real: ${historyCoverage?.tickersWithRealData ?? 0} de ${historyCoverage?.tickersTotal ?? 0} activos con precio real por fecha (el resto usa su precio actual hacia atrás).`
-                    : "Buscando histórico real por activo… mientras tanto se muestra una estimación."}
+                <div style={{ fontSize: 10, color: C.faint, paddingBottom: 4 }}>
+                  Este gráfico es una estimación anclada al valor real de hoy — pedir el histórico real de
+                  toda la cartera de una satura la fuente de datos gratuita. Para ver el histórico real de
+                  un activo puntual, entrá a Buscar activo.
                 </div>
               </div>
 
