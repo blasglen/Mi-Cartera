@@ -81,7 +81,7 @@ function buildSeries() {
 const SERIES = buildSeries();
 
 const HOLDINGS = [
-  { name: "YPFD", cat: "Acciones", qty: 22.0, avgCost: 14468.38, price: 13973.27, broker: "Balanz", manual: false },
+  { name: "YPFD", cat: "Acciones", qty: 40.0, avgCost: 7957.61, price: 13973.27, broker: "Balanz", manual: false },
   { name: "AMD", cat: "CEDEARs", qty: 1.0, avgCost: 76430.28, price: 75607.89, broker: "Balanz", manual: false },
   { name: "CEPU", cat: "Acciones", qty: 82.0, avgCost: 2425.57, price: 2949.73, broker: "Balanz", manual: false },
   { name: "TSM", cat: "CEDEARs", qty: 5.0, avgCost: 73767.68, price: 87976.07, broker: "Balanz", manual: false },
@@ -92,7 +92,7 @@ const HOLDINGS = [
   { name: "PFE", cat: "CEDEARs", qty: 10.0, avgCost: 9452.49, price: 8907.55, broker: "Balanz", manual: false },
   { name: "MELI", cat: "CEDEARs", qty: 18.0, avgCost: 23039.24, price: 22207.98, broker: "Balanz", manual: false },
   { name: "META", cat: "CEDEARs", qty: 5.0, avgCost: 42170.79, price: 48462.67, broker: "Balanz", manual: false },
-  { name: "SPY", cat: "CEDEARs", qty: 4.0, avgCost: 43342.85, price: 43771.08, broker: "Balanz", manual: false },
+  { name: "SPY", cat: "CEDEARs", qty: 12.0, avgCost: 14447.62, price: 43771.08, broker: "Balanz", manual: false },
   { name: "VIST", cat: "CEDEARs", qty: 3.0, avgCost: 25428.11, price: 28507.96, broker: "Balanz", manual: false },
   { name: "GGAL", cat: "Acciones", qty: 13.0, avgCost: 7023.11, price: 8395.42, broker: "Balanz", manual: false },
   { name: "MU", cat: "CEDEARs", qty: 1.0, avgCost: 71321.5, price: 71859.26, broker: "Balanz", manual: false },
