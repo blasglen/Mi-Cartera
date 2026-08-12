@@ -602,7 +602,7 @@ function priceAt(historyMap, sortedDates, date) {
 }
 
 async function fetchHistoryForTicker(h, fx) {
-  const typeMap = { Acciones: "stocks", CEDEARs: "cedears", Bonos: "bonds" };
+  const typeMap = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
   try {
     if (COINGECKO_IDS[h.name]) {
       const usdHistory = await fetchCryptoHistoryUsd(h.name, 365);
@@ -610,7 +610,10 @@ async function fetchHistoryForTicker(h, fx) {
     }
     if (typeMap[h.cat]) {
       const raw = await fetchAssetHistory(typeMap[h.cat], h.name);
-      return raw ? raw.map((p) => ({ date: p.date, price: h.cat === "Bonos" ? p.price / 100 : p.price })) : null;
+      if (!raw) return null;
+      if (h.cat === "Bonos") return raw.map((p) => ({ date: p.date, price: p.price / 100 }));
+      if (h.cat === "CEDEARs") return raw.map((p) => ({ date: p.date, price: p.price * fx })); // usa_stocks viene en USD
+      return raw;
     }
   } catch {
     return null;
@@ -1318,7 +1321,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, initialSymbo
     let cancelled = false;
     setHistoryStatus("cargando");
     setRealHistory(null);
-    const typeMap = { "Acciones AR": "stocks", CEDEARs: "cedears", Bonos: "bonds" };
+    const typeMap = { "Acciones AR": "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
     (async () => {
       try {
         let data = null;
@@ -1327,7 +1330,9 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, initialSymbo
           data = usdHistory ? usdHistory.map((p) => ({ date: p.date, price: p.price * fx })) : null;
         } else if (typeMap[selected.cat]) {
           const raw = await fetchAssetHistory(typeMap[selected.cat], selected.symbol);
-          data = raw ? raw.map((p) => ({ date: p.date, price: selected.cat === "Bonos" ? p.price / 100 : p.price })) : null;
+          data = raw
+            ? raw.map((p) => ({ date: p.date, price: selected.cat === "Bonos" ? p.price / 100 : selected.cat === "CEDEARs" ? p.price * fx : p.price }))
+            : null;
         }
         if (cancelled) return;
         if (data && data.length > 1) { setRealHistory(data); setHistoryStatus("ok"); }
