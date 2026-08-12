@@ -433,10 +433,15 @@ function extractPrice(o) {
 // está guardado en pesos por unidad. Para poder comparar precio actual vs costo hay
 // que llevar el precio en vivo a la misma base: pesos por unidad.
 // Confirmado con datos reales del usuario (Balanz: GD38 a u$s0,8466/unidad).
+// Confirmado con datos reales de data912: el ticker sin sufijo (ej "GD38") ya
+// viene en PESOS, cotizado cada 100 de nominal (c: 129360 = ARS 1293,60/unidad).
+// Solo hace falta dividir por 100 -- no hay que convertir moneda, ya está en ARS
+// igual que nuestro avgCost. (Existen también "GD38D"/"GD38C" en dólares, pero
+// no son los que usamos porque nuestras tenencias están cargadas como "GD38".)
 function liveAdjustedPrice(holding, livePrices, fx) {
   const raw = livePrices[holding.name];
   if (raw == null) return holding.price; // sin dato en vivo, se mantiene el estimado
-  if (holding.cat === "Bonos") return (raw / 100) * fx;
+  if (holding.cat === "Bonos") return raw / 100;
   return raw;
 }
 async function fetchLivePrices() {
@@ -605,6 +610,12 @@ export default function InvestmentDashboard() {
   const pnlAbs = rangeEndPoint.total - rangeStartPoint.total;
   const pnlPct = pct(rangeEndPoint.total, rangeStartPoint.total);
   const chartData = SERIES.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
+  const chartTrades = MOVIMIENTOS.filter(
+    (m) => (m.tipo === "Compra" || m.tipo === "Venta") && m.fecha >= chartData[0]?.date && m.fecha <= chartData[chartData.length - 1]?.date
+  ).map((m) => {
+    const point = chartData.find((p) => p.date === m.fecha) || [...chartData].reverse().find((p) => p.date <= m.fecha);
+    return { ...m, y: point ? point.total : null };
+  }).filter((m) => m.y != null);
 
   const current = SERIES[SERIES.length - 1];
   const yesterday = SERIES[SERIES.length - 2];
@@ -848,9 +859,33 @@ export default function InvestmentDashboard() {
                       <YAxis hide domain={["auto", "auto"]} />
                       <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Valor"]} />
                       <Area type="monotone" dataKey="total" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
+                      {chartTrades.map((t, i) => (
+                        <ReferenceDot
+                          key={i}
+                          x={t.fecha}
+                          y={t.y}
+                          r={4}
+                          fill={t.tipo === "Compra" ? C.gain : C.loss}
+                          stroke={C.bg}
+                          strokeWidth={1.5}
+                          isFront
+                        />
+                      ))}
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
+                {chartTrades.length > 0 && (
+                  <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginTop: 4, paddingBottom: 4 }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <span style={{ width: 7, height: 7, borderRadius: 999, background: C.gain, display: "inline-block" }} />
+                      Compra
+                    </span>
+                    <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <span style={{ width: 7, height: 7, borderRadius: 999, background: C.loss, display: "inline-block" }} />
+                      Venta
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "minmax(220px, 260px) 1fr", gap: 12, marginTop: 20, alignItems: "stretch" }}>
