@@ -382,10 +382,25 @@ const FX_RATES = {
 };
 
 // --- Cotizaciones en vivo -------------------------------------------------
+// fetch() del navegador no tiene timeout por defecto: si el servidor no
+// responde (bloqueado por firewall/antivirus/red corporativa, o caído), la
+// promesa queda colgada para siempre en vez de fallar. Por eso todo fetch acá
+// se corta a los 8s con AbortController.
+async function fetchWithTimeout(url, ms = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    return res;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 // FX: dolarapi.com -- API pública, formato confirmado y estable:
 // GET https://dolarapi.com/v1/dolares -> [{ casa, nombre, compra, venta, moneda, fechaActualizacion }]
 async function fetchFxRates() {
-  const res = await fetch("https://dolarapi.com/v1/dolares");
+  const res = await fetchWithTimeout("https://dolarapi.com/v1/dolares");
   if (!res.ok) throw new Error("fx fetch failed");
   const data = await res.json();
   const byCasa = Object.fromEntries(data.map((d) => [d.casa, d]));
@@ -415,7 +430,7 @@ function extractPrice(o) {
 async function fetchLivePrices() {
   const endpoints = ["arg_stocks", "arg_bonds", "arg_cedears"];
   const results = await Promise.allSettled(
-    endpoints.map((e) => fetch(`https://data912.com/live/${e}`).then((r) => r.json()))
+    endpoints.map((e) => fetchWithTimeout(`https://data912.com/live/${e}`).then((r) => r.json()))
   );
   const prices = {};
   for (const r of results) {
@@ -533,17 +548,23 @@ export default function InvestmentDashboard() {
 
   React.useEffect(() => {
     let cancelled = false;
-    Promise.allSettled([fetchFxRates(), fetchLivePrices()]).then(([fxRes, pxRes]) => {
-      if (cancelled) return;
-      if (fxRes.status === "fulfilled" && Object.keys(fxRes.value).length > 0) {
-        setLiveFxRates(fxRes.value);
-      }
-      if (pxRes.status === "fulfilled" && Object.keys(pxRes.value).length > 0) {
-        setLivePrices(pxRes.value);
-      }
-      const gotFx = fxRes.status === "fulfilled" && Object.keys(fxRes.value || {}).length > 0;
-      setLiveStatus(gotFx ? "ok" : "error");
-    });
+    Promise.allSettled([fetchFxRates(), fetchLivePrices()])
+      .then(([fxRes, pxRes]) => {
+        if (cancelled) return;
+        if (fxRes.status === "fulfilled" && Object.keys(fxRes.value).length > 0) {
+          setLiveFxRates(fxRes.value);
+        }
+        if (pxRes.status === "fulfilled" && Object.keys(pxRes.value).length > 0) {
+          setLivePrices(pxRes.value);
+        }
+        const gotFx = fxRes.status === "fulfilled" && Object.keys(fxRes.value || {}).length > 0;
+        setLiveStatus(gotFx ? "ok" : "error");
+      })
+      .catch(() => {
+        // red de seguridad: cualquier error no previsto no debe dejar el estado
+        // colgado en "cargando" para siempre.
+        if (!cancelled) setLiveStatus("error");
+      });
     return () => { cancelled = true; };
   }, []);
 
