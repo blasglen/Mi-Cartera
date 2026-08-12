@@ -685,7 +685,11 @@ export default function InvestmentDashboard() {
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: liveStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
                     <span style={{ width: 5, height: 5, borderRadius: 999, background: liveStatus === "ok" ? C.gain : C.faint, display: "inline-block" }} />
-                    {liveStatus === "ok" ? "Dólar en vivo · precios de mercado estimados" : liveStatus === "cargando" ? "Conectando cotizaciones…" : "Estimado — la vista previa del chat no permite conexiones externas"}
+                    {liveStatus === "ok"
+                      ? `Dólar en vivo · ${Object.keys(livePrices).length > 0 ? `${Object.keys(livePrices).length} activos con precio en vivo` : "precios de mercado sin conectar todavía"}`
+                      : liveStatus === "cargando"
+                      ? "Conectando cotizaciones…"
+                      : "Estimado — sin conexión a las fuentes de cotización"}
                   </div>
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
                     <button
@@ -916,7 +920,7 @@ export default function InvestmentDashboard() {
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
-          {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} />}
+          {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} />}
         </div>
       </div>
     </div>
@@ -1436,7 +1440,7 @@ function ManualView({ f, C }) {
   );
 }
 
-function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, liveStatus }) {
+function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, liveStatus, livePrices }) {
   return (
     <div>
       <SectionTitle C={C} sub="Moneda por defecto, fuente del tipo de cambio y qué cuentas están conectadas.">Configuración</SectionTitle>
@@ -1457,10 +1461,16 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
         <div style={{ fontSize: 11, color: liveStatus === "ok" ? C.gain : C.faint, marginTop: 10, display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 6, height: 6, borderRadius: 999, background: liveStatus === "ok" ? C.gain : C.faint, display: "inline-block" }} />
           {liveStatus === "ok"
-            ? "Cotizaciones en vivo desde DolarAPI."
+            ? "Dólar: en vivo desde DolarAPI."
             : liveStatus === "cargando"
             ? "Conectando con DolarAPI…"
-            : "La vista previa del chat bloquea conexiones a APIs externas — esto va a funcionar cuando la app esté desplegada afuera."}
+            : "Dólar: sin conexión, usando valores de referencia."}
+        </div>
+        <div style={{ fontSize: 11, color: Object.keys(livePrices).length > 0 ? C.gain : C.faint, marginTop: 6, display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 6, height: 6, borderRadius: 999, background: Object.keys(livePrices).length > 0 ? C.gain : C.faint, display: "inline-block" }} />
+          {Object.keys(livePrices).length > 0
+            ? `Precios de mercado: ${Object.keys(livePrices).length} activos en vivo desde data912.`
+            : "Precios de mercado: sin conectar (data912) — usando estimados."}
         </div>
       </div>
 
