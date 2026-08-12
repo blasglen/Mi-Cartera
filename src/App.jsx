@@ -621,9 +621,23 @@ async function fetchHistoryForTicker(h, fx) {
   return null;
 }
 
+// data912 es un servicio chico/educativo, no pensado para ráfagas de decenas de
+// pedidos simultáneos -- mandarlos todos juntos hace que varios se corten. Se
+// procesan de a poco, con una pausa corta entre tandas.
+async function mapWithLimitedConcurrency(items, limit, fn) {
+  const results = new Array(items.length);
+  for (let i = 0; i < items.length; i += limit) {
+    const batch = items.slice(i, i + limit);
+    const batchResults = await Promise.allSettled(batch.map(fn));
+    batchResults.forEach((r, j) => { results[i + j] = r; });
+    if (i + limit < items.length) await new Promise((res) => setTimeout(res, 400));
+  }
+  return results;
+}
+
 async function buildRealPortfolioHistory(holdings, fx, onProgress) {
   const uniqueTickers = [...new Map(holdings.map((h) => [h.name, h])).values()];
-  const results = await Promise.allSettled(uniqueTickers.map((h) => fetchHistoryForTicker(h, fx)));
+  const results = await mapWithLimitedConcurrency(uniqueTickers, 4, (h) => fetchHistoryForTicker(h, fx));
 
   const days = 365;
   const today = new Date();
