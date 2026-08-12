@@ -543,26 +543,27 @@ async function fetchCryptoHistoryUsd(symbol, days) {
 // documentación, pero no pude confirmar la ruta exacta desde este entorno (red
 // restringida). Se prueba con las rutas más probables; si ninguna responde,
 // se informa con claridad en vez de mostrar algo simulado como si fuera real.
+// Rutas confirmadas con datos reales del usuario: historical/stocks/{ticker}
+// y historical/usa_stocks/{ticker}. Ya no se prueban rutas alternativas --
+// generaban 3x más pedidos de los necesarios y eso es justo lo que satura al
+// servidor (es un servicio chico, no pensado para ráfagas).
 async function fetchAssetHistory(type, ticker) {
-  const candidates = [`historical/${type}/${ticker}`, `historical/${ticker}`, `eod/${type}/${ticker}`];
-  for (const path of candidates) {
-    try {
-      const res = await fetchWithTimeout(`https://data912.com/${path}`);
-      if (!res.ok) continue;
-      const data = await res.json();
-      if (!Array.isArray(data) || data.length === 0) continue;
-      const parsed = data
-        .map((row) => {
-          const date = row.date || row.fecha || row.d || row.t;
-          const price = row.c ?? row.close ?? row.px ?? row.price;
-          if (!date || price == null) return null;
-          return { date: String(date).slice(0, 10), price };
-        })
-        .filter(Boolean);
-      if (parsed.length > 0) return parsed;
-    } catch {
-      // sigue probando la siguiente ruta candidata
-    }
+  try {
+    const res = await fetchWithTimeout(`https://data912.com/historical/${type}/${ticker}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return null;
+    const parsed = data
+      .map((row) => {
+        const date = row.date || row.fecha || row.d || row.t;
+        const price = row.c ?? row.close ?? row.px ?? row.price;
+        if (!date || price == null) return null;
+        return { date: String(date).slice(0, 10), price };
+      })
+      .filter(Boolean);
+    return parsed.length > 0 ? parsed : null;
+  } catch {
+    return null;
   }
   return null;
 }
@@ -630,14 +631,14 @@ async function mapWithLimitedConcurrency(items, limit, fn) {
     const batch = items.slice(i, i + limit);
     const batchResults = await Promise.allSettled(batch.map(fn));
     batchResults.forEach((r, j) => { results[i + j] = r; });
-    if (i + limit < items.length) await new Promise((res) => setTimeout(res, 400));
+    if (i + limit < items.length) await new Promise((res) => setTimeout(res, 700));
   }
   return results;
 }
 
 async function buildRealPortfolioHistory(holdings, fx, onProgress) {
   const uniqueTickers = [...new Map(holdings.map((h) => [h.name, h])).values()];
-  const results = await mapWithLimitedConcurrency(uniqueTickers, 4, (h) => fetchHistoryForTicker(h, fx));
+  const results = await mapWithLimitedConcurrency(uniqueTickers, 1, (h) => fetchHistoryForTicker(h, fx));
 
   const days = 365;
   const today = new Date();
