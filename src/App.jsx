@@ -592,6 +592,7 @@ export default function InvestmentDashboard() {
   const rangeEndPoint = [...SERIES].reverse().find((p) => p.date <= to) || SERIES[SERIES.length - 1];
   const pnlAbs = rangeEndPoint.total - rangeStartPoint.total;
   const pnlPct = pct(rangeEndPoint.total, rangeStartPoint.total);
+  const chartData = SERIES.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
 
   const current = SERIES[SERIES.length - 1];
   const yesterday = SERIES[SERIES.length - 2];
@@ -823,7 +824,7 @@ export default function InvestmentDashboard() {
 
                 <div style={{ height: 190, marginTop: 4 }}>
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={SERIES} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
+                    <AreaChart data={chartData} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
                       <defs>
                         <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor={C.gold} stopOpacity={0.35} />
@@ -834,7 +835,6 @@ export default function InvestmentDashboard() {
                       <XAxis dataKey="date" tick={{ fill: C.faint, fontSize: 10 }} tickFormatter={(d) => d.slice(5)} axisLine={{ stroke: C.border }} tickLine={false} minTickGap={40} />
                       <YAxis hide domain={["auto", "auto"]} />
                       <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Valor"]} />
-                      <ReferenceArea x1={rangeStartPoint.date} x2={rangeEndPoint.date} fill={C.gold} fillOpacity={0.12} />
                       <Area type="monotone" dataKey="total" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -911,24 +911,34 @@ export default function InvestmentDashboard() {
                       <tr style={{ color: C.faint, textAlign: "left" }}>
                         <th style={{ padding: "10px 18px", fontWeight: 500 }}>Activo</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Cantidad</th>
+                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Precio</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Valor actual</th>
                         <th style={{ padding: "10px 18px", fontWeight: 500, textAlign: "right" }}>P&amp;L</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {consolidateByName(filteredHoldings).map((h) => {
-                        const value = h.qty * h.price;
-                        const cost = h.qty * h.avgCost;
-                        const p = pct(value, cost);
-                        return (
-                          <tr key={h.name} style={{ borderTop: `1px solid ${C.rowLine}` }}>
-                            <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
-                            <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
-                            <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
-                            <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: p >= 0 ? C.gain : C.loss }}>{p >= 0 ? "+" : ""}{p.toFixed(1)}%</td>
-                          </tr>
-                        );
-                      })}
+                      {consolidateByName(filteredHoldings)
+                        .sort((a, b) => b.qty * b.price - a.qty * a.price)
+                        .map((h) => {
+                          const value = h.qty * h.price;
+                          const cost = h.qty * h.avgCost;
+                          const p = pct(value, cost);
+                          const enVivo = livePrices[h.name] != null;
+                          return (
+                            <tr key={h.name} style={{ borderTop: `1px solid ${C.rowLine}` }}>
+                              <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                  {enVivo && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block" }} />}
+                                  {f(h.price)}
+                                </span>
+                              </td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
+                              <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: p >= 0 ? C.gain : C.loss }}>{p >= 0 ? "+" : ""}{p.toFixed(1)}%</td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
