@@ -328,6 +328,24 @@ const ASSET_UNIVERSE = [
   { symbol: "USDT", name: "Tether", cat: "Cripto", ccy: "ARS", seed: 34, base: 1245 },
 ];
 
+// Nombres completos para que el buscador encuentre por "microsoft" y no solo "MSFT".
+// Cubre tus tenencias reales + los tickers más comunes; lo que no está acá usa el
+// ticker como nombre (sigue siendo buscable por símbolo, solo no por nombre completo).
+const SYMBOL_NAMES = {
+  GGAL: "Grupo Financiero Galicia", YPFD: "YPF", BBAR: "Banco BBVA Argentina",
+  BMA: "Banco Macro", CEPU: "Central Puerto", PAMP: "Pampa Energía", SUPV: "Grupo Supervielle",
+  LOMA: "Loma Negra", TGSU2: "Transportadora de Gas del Sur",
+  AAPL: "Apple", AMD: "AMD", AMZN: "Amazon", BABA: "Alibaba", GOOGL: "Google (Alphabet)",
+  MELI: "Mercado Libre", META: "Meta (Facebook)", MSFT: "Microsoft", MU: "Micron",
+  PFE: "Pfizer", TSM: "Taiwan Semiconductor (TSMC)", VIST: "Vista Energy", NVDA: "Nvidia",
+  KO: "Coca-Cola", CSCO: "Cisco", DISN: "Disney", MCD: "McDonald's", LLY: "Eli Lilly",
+  PBR: "Petrobras", PYPL: "PayPal", HMY: "Harmony Gold", IBM: "IBM", T: "AT&T",
+  SPY: "SPDR S&P 500 (ETF)", QQQ: "Invesco QQQ Trust (Nasdaq 100)", DIA: "SPDR Dow Jones (ETF)",
+  AL30: "Bonar 2030", GD35: "Global 2035", GD38: "Global 2038", GD41: "Global 2041",
+  BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana", USDT: "Tether", TSLA: "Tesla",
+  CONIOLA: "AdCap Acciones - Fondo Común de Inversión",
+};
+
 function hashSeed(str) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) % 9973;
@@ -344,7 +362,7 @@ const AUTO_ASSETS = [...new Set(HOLDINGS.map((h) => h.name))]
     const h = HOLDINGS.find((x) => x.name === t);
     return {
       symbol: t,
-      name: t,
+      name: SYMBOL_NAMES[t] || t,
       cat: HOLDINGS_CAT_TO_SEARCH_CAT[h.cat] || "CEDEARs",
       ccy: "ARS",
       seed: hashSeed(t),
@@ -492,6 +510,22 @@ async function fetchLivePrices() {
   return { prices, catalog };
 }
 
+// CoinGecko: API pública, sin API key, formato estable.
+// GET .../simple/price?ids=bitcoin,ethereum,solana,tether&vs_currencies=usd
+// -> { bitcoin: { usd: 63500 }, ethereum: { usd: ... }, ... }
+const COINGECKO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
+async function fetchCryptoPricesUsd() {
+  const ids = Object.values(COINGECKO_IDS).join(",");
+  const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+  if (!res.ok) throw new Error("crypto fetch failed");
+  const data = await res.json();
+  const out = {};
+  for (const [symbol, id] of Object.entries(COINGECKO_IDS)) {
+    if (data[id]?.usd) out[symbol] = data[id].usd;
+  }
+  return out;
+}
+
 const BROKERS = [
   { name: "Balanz", status: "conectado", tipo: "Import manual (Excel)" },
   { name: "IOL", status: "conectado", tipo: "API" },
@@ -596,12 +630,13 @@ export default function InvestmentDashboard() {
   const [liveFxRates, setLiveFxRates] = useState(null); // null hasta que carguen
   const [livePrices, setLivePrices] = useState({});
   const [liveCatalog, setLiveCatalog] = useState([]);
+  const [cryptoUsd, setCryptoUsd] = useState({});
   const [liveStatus, setLiveStatus] = useState("cargando"); // cargando | ok | error
 
   React.useEffect(() => {
     let cancelled = false;
-    Promise.allSettled([fetchFxRates(), fetchLivePrices()])
-      .then(([fxRes, pxRes]) => {
+    Promise.allSettled([fetchFxRates(), fetchLivePrices(), fetchCryptoPricesUsd()])
+      .then(([fxRes, pxRes, cryptoRes]) => {
         if (cancelled) return;
         if (fxRes.status === "fulfilled" && Object.keys(fxRes.value).length > 0) {
           setLiveFxRates(fxRes.value);
@@ -609,6 +644,9 @@ export default function InvestmentDashboard() {
         if (pxRes.status === "fulfilled" && pxRes.value.prices && Object.keys(pxRes.value.prices).length > 0) {
           setLivePrices(pxRes.value.prices);
           setLiveCatalog(pxRes.value.catalog || []);
+        }
+        if (cryptoRes.status === "fulfilled" && Object.keys(cryptoRes.value).length > 0) {
+          setCryptoUsd(cryptoRes.value);
         }
         const gotFx = fxRes.status === "fulfilled" && Object.keys(fxRes.value || {}).length > 0;
         setLiveStatus(gotFx ? "ok" : "error");
@@ -1077,7 +1115,7 @@ export default function InvestmentDashboard() {
           )}
 
           {view === "importar" && <ImportarView C={C} />}
-          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} liveCatalog={liveCatalog} initialSymbol={jumpSymbol} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
@@ -1088,7 +1126,7 @@ export default function InvestmentDashboard() {
   );
 }
 
-function BuscarView({ fx, f, C, livePrices, liveCatalog, initialSymbol }) {
+function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, initialSymbol }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
@@ -1108,7 +1146,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, initialSymbol }) {
     const known = new Set(ASSET_UNIVERSE_FULL.map((a) => a.symbol));
     const fromLive = (liveCatalog || [])
       .filter((c) => !known.has(c.symbol))
-      .map((c) => ({ symbol: c.symbol, name: c.symbol, cat: c.cat, ccy: "ARS", seed: hashSeed(c.symbol), base: livePrices[c.symbol] || 100 }));
+      .map((c) => ({ symbol: c.symbol, name: SYMBOL_NAMES[c.symbol] || c.symbol, cat: c.cat, ccy: "ARS", seed: hashSeed(c.symbol), base: livePrices[c.symbol] || 100 }));
     return [...ASSET_UNIVERSE_FULL, ...fromLive];
   }, [liveCatalog]);
 
@@ -1129,7 +1167,18 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, initialSymbol }) {
   const sliced = series.slice(-days);
   const first = sliced[0].price;
   const lastRaw = sliced[sliced.length - 1].price;
-  const last = lastRaw * liveJitter;
+
+  // Precio real cuando está disponible: cripto sale de CoinGecko (en USD, se
+  // convierte a la escala interna en ARS multiplicando por el tipo de cambio),
+  // el resto sale de data912 (los bonos vienen cada 100 de nominal, hay que /100).
+  const liveCryptoUsd = cryptoUsd[selected.symbol];
+  const liveRaw = livePrices[selected.symbol];
+  let realLivePrice = null;
+  if (selected.cat === "Cripto" && liveCryptoUsd != null) realLivePrice = liveCryptoUsd * fx;
+  else if (liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
+
+  const isLive = realLivePrice != null;
+  const last = isLive ? realLivePrice : lastRaw * liveJitter;
   const abs = last - first;
   const p = pct(last, first);
 
@@ -1293,8 +1342,10 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, initialSymbol }) {
           )}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, flexWrap: "wrap", gap: 8 }}>
-          <div style={{ fontSize: 11, color: C.faint }}>
-            Precio simulado — se conecta a la cotización real de tu broker/exchange una vez integrada la fuente de datos.
+          <div style={{ fontSize: 11, color: isLive ? C.gain : C.faint }}>
+            {isLive
+              ? "Precio en vivo" + (selected.cat === "Cripto" ? " (CoinGecko)." : " (data912).")
+              : "Precio simulado — no encontramos cotización en vivo para este símbolo todavía."}
           </div>
           {trades.length > 0 && (
             <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted }}>
@@ -1309,6 +1360,11 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, initialSymbol }) {
             </div>
           )}
         </div>
+        {isLive && (
+          <div style={{ fontSize: 10, color: C.faint, marginTop: 4 }}>
+            El gráfico histórico sigue siendo una simulación; el precio actual de arriba sí es real.
+          </div>
+        )}
       </div>
 
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, marginTop: 16, overflow: "hidden" }}>
