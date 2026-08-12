@@ -526,6 +526,47 @@ async function fetchCryptoPricesUsd() {
   return out;
 }
 
+// Histórico real de cripto -- mismo CoinGecko, endpoint confirmado y estable:
+// GET .../coins/{id}/market_chart?vs_currency=usd&days=365
+// -> { prices: [[timestampMs, precioUsd], ...] }
+async function fetchCryptoHistoryUsd(symbol, days) {
+  const id = COINGECKO_IDS[symbol];
+  if (!id) return null;
+  const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`);
+  if (!res.ok) throw new Error("crypto history fetch failed");
+  const data = await res.json();
+  if (!Array.isArray(data.prices)) return null;
+  return data.prices.map(([ts, price]) => ({ date: new Date(ts).toISOString().slice(0, 10), price }));
+}
+
+// Histórico de acciones/bonos/CEDEARs vía data912 -- existe según su propia
+// documentación, pero no pude confirmar la ruta exacta desde este entorno (red
+// restringida). Se prueba con las rutas más probables; si ninguna responde,
+// se informa con claridad en vez de mostrar algo simulado como si fuera real.
+async function fetchAssetHistory(type, ticker) {
+  const candidates = [`historical/${type}/${ticker}`, `historical/${ticker}`, `eod/${type}/${ticker}`];
+  for (const path of candidates) {
+    try {
+      const res = await fetchWithTimeout(`https://data912.com/${path}`);
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) continue;
+      const parsed = data
+        .map((row) => {
+          const date = row.date || row.fecha || row.d || row.t;
+          const price = row.c ?? row.close ?? row.px ?? row.price;
+          if (!date || price == null) return null;
+          return { date: String(date).slice(0, 10), price };
+        })
+        .filter(Boolean);
+      if (parsed.length > 0) return parsed;
+    } catch {
+      // sigue probando la siguiente ruta candidata
+    }
+  }
+  return null;
+}
+
 const BROKERS = [
   { name: "Balanz", status: "conectado", tipo: "Import manual (Excel)" },
   { name: "IOL", status: "conectado", tipo: "API" },
@@ -1164,7 +1205,37 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, initialSymbo
   }, [selected, tick]);
 
   const days = CHART_RANGES[rangeIdx].days;
-  const sliced = series.slice(-days);
+
+  // Histórico real cuando se consigue -- si no, se cae al simulado (y se avisa
+  // claramente cuál de los dos es en el pie del gráfico).
+  const [realHistory, setRealHistory] = useState(null);
+  const [historyStatus, setHistoryStatus] = useState("cargando"); // cargando | ok | no-disponible
+  React.useEffect(() => {
+    let cancelled = false;
+    setHistoryStatus("cargando");
+    setRealHistory(null);
+    const typeMap = { "Acciones AR": "stocks", CEDEARs: "cedears", Bonos: "bonds" };
+    (async () => {
+      try {
+        let data = null;
+        if (selected.cat === "Cripto") {
+          const usdHistory = await fetchCryptoHistoryUsd(selected.symbol, days);
+          data = usdHistory ? usdHistory.map((p) => ({ date: p.date, price: p.price * fx })) : null;
+        } else if (typeMap[selected.cat]) {
+          const raw = await fetchAssetHistory(typeMap[selected.cat], selected.symbol);
+          data = raw ? raw.map((p) => ({ date: p.date, price: selected.cat === "Bonos" ? p.price / 100 : p.price })) : null;
+        }
+        if (cancelled) return;
+        if (data && data.length > 1) { setRealHistory(data); setHistoryStatus("ok"); }
+        else setHistoryStatus("no-disponible");
+      } catch {
+        if (!cancelled) setHistoryStatus("no-disponible");
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [selected, days, fx]);
+
+  const sliced = realHistory && realHistory.length > 1 ? realHistory.slice(-days) : series.slice(-days);
   const first = sliced[0].price;
   const lastRaw = sliced[sliced.length - 1].price;
 
@@ -1178,7 +1249,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, initialSymbo
   else if (liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
 
   const isLive = realLivePrice != null;
-  const last = isLive ? realLivePrice : lastRaw * liveJitter;
+  const last = isLive ? realLivePrice : historyStatus === "ok" ? lastRaw : lastRaw * liveJitter;
   const abs = last - first;
   const p = pct(last, first);
 
@@ -1361,8 +1432,12 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, initialSymbo
           )}
         </div>
         {isLive && (
-          <div style={{ fontSize: 10, color: C.faint, marginTop: 4 }}>
-            El gráfico histórico sigue siendo una simulación; el precio actual de arriba sí es real.
+          <div style={{ fontSize: 10, color: historyStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
+            {historyStatus === "ok"
+              ? "Histórico real" + (selected.cat === "Cripto" ? " (CoinGecko)." : " (data912).")
+              : historyStatus === "cargando"
+              ? "Buscando histórico real…"
+              : "No encontramos histórico real para este símbolo — el gráfico de arriba es simulado, aunque el precio actual sí es real."}
           </div>
         )}
       </div>
