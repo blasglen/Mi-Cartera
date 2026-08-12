@@ -6,5 +6,5 @@ export default defineConfig({
   plugins: [react()],
   // GitHub Pages sirve el sitio en usuario.github.io/nombre-del-repo/ -- si
   // llamás al repositorio distinto a "mi-cartera", cambiá esto para que coincida.
-  base: '/mi-cartera/',
+  base: '/Mi-Cartera/',
 })
