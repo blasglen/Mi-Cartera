@@ -105,7 +105,10 @@ async function fetchHistoryFor(ticker, cat, fxMep) {
   const type = TYPE_MAP[cat];
   if (!type) return null; // ej: Fondos, no cubierto por data912
   const data = await fetchJson(`https://data912.com/historical/${type}/${ticker}`);
-  if (!Array.isArray(data) || data.length === 0) return null;
+  if (!Array.isArray(data) || data.length === 0) {
+    if (data != null) console.log(`    [no-array] respuesta: ${JSON.stringify(data).slice(0, 150)}`);
+    return null;
+  }
   return data
     .map((row) => {
       const date = row.date || row.fecha || row.d || row.t;
