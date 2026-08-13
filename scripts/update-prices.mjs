@@ -6,7 +6,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const TICKERS = [
+// Tus tenencias reales -- siempre se piden.
+const HOLDINGS_TICKERS = [
   ["YPFD", "Acciones"], ["AMD", "CEDEARs"], ["CEPU", "Acciones"], ["TSM", "CEDEARs"],
   ["BABA", "CEDEARs"], ["GOOGL", "CEDEARs"], ["MSFT", "CEDEARs"], ["PFE", "CEDEARs"],
   ["MELI", "CEDEARs"], ["META", "CEDEARs"], ["SPY", "CEDEARs"], ["VIST", "CEDEARs"],
@@ -19,6 +20,31 @@ const TICKERS = [
   ["HMY", "CEDEARs"], ["IBM", "CEDEARs"], ["T", "CEDEARs"], ["TSLA", "CEDEARs"],
   ["DIA", "CEDEARs"], ["LOMA", "Acciones"],
 ];
+
+// Acciones/CEDEARs/bonos populares que NO tenés en cartera, pero es probable
+// que busques -- así también tienen histórico real, no solo las tuyas. Si
+// alguno no existe en data912, el script simplemente lo salta sin romper nada.
+const EXTRA_TICKERS = [
+  // CEDEARs de EE.UU. muy conocidas
+  ["NKE", "CEDEARs"], ["V", "CEDEARs"], ["MA", "CEDEARs"], ["JNJ", "CEDEARs"],
+  ["WMT", "CEDEARs"], ["XOM", "CEDEARs"], ["JPM", "CEDEARs"], ["BAC", "CEDEARs"],
+  ["GE", "CEDEARs"], ["F", "CEDEARs"], ["GM", "CEDEARs"], ["NFLX", "CEDEARs"],
+  ["UBER", "CEDEARs"], ["SBUX", "CEDEARs"], ["ORCL", "CEDEARs"], ["CRM", "CEDEARs"],
+  ["ADBE", "CEDEARs"], ["INTC", "CEDEARs"], ["QCOM", "CEDEARs"], ["CVX", "CEDEARs"],
+  ["UNH", "CEDEARs"], ["PG", "CEDEARs"], ["HD", "CEDEARs"], ["COST", "CEDEARs"],
+  ["BA", "CEDEARs"], ["CAT", "CEDEARs"], ["MMM", "CEDEARs"], ["GS", "CEDEARs"],
+  ["C", "CEDEARs"], ["WFC", "CEDEARs"], ["DE", "CEDEARs"], ["UPS", "CEDEARs"],
+  ["NIO", "CEDEARs"], ["RIOT", "CEDEARs"], ["COIN", "CEDEARs"], ["SQ", "CEDEARs"],
+  ["PANW", "CEDEARs"], ["SNOW", "CEDEARs"], ["ABNB", "CEDEARs"], ["DIS", "CEDEARs"],
+  // Acciones argentinas populares que no tenés
+  ["TXAR", "Acciones"], ["ALUA", "Acciones"], ["CRES", "Acciones"], ["COME", "Acciones"],
+  ["TECO2", "Acciones"], ["EDN", "Acciones"], ["TRAN", "Acciones"], ["CVH", "Acciones"],
+  ["MIRG", "Acciones"], ["VALO", "Acciones"], ["BYMA", "Acciones"], ["CEPU2", "Acciones"],
+  // Otros bonos soberanos comunes
+  ["AL29", "Bonos"], ["AE38", "Bonos"], ["GD29", "Bonos"], ["GD46", "Bonos"],
+];
+
+const TICKERS = [...HOLDINGS_TICKERS, ...EXTRA_TICKERS];
 
 const TYPE_MAP = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
 // El CEDEAR se llama distinto al ticker real de EE.UU. en algunos casos puntuales.
