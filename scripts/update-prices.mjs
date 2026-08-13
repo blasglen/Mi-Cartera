@@ -105,19 +105,32 @@ async function fetchHistoryFor(ticker, cat, fxMep) {
   const type = TYPE_MAP[cat];
   if (!type) return null; // ej: Fondos, no cubierto por data912
   const data = await fetchJson(`https://data912.com/historical/${type}/${ticker}`);
-  if (!Array.isArray(data) || data.length === 0) {
-    if (data != null) console.log(`    [no-array] respuesta: ${JSON.stringify(data).slice(0, 150)}`);
-    return null;
+  const fxAdjust = (price) => (cat === "Bonos" ? price / 100 : cat === "CEDEARs" ? price * fxMep : price);
+
+  // Formato A (stocks/bonds argentinos): lista de objetos [{date, c, ...}, ...]
+  if (Array.isArray(data) && data.length > 0) {
+    return data
+      .map((row) => {
+        const date = row.date || row.fecha || row.d || row.t;
+        const price = row.c ?? row.close ?? row.px ?? row.price;
+        if (!date || price == null) return null;
+        return { date: String(date).slice(0, 10), price: fxAdjust(price) };
+      })
+      .filter(Boolean);
   }
-  return data
-    .map((row) => {
-      const date = row.date || row.fecha || row.d || row.t;
-      const price = row.c ?? row.close ?? row.px ?? row.price;
-      if (!date || price == null) return null;
-      const finalPrice = cat === "Bonos" ? price / 100 : cat === "CEDEARs" ? price * fxMep : price;
-      return { date: String(date).slice(0, 10), price: finalPrice };
-    })
-    .filter(Boolean);
+
+  // Formato B (usa_stocks / CEDEARs): un objeto con arrays paralelos {dates:[...], prices:[...]}
+  if (data && Array.isArray(data.dates) && Array.isArray(data.prices)) {
+    const out = [];
+    for (let i = 0; i < data.dates.length; i++) {
+      if (data.dates[i] == null || data.prices[i] == null) continue;
+      out.push({ date: String(data.dates[i]).slice(0, 10), price: fxAdjust(data.prices[i]) });
+    }
+    return out.length > 0 ? out : null;
+  }
+
+  if (data != null) console.log(`    [formato desconocido] respuesta: ${JSON.stringify(data).slice(0, 150)}`);
+  return null;
 }
 
 async function main() {
