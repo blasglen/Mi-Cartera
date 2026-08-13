@@ -1365,9 +1365,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
       ? "ok"
       : "no-disponible";
 
-  const sliced = historyStatus === "ok" ? realHistory.slice(-days) : series.slice(-days);
-  const first = sliced[0].price;
-  const lastRaw = sliced[sliced.length - 1].price;
+  const rawSliced = historyStatus === "ok" ? realHistory.slice(-days) : series.slice(-days);
 
   // Precio real: cripto usa el polling propio (más fresco, cada 5s); el resto
   // sale del panel en vivo de data912 (bonos vienen cada 100 nominal, /100).
@@ -1378,6 +1376,18 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
   else if (liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
 
   const isLive = realLivePrice != null;
+
+  // Los CEDEARs cotizan según una "ratio" propia de cada uno (no es 1:1 con la
+  // acción real de EE.UU.), y esa ratio no está en los datos que tenemos. En vez
+  // de mostrar un histórico mal escalado, se reajusta para que el último punto
+  // coincida siempre con el precio en vivo real -- la forma de la curva (% de
+  // variación) sigue siendo la real, solo se corrige la escala absoluta.
+  const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
+  const scaleFix = isLive && selected.cat !== "Cripto" && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
+  const sliced = scaleFix !== 1 ? rawSliced.map((p) => ({ ...p, price: p.price * scaleFix })) : rawSliced;
+  const first = sliced[0].price;
+  const lastRaw = sliced[sliced.length - 1].price;
+
   const last = isLive ? realLivePrice : lastRaw;
   const abs = last - first;
   const p = pct(last, first);
@@ -1395,7 +1405,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
   const trades = MOVIMIENTOS.filter(
     (m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta") && m.fecha >= sliced[0].date && m.fecha <= sliced[sliced.length - 1].date
   ).map((m) => {
-    const point = series.find((p) => p.date === m.fecha) || [...series].reverse().find((p) => p.date <= m.fecha);
+    const point = sliced.find((p) => p.date === m.fecha) || [...sliced].reverse().find((p) => p.date <= m.fecha);
     return { ...m, y: point ? point.price : m.precio };
   });
 
