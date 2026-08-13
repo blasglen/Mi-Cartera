@@ -535,6 +535,25 @@ async function fetchCryptoHistoryUsd(symbol, days) {
 // confirmamos con datos reales: lista de objetos (stocks/bonds argentinos) y
 // objeto con arrays paralelos {dates, prices} (usa_stocks/CEDEARs).
 const US_TICKER_ALIAS = { DISN: "DIS" };
+
+// Finnhub: cotización real en vivo de la bolsa de EE.UU. -- necesita API key
+// gratis (ver .github/workflows/deploy.yml, se inyecta como VITE_FINNHUB_KEY
+// en el build, nunca queda en el código fuente del repo).
+const FINNHUB_KEY = import.meta.env.VITE_FINNHUB_KEY;
+async function fetchFinnhubQuote(ticker) {
+  if (!FINNHUB_KEY) return null;
+  const requestTicker = US_TICKER_ALIAS[ticker] || ticker;
+  try {
+    const res = await fetchWithTimeout(`https://finnhub.io/api/v1/quote?symbol=${requestTicker}&token=${FINNHUB_KEY}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    // "c" = precio actual. Si Finnhub no tiene el símbolo, devuelve c:0.
+    return typeof data.c === "number" && data.c > 0 ? data.c : null;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchAssetHistory(type, ticker, cat) {
   const requestTicker = (cat === "CEDEARs" && US_TICKER_ALIAS[ticker]) || ticker;
   try {
@@ -1297,6 +1316,23 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
   const [posExpanded, setPosExpanded] = useState(false);
   const [hoverDot, setHoverDot] = useState(null);
   const [livePriceUsd, setLivePriceUsd] = useState(null); // solo para cripto, polling propio
+  const [assetMode, setAssetMode] = useState("cedear"); // "cedear" | "accion" -- solo aplica a CEDEARs
+  const [accionLiveUsd, setAccionLiveUsd] = useState(null);
+
+  // Modo "Acción": cotización real de EE.UU. en vivo vía Finnhub, polling cada
+  // 5s mientras estás mirando ese activo (igual que hacemos con cripto).
+  React.useEffect(() => {
+    if (!(selected.cat === "CEDEARs" && assetMode === "accion")) { setAccionLiveUsd(null); return; }
+    let cancelled = false;
+    const poll = () => {
+      fetchFinnhubQuote(selected.symbol).then((price) => {
+        if (!cancelled && price != null) setAccionLiveUsd(price);
+      }).catch(() => {});
+    };
+    poll();
+    const id = setInterval(poll, 5000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [selected, assetMode]);
 
   // Cripto: además del precio ya cargado al entrar, hace polling propio cada
   // 5s directo a CoinGecko mientras estás mirando ese activo -- así se siente
@@ -1365,26 +1401,42 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
       ? "ok"
       : "no-disponible";
 
+  const isCedear = selected.cat === "CEDEARs";
+  const mode = isCedear ? assetMode : "cedear";
+
   const rawSliced = historyStatus === "ok" ? realHistory.slice(-days) : series.slice(-days);
 
   // Precio real: cripto usa el polling propio (más fresco, cada 5s); el resto
   // sale del panel en vivo de data912 (bonos vienen cada 100 nominal, /100).
+  // Modo "Acción": Finnhub en vivo si hay API key configurada; si no, cae al
+  // último cierre cacheado (se avisa en la interfaz cuál de los dos es).
   const liveRaw = livePrices[selected.symbol];
   let realLivePrice = null;
   if (selected.cat === "Cripto" && livePriceUsd != null) realLivePrice = livePriceUsd * fx;
   else if (selected.cat === "Cripto" && cryptoUsd[selected.symbol] != null) realLivePrice = cryptoUsd[selected.symbol] * fx;
-  else if (liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
+  else if (mode === "accion" && accionLiveUsd != null) realLivePrice = accionLiveUsd * fx;
+  else if (mode === "cedear" && liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
 
   const isLive = realLivePrice != null;
 
-  // Los CEDEARs cotizan según una "ratio" propia de cada uno (no es 1:1 con la
-  // acción real de EE.UU.), y esa ratio no está en los datos que tenemos. En vez
-  // de mostrar un histórico mal escalado, se reajusta para que el último punto
-  // coincida siempre con el precio en vivo real -- la forma de la curva (% de
-  // variación) sigue siendo la real, solo se corrige la escala absoluta.
-  const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
-  const scaleFix = isLive && selected.cat !== "Cripto" && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
-  const sliced = scaleFix !== 1 ? rawSliced.map((p) => ({ ...p, price: p.price * scaleFix })) : rawSliced;
+  // Modo "Acción": el histórico cacheado ya es el precio real en dólares --
+  // se convierte a la escala interna (ARS-equivalente) para reutilizar todo
+  // el resto del formateo/gráfico sin duplicar lógica. Si Finnhub está
+  // disponible, también se reajusta al último precio en vivo real.
+  // Modo "CEDEAR": los CEDEARs cotizan según una "ratio" propia (no es 1:1 con
+  // la acción real), y no la tenemos. Se reajusta el histórico para que el
+  // último punto coincida con el precio en vivo real del CEDEAR -- la forma
+  // de la curva (% de variación) sigue siendo la real.
+  let sliced;
+  if (mode === "accion") {
+    const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
+    const scaleFix = isLive && historyStatus === "ok" && rawLast > 0 ? realLivePrice / (rawLast * fx) : 1;
+    sliced = rawSliced.map((p) => ({ ...p, price: p.price * fx * scaleFix }));
+  } else {
+    const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
+    const scaleFix = isLive && selected.cat !== "Cripto" && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
+    sliced = scaleFix !== 1 ? rawSliced.map((p) => ({ ...p, price: p.price * scaleFix })) : rawSliced;
+  }
   const first = sliced[0].price;
   const lastRaw = sliced[sliced.length - 1].price;
 
@@ -1452,18 +1504,51 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12, marginBottom: 12 }}>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, flexWrap: "wrap" }}>
               <span className="display" style={{ fontSize: 20, fontWeight: 600 }}>{selected.symbol}</span>
               <span style={{ fontSize: 12, color: C.faint }}>{selected.name}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: C.gain, marginLeft: 4 }}>
-                <span style={{ width: 6, height: 6, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />
-                en vivo
-              </span>
+              {isLive && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: C.gain, marginLeft: 4 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />
+                  en vivo
+                </span>
+              )}
+              {isCedear && (
+                <div style={{ display: "flex", border: `1px solid ${C.border}`, borderRadius: 999, overflow: "hidden", marginLeft: 4 }}>
+                  {[
+                    { key: "cedear", label: "CEDEAR" },
+                    { key: "accion", label: "Acción" },
+                  ].map((m) => (
+                    <button
+                      key={m.key}
+                      onClick={() => setAssetMode(m.key)}
+                      style={{
+                        padding: "3px 10px",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        border: "none",
+                        cursor: "pointer",
+                        background: assetMode === m.key ? C.gold : "transparent",
+                        color: assetMode === m.key ? C.bg : C.muted,
+                      }}
+                    >
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="tabular" style={{ fontSize: 28, fontWeight: 600 }}>{f(last)}</div>
             <div className="tabular" style={{ fontSize: 13, color: abs >= 0 ? C.gain : C.loss, marginTop: 2 }}>
               {abs >= 0 ? "+" : ""}{f(abs)} ({p >= 0 ? "+" : ""}{p.toFixed(2)}%) · {CHART_RANGES[rangeIdx].label}
             </div>
+            {mode === "accion" && (
+              <div style={{ fontSize: 11, color: C.faint, marginTop: 4 }}>
+                {isLive
+                  ? "Precio real de la acción en EE.UU., en vivo vía Finnhub."
+                  : "Precio real de la acción en EE.UU., en dólares — cierre del último día cacheado."}
+              </div>
+            )}
           </div>
           <div style={{ display: "flex", gap: 6 }}>
             {CHART_RANGES.map((r, i) => (
@@ -1552,10 +1637,12 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
           )}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, flexWrap: "wrap", gap: 8 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: isLive ? C.gain : C.faint }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: isLive ? C.gain : mode === "accion" && historyStatus === "ok" ? C.muted : C.faint }}>
             {isLive && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />}
             {isLive
-              ? `Precio en vivo${selected.cat === "Cripto" ? " (CoinGecko, cada 5s)" : " (data912)"}.`
+              ? `Precio en vivo${selected.cat === "Cripto" ? " (CoinGecko, cada 5s)" : mode === "accion" ? " (Finnhub, cada 5s)" : " (data912)"}.`
+              : mode === "accion" && historyStatus === "ok"
+              ? "Precio real de la acción, último cierre (no en vivo — configurá FINNHUB_API_KEY para tenerlo en vivo)."
               : "Precio simulado — no encontramos cotización para este símbolo todavía."}
           </div>
           {trades.length > 0 && (
@@ -1571,7 +1658,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
             </div>
           )}
         </div>
-        {isLive && (
+        {historyStatus !== "cargando" && (
           <div style={{ fontSize: 10, color: historyStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
             {historyStatus === "ok"
               ? `Histórico ${selected.cat === "Cripto" ? "en vivo (CoinGecko)." : "real, actualizado una vez al día (caché)."}`
