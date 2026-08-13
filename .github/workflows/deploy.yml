@@ -27,6 +27,8 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
       - name: Compilar
+        env:
+          VITE_FINNHUB_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: npm run build
       - name: Configurar Pages
         uses: actions/configure-pages@v5
