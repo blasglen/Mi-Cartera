@@ -1,1 +1,6152 @@
-{ "prices": {}, "catalog": [], "updatedAt": null }
+{
+  "prices": {
+    "A3": 3125,
+    "AGRO": 37,
+    "ALUA": 930,
+    "ALUAD": 0.608,
+    "AUSO": 3215,
+    "BBAR": 8460,
+    "BBARD": 5.57,
+    "BHIP": 300,
+    "BMA": 12650,
+    "BMA.D": 8.28,
+    "BOLT": 45.2,
+    "BPAT": 1810,
+    "BYMA": 278,
+    "BYMAD": 0.179,
+    "CADO": 543,
+    "CAPX": 3370,
+    "CARC": 19.05,
+    "CECO2": 548,
+    "CELU": 224.5,
+    "CEPU": 2110,
+    "CEPUD": 1.375,
+    "CGPA2": 1855,
+    "COME": 41,
+    "COMED": 0.027,
+    "CRES": 1691,
+    "CRESD": 1.11,
+    "CTIO": 1880,
+    "CVH": 9470,
+    "CVHD": 6.01,
+    "DGCU2": 1610,
+    "DOME": 57,
+    "ECOG": 2862.5,
+    "ECOGD": 1.87,
+    "EDN": 1811,
+    "EDND": 1.185,
+    "EDSH": 1000,
+    "FERR": 18.9,
+    "FIPL": 159.5,
+    "GAMI": 373,
+    "GARO": 475,
+    "GBAN": 1990,
+    "GCDI": 12.6,
+    "GCLA": 3670,
+    "GGAL": 7030,
+    "GGALD": 4.585,
+    "GRIM": 2290,
+    "HARG": 1495,
+    "HAVA": 4795,
+    "HSAT": 122.5,
+    "IEB": 1570,
+    "INAG": 7000,
+    "INTR": 284.5,
+    "INVJ": 427,
+    "IRSA": 2320,
+    "IRSAD": 1.52,
+    "LEDE": 763,
+    "LOMA": 3057.5,
+    "LOMAD": 2.01,
+    "LONG": 15.95,
+    "METR": 2271,
+    "METRD": 1.485,
+    "MIRG": 1630,
+    "MOLA": 21700,
+    "MOLI": 2205,
+    "MOLI5": 4960,
+    "MORI": 22.85,
+    "OEST": 745,
+    "PAMP": 5050,
+    "PAMPD": 3.345,
+    "PATA": 1185,
+    "POLL": 270,
+    "RAGH": 1750,
+    "REGE": 7100,
+    "REIT": 1023,
+    "REITD": 0.665,
+    "RICH": 1535,
+    "RIGO": 430,
+    "ROSE": 160.5,
+    "SAMI": 475,
+    "SEMI": 15.3,
+    "SUPV": 2650,
+    "SUPVD": 1.73,
+    "TECO2": 4270,
+    "TECOD": 2.795,
+    "TGN4D": 2.435,
+    "TGNO4": 3520,
+    "TGSU2": 8920,
+    "TGSUD": 5.86,
+    "TRAN": 3500,
+    "TRAND": 2.325,
+    "TXAR": 750,
+    "TXARD": 0.493,
+    "VALO": 582,
+    "VALOD": 0.386,
+    "YPFD": 7770,
+    "YPFDD": 5.1,
+    "AE38": 122360,
+    "AE38C": 77.11,
+    "AE38D": 80.29,
+    "AL29": 83150,
+    "AL29C": 52.39,
+    "AL29D": 54.45,
+    "AL30": 86280,
+    "AL30C": 54.37,
+    "AL30D": 56.57,
+    "AL35": 118500,
+    "AL35C": 74.7,
+    "AL35D": 77.61,
+    "AL41": 110420,
+    "AL41C": 69.41,
+    "AL41D": 72.65,
+    "AN29": 145350,
+    "AN29C": 91.7,
+    "AN29D": 95.25,
+    "AO27": 156400,
+    "AO27C": 98.59,
+    "AO27D": 102.4,
+    "AO28": 146890,
+    "AO28C": 92.58,
+    "AO28D": 96.21,
+    "AO29": 143050,
+    "AO29C": 90.2,
+    "AO29D": 93.69,
+    "BA37D": 119700,
+    "BA7DC": 75.53,
+    "BA7DD": 78.4,
+    "BAO27": 96,
+    "BB37D": 122000,
+    "BB7DC": 78.19,
+    "BB7DD": 79.5,
+    "BC33C": 106.3,
+    "BC33D": 110.55,
+    "BC37D": 116010,
+    "BC37E": 97500,
+    "BC7DD": 75.01,
+    "BDC28": 105,
+    "BDC33": 169030,
+    "BDC36": 159900,
+    "BPA7C": 98.97,
+    "BPA7D": 102.75,
+    "BPA8C": 89.75,
+    "BPA8D": 93.29,
+    "BPB7C": 98.95,
+    "BPB7D": 102.6,
+    "BPB8C": 88.98,
+    "BPB8D": 92.51,
+    "BPC7C": 98.92,
+    "BPC7D": 102.75,
+    "BPD7C": 98.78,
+    "BPD7D": 102.65,
+    "BPOA7": 156800,
+    "BPOA8": 142000,
+    "BPOB7": 156260,
+    "BPOB8": 141000,
+    "BPOC7": 156620,
+    "BPOD7": 156450,
+    "CO26": 5510,
+    "CO26D": 3.65,
+    "CO2D7": 106,
+    "CO32": 171850,
+    "CO32C": 108.4,
+    "CO32D": 112.4,
+    "CO35": 159600,
+    "CO35C": 100.7,
+    "CO35D": 104.75,
+    "COD7": 172,
+    "COY27": 214.95,
+    "CUAP": 43650,
+    "DICP": 48735,
+    "DICPC": 31.351,
+    "DICPD": 32.259,
+    "DIP0": 48670,
+    "EF25D": 37.1,
+    "EM33D": 106.5,
+    "ERF25": 56090,
+    "ERM33": 162400,
+    "GD29": 85360,
+    "GD29C": 53.96,
+    "GD29D": 56.12,
+    "GD30": 88800,
+    "GD30C": 56.05,
+    "GD30D": 58.36,
+    "GD35": 123820,
+    "GD35C": 77.94,
+    "GD35D": 80.9,
+    "GD38": 129360,
+    "GD38C": 81.65,
+    "GD38D": 84.66,
+    "GD41": 115500,
+    "GD41C": 72.83,
+    "GD41D": 75.57,
+    "GD46": 105980,
+    "GD46C": 66.82,
+    "GD46D": 69.05,
+    "LK01Q": 159900,
+    "LK1QD": 101,
+    "NDT25": 98900,
+    "NDT5C": 63,
+    "NDT5D": 64.35,
+    "PAP0": 35420,
+    "PARP": 35470,
+    "PAY0": 111500,
+    "PAY0D": 71.5,
+    "PBA27": 100.85,
+    "PBA28": 109.75,
+    "PBM27": 101.75,
+    "PM29C": 46,
+    "PM29D": 48,
+    "PMA28": 112,
+    "PMD26": 103,
+    "PMM29": 73500,
+    "PR17": 629,
+    "PUA36": 170660,
+    "PUA6C": 108,
+    "PUA6D": 111.75,
+    "S24DD": 39,
+    "SA24D": 59610,
+    "SFD34": 161950,
+    "SFD4C": 101.9,
+    "SFD4D": 105.95,
+    "SFN27": 89.19,
+    "T15E7": 144.55,
+    "T30A7": 131.15,
+    "T30J7": 125.3,
+    "T31Y7": 123.3,
+    "TA7C": 0.084,
+    "TA7D": 0.086,
+    "TJ7D": 0.082,
+    "TMF27": 119.1,
+    "TMF28": 107,
+    "TMG27": 115.4,
+    "TMG28": 104,
+    "TML27": 105.2,
+    "TMVE8": 136890,
+    "TO26": 103.35,
+    "TO26D": 0.067,
+    "TTD26": 165.55,
+    "TTD6C": 0.1,
+    "TTD6D": 0.108,
+    "TTS26": 166.3,
+    "TVPA": 4200,
+    "TVPE": 20000,
+    "TVPP": 11.28,
+    "TVPY": 10300,
+    "TX26": 725,
+    "TX26D": 0.476,
+    "TX28": 1710,
+    "TX28D": 1.121,
+    "TX31": 1460,
+    "TXA7D": 0.078,
+    "TXD6D": 0.196,
+    "TXD7D": 0.179,
+    "TXD9D": 0.055,
+    "TXM7D": 0.143,
+    "TXM8D": 0.065,
+    "TXM9D": 0.058,
+    "TXMD8": 91.54,
+    "TXMD9": 84.55,
+    "TXMJ0": 81.6,
+    "TXMJ8": 97.35,
+    "TXMJ9": 90.6,
+    "TXS7D": 0.069,
+    "TXS8D": 0.062,
+    "TY30D": 0.073,
+    "TY30P": 112.6,
+    "TZV27": 149000,
+    "TZV28": 126290,
+    "TZV7D": 97.96,
+    "TZVD8": 120300,
+    "TZX27": 388.5,
+    "TZX28": 347,
+    "TZX7D": 0.25,
+    "TZXA7": 120.6,
+    "TZXD6": 297.85,
+    "TZXD7": 272.65,
+    "TZXD8": 84.89,
+    "TZXM7": 219.15,
+    "TZXM8": 99.1,
+    "TZXM9": 90.15,
+    "TZXO6": 169,
+    "TZXO7": 94.76,
+    "TZXS7": 104.75,
+    "TZXS8": 94.23,
+    "TZXY7": 118.5,
+    "AAL": 11870,
+    "AALC": 8.07,
+    "AALD": 7.76,
+    "AAP": 6100,
+    "AAPL": 24000,
+    "AAPLC": 15.14,
+    "AAPLD": 15.66,
+    "ABBV": 39580,
+    "ABBVC": 24.92,
+    "ABBVD": 25.59,
+    "ABEV": 13490,
+    "ABEV3": 4600,
+    "ABEVC": 8.89,
+    "ABEVD": 8.97,
+    "ABNB": 19040,
+    "ABNBC": 12.01,
+    "ABNBD": 12.55,
+    "ABT": 43920,
+    "ABTD": 28.98,
+    "ACN": 3787.5,
+    "ACNC": 2.38,
+    "ACND": 2.45,
+    "ACWI": 9865,
+    "ACWIC": 6.24,
+    "ACWID": 6.47,
+    "ADBE": 9335,
+    "ADBEC": 5.83,
+    "ADBED": 6.13,
+    "ADGO": 14770,
+    "ADGOC": 10.2,
+    "ADGOD": 9.63,
+    "ADI": 40760,
+    "ADID": 26.81,
+    "ADP": 71125,
+    "ADPD": 45.61,
+    "AEG": 14900,
+    "AEM": 48940,
+    "AEMD": 31.94,
+    "AI": 3175,
+    "AIC": 2.02,
+    "AID": 2.13,
+    "AIG": 24300,
+    "AIGC": 15.18,
+    "AIGD": 15.99,
+    "AKO.B": 48020,
+    "AKOBD": 32.07,
+    "ALAB": 11500,
+    "ALAD": 8.08,
+    "AMAT": 174425,
+    "AMATC": 110,
+    "AMATD": 114.5,
+    "AMD": 76650,
+    "AMDC": 48.68,
+    "AMDD": 50.2,
+    "AMGN": 22000,
+    "AMGNC": 13.85,
+    "AMGND": 14.47,
+    "AMX": 36900,
+    "AMXD": 23.29,
+    "AMZN": 2942.5,
+    "AMZNC": 1.87,
+    "AMZND": 1.93,
+    "ANET": 11510,
+    "ANETC": 6.84,
+    "ANETD": 7.54,
+    "ANF": 178700,
+    "ANFD": 117.75,
+    "ARCO": 25140,
+    "ARCOC": 16.35,
+    "ARCOD": 16.45,
+    "ARKK": 12890,
+    "ARKKC": 8.09,
+    "ARKKD": 8.41,
+    "ARM": 15940,
+    "ARMD": 10.52,
+    "ASML": 19720,
+    "ASMLC": 12.54,
+    "ASMLD": 12.92,
+    "ASR": 21870,
+    "ASTS": 7840,
+    "ASTSC": 5.01,
+    "ASTSD": 5.19,
+    "AVGO": 16910,
+    "AVGOC": 10.77,
+    "AVGOD": 11.02,
+    "AVY": 15890,
+    "AVYD": 10.38,
+    "AXP": 36500,
+    "AXPC": 22.81,
+    "AXPD": 23.8,
+    "AZN": 62700,
+    "AZNC": 39.5,
+    "AZND": 40.86,
+    "B": 32740,
+    "B.C": 20.47,
+    "B.D": 21.48,
+    "BA": 15270,
+    "BA.C": 25660,
+    "BA.CC": 15.88,
+    "BA.CD": 16.88,
+    "BABA": 22110,
+    "BABAC": 13.83,
+    "BABAD": 14.47,
+    "BAC": 9.81,
+    "BAD": 10,
+    "BAK": 1630,
+    "BAKD": 1.08,
+    "BAYN": 30000,
+    "BB": 4630,
+    "BB.D": 3.08,
+    "BBAS3": 2940,
+    "BBD": 5090,
+    "BBDC": 3.225,
+    "BBDC3": 4552.5,
+    "BBDCD": 3.1,
+    "BBDD": 3.355,
+    "BBV": 45300,
+    "BBVD": 29.96,
+    "BCS": 44720,
+    "BHP": 71450,
+    "BHPD": 46.27,
+    "BIDU": 15120,
+    "BIDUC": 9.8,
+    "BIDUD": 9.91,
+    "BIIB": 25460,
+    "BIIBD": 16.83,
+    "BIOX": 585,
+    "BIOXC": 0.371,
+    "BIOXD": 0.383,
+    "BKNG": 466.25,
+    "BKNGC": 0.298,
+    "BKNGD": 0.309,
+    "BKR": 14450,
+    "BKRD": 9.71,
+    "BMNR": 3585,
+    "BMNRD": 3,
+    "BMY": 33780,
+    "BMYD": 21.97,
+    "BNG": 35460,
+    "BNGD": 23.39,
+    "BNY": 129250,
+    "BNYD": 80.7,
+    "BP": 13610,
+    "BPA11": 15510,
+    "BPC": 8.94,
+    "BPD": 8.96,
+    "BRKB": 36820,
+    "BRKBC": 23.12,
+    "BRKBD": 24.14,
+    "BSBR": 9095,
+    "BX": 7740,
+    "BXD": 5.1,
+    "C": 72950,
+    "C.D": 47.76,
+    "CAAP": 157025,
+    "CAAPD": 98.9,
+    "CAH": 123900,
+    "CAHD": 82.6,
+    "CAR": 8545,
+    "CAR.C": 0.13,
+    "CAR.D": 5.51,
+    "CAT": 68050,
+    "CATC": 42.35,
+    "CATD": 44.6,
+    "CC": 45.01,
+    "CCJ": 6830,
+    "CCJC": 4.13,
+    "CCJD": 4.525,
+    "CCL": 14670,
+    "CCLD": 9.68,
+    "CDE": 29820,
+    "CDED": 19.3,
+    "CEG": 9860,
+    "CEGC": 6.08,
+    "CEGD": 6.4,
+    "CIBR": 15960,
+    "CIBRC": 10.05,
+    "CIBRD": 10.47,
+    "CL": 48920,
+    "CLD": 32.26,
+    "CLS": 27000,
+    "CLSD": 17.58,
+    "COIN": 8790,
+    "COINC": 5.61,
+    "COIND": 5.66,
+    "COP": 8040,
+    "COPD": 5.14,
+    "COPX": 10020,
+    "COPXC": 6.38,
+    "COPXD": 6.53,
+    "COST": 31440,
+    "COSTC": 19.6,
+    "COSTD": 20.47,
+    "CRM": 17010,
+    "CRMC": 10.73,
+    "CRMD": 11.11,
+    "CRWD": 4462.5,
+    "CRWDD": 2.9,
+    "CRWV": 6310,
+    "CRWVD": 4.19,
+    "CSCO": 39400,
+    "CSCOC": 24.71,
+    "CSCOD": 27.2,
+    "CSNA3": 1363,
+    "CVS": 10040,
+    "CVSD": 6.56,
+    "CVX": 19520,
+    "CVXC": 12.32,
+    "CVXD": 12.73,
+    "CX": 17810,
+    "CXD": 12.5,
+    "DAL": 17900,
+    "DALD": 11.9,
+    "DD": 45620,
+    "DDD": 30.13,
+    "DE": 24540,
+    "DEC": 15.63,
+    "DECK": 5805,
+    "DECKC": 4.09,
+    "DECKD": 3.81,
+    "DED": 16.13,
+    "DEO": 24810,
+    "DEOC": 13.15,
+    "DEOD": 16.4,
+    "DHR": 6040,
+    "DHRC": 3.565,
+    "DHRD": 3.865,
+    "DIA": 42600,
+    "DIAC": 26.95,
+    "DIAD": 28.01,
+    "DISN": 13640,
+    "DISNC": 8.61,
+    "DISND": 8.95,
+    "DOCU": 4180,
+    "DOCUC": 2.605,
+    "DOCUD": 2.71,
+    "DOW": 8075,
+    "DOWC": 4.945,
+    "DOWD": 5.34,
+    "E": 21860,
+    "EBAY": 81300,
+    "EBAYC": 56.4,
+    "EBAYD": 53.5,
+    "EC": 13.97,
+    "ECL": 7920,
+    "ECLD": 5.33,
+    "EEM": 21120,
+    "EEMC": 13.45,
+    "EEMD": 13.89,
+    "EFA": 9585,
+    "EFAC": 6.12,
+    "EFAD": 6.29,
+    "EFX": 17920,
+    "EFXD": 11.69,
+    "ELPC": 50750,
+    "EMBJ": 117400,
+    "EQNR": 10770,
+    "ERIC": 8065,
+    "ERICD": 5.41,
+    "ESGU": 8985,
+    "ESGUD": 5.91,
+    "ETHA": 4480,
+    "ETHAC": 2.845,
+    "ETHAD": 2.94,
+    "ETSY": 7895,
+    "ETSYD": 5.2,
+    "EWJ": 11110,
+    "EWJC": 6.94,
+    "EWJD": 7.3,
+    "EWY": 5570,
+    "EWYC": 3.5,
+    "EWYD": 3.62,
+    "EWZ": 26860,
+    "EWZC": 16.98,
+    "EWZD": 17.62,
+    "F": 21950,
+    "FC": 15.55,
+    "FCX": 36640,
+    "FCXC": 23.7,
+    "FCXD": 24.01,
+    "FD": 14.43,
+    "FDX": 51725,
+    "FDXC": 38.17,
+    "FDXD": 34.32,
+    "FISV": 7415,
+    "FISVD": 4.895,
+    "FMX": 31000,
+    "FMXD": 21.77,
+    "FNMA": 10250,
+    "FSLR": 20030,
+    "FSLRC": 13.08,
+    "FSLRD": 13.24,
+    "FXI": 11170,
+    "FXIC": 7,
+    "FXID": 7.28,
+    "GDX": 14470,
+    "GDXC": 9.31,
+    "GDXD": 9.53,
+    "GE": 72400,
+    "GEC": 45.9,
+    "GED": 47.62,
+    "GFI": 64600,
+    "GGB": 30500,
+    "GGBD": 20.5,
+    "GILD": 53900,
+    "GILDC": 33.49,
+    "GILDD": 34.74,
+    "GLD": 12880,
+    "GLDC": 8.13,
+    "GLDD": 8.45,
+    "GLNG": 8130,
+    "GLNGD": 5.29,
+    "GLOB": 3415,
+    "GLOBC": 2.125,
+    "GLOBD": 2.23,
+    "GLW": 66625,
+    "GLWC": 41.04,
+    "GLWD": 43.8,
+    "GM": 23000,
+    "GMD": 15.29,
+    "GOGLC": 6.13,
+    "GOGLD": 6.19,
+    "GOOGL": 9430,
+    "GPRK": 14720,
+    "GPRKC": 9.59,
+    "GPRKD": 9.68,
+    "GRMN": 164250,
+    "GRMND": 104.25,
+    "GS": 126400,
+    "GSC": 79.4,
+    "GSD": 82.8,
+    "GSK": 19940,
+    "GSKC": 14.03,
+    "GSKD": 13.1,
+    "GT": 4750,
+    "GTC": 3.13,
+    "GTD": 3.11,
+    "HAL": 26380,
+    "HALC": 16.62,
+    "HALD": 17.4,
+    "HAPV3": 2917.5,
+    "HD": 17050,
+    "HDB": 18370,
+    "HDC": 10.21,
+    "HDD": 11.19,
+    "HIMS": 11850,
+    "HIMSC": 7.54,
+    "HIMSD": 7.9,
+    "HL": 28760,
+    "HLD": 18.94,
+    "HMC": 49600,
+    "HMY": 31460,
+    "HMYC": 19.79,
+    "HMYD": 20.6,
+    "HOG": 13780,
+    "HON": 46720,
+    "HOND": 30.59,
+    "HOOD": 5220,
+    "HOODD": 3.4,
+    "HPQ": 46260,
+    "HPQC": 27.58,
+    "HPQD": 29.89,
+    "HSBC": 82800,
+    "HSY": 13890,
+    "HSYC": 8.78,
+    "HSYD": 8.92,
+    "HUT": 28840,
+    "HUTC": 18.16,
+    "HUTD": 19.1,
+    "HWM": 447550,
+    "HWMC": 284,
+    "HWMD": 293.25,
+    "IBB": 11820,
+    "IBBC": 7.12,
+    "IBBD": 7.76,
+    "IBIT": 5710,
+    "IBITC": 3.61,
+    "IBITD": 3.77,
+    "IBM": 25020,
+    "IBMC": 15.82,
+    "IBMD": 16.77,
+    "IBN": 47320,
+    "ICLN": 5835,
+    "ICLNC": 3.725,
+    "ICLND": 3.855,
+    "IEMG": 10740,
+    "IEMGC": 6.84,
+    "IEMGD": 7.05,
+    "IEUR": 11300,
+    "IEURC": 7.08,
+    "IEURD": 7.37,
+    "IFF": 11110,
+    "IFFD": 7.6,
+    "IJH": 10300,
+    "IJHC": 6.47,
+    "IJHD": 6.69,
+    "ILF": 8870,
+    "ILFC": 5.8,
+    "ILFD": 5.85,
+    "INFY": 19460,
+    "INFYC": 12.07,
+    "ING": 18900,
+    "INGD": 10.16,
+    "INTC": 32080,
+    "INTCC": 20.33,
+    "INTCD": 21.13,
+    "IP": 16260,
+    "IPD": 10.59,
+    "IREN": 5760,
+    "IRENC": 3.28,
+    "IREND": 3.75,
+    "ISRG": 7050,
+    "ITA": 7965,
+    "ITAC": 4.915,
+    "ITAD": 5.27,
+    "ITUB": 11760,
+    "ITUB3": 12850,
+    "ITUBC": 7.91,
+    "ITUBD": 7.75,
+    "IVE": 9375,
+    "IVEC": 5.95,
+    "IVED": 6.2,
+    "IVV": 1788,
+    "IVVC": 1.13,
+    "IVVD": 1.18,
+    "IVW": 11240,
+    "IVWC": 7.11,
+    "IVWD": 7.4,
+    "IWM": 48040,
+    "IWMC": 29.66,
+    "IWMD": 31.59,
+    "JCI": 118600,
+    "JD": 12540,
+    "JDC": 8.14,
+    "JDD": 8.11,
+    "JMIA": 10190,
+    "JMIAC": 6.26,
+    "JMIAD": 6.75,
+    "JNJ": 27540,
+    "JNJC": 17.45,
+    "JNJD": 18.12,
+    "JOYY": 23590,
+    "JOYYD": 6.8,
+    "JPM": 38680,
+    "JPMC": 24.25,
+    "JPMD": 25.3,
+    "KB": 93525,
+    "KEEL": 28100,
+    "KEELC": 13.01,
+    "KEELD": 18.65,
+    "KEP": 18930,
+    "KGC": 43560,
+    "KMB": 28900,
+    "KMBC": 18.9,
+    "KMBD": 18.86,
+    "KO": 27500,
+    "KOC": 17.41,
+    "KOD": 18.05,
+    "KOFM": 87125,
+    "LAC": 5160,
+    "LACD": 3.4,
+    "LAR": 10840,
+    "LARC": 2.2,
+    "LARD": 7.1,
+    "LLY": 34640,
+    "LLYC": 21.3,
+    "LLYD": 22.7,
+    "LMT": 48260,
+    "LMTC": 28.99,
+    "LMTD": 31.55,
+    "LND": 5580,
+    "LRCX": 9275,
+    "LRCXC": 5.8,
+    "LRCXD": 6.01,
+    "LREN3": 3680,
+    "LVS": 36320,
+    "LYG": 4892.5,
+    "MA": 26920,
+    "MAC": 17,
+    "MAD": 17.71,
+    "MCD": 18250,
+    "MCDC": 11.49,
+    "MCDD": 11.97,
+    "MDLZ": 6565,
+    "MDLZC": 4.26,
+    "MDLZD": 4.34,
+    "MDT": 35940,
+    "MDTD": 23.42,
+    "MELI": 24210,
+    "MELIC": 15.31,
+    "MELID": 15.92,
+    "META": 38420,
+    "METAC": 24.09,
+    "METAD": 25.35,
+    "MFG": 17110,
+    "MGLU3": 1337,
+    "MMM": 29160,
+    "MMMC": 18.5,
+    "MMMD": 19,
+    "MO": 25640,
+    "MOC": 16.42,
+    "MOD": 16.89,
+    "MOS": 7180,
+    "MOSD": 4.77,
+    "MP": 8600,
+    "MPC": 5.46,
+    "MPD": 5.57,
+    "MRK": 42220,
+    "MRKC": 25.8,
+    "MRKD": 27.85,
+    "MRNA": 5330,
+    "MRNAC": 3.42,
+    "MRNAD": 3.52,
+    "MRSH": 18700,
+    "MRVL": 24680,
+    "MRVLD": 16.3,
+    "MSFT": 26020,
+    "MSFTC": 16.49,
+    "MSFTD": 17.04,
+    "MSI": 37140,
+    "MSTR": 7520,
+    "MSTRC": 4.79,
+    "MSTRD": 4.99,
+    "MU": 290000,
+    "MUC": 183.5,
+    "MUD": 189,
+    "MUFG": 36120,
+    "MUFGD": 23.3,
+    "MUX": 15220,
+    "MUXC": 10.28,
+    "MUXD": 10.41,
+    "NAT3D": 1.655,
+    "NATU3": 2722.5,
+    "NBIS": 15220,
+    "NBISC": 5.6,
+    "NBISD": 9.9,
+    "NEE": 7135,
+    "NEED": 4.7,
+    "NEM": 62300,
+    "NEMD": 40.87,
+    "NFLX": 2460,
+    "NFLXC": 1.555,
+    "NFLXD": 1.63,
+    "NG": 50350,
+    "NGD": 31.24,
+    "NGG": 63925,
+    "NIO": 1811,
+    "NIOC": 1.2,
+    "NIOD": 1.235,
+    "NKE": 5365,
+    "NKEC": 3.43,
+    "NKED": 3.53,
+    "NMR": 15800,
+    "NOKA": 16330,
+    "NOW": 1137,
+    "NOWC": 0.698,
+    "NOWD": 0.744,
+    "NTES": 14120,
+    "NTESD": 9.63,
+    "NU": 10790,
+    "NUC": 6.81,
+    "NUD": 7.05,
+    "NUE": 26900,
+    "NVDA": 14850,
+    "NVDAC": 9.28,
+    "NVDAD": 9.7,
+    "NVO": 10570,
+    "NVOC": 6.7,
+    "NVOD": 6.92,
+    "NVS": 60575,
+    "NVSC": 36.71,
+    "NVSD": 40.15,
+    "NXE": 16860,
+    "NXED": 10.4,
+    "O": 7650,
+    "OC": 4.81,
+    "OD": 5.03,
+    "OKLO": 2555,
+    "OKLOD": 1.71,
+    "ONDS": 7750,
+    "ONDSD": 5.09,
+    "ORCL": 81050,
+    "ORCLC": 51.6,
+    "ORCLD": 52.4,
+    "ORLY": 640,
+    "ORLYC": 0.409,
+    "ORLYD": 0.428,
+    "OXY": 18620,
+    "OXYC": 12.04,
+    "OXYD": 12.11,
+    "PAAS": 27800,
+    "PAASC": 17.61,
+    "PAASD": 18.17,
+    "PAC": 21400,
+    "PAGS": 4615,
+    "PAGSD": 3.095,
+    "PANW": 12320,
+    "PANWC": 7.59,
+    "PANWD": 8.07,
+    "PATH": 12050,
+    "PATHC": 6.14,
+    "PATHD": 7.89,
+    "PBI": 26300,
+    "PBR": 28200,
+    "PBRC": 17.82,
+    "PBRD": 18.58,
+    "PCAR": 69350,
+    "PCARD": 45.13,
+    "PDD": 5630,
+    "PDDC": 3.98,
+    "PDDD": 3.65,
+    "PEP": 12260,
+    "PEPC": 7.75,
+    "PEPD": 8.04,
+    "PETR3": 14390,
+    "PETRD": 9.4,
+    "PFE": 10440,
+    "PFEC": 6.68,
+    "PFED": 6.85,
+    "PG": 15280,
+    "PGC": 9.66,
+    "PGD": 10,
+    "PHG": 8500,
+    "PINS": 5210,
+    "PINSD": 3.5,
+    "PKS": 30180,
+    "PLTR": 90500,
+    "PLTRC": 57.7,
+    "PLTRD": 60,
+    "PM": 16410,
+    "PMD": 10.33,
+    "PRIO3": 9150,
+    "PSQ": 5080,
+    "PSQC": 4.1,
+    "PSQD": 3.35,
+    "PSX": 59875,
+    "PSXD": 39,
+    "PYPL": 11750,
+    "PYPLC": 7.33,
+    "PYPLD": 7.64,
+    "QCOM": 23600,
+    "QCOMC": 14.83,
+    "QCOMD": 15.45,
+    "QQQ": 57500,
+    "QQQC": 37.05,
+    "QQQD": 38,
+    "RACE": 7770,
+    "RACEC": 4.94,
+    "RACED": 5.06,
+    "RBLX": 28260,
+    "RBLXD": 18.57,
+    "RENT3": 5285,
+    "RGTI": 14610,
+    "RGTIC": 8.93,
+    "RGTID": 9.58,
+    "RIO": 20070,
+    "RIOC": 12.64,
+    "RIOD": 13.16,
+    "RIOT": 10780,
+    "RIOTC": 6.52,
+    "RIOTD": 7.2,
+    "RKLB": 10740,
+    "RKLBC": 6.86,
+    "RKLBD": 7.1,
+    "ROKU": 18480,
+    "ROKUD": 11.64,
+    "ROST": 98525,
+    "ROSTD": 66.1,
+    "RSP": 11720,
+    "RSPC": 7.45,
+    "RSPD": 7.73,
+    "RTX": 70850,
+    "RTXD": 46.37,
+    "SAN": 94050,
+    "SANC": 56.4,
+    "SAND": 61.2,
+    "SAP": 53875,
+    "SAPD": 35,
+    "SATL": 9480,
+    "SATLC": 3.975,
+    "SATLD": 6.2,
+    "SBS": 16060,
+    "SBSP3": 7980,
+    "SBUX": 14320,
+    "SBUXC": 8.95,
+    "SBUXD": 9.4,
+    "SCCO": 154100,
+    "SCHW": 9810,
+    "SDA": 639,
+    "SE": 6360,
+    "SEC": 3.53,
+    "SED": 4.235,
+    "SH": 6380,
+    "SHC": 4.17,
+    "SHD": 4.2,
+    "SHEL": 71500,
+    "SHELC": 45.42,
+    "SHELD": 46.96,
+    "SHOP": 2225,
+    "SHOPC": 1.41,
+    "SHOPD": 1.44,
+    "SID": 11170,
+    "SIDD": 7.29,
+    "SLB": 27900,
+    "SLBC": 17.81,
+    "SLBD": 18.38,
+    "SLV": 15650,
+    "SLVC": 9.88,
+    "SLVD": 10.33,
+    "SMH": 18610,
+    "SMHC": 11.95,
+    "SMHD": 12.27,
+    "SNA": 107825,
+    "SNAP": 8270,
+    "SNAPD": 5.51,
+    "SNDK": 12540,
+    "SNDKC": 6.48,
+    "SNDKD": 8.2,
+    "SNOW": 17630,
+    "SNOWC": 9.11,
+    "SNOWD": 11.59,
+    "SONY": 4655,
+    "SONYC": 2.905,
+    "SONYD": 3.06,
+    "SPCE": 10560,
+    "SPCED": 6.71,
+    "SPCX": 4625,
+    "SPCXD": 3.02,
+    "SPGI": 14510,
+    "SPGID": 9.49,
+    "SPHQ": 9800,
+    "SPHQC": 6.04,
+    "SPHQD": 6.36,
+    "SPOT": 27720,
+    "SPOTC": 17.31,
+    "SPOTD": 18.03,
+    "SPXL": 18760,
+    "SPXLC": 11.85,
+    "SPXLD": 12.38,
+    "SPY": 20470,
+    "SPYC": 12.9,
+    "SPYD": 13.43,
+    "STLA": 1710,
+    "STLAC": 1.1,
+    "STLAD": 1.11,
+    "STNE": 5280,
+    "STNEC": 3.74,
+    "STNED": 3.455,
+    "SUZ": 12740,
+    "SUZB3": 12780,
+    "SUZD": 8.9,
+    "SWKS": 5250,
+    "SWKSD": 3.42,
+    "SYY": 16810,
+    "SYYD": 10.77,
+    "T": 12810,
+    "TC": 8.04,
+    "TCOM": 36140,
+    "TCOMD": 22.8,
+    "TD": 8.35,
+    "TEAM": 5225,
+    "TEAMD": 3.43,
+    "TEM": 7190,
+    "TEMD": 4.695,
+    "TEN": 84500,
+    "TENC": 57,
+    "TEND": 55.4,
+    "TGT": 10160,
+    "TGTC": 6.21,
+    "TGTD": 6.65,
+    "TIMB": 28960,
+    "TIMBD": 20.49,
+    "TIMS3": 5725,
+    "TJX": 11160,
+    "TJXD": 7.22,
+    "TM": 19950,
+    "TMC": 12.6,
+    "TMD": 13.09,
+    "TMO": 43600,
+    "TMOD": 28.36,
+    "TMUS": 8500,
+    "TMUSD": 5.71,
+    "TQQQ": 4722.5,
+    "TQQQC": 2.955,
+    "TQQQD": 3.09,
+    "TRIP": 8475,
+    "TRIPC": 5.4,
+    "TRIPD": 5.61,
+    "TRVV": 97800,
+    "TRVVD": 64.3,
+    "TSLA": 34660,
+    "TSLAC": 21.89,
+    "TSLAD": 22.65,
+    "TSM": 75775,
+    "TSMC": 48.4,
+    "TSMD": 48.9,
+    "TTE": 46440,
+    "TTED": 30.04,
+    "TV": 1498,
+    "TVD": 0.99,
+    "TWLO": 10870,
+    "TWLOD": 7.25,
+    "TXN": 88000,
+    "TXND": 58,
+    "TXR": 21720,
+    "TXRC": 12.27,
+    "TXRD": 14.27,
+    "UAL": 39800,
+    "UALC": 19.71,
+    "UALD": 26.15,
+    "UBER": 59875,
+    "UBERC": 37.92,
+    "UBERD": 39.12,
+    "UGP": 9280,
+    "UGPD": 6.24,
+    "UL": 32680,
+    "ULC": 21.17,
+    "ULD": 21.5,
+    "UNH": 19530,
+    "UNHC": 12.27,
+    "UNHD": 12.81,
+    "UNP": 23300,
+    "UNPD": 15.27,
+    "UPST": 9260,
+    "UPSTC": 6.4,
+    "UPSTD": 6.1,
+    "URA": 14350,
+    "URAC": 9.06,
+    "URAD": 9.43,
+    "URBN": 61575,
+    "URBND": 40,
+    "USB": 20600,
+    "USO": 13500,
+    "USOD": 8.84,
+    "V": 31760,
+    "VAL3C": 16.33,
+    "VAL3D": 15.33,
+    "VALE": 11410,
+    "VALE3": 23320,
+    "VALEC": 7.45,
+    "VALED": 7.52,
+    "VC": 20,
+    "VD": 20.69,
+    "VEA": 11640,
+    "VEAC": 7.44,
+    "VEAD": 7.66,
+    "VIG": 10040,
+    "VIGC": 6.39,
+    "VIGD": 6.6,
+    "VIST": 35040,
+    "VISTC": 22.16,
+    "VISTD": 22.92,
+    "VIV": 18420,
+    "VIVD": 12,
+    "VIVT3": 9240,
+    "VOD": 25500,
+    "VODC": 13.3,
+    "VODD": 16.88,
+    "VRSN": 74950,
+    "VRSND": 48.6,
+    "VRTX": 8245,
+    "VRTXD": 5.4,
+    "VST": 8975,
+    "VSTC": 5.6,
+    "VSTD": 5.88,
+    "VXX": 6210,
+    "VXXD": 4.065,
+    "VZ": 18600,
+    "VZC": 11.43,
+    "VZD": 12.17,
+    "WBO": 2032,
+    "WBOD": 1.355,
+    "WEGE3": 14340,
+    "WFC": 28260,
+    "WFCC": 16.66,
+    "WFCD": 18.38,
+    "WMT": 10240,
+    "WMTC": 6.25,
+    "WMTD": 6.67,
+    "XLB": 4647.5,
+    "XLBC": 2.935,
+    "XLBD": 3.055,
+    "XLC": 9200,
+    "XLCC": 5.88,
+    "XLCD": 6.23,
+    "XLE": 48460,
+    "XLEC": 31.34,
+    "XLED": 31.83,
+    "XLF": 45960,
+    "XLFC": 28.94,
+    "XLFD": 30.13,
+    "XLI": 10570,
+    "XLIC": 6.66,
+    "XLID": 7,
+    "XLK": 6490,
+    "XLKC": 4.13,
+    "XLKD": 4.28,
+    "XLP": 8460,
+    "XLPC": 5.3,
+    "XLPD": 5.56,
+    "XLRE": 7820,
+    "XLREC": 4.955,
+    "XLRED": 5.12,
+    "XLU": 4655,
+    "XLUC": 2.95,
+    "XLUD": 3.06,
+    "XLV": 9240,
+    "XLVC": 5.85,
+    "XLVD": 6.09,
+    "XLY": 4365,
+    "XLYC": 2.78,
+    "XLYD": 2.865,
+    "XME": 6190,
+    "XMEC": 3.46,
+    "XMED": 4.06,
+    "XOM": 25400,
+    "XOMC": 15.95,
+    "XOMD": 16.55,
+    "XP": 6120,
+    "XPC": 3.86,
+    "XPD": 4.04,
+    "XPEV": 4667.5,
+    "XPEVD": 3.14,
+    "XROX": 4945,
+    "XROXD": 3.26,
+    "XYZ": 6215,
+    "XYZC": 3.09,
+    "XYZD": 4.055,
+    "YELP": 18720,
+    "YELPD": 13.16,
+    "ZM": 3540,
+    "ZMC": 1.835,
+    "ZMD": 2.39
+  },
+  "catalog": [
+    {
+      "symbol": "A3",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "AGRO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "ALUA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "ALUAD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "AUSO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BBAR",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BBARD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BHIP",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BMA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BMA.D",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BOLT",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BPAT",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BYMA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "BYMAD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CADO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CAPX",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CARC",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CECO2",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CELU",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CEPU",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CEPUD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CGPA2",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "COME",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "COMED",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CRES",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CRESD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CTIO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CVH",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "CVHD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "DGCU2",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "DOME",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "ECOG",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "ECOGD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "EDN",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "EDND",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "EDSH",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "FERR",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "FIPL",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GAMI",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GARO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GBAN",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GCDI",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GCLA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GGAL",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GGALD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "GRIM",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "HARG",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "HAVA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "HSAT",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "IEB",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "INAG",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "INTR",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "INVJ",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "IRSA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "IRSAD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "LEDE",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "LOMA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "LOMAD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "LONG",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "METR",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "METRD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "MIRG",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "MOLA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "MOLI",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "MOLI5",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "MORI",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "OEST",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "PAMP",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "PAMPD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "PATA",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "POLL",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "RAGH",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "REGE",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "REIT",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "REITD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "RICH",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "RIGO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "ROSE",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "SAMI",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "SEMI",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "SUPV",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "SUPVD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TECO2",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TECOD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TGN4D",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TGNO4",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TGSU2",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TGSUD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TRAN",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TRAND",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TXAR",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "TXARD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "VALO",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "VALOD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "YPFD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "YPFDD",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "AE38",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AE38C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AE38D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL30",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL30C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL30D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL35",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL35C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL35D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL41",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL41C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL41D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AN29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AN29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AN29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO27C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO27D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO28C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO28D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BA37D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BA7DC",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BA7DD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BAO27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BB37D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BB7DC",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BB7DD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BC33C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BC33D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BC37D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BC37E",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BC7DD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BDC28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BDC33",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BDC36",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPA7C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPA7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPA8C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPA8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPB7C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPB7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPB8C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPB8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPC7C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPC7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPD7C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPD7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPOA7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPOA8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPOB7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPOB8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPOC7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPOD7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO26D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO2D7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO32",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO32C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO32D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO35",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO35C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO35D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "COD7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "COY27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CUAP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DICP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DICPC",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DICPD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DIP0",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "EF25D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "EM33D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "ERF25",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "ERM33",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD30",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD30C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD30D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD35",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD35C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD35D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD38",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD38C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD38D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD41",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD41C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD41D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD46",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD46C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD46D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "LK01Q",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "LK1QD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "NDT25",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "NDT5C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "NDT5D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PAP0",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PARP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PAY0",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PAY0D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PBA27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PBA28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PBM27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PM29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PM29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PMA28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PMD26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PMM29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PR17",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PUA36",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PUA6C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PUA6D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "S24DD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SA24D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SFD34",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SFD4C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SFD4D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SFN27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "T15E7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "T30A7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "T30J7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "T31Y7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TA7C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TA7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TJ7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMF27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMF28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMG27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMG28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TML27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMVE8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TO26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TO26D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TTD26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TTD6C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TTD6D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TTS26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPA",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPE",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPY",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TX26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TX26D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TX28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TX28D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TX31",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXA7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXD6D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXD7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXD9D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXM7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXM8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXM9D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXMD8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXMD9",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXMJ0",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXMJ8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXMJ9",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXS7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXS8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TY30D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TY30P",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZV27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZV28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZV7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZVD8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZX27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZX28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZX7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXA7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXD6",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXD7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXD8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXM7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXM8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXM9",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXO6",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXO7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXS7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXS8",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXY7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AAL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AALC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AALD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AAP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AAPL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AAPLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AAPLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABBV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABBVC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABBVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABEV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABEV3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABEVC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABEVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABNB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABNBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABNBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ACN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ACNC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ACND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ACWI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ACWIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ACWID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADBE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADBEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADBED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADGO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADGOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADGOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ADPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AEG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AEM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AEMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AIG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AIGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AIGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AKO.B",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AKOBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ALAB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ALAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMAT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMATC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMATD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMGN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMGNC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMGND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMZN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMZNC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AMZND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ANET",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ANETC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ANETD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ANF",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ANFD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARCO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARCOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARCOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARKK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARKKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARKKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ARMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASML",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASMLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASMLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASTS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASTSC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ASTSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AVGO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AVGOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AVGOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AVY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AVYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AXP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AXPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AXPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AZN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AZNC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "AZND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "B",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "B.C",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "B.D",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BA.C",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BA.CC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BA.CD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BABA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BABAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BABAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BAK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BAKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BAYN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BB.D",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBAS3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBDC3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBDCD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BBVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BCS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BHP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BHPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIDU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIDUC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIDUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIIB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIIBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIOX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIOXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BIOXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BKNG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BKNGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BKNGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BKR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BKRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BMNR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BMNRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BMY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BMYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BMYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BNG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BNGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BNY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BNYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BPA11",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BRKB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BRKBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BRKBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BSBR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "C",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "C.D",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAAP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAAPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAHD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAR.C",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAR.D",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CAT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CATC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CATD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CCJ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CCJC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CCJD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CCL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CCLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CDE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CDED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CEG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CEGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CEGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CIBR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CIBRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CIBRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CLS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CLSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COIN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COINC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COIND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COPX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COPXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COPXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COST",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COSTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "COSTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRWDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRWV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CRWVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CSCO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CSCOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CSCOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CSNA3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CVS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CVSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CVX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CVXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CVXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "CXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DAL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DALD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DECK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DECKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DECKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DEO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DEOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DEOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DHR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DHRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DHRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DIA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DIAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DIAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DISN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DISNC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DISND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DOCU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DOCUC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DOCUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DOW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DOWC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "DOWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "E",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EBAY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EBAYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EBAYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ECL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ECLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EEM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EEMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EEMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EFA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EFAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EFAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EFX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EFXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EFXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ELPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EMBJ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EQNR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ERIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ERICD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ESGU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ESGUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ETHA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ETHAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ETHAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ETSY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ETSYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ETSYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWJ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWJC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWJD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWZ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWZC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "EWZD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "F",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FCX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FCXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FCXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FDX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FDXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FDXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FISV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FISVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FMX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FMXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FNMA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FSLR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FSLRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FSLRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FXI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FXIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "FXID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GDX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GDXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GDXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GFI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GGB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GGBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GILD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GILDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GILDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLNG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLNGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLOB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLOBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLOBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLWC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GLWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GOGLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GOGLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GOOGL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GPRK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GPRKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GPRKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GRMN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GRMND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GSC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GSK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GSKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GSKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "GTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HAL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HALC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HALD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HAPV3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HDB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HIMS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HIMSC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HIMSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HMY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HMYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HMYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HOG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HON",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HOND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HOOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HOODD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HPQ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HPQC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HPQD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HSBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HSY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HSYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HSYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HUT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HUTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HUTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HWM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HWMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "HWMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBIT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBITC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBITD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IBN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ICLN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ICLNC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ICLND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IEMG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IEMGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IEMGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IEUR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IEURC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IEURD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IFF",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IFFD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IJH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IJHC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IJHD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ILF",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ILFC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ILFD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "INFY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "INFYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ING",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "INGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "INTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "INTCC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "INTCD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IREN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IRENC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IREND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ISRG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITUB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITUB3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITUBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITUBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVVC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVWC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IVWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IWM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IWMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "IWMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JCI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JMIA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JMIAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JMIAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JNJ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JNJC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JNJD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JOYY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JOYYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JPM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JPMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "JPMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KEEL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KEELC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KEELD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KEP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KMB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KMBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KMBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "KOFM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LACD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LAR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LARC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LARD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LLY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LLYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LLYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LMT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LMTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LMTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LRCX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LRCXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LRCXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LREN3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LVS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "LYG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MCD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MCDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MCDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MDLZ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MDLZC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MDLZD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MDT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MDTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MELI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MELIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MELID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "META",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "METAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "METAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MFG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MGLU3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MMM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MMMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MMMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MOS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MOSC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MOSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRNA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRNAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRNAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRSH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRVL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MRVLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSFT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSFTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSFTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSTR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSTRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MSTRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUFG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUFGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "MUXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NAT3D",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NATU3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NBIS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NBISC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NBISD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NEE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NEED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NEM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NEMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NFLX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NFLXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NFLXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NGG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NIO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NIOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NIOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NKE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NKEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NKED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NMR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NOKA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NOW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NOWC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NOWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NTES",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NTESD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NUC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NUE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVDA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVDAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVDAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVSC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NVSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NXE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "NXED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "O",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OKLO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OKLOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ONDS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ONDSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ORCL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ORCLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ORCLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ORLY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ORLYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ORLYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OXY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OXYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "OXYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PAAS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PAASC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PAASD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PAGS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PAGSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PANW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PANWC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PANWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PATH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PATHC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PATHD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PBI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PBR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PBRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PBRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PCAR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PCARD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PDDC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PDDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PEP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PEPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PEPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PETR3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PETRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PFE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PFEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PFED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PHG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PINS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PINSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PKS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PLTR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PLTRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PLTRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PRIO3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PSQ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PSQC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PSQD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PSX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PSXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PSXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PYPL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PYPLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "PYPLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "QCOM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "QCOMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "QCOMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "QQQ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "QQQC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "QQQD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RACE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RACEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RACED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RBLX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RBLXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RENT3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RGTI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RGTIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RGTID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RIO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RIOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RIOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RIOT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RIOTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RIOTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RKLB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RKLBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RKLBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ROKU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ROKUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ROST",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ROSTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RSP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RSPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RSPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RTX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "RTXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SAN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SANC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SAND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SAP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SAPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SATL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SATLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SATLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SBS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SBSP3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SBUX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SBUXC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SBUXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SCCO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SCHW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SDA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHEL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHELC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHELD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHOP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHOPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SHOPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SIDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SLB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SLBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SLBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SLV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SLVC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SLVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SMH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SMHC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SMHD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SMSN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNAP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNAPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNDK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNDKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNDKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNOW",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNOWC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SNOWD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SONY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SONYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SONYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPCE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPCED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPCX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPCXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPGI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPGIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPGID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPHQ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPHQC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPHQD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPOT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPOTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPOTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPXL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPXLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPXLD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SPYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "STLA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "STLAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "STLAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "STNE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "STNEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "STNED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SUZ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SUZB3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SUZD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SWKS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SWKSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SYY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SYYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "T",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TCOM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TCOMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TEAM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TEAMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TEM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TEMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TEN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TENC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TEND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TGT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TGTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TGTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TIMB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TIMBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TIMS3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TJX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TJXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TMO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TMOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TMUS",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TMUSD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TQQQ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TQQQC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TQQQD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TRIP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TRIPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TRIPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TRVV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TRVVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TSLA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TSLAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TSLAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TSM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TSMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TSMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TTE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TTED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TVC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TWLO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TWLOC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TWLOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TXN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TXND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TXR",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TXRC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "TXRD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UAL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UALC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UALD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UBER",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UBERC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UBERD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UGP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UGPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UL",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ULC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ULD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UNH",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UNHC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UNHD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UNP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UNPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UNPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UPST",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UPSTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "UPSTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "URA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "URAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "URAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "URBN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "URBND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "USB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "USO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "USOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "V",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VAL3C",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VAL3D",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VALE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VALE3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VALEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VALED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VEA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VEAC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VEAD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIG",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIGC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIGD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIST",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VISTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VISTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VIVT3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VODC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VODD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VRSN",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VRSND",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VRTX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VRTXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VST",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VSTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VSTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VXX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VXXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VZ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VZC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "VZD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WBO",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WBOD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WEGE3",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WFC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WFCC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WFCD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WMT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WMTC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "WMTD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLB",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLBC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLBD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLCC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLCD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLF",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLFC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLFD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLI",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLIC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLID",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLK",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLKC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLKD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLRE",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLREC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLRED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLU",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLUC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLUD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLVC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLY",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLYC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XLYD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XME",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XMEC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XMED",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XOM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XOMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XOMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XPC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XPEV",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XPEVD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XROX",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XROXD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XYZ",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XYZC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "XYZD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "YELP",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "YELPD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ZM",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ZMC",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ZMD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "BTC",
+      "cat": "Cripto"
+    },
+    {
+      "symbol": "ETH",
+      "cat": "Cripto"
+    },
+    {
+      "symbol": "SOL",
+      "cat": "Cripto"
+    },
+    {
+      "symbol": "USDT",
+      "cat": "Cripto"
+    }
+  ],
+  "updatedAt": "2026-08-13T10:17:45.378Z"
+}

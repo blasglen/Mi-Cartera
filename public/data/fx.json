@@ -1,1 +1,17 @@
-{ "fx": {}, "updatedAt": null }
+{
+  "fx": {
+    "oficial": {
+      "label": "Oficial",
+      "value": 1515
+    },
+    "mep": {
+      "label": "MEP",
+      "value": 1529.2
+    },
+    "blue": {
+      "label": "Blue",
+      "value": 1540
+    }
+  },
+  "updatedAt": "2026-08-13T10:17:45.375Z"
+}
