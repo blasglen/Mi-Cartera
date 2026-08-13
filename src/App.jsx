@@ -516,6 +516,7 @@ const COINGECKO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "t
 async function fetchCryptoPricesUsd() {
   const ids = Object.values(COINGECKO_IDS).join(",");
   const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+  if (res.status === 429) throw new Error("rate-limited");
   if (!res.ok) throw new Error("crypto fetch failed");
   const data = await res.json();
   const out = {};
@@ -529,6 +530,7 @@ async function fetchCryptoHistoryUsd(symbol, days) {
   const id = COINGECKO_IDS[symbol];
   if (!id) return null;
   const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`);
+  if (res.status === 429) throw new Error("rate-limited");
   if (!res.ok) throw new Error("crypto history fetch failed");
   const data = await res.json();
   if (!Array.isArray(data.prices)) return null;
@@ -1406,7 +1408,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
       }).catch(() => {});
     };
     poll();
-    const id = setInterval(poll, 5000);
+    const id = setInterval(poll, 20000);
     return () => { cancelled = true; clearInterval(id); };
   }, [selected, assetMode]);
 
@@ -1422,7 +1424,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
       }).catch(() => {});
     };
     poll();
-    const id = setInterval(poll, 5000);
+    const id = setInterval(poll, 20000);
     return () => { cancelled = true; clearInterval(id); };
   }, [selected]);
 
@@ -1451,31 +1453,13 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
   // Acciones/CEDEARs/bonos NO se piden en vivo por activo -- eso fue lo que
   // saturaba a data912. Salen del mismo archivo cacheado una vez al día que
   // usa el gráfico de Inicio (public/data/history.json).
-  const [cryptoHistory, setCryptoHistory] = useState(null);
-  const [cryptoHistoryStatus, setCryptoHistoryStatus] = useState("cargando");
-  React.useEffect(() => {
-    if (selected.cat !== "Cripto") return;
-    let cancelled = false;
-    setCryptoHistoryStatus("cargando");
-    setCryptoHistory(null);
-    fetchCryptoHistoryUsd(selected.symbol, 365)
-      .then((data) => {
-        if (cancelled) return;
-        if (data && data.length > 1) { setCryptoHistory(data); setCryptoHistoryStatus("ok"); }
-        else setCryptoHistoryStatus("no-disponible");
-      })
-      .catch(() => { if (!cancelled) setCryptoHistoryStatus("no-disponible"); });
-    return () => { cancelled = true; };
-  }, [selected]);
-
+  // Histórico: sale del mismo archivo cacheado una vez al día que usa el resto
+  // de los activos (acciones/CEDEARs/bonos/cripto) -- ya no se le pide en vivo
+  // a CoinGecko el año completo de datos, eso fue lo que disparó el límite de
+  // pedidos gratis. El precio ACTUAL de cripto sigue en vivo (más abajo).
   const cachedHistory = historyCache[selected.symbol];
-  const realHistory = selected.cat === "Cripto" ? cryptoHistory : cachedHistory;
-  const historyStatus =
-    selected.cat === "Cripto"
-      ? cryptoHistoryStatus
-      : cachedHistory && cachedHistory.length > 1
-      ? "ok"
-      : "no-disponible";
+  const realHistory = cachedHistory;
+  const historyStatus = cachedHistory && cachedHistory.length > 1 ? "ok" : "no-disponible";
 
   const isCedear = selected.cat === "CEDEARs";
   const mode = isCedear ? assetMode : "cedear";
@@ -1510,7 +1494,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
     sliced = rawSliced.map((p) => ({ ...p, price: p.price * fx * scaleFix }));
   } else {
     const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
-    const scaleFix = isLive && selected.cat !== "Cripto" && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
+    const scaleFix = isLive && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
     sliced = scaleFix !== 1 ? rawSliced.map((p) => ({ ...p, price: p.price * scaleFix })) : rawSliced;
   }
   const first = sliced[0].price;
@@ -1723,7 +1707,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
           <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: isLive ? C.gain : mode === "accion" && historyStatus === "ok" ? C.muted : C.faint }}>
             {isLive && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />}
             {isLive
-              ? `Precio en vivo${selected.cat === "Cripto" ? " (CoinGecko, cada 5s)" : mode === "accion" ? " (Finnhub, cada 5s)" : " (data912)"}.`
+              ? `Precio en vivo${selected.cat === "Cripto" ? " (CoinGecko, cada 20s)" : mode === "accion" ? " (Finnhub, cada 20s)" : " (data912)"}.`
               : mode === "accion" && historyStatus === "ok"
               ? "Precio real de la acción, último cierre (no en vivo — configurá FINNHUB_API_KEY para tenerlo en vivo)."
               : "Precio simulado — no encontramos cotización para este símbolo todavía."}
@@ -1744,7 +1728,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
         {historyStatus !== "cargando" && (
           <div style={{ fontSize: 10, color: historyStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
             {historyStatus === "ok"
-              ? `Histórico ${selected.cat === "Cripto" ? "en vivo (CoinGecko)." : "real, actualizado una vez al día (caché)."}`
+              ? "Histórico real, actualizado una vez al día (caché)."
               : "No encontramos histórico real para este símbolo — el gráfico de arriba es simulado, aunque el precio actual sí es real."}
           </div>
         )}
