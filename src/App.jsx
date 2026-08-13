@@ -12,6 +12,7 @@ import {
   Pie,
   Cell,
   ReferenceDot,
+  Line,
 } from "recharts";
 import {
   TrendingUp,
@@ -500,8 +501,10 @@ function extractPrice(o) {
 // CONIOLA) aportan su valor actual "plano" hacia atrás -- no es ideal, pero es
 // mejor que inventar una caminata aleatoria, y queda claramente marcado.
 
-function buildQtyTimeline(ticker) {
-  const trades = MOVIMIENTOS.filter((m) => m.activo === ticker && (m.tipo === "Compra" || m.tipo === "Venta"))
+function buildQtyTimeline(ticker, broker) {
+  const trades = MOVIMIENTOS.filter(
+    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta")
+  )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
   return (date) => {
@@ -512,6 +515,18 @@ function buildQtyTimeline(ticker) {
     }
     return q;
   };
+}
+
+// Capital invertido real, día por día: para cada tenencia (ticker+broker,
+// respetando el filtro de cartera activo), cuánto tenías comprado a esa fecha
+// multiplicado por tu costo promedio real. A diferencia del valor de mercado,
+// esto no es una estimación -- sale directo de tus movimientos reales.
+function buildInvestedSeries(holdings, dates) {
+  const perHolding = holdings.map((h) => ({ qtyAt: buildQtyTimeline(h.name, h.broker), avgCost: h.avgCost }));
+  return dates.map((date) => ({
+    date,
+    invertido: perHolding.reduce((s, h) => s + h.qtyAt(date) * h.avgCost, 0),
+  }));
 }
 
 function priceAt(historyMap, sortedDates, date) {
@@ -743,7 +758,12 @@ export default function InvestmentDashboard() {
   const rangeEndPoint = [...scaledSeries].reverse().find((p) => p.date <= to) || scaledSeries[scaledSeries.length - 1];
   const pnlAbs = rangeEndPoint.total - rangeStartPoint.total;
   const pnlPct = pct(rangeEndPoint.total, rangeStartPoint.total);
-  const chartData = scaledSeries.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
+  const chartDataRaw = scaledSeries.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
+  const investedSeries = useMemo(
+    () => buildInvestedSeries(byBroker, chartDataRaw.map((p) => p.date)),
+    [byBroker, chartDataRaw.length ? chartDataRaw[0].date : null, chartDataRaw.length ? chartDataRaw[chartDataRaw.length - 1].date : null]
+  );
+  const chartData = chartDataRaw.map((p, i) => ({ ...p, invertido: investedSeries[i]?.invertido ?? null }));
   const chartTrades = MOVIMIENTOS.filter(
     (m) =>
       (m.tipo === "Compra" || m.tipo === "Venta") &&
@@ -981,8 +1001,9 @@ export default function InvestmentDashboard() {
                       <CartesianGrid stroke={C.rowLine} vertical={false} />
                       <XAxis dataKey="date" tick={{ fill: C.faint, fontSize: 10 }} tickFormatter={(d) => d.slice(5)} axisLine={{ stroke: C.border }} tickLine={false} minTickGap={40} />
                       <YAxis hide domain={["auto", "auto"]} />
-                      <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Valor"]} />
-                      <Area type="monotone" dataKey="total" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
+                      <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v, name) => [f(v), name]} />
+                      <Area type="monotone" dataKey="total" name="Valor actual" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
+                      <Line type="monotone" dataKey="invertido" name="Invertido" stroke={C.muted} strokeWidth={1.5} strokeDasharray="4 3" dot={false} isAnimationActive={false} />
                       {chartTrades.map((t, i) => {
                         const text = `${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`;
                         return (
@@ -1034,18 +1055,24 @@ export default function InvestmentDashboard() {
                     </div>
                   )}
                 </div>
-                {chartTrades.length > 0 && (
-                  <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginTop: 4, paddingBottom: 4 }}>
-                    <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ width: 7, height: 7, borderRadius: 999, background: C.gain, display: "inline-block" }} />
-                      Compra
-                    </span>
-                    <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ width: 7, height: 7, borderRadius: 999, background: C.loss, display: "inline-block" }} />
-                      Venta
-                    </span>
-                  </div>
-                )}
+                <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginTop: 4, paddingBottom: 4, flexWrap: "wrap" }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <span style={{ width: 14, height: 0, borderTop: `1.5px dashed ${C.muted}`, display: "inline-block" }} />
+                    Invertido
+                  </span>
+                  {chartTrades.length > 0 && (
+                    <>
+                      <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                        <span style={{ width: 7, height: 7, borderRadius: 999, background: C.gain, display: "inline-block" }} />
+                        Compra
+                      </span>
+                      <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                        <span style={{ width: 7, height: 7, borderRadius: 999, background: C.loss, display: "inline-block" }} />
+                        Venta
+                      </span>
+                    </>
+                  )}
+                </div>
                 <div style={{ fontSize: 10, color: realPortfolioHistory ? C.gain : C.faint, paddingBottom: 4 }}>
                   {realPortfolioHistory
                     ? `Histórico real: ${historyCoverage?.tickersWithRealData ?? 0} de ${historyCoverage?.tickersTotal ?? 0} activos con precio real por fecha (actualizado una vez al día; el resto usa su precio actual hacia atrás).`
