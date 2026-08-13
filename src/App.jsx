@@ -12,6 +12,7 @@ import {
   Pie,
   Cell,
   ReferenceDot,
+  ReferenceLine,
   Line,
 } from "recharts";
 import {
@@ -820,6 +821,7 @@ export default function InvestmentDashboard() {
     return hour >= 7 && hour < 20 ? "light" : "dark"; // de día (7-20hs) claro, de noche oscuro
   });
   const C = themeMode === "dark" ? DARK : LIGHT;
+  const Cinv = themeMode === "dark" ? LIGHT : DARK; // paleta opuesta, para carteles de contraste
 
   const [rangeIdx, setRangeIdx] = useState(1);
   const [customFrom, setCustomFrom] = useState("");
@@ -1377,7 +1379,7 @@ export default function InvestmentDashboard() {
           )}
 
           {view === "importar" && <ImportarView C={C} />}
-          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
@@ -1388,7 +1390,7 @@ export default function InvestmentDashboard() {
   );
 }
 
-function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache, initialSymbol }) {
+function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoUsd, historyCache, initialSymbol }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
@@ -1398,9 +1400,11 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
   const [assetMode, setAssetMode] = useState("cedear"); // "cedear" | "accion" -- solo aplica a CEDEARs
   const [accionLiveUsd, setAccionLiveUsd] = useState(null);
   const [measurePoints, setMeasurePoints] = useState([]); // hasta 2 puntos tocados en el gráfico
+  const [hoverPoint, setHoverPoint] = useState(null); // circulito visual propio, no el de Recharts
+  const [measurePixels, setMeasurePixels] = useState({}); // posición en píxeles de cada punto elegido, para dibujar la recta y el cartel
   const lastHoverPoint = useRef(null);
 
-  React.useEffect(() => { setMeasurePoints([]); }, [selected, rangeIdx]);
+  React.useEffect(() => { setMeasurePoints([]); setMeasurePixels({}); }, [selected, rangeIdx]);
 
   // Modo "Acción": cotización real de EE.UU. en vivo vía Finnhub, polling cada
   // 5s mientras estás mirando ese activo (igual que hacemos con cripto).
@@ -1668,7 +1672,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                 strokeWidth={2}
                 fill="url(#fillAsset)"
                 dot={false}
-                activeDot={{ r: 4, fill: abs >= 0 ? C.gain : C.loss, stroke: C.bg, strokeWidth: 2, style: { pointerEvents: "none" } }}
+                activeDot={false}
               />
               {trades.map((t, i) => {
                 const text = `${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`;
@@ -1710,6 +1714,8 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                       r={9}
                       fill="transparent"
                       style={{ cursor: "pointer" }}
+                      onMouseEnter={() => setHoverPoint({ x: props.cx, y: props.cy })}
+                      onMouseLeave={() => setHoverPoint(null)}
                       onClick={() => {
                         const point = { date: p.date, price: p.price };
                         setMeasurePoints((prev) => {
@@ -1722,9 +1728,39 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                   )}
                 />
               ))}
+              {hoverPoint && (
+                <circle cx={hoverPoint.x} cy={hoverPoint.y} r={4} fill={abs >= 0 ? C.gain : C.loss} stroke={C.bg} strokeWidth={2} style={{ pointerEvents: "none" }} />
+              )}
               {measurePoints.map((mp, i) => (
-                <ReferenceDot key={`measure-${i}`} x={mp.date} y={mp.price} r={6} fill={C.gold} stroke={C.bg} strokeWidth={2} isFront />
+                <ReferenceDot
+                  key={`measure-${i}`}
+                  x={mp.date}
+                  y={mp.price}
+                  r={6}
+                  fill={C.gold}
+                  stroke={C.bg}
+                  strokeWidth={2}
+                  isFront
+                  shape={(props) => {
+                    // Guardamos la posición en píxeles de este punto para poder
+                    // dibujar la recta y ubicar el cartel flotante afuera del SVG.
+                    if (measurePixels[i]?.x !== props.cx || measurePixels[i]?.y !== props.cy) {
+                      setTimeout(() => setMeasurePixels((prev) => ({ ...prev, [i]: { x: props.cx, y: props.cy } })), 0);
+                    }
+                    return <circle cx={props.cx} cy={props.cy} r={6} fill={C.gold} stroke={C.bg} strokeWidth={2} style={{ pointerEvents: "none" }} />;
+                  }}
+                />
               ))}
+              {measurePoints.length === 2 && (
+                <ReferenceLine
+                  segment={[
+                    { x: measurePoints[0].date, y: measurePoints[0].price },
+                    { x: measurePoints[1].date, y: measurePoints[1].price },
+                  ]}
+                  stroke={C.gold}
+                  strokeWidth={1.5}
+                />
+              )}
             </AreaChart>
           </ResponsiveContainer>
           {hoverDot && (
@@ -1749,9 +1785,44 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
               {hoverDot.text}
             </div>
           )}
+          {measurePoints.length === 2 && measurePixels[0] && measurePixels[1] && (() => {
+            const [pa, pb] = measurePoints[0].date <= measurePoints[1].date ? measurePoints : [measurePoints[1], measurePoints[0]];
+            const [pxa, pxb] = measurePoints[0].date <= measurePoints[1].date ? [measurePixels[0], measurePixels[1]] : [measurePixels[1], measurePixels[0]];
+            const diff = pb.price - pa.price;
+            const diffPct = pct(pb.price, pa.price);
+            const up = diff >= 0;
+            const midX = (pxa.x + pxb.x) / 2;
+            const midY = Math.min(pxa.y, pxb.y) - 14;
+            return (
+              <div
+                className="tabular"
+                style={{
+                  position: "absolute",
+                  left: midX,
+                  top: midY,
+                  transform: "translate(-50%, -100%)",
+                  background: Cinv.bg,
+                  color: Cinv.text,
+                  borderRadius: 6,
+                  padding: "6px 10px",
+                  fontSize: 11,
+                  whiteSpace: "nowrap",
+                  pointerEvents: "none",
+                  zIndex: 10,
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.35)",
+                }}
+              >
+                <div>{pa.date} → {pb.date}</div>
+                <div style={{ color: up ? C.gain : C.loss, fontWeight: 600, marginTop: 2 }}>
+                  {up ? "+" : ""}{f(diff)} ({up ? "+" : ""}{diffPct.toFixed(2)}%)
+                </div>
+              </div>
+            );
+          })()}
         </div>
 
-        {/* Comparador: tocá dos puntos del gráfico para medir la diferencia entre ellos */}
+        {/* El resultado de la comparación ahora se ve flotando sobre el gráfico (arriba de
+            la recta dorada). Acá abajo solo queda el hint mientras elegís los puntos. */}
         {measurePoints.length === 0 && (
           <div style={{ fontSize: 11, color: C.faint, marginTop: 6 }}>Tocá dos puntos del gráfico para comparar precios entre esas fechas.</div>
         )}
@@ -1760,43 +1831,16 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
             {measurePoints[0].date}: {f(measurePoints[0].price)} · tocá otro punto para comparar.
           </div>
         )}
-        {measurePoints.length === 2 && (() => {
-          const [pa, pb] = measurePoints[0].date <= measurePoints[1].date ? measurePoints : [measurePoints[1], measurePoints[0]];
-          const diff = pb.price - pa.price;
-          const diffPct = pct(pb.price, pa.price);
-          const up = diff >= 0;
-          return (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginTop: 8,
-                padding: "8px 12px",
-                borderRadius: 8,
-                background: C.rowLine,
-                flexWrap: "wrap",
-                gap: 8,
-              }}
+        {measurePoints.length === 2 && (
+          <div style={{ fontSize: 11, color: C.faint, marginTop: 6 }}>
+            <button
+              onClick={() => { setMeasurePoints([]); setMeasurePixels({}); }}
+              style={{ fontSize: 11, color: C.faint, background: "none", border: `1px solid ${C.border}`, borderRadius: 999, padding: "3px 10px", cursor: "pointer" }}
             >
-              <div className="tabular" style={{ fontSize: 12, color: C.muted }}>
-                {pa.date} ({f(pa.price)}) → {pb.date} ({f(pb.price)})
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                {up ? <TrendingUp size={15} color={C.gain} /> : <TrendingDown size={15} color={C.loss} />}
-                <span className="tabular" style={{ fontSize: 14, fontWeight: 600, color: up ? C.gain : C.loss }}>
-                  {up ? "+" : ""}{f(diff)} ({up ? "+" : ""}{diffPct.toFixed(2)}%)
-                </span>
-                <button
-                  onClick={() => setMeasurePoints([])}
-                  style={{ fontSize: 11, color: C.faint, background: "none", border: "none", cursor: "pointer", marginLeft: 6 }}
-                >
-                  limpiar ×
-                </button>
-              </div>
-            </div>
-          );
-        })()}
+              limpiar comparación ×
+            </button>
+          </div>
+        )}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, flexWrap: "wrap", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: isLive ? C.gain : mode === "accion" && historyStatus === "ok" ? C.muted : C.faint }}>
             {isLive && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />}
