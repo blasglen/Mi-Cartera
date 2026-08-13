@@ -664,7 +664,7 @@ function buildRealPortfolioHistory(holdings, historyCache) {
 
   let tickersWithRealData = 0;
   const perTicker = uniqueTickers.map((h) => {
-    const qtyAt = buildQtyTimeline(h.name);
+    const qtyAt = buildQtyTimeline(h.name, h.broker);
     const hist = historyCache[h.name];
     if (hist && hist.length > 1) {
       tickersWithRealData++;
@@ -837,8 +837,8 @@ export default function InvestmentDashboard() {
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
   const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
-    () => buildRealPortfolioHistory(HOLDINGS, historyCache),
-    [historyCache]
+    () => buildRealPortfolioHistory(byBroker, historyCache),
+    [historyCache, byBroker]
   );
   React.useEffect(() => { setHistoryCoverage(realHistoryCoverage); }, [realHistoryCoverage]);
   const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
@@ -864,6 +864,13 @@ export default function InvestmentDashboard() {
   const scale = seriesLastFull > 0 ? realCurrentTotal / seriesLastFull : 1;
   const scaledSeries = useMemo(() => baseSeries.map((p) => ({ ...p, total: p.total * scale })), [scale, baseSeries]);
 
+  const earliestDateForFilter = useMemo(() => {
+    const relevant = MOVIMIENTOS.filter(
+      (m) => (m.tipo === "Compra" || m.tipo === "Venta") && (brokerFilter.length === 0 || brokerFilter.includes(m.broker))
+    );
+    return relevant.length > 0 ? relevant.reduce((min, m) => (m.fecha < min ? m.fecha : min), relevant[0].fecha) : EARLIEST_TRADE_DATE;
+  }, [brokerFilter]);
+
   const { from, to } = useMemo(() => {
     if (useCustom && customFrom && customTo) return { from: customFrom, to: customTo };
     const preset = RANGE_PRESETS[rangeIdx];
@@ -872,13 +879,13 @@ export default function InvestmentDashboard() {
     let fromDate;
     if (preset.month) fromDate = new Date(lastDate.getFullYear(), lastDate.getMonth(), 1);
     else if (preset.ytd) fromDate = new Date(lastDate.getFullYear(), 0, 1);
-    else if (preset.all) fromDate = new Date(EARLIEST_TRADE_DATE);
+    else if (preset.all) fromDate = new Date(earliestDateForFilter);
     else {
       fromDate = new Date(lastDate);
       fromDate.setDate(fromDate.getDate() - preset.days);
     }
     return { from: fromDate.toISOString().slice(0, 10), to: last.date };
-  }, [rangeIdx, useCustom, customFrom, customTo]);
+  }, [rangeIdx, useCustom, customFrom, customTo, earliestDateForFilter]);
 
   const rangeStartPoint = scaledSeries.find((p) => p.date >= from) || scaledSeries[0];
   const rangeEndPoint = [...scaledSeries].reverse().find((p) => p.date <= to) || scaledSeries[scaledSeries.length - 1];
@@ -1119,7 +1126,7 @@ export default function InvestmentDashboard() {
                   </div>
                 )}
 
-                <div style={{ height: 190, marginTop: 4, position: "relative" }}>
+                <div style={{ height: 340, marginTop: 4, position: "relative" }}>
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
                       <defs>
