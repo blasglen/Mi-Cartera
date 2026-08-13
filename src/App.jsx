@@ -1643,22 +1643,6 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
               data={sliced}
               margin={{ top: 6, right: 8, left: 0, bottom: 0 }}
               style={{ cursor: "crosshair" }}
-              onMouseMove={(state) => {
-                if (!state || !state.activeLabel) return;
-                const entry = state.activePayload?.find((p) => p.dataKey === "price");
-                if (entry && entry.value != null) {
-                  lastHoverPoint.current = { date: state.activeLabel, price: entry.value };
-                }
-              }}
-              onClick={() => {
-                const point = lastHoverPoint.current;
-                if (!point) return;
-                setMeasurePoints((prev) => {
-                  if (prev.length >= 2) return [point];
-                  if (prev.length === 1 && prev[0].date === point.date) return prev;
-                  return [...prev, point];
-                });
-              }}
             >
               <defs>
                 <linearGradient id="fillAsset" x1="0" y1="0" x2="0" y2="1">
@@ -1703,6 +1687,33 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                   />
                 );
               })}
+              {(sliced.length > 120 ? sliced.filter((_, i) => i % Math.ceil(sliced.length / 120) === 0) : sliced).map((p, i) => (
+                <ReferenceDot
+                  key={`hit-${i}`}
+                  x={p.date}
+                  y={p.price}
+                  r={1}
+                  fill="transparent"
+                  stroke="none"
+                  shape={(props) => (
+                    <circle
+                      cx={props.cx}
+                      cy={props.cy}
+                      r={9}
+                      fill="transparent"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        const point = { date: p.date, price: p.price };
+                        setMeasurePoints((prev) => {
+                          if (prev.length >= 2) return [point];
+                          if (prev.length === 1 && prev[0].date === point.date) return prev;
+                          return [...prev, point];
+                        });
+                      }}
+                    />
+                  )}
+                />
+              ))}
               {measurePoints.map((mp, i) => (
                 <ReferenceDot key={`measure-${i}`} x={mp.date} y={mp.price} r={6} fill={C.gold} stroke={C.bg} strokeWidth={2} isFront />
               ))}
