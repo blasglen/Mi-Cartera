@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import {
   AreaChart,
   Area,
@@ -971,6 +971,7 @@ export default function InvestmentDashboard() {
         .tabular { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
         .display { font-family: 'Fraunces', serif; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .recharts-wrapper:focus, .recharts-surface:focus { outline: none; }
         ::-webkit-scrollbar { height: 6px; width: 6px; }
         ::-webkit-scrollbar-thumb { background: ${C.scrollbar}; border-radius: 4px; }
         @media (max-width: 640px) {
@@ -1397,6 +1398,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
   const [assetMode, setAssetMode] = useState("cedear"); // "cedear" | "accion" -- solo aplica a CEDEARs
   const [accionLiveUsd, setAccionLiveUsd] = useState(null);
   const [measurePoints, setMeasurePoints] = useState([]); // hasta 2 puntos tocados en el gráfico
+  const lastHoverPoint = useRef(null);
 
   React.useEffect(() => { setMeasurePoints([]); }, [selected, rangeIdx]);
 
@@ -1641,11 +1643,16 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
               data={sliced}
               margin={{ top: 6, right: 8, left: 0, bottom: 0 }}
               style={{ cursor: "crosshair" }}
-              onClick={(state) => {
+              onMouseMove={(state) => {
                 if (!state || !state.activeLabel) return;
                 const entry = state.activePayload?.find((p) => p.dataKey === "price");
-                if (!entry || entry.value == null) return;
-                const point = { date: state.activeLabel, price: entry.value };
+                if (entry && entry.value != null) {
+                  lastHoverPoint.current = { date: state.activeLabel, price: entry.value };
+                }
+              }}
+              onClick={() => {
+                const point = lastHoverPoint.current;
+                if (!point) return;
                 setMeasurePoints((prev) => {
                   if (prev.length >= 2) return [point];
                   if (prev.length === 1 && prev[0].date === point.date) return prev;
