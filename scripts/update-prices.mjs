@@ -26,17 +26,29 @@ const CRYPTO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "teth
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function fetchJson(url) {
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-      "Accept": "application/json, text/plain, */*",
-    },
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+      },
+    });
+  } catch (err) {
+    console.log(`    [red] ${err.message} -- ${url}`);
+    return null;
+  }
   if (!res.ok) {
     console.log(`    [${res.status}] ${url}`);
     return null;
   }
-  try { return await res.json(); } catch { return null; }
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    console.log(`    [no-json] ${url} -- primeros 150 caracteres: ${text.slice(0, 150).replace(/\n/g, " ")}`);
+    return null;
+  }
 }
 
 function extractSymbol(o) { return o.symbol || o.ticker || o.simbolo || o.especie || null; }
