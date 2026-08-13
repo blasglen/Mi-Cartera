@@ -1396,6 +1396,9 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
   const [livePriceUsd, setLivePriceUsd] = useState(null); // solo para cripto, polling propio
   const [assetMode, setAssetMode] = useState("cedear"); // "cedear" | "accion" -- solo aplica a CEDEARs
   const [accionLiveUsd, setAccionLiveUsd] = useState(null);
+  const [measurePoints, setMeasurePoints] = useState([]); // hasta 2 puntos tocados en el gráfico
+
+  React.useEffect(() => { setMeasurePoints([]); }, [selected, rangeIdx]);
 
   // Modo "Acción": cotización real de EE.UU. en vivo vía Finnhub, polling cada
   // 5s mientras estás mirando ese activo (igual que hacemos con cripto).
@@ -1634,7 +1637,22 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
 
         <div style={{ height: 220, position: "relative" }}>
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={sliced} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
+            <AreaChart
+              data={sliced}
+              margin={{ top: 6, right: 8, left: 0, bottom: 0 }}
+              style={{ cursor: "crosshair" }}
+              onClick={(state) => {
+                if (!state || !state.activeLabel) return;
+                const entry = state.activePayload?.find((p) => p.dataKey === "price");
+                if (!entry || entry.value == null) return;
+                const point = { date: state.activeLabel, price: entry.value };
+                setMeasurePoints((prev) => {
+                  if (prev.length >= 2) return [point];
+                  if (prev.length === 1 && prev[0].date === point.date) return prev;
+                  return [...prev, point];
+                });
+              }}
+            >
               <defs>
                 <linearGradient id="fillAsset" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor={abs >= 0 ? C.gain : C.loss} stopOpacity={0.3} />
@@ -1678,6 +1696,9 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                   />
                 );
               })}
+              {measurePoints.map((mp, i) => (
+                <ReferenceDot key={`measure-${i}`} x={mp.date} y={mp.price} r={6} fill={C.gold} stroke={C.bg} strokeWidth={2} isFront />
+              ))}
             </AreaChart>
           </ResponsiveContainer>
           {hoverDot && (
@@ -1703,6 +1724,53 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
             </div>
           )}
         </div>
+
+        {/* Comparador: tocá dos puntos del gráfico para medir la diferencia entre ellos */}
+        {measurePoints.length === 0 && (
+          <div style={{ fontSize: 11, color: C.faint, marginTop: 6 }}>Tocá dos puntos del gráfico para comparar precios entre esas fechas.</div>
+        )}
+        {measurePoints.length === 1 && (
+          <div style={{ fontSize: 11, color: C.muted, marginTop: 6 }}>
+            {measurePoints[0].date}: {f(measurePoints[0].price)} · tocá otro punto para comparar.
+          </div>
+        )}
+        {measurePoints.length === 2 && (() => {
+          const [pa, pb] = measurePoints[0].date <= measurePoints[1].date ? measurePoints : [measurePoints[1], measurePoints[0]];
+          const diff = pb.price - pa.price;
+          const diffPct = pct(pb.price, pa.price);
+          const up = diff >= 0;
+          return (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: 8,
+                padding: "8px 12px",
+                borderRadius: 8,
+                background: C.rowLine,
+                flexWrap: "wrap",
+                gap: 8,
+              }}
+            >
+              <div className="tabular" style={{ fontSize: 12, color: C.muted }}>
+                {pa.date} ({f(pa.price)}) → {pb.date} ({f(pb.price)})
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                {up ? <TrendingUp size={15} color={C.gain} /> : <TrendingDown size={15} color={C.loss} />}
+                <span className="tabular" style={{ fontSize: 14, fontWeight: 600, color: up ? C.gain : C.loss }}>
+                  {up ? "+" : ""}{f(diff)} ({up ? "+" : ""}{diffPct.toFixed(2)}%)
+                </span>
+                <button
+                  onClick={() => setMeasurePoints([])}
+                  style={{ fontSize: 11, color: C.faint, background: "none", border: "none", cursor: "pointer", marginLeft: 6 }}
+                >
+                  limpiar ×
+                </button>
+              </div>
+            </div>
+          );
+        })()}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, flexWrap: "wrap", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: isLive ? C.gain : mode === "accion" && historyStatus === "ok" ? C.muted : C.faint }}>
             {isLive && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />}
