@@ -882,14 +882,18 @@ export default function InvestmentDashboard() {
 
   const rangeStartPoint = scaledSeries.find((p) => p.date >= from) || scaledSeries[0];
   const rangeEndPoint = [...scaledSeries].reverse().find((p) => p.date <= to) || scaledSeries[scaledSeries.length - 1];
-  const pnlAbs = rangeEndPoint.total - rangeStartPoint.total;
-  const pnlPct = pct(rangeEndPoint.total, rangeStartPoint.total);
   const chartDataRaw = scaledSeries.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
   const investedSeries = useMemo(
     () => buildInvestedSeries(byBroker, chartDataRaw.map((p) => p.date)),
     [byBroker, chartDataRaw.length ? chartDataRaw[0].date : null, chartDataRaw.length ? chartDataRaw[chartDataRaw.length - 1].date : null]
   );
   const chartData = chartDataRaw.map((p, i) => ({ ...p, invertido: investedSeries[i]?.invertido ?? null }));
+  // Ganancia neta real: valor actual vs. lo que efectivamente invertiste (no
+  // contra el valor de arranque del período -- eso da porcentajes absurdos
+  // cuando el rango es largo y arrancás de una cartera casi vacía).
+  const investedAtEnd = investedSeries[investedSeries.length - 1]?.invertido || 0;
+  const pnlAbs = rangeEndPoint.total - investedAtEnd;
+  const pnlPct = pct(rangeEndPoint.total, investedAtEnd);
   const chartTrades = MOVIMIENTOS.filter(
     (m) =>
       (m.tipo === "Compra" || m.tipo === "Venta") &&
@@ -1078,7 +1082,7 @@ export default function InvestmentDashboard() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16, marginBottom: 8 }}>
                   <div>
                     <div style={{ fontSize: 12, color: C.muted, marginBottom: 6 }}>
-                      Resultado {useCustom ? `del ${from} al ${to}` : RANGE_PRESETS[rangeIdx].label.toLowerCase()}
+                      Ganancia neta (valor actual vs. invertido) {useCustom ? `· al ${to}` : ""}
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                       {pnlAbs >= 0 ? <TrendingUp size={22} color={C.gain} /> : <TrendingDown size={22} color={C.loss} />}
