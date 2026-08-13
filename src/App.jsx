@@ -416,7 +416,7 @@ const RANGE_PRESETS = [
   { label: "90D", days: 90 },
   { label: "Este mes", month: true },
   { label: "YTD", ytd: true },
-  { label: "Todo", days: 420 },
+  { label: "Todo", all: true },
 ];
 
 const FX_RATES = {
@@ -645,10 +645,16 @@ function priceAt(historyMap, sortedDates, date) {
 
 // Ahora es sincrónica y sin red -- historyCache ya viene descargado (un solo
 // archivo, una sola vez) así que cruzar todo es instantáneo.
+// Fecha de tu primer movimiento real -- no tiene sentido mostrar histórico de
+// antes de eso, tu cartera todavía no existía.
+const EARLIEST_TRADE_DATE = MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
+  .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
+
 function buildRealPortfolioHistory(holdings, historyCache) {
   const uniqueTickers = [...new Map(holdings.map((h) => [h.name, h])).values()];
-  const days = 365;
   const today = new Date();
+  const start = new Date(EARLIEST_TRADE_DATE);
+  const days = Math.max(1, Math.round((today - start) / 86400000));
   const dates = [];
   for (let i = days; i >= 0; i--) {
     const d = new Date(today);
@@ -866,6 +872,7 @@ export default function InvestmentDashboard() {
     let fromDate;
     if (preset.month) fromDate = new Date(lastDate.getFullYear(), lastDate.getMonth(), 1);
     else if (preset.ytd) fromDate = new Date(lastDate.getFullYear(), 0, 1);
+    else if (preset.all) fromDate = new Date(EARLIEST_TRADE_DATE);
     else {
       fromDate = new Date(lastDate);
       fromDate.setDate(fromDate.getDate() - preset.days);
