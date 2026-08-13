@@ -1661,7 +1661,15 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                 width={56}
               />
               <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Precio"]} />
-              <Area type="monotone" dataKey="price" stroke={abs >= 0 ? C.gain : C.loss} strokeWidth={2} fill="url(#fillAsset)" dot={false} activeDot={false} />
+              <Area
+                type="monotone"
+                dataKey="price"
+                stroke={abs >= 0 ? C.gain : C.loss}
+                strokeWidth={2}
+                fill="url(#fillAsset)"
+                dot={false}
+                activeDot={{ r: 4, fill: abs >= 0 ? C.gain : C.loss, stroke: C.bg, strokeWidth: 2, style: { pointerEvents: "none" } }}
+              />
               {trades.map((t, i) => {
                 const text = `${t.activo}: ${t.tipo === "Compra" ? "↑" : "↓"} ${f(t.cantidad * t.precio)}`;
                 return (
