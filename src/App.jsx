@@ -651,7 +651,7 @@ const EARLIEST_TRADE_DATE = MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.t
   .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
 
 function buildRealPortfolioHistory(holdings, historyCache) {
-  const uniqueTickers = [...new Map(holdings.map((h) => [h.name, h])).values()];
+  const uniqueTickers = [...new Map(holdings.map((h) => [`${h.name}__${h.broker}`, h])).values()];
   const today = new Date();
   const start = new Date(EARLIEST_TRADE_DATE);
   const days = Math.max(1, Math.round((today - start) / 86400000));
@@ -841,7 +841,10 @@ export default function InvestmentDashboard() {
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx) })), [livePrices, fx]);
 
-  const byBroker = brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker));
+  const byBroker = useMemo(
+    () => (brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker))),
+    [holdingsLive, brokerFilter]
+  );
   const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
 
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
