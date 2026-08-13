@@ -441,46 +441,24 @@ async function fetchWithTimeout(url, ms = 8000) {
   }
 }
 
-// --- Datos cacheados por el workflow diario -------------------------------
-// En vez de pedirle en vivo a data912/CoinGecko/DolarAPI desde el navegador de
-// cada visitante (lo que terminó bloqueando el sitio por exceso de pedidos),
-// un GitHub Action corre una vez al día, pide todo con calma, y guarda el
-// resultado acá mismo en el repo. La app solo lee estos archivos estáticos.
+// --- Datos en vivo (livianos: dólar + 3 paneles de precios + cripto) ------
+// Solo el histórico de TODA la cartera junta (42 tickers de una) se cachea
+// una vez al día -- eso fue lo que terminó bloqueando el sitio. Todo lo demás
+// (precio actual, e histórico de UN activo puntual que estás mirando) es
+// liviano y sigue en vivo, como corresponde.
 const dataUrl = (name) => `${import.meta.env.BASE_URL}data/${name}`;
 
+// FX: dolarapi.com -- API pública, formato confirmado y estable.
 async function fetchFxRates() {
-  const res = await fetchWithTimeout(dataUrl("fx.json"));
-  if (!res.ok) throw new Error("fx cache fetch failed");
+  const res = await fetchWithTimeout("https://dolarapi.com/v1/dolares");
+  if (!res.ok) throw new Error("fx fetch failed");
   const data = await res.json();
-  return data.fx || {};
-}
-
-async function fetchLivePrices() {
-  const res = await fetchWithTimeout(dataUrl("live.json"));
-  if (!res.ok) throw new Error("live cache fetch failed");
-  const data = await res.json();
-  return { prices: data.prices || {}, catalog: data.catalog || [] };
-}
-
-async function fetchHistoryCache() {
-  const res = await fetchWithTimeout(dataUrl("history.json"));
-  if (!res.ok) return { history: {}, coverage: null };
-  const data = await res.json();
-  return { history: data.history || {}, coverage: data.coverage || null };
-}
-
-const COINGECKO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
-
-// Los bonos en ley extranjera (AL/GD) cotizan "cada 100 de nominal" y en dólares
-// (ej: 84,59 = US$0,8459 por unidad), mientras que nuestro costo de compra (avgCost)
-// está guardado en pesos por unidad. Confirmado con datos reales del usuario
-// (Balanz: GD38 a u$s0,8466/unidad; data912: "GD38" sin sufijo = ARS 1293,60,
-// cada 100 nominal) -- ya está en pesos, solo falta dividir por 100.
-function liveAdjustedPrice(holding, livePrices, fx) {
-  const raw = livePrices[holding.name];
-  if (raw == null) return holding.price; // sin dato en caché, se mantiene el estimado
-  if (holding.cat === "Bonos") return raw / 100;
-  return raw;
+  const byCasa = Object.fromEntries(data.map((d) => [d.casa, d]));
+  const out = {};
+  if (byCasa.oficial) out.oficial = { label: "Oficial", value: byCasa.oficial.venta };
+  if (byCasa.bolsa) out.mep = { label: "MEP", value: byCasa.bolsa.venta };
+  if (byCasa.blue) out.blue = { label: "Blue", value: byCasa.blue.venta };
+  return out;
 }
 
 function extractSymbol(o) { return o.symbol || o.ticker || o.simbolo || o.especie || null; }
@@ -492,6 +470,112 @@ function extractPrice(o) {
   if (typeof o.price === "number") return o.price;
   if (typeof o.px_bid === "number" && typeof o.px_ask === "number") return (o.px_bid + o.px_ask) / 2;
   return null;
+}
+
+// Precios en vivo: data912.com, 3 paneles nada más -- liviano, nunca causó problema.
+async function fetchLivePrices() {
+  const endpoints = [
+    { path: "arg_stocks", cat: "Acciones AR" },
+    { path: "arg_bonds", cat: "Bonos" },
+    { path: "arg_cedears", cat: "CEDEARs" },
+  ];
+  const results = await Promise.allSettled(
+    endpoints.map((e) => fetchWithTimeout(`https://data912.com/live/${e.path}`).then((r) => r.json()))
+  );
+  const prices = {};
+  const catalog = [];
+  results.forEach((r, i) => {
+    if (r.status !== "fulfilled" || !Array.isArray(r.value)) return;
+    for (const item of r.value) {
+      const sym = extractSymbol(item);
+      const price = extractPrice(item);
+      if (sym && price) prices[sym] = price;
+      if (sym) catalog.push({ symbol: sym, cat: endpoints[i].cat });
+    }
+  });
+  return { prices, catalog };
+}
+
+// Histórico de TODA la cartera (42 tickers) -- este sí queda cacheado,
+// generado una vez al día por .github/workflows/update-prices.yml.
+async function fetchHistoryCache() {
+  const res = await fetchWithTimeout(dataUrl("history.json"));
+  if (!res.ok) return { history: {}, coverage: null };
+  const data = await res.json();
+  return { history: data.history || {}, coverage: data.coverage || null };
+}
+
+const COINGECKO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
+
+// Cripto en vivo: CoinGecko, endpoint confirmado y estable.
+async function fetchCryptoPricesUsd() {
+  const ids = Object.values(COINGECKO_IDS).join(",");
+  const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+  if (!res.ok) throw new Error("crypto fetch failed");
+  const data = await res.json();
+  const out = {};
+  for (const [symbol, id] of Object.entries(COINGECKO_IDS)) {
+    if (data[id]?.usd) out[symbol] = data[id].usd;
+  }
+  return out;
+}
+
+async function fetchCryptoHistoryUsd(symbol, days) {
+  const id = COINGECKO_IDS[symbol];
+  if (!id) return null;
+  const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`);
+  if (!res.ok) throw new Error("crypto history fetch failed");
+  const data = await res.json();
+  if (!Array.isArray(data.prices)) return null;
+  return data.prices.map(([ts, price]) => ({ date: new Date(ts).toISOString().slice(0, 10), price }));
+}
+
+// Histórico de UN activo puntual vía data912 -- se usa on-demand en Buscar
+// activo (1 pedido, liviano), nunca en bloque. Maneja los dos formatos que
+// confirmamos con datos reales: lista de objetos (stocks/bonds argentinos) y
+// objeto con arrays paralelos {dates, prices} (usa_stocks/CEDEARs).
+const US_TICKER_ALIAS = { DISN: "DIS" };
+async function fetchAssetHistory(type, ticker, cat) {
+  const requestTicker = (cat === "CEDEARs" && US_TICKER_ALIAS[ticker]) || ticker;
+  try {
+    const res = await fetchWithTimeout(`https://data912.com/historical/${type}/${requestTicker}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (Array.isArray(data) && data.length > 0) {
+      const parsed = data
+        .map((row) => {
+          const date = row.date || row.fecha || row.d || row.t;
+          const price = row.c ?? row.close ?? row.px ?? row.price;
+          if (!date || price == null) return null;
+          return { date: String(date).slice(0, 10), price };
+        })
+        .filter(Boolean);
+      return parsed.length > 0 ? parsed : null;
+    }
+    if (data && Array.isArray(data.dates) && Array.isArray(data.prices)) {
+      const out = [];
+      for (let i = 0; i < data.dates.length; i++) {
+        if (data.dates[i] == null || data.prices[i] == null) continue;
+        out.push({ date: String(data.dates[i]).slice(0, 10), price: data.prices[i] });
+      }
+      return out.length > 0 ? out : null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// Los bonos en ley extranjera (AL/GD) cotizan "cada 100 de nominal" y en dólares
+// (ej: 84,59 = US$0,8459 por unidad), mientras que nuestro costo de compra (avgCost)
+// está guardado en pesos por unidad. Confirmado con datos reales del usuario
+// (Balanz: GD38 a u$s0,8466/unidad; data912: "GD38" sin sufijo = ARS 1293,60,
+// cada 100 nominal) -- ya está en pesos, solo falta dividir por 100.
+function liveAdjustedPrice(holding, livePrices, fx) {
+  const raw = livePrices[holding.name];
+  if (raw == null) return holding.price; // sin dato en vivo, se mantiene el estimado
+  if (holding.cat === "Bonos") return raw / 100;
+  return raw;
 }
 
 // --- Reconstrucción de histórico real de la cartera --------------------
@@ -675,18 +759,18 @@ export default function InvestmentDashboard() {
   const [liveFxRates, setLiveFxRates] = useState(null); // null hasta que carguen
   const [livePrices, setLivePrices] = useState({});
   const [liveCatalog, setLiveCatalog] = useState([]);
+  const [cryptoUsd, setCryptoUsd] = useState({});
   const [historyCache, setHistoryCache] = useState({});
   const [historyCoverage, setHistoryCoverage] = useState(null);
   const [liveStatus, setLiveStatus] = useState("cargando"); // cargando | ok | error
 
-  // Todo sale de public/data/*.json, generados una vez al día por un GitHub
-  // Action (ver .github/workflows/update-prices.yml) -- la app nunca le pega
-  // en vivo a data912/CoinGecko/DolarAPI, así que no hay límites de pedidos
-  // ni bloqueos por CORS que temer.
+  // Dólar, precios y cripto: en vivo (livianos). Histórico de la cartera
+  // completa: cacheado una vez al día (ver .github/workflows/update-prices.yml)
+  // porque son 42 pedidos de una, y eso sí terminó bloqueando el sitio antes.
   React.useEffect(() => {
     let cancelled = false;
-    Promise.allSettled([fetchFxRates(), fetchLivePrices(), fetchHistoryCache()])
-      .then(([fxRes, pxRes, histRes]) => {
+    Promise.allSettled([fetchFxRates(), fetchLivePrices(), fetchHistoryCache(), fetchCryptoPricesUsd()])
+      .then(([fxRes, pxRes, histRes, cryptoRes]) => {
         if (cancelled) return;
         if (fxRes.status === "fulfilled" && Object.keys(fxRes.value).length > 0) {
           setLiveFxRates(fxRes.value);
@@ -697,6 +781,9 @@ export default function InvestmentDashboard() {
         }
         if (histRes.status === "fulfilled") {
           setHistoryCache(histRes.value.history || {});
+        }
+        if (cryptoRes.status === "fulfilled" && Object.keys(cryptoRes.value).length > 0) {
+          setCryptoUsd(cryptoRes.value);
         }
         const gotFx = fxRes.status === "fulfilled" && Object.keys(fxRes.value || {}).length > 0;
         setLiveStatus(gotFx ? "ok" : "error");
@@ -1192,7 +1279,7 @@ export default function InvestmentDashboard() {
           )}
 
           {view === "importar" && <ImportarView C={C} />}
-          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} liveCatalog={liveCatalog} historyCache={historyCache} initialSymbol={jumpSymbol} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
@@ -1203,19 +1290,29 @@ export default function InvestmentDashboard() {
   );
 }
 
-function BuscarView({ fx, f, C, livePrices, liveCatalog, historyCache, initialSymbol }) {
+function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache, initialSymbol }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
-  const [tick, setTick] = useState(0);
   const [posExpanded, setPosExpanded] = useState(false);
   const [hoverDot, setHoverDot] = useState(null);
+  const [livePriceUsd, setLivePriceUsd] = useState(null); // solo para cripto, polling propio
 
-  // Simula actualización en vivo: cada 3s "late" el último precio un poco.
+  // Cripto: además del precio ya cargado al entrar, hace polling propio cada
+  // 5s directo a CoinGecko mientras estás mirando ese activo -- así se siente
+  // realmente en vivo, segundo a segundo, como pediste.
   React.useEffect(() => {
-    const id = setInterval(() => setTick((t) => t + 1), 3000);
-    return () => clearInterval(id);
-  }, []);
+    if (selected.cat !== "Cripto") { setLivePriceUsd(null); return; }
+    let cancelled = false;
+    const poll = () => {
+      fetchCryptoPricesUsd().then((prices) => {
+        if (!cancelled && prices[selected.symbol] != null) setLivePriceUsd(prices[selected.symbol]);
+      }).catch(() => {});
+    };
+    poll();
+    const id = setInterval(poll, 5000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [selected]);
 
   // Universo completo: catálogo base + tus tenencias + todo lo que devuelva data912
   // en vivo (así "Nike", "Coca-Cola", etc. aparecen aunque no los tengas en cartera).
@@ -1235,28 +1332,53 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, historyCache, initialSy
         ).slice(0, 30);
 
   const series = useMemo(() => genPriceSeries(selected.seed, selected.base, 400, selected.cat === "Cripto" ? 0.035 : 0.016), [selected]);
-  const liveJitter = useMemo(() => {
-    const r = seededRandom(selected.seed + tick);
-    return 1 + (r() - 0.5) * 0.004;
-  }, [selected, tick]);
 
   const days = CHART_RANGES[rangeIdx].days;
 
-  // Histórico real cacheado (sin red, instantáneo) -- si no está disponible
-  // para este símbolo, se cae al simulado y se avisa en el pie del gráfico.
+  // Histórico: cripto sale en vivo de CoinGecko (real, segundo a segundo).
+  // Acciones/CEDEARs/bonos NO se piden en vivo por activo -- eso fue lo que
+  // saturaba a data912. Salen del mismo archivo cacheado una vez al día que
+  // usa el gráfico de Inicio (public/data/history.json).
+  const [cryptoHistory, setCryptoHistory] = useState(null);
+  const [cryptoHistoryStatus, setCryptoHistoryStatus] = useState("cargando");
+  React.useEffect(() => {
+    if (selected.cat !== "Cripto") return;
+    let cancelled = false;
+    setCryptoHistoryStatus("cargando");
+    setCryptoHistory(null);
+    fetchCryptoHistoryUsd(selected.symbol, 365)
+      .then((data) => {
+        if (cancelled) return;
+        if (data && data.length > 1) { setCryptoHistory(data); setCryptoHistoryStatus("ok"); }
+        else setCryptoHistoryStatus("no-disponible");
+      })
+      .catch(() => { if (!cancelled) setCryptoHistoryStatus("no-disponible"); });
+    return () => { cancelled = true; };
+  }, [selected]);
+
   const cachedHistory = historyCache[selected.symbol];
-  const historyStatus = cachedHistory && cachedHistory.length > 1 ? "ok" : "no-disponible";
-  const sliced = historyStatus === "ok" ? cachedHistory.slice(-days) : series.slice(-days);
+  const realHistory = selected.cat === "Cripto" ? cryptoHistory : cachedHistory;
+  const historyStatus =
+    selected.cat === "Cripto"
+      ? cryptoHistoryStatus
+      : cachedHistory && cachedHistory.length > 1
+      ? "ok"
+      : "no-disponible";
+
+  const sliced = historyStatus === "ok" ? realHistory.slice(-days) : series.slice(-days);
   const first = sliced[0].price;
   const lastRaw = sliced[sliced.length - 1].price;
 
-  // Precio real cacheado (actualizado una vez al día). La cripto ya viene
-  // convertida a pesos desde el archivo cacheado, igual que el resto.
+  // Precio real: cripto usa el polling propio (más fresco, cada 5s); el resto
+  // sale del panel en vivo de data912 (bonos vienen cada 100 nominal, /100).
   const liveRaw = livePrices[selected.symbol];
-  const realLivePrice = liveRaw != null ? (selected.cat === "Bonos" ? liveRaw / 100 : liveRaw) : null;
+  let realLivePrice = null;
+  if (selected.cat === "Cripto" && livePriceUsd != null) realLivePrice = livePriceUsd * fx;
+  else if (selected.cat === "Cripto" && cryptoUsd[selected.symbol] != null) realLivePrice = cryptoUsd[selected.symbol] * fx;
+  else if (liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
 
   const isLive = realLivePrice != null;
-  const last = isLive ? realLivePrice : historyStatus === "ok" ? lastRaw : lastRaw * liveJitter;
+  const last = isLive ? realLivePrice : lastRaw;
   const abs = last - first;
   const p = pct(last, first);
 
@@ -1420,8 +1542,11 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, historyCache, initialSy
           )}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, flexWrap: "wrap", gap: 8 }}>
-          <div style={{ fontSize: 11, color: isLive ? C.gain : C.faint }}>
-            {isLive ? "Precio real (actualizado una vez al día)." : "Precio simulado — no encontramos cotización cacheada para este símbolo todavía."}
+          <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: isLive ? C.gain : C.faint }}>
+            {isLive && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block", animation: "pulse 1.5s infinite" }} />}
+            {isLive
+              ? `Precio en vivo${selected.cat === "Cripto" ? " (CoinGecko, cada 5s)" : " (data912)"}.`
+              : "Precio simulado — no encontramos cotización para este símbolo todavía."}
           </div>
           {trades.length > 0 && (
             <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted }}>
@@ -1439,7 +1564,7 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, historyCache, initialSy
         {isLive && (
           <div style={{ fontSize: 10, color: historyStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
             {historyStatus === "ok"
-              ? "Histórico real (actualizado una vez al día)."
+              ? `Histórico ${selected.cat === "Cripto" ? "en vivo (CoinGecko)." : "real, actualizado una vez al día (caché)."}`
               : "No encontramos histórico real para este símbolo — el gráfico de arriba es simulado, aunque el precio actual sí es real."}
           </div>
         )}
