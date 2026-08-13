@@ -21,6 +21,8 @@ const TICKERS = [
 ];
 
 const TYPE_MAP = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
+// El CEDEAR se llama distinto al ticker real de EE.UU. en algunos casos puntuales.
+const US_TICKER_ALIAS = { DISN: "DIS" };
 const CRYPTO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -104,7 +106,8 @@ async function fetchHistoryFor(ticker, cat, fxMep) {
   }
   const type = TYPE_MAP[cat];
   if (!type) return null; // ej: Fondos, no cubierto por data912
-  const data = await fetchJson(`https://data912.com/historical/${type}/${ticker}`);
+  const requestTicker = (cat === "CEDEARs" && US_TICKER_ALIAS[ticker]) || ticker;
+  const data = await fetchJson(`https://data912.com/historical/${type}/${requestTicker}`);
   const fxAdjust = (price) => (cat === "Bonos" ? price / 100 : cat === "CEDEARs" ? price * fxMep : price);
 
   // Formato A (stocks/bonds argentinos): lista de objetos [{date, c, ...}, ...]
