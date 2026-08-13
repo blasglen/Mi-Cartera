@@ -834,15 +834,6 @@ export default function InvestmentDashboard() {
     return () => { cancelled = true; };
   }, []);
 
-  // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
-  // (no hay red de por medio acá), así que se recalcula solo con useMemo.
-  const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
-    () => buildRealPortfolioHistory(byBroker, historyCache),
-    [historyCache, byBroker]
-  );
-  React.useEffect(() => { setHistoryCoverage(realHistoryCoverage); }, [realHistoryCoverage]);
-  const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
-
   const activeFxRates = { ...FX_RATES, ...(liveFxRates || {}) };
   const fx = activeFxRates[fxType].value;
   const f = (n) => fmt(n, currency, fx);
@@ -852,6 +843,15 @@ export default function InvestmentDashboard() {
 
   const byBroker = brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker));
   const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
+
+  // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
+  // (no hay red de por medio acá), así que se recalcula solo con useMemo.
+  const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
+    () => buildRealPortfolioHistory(byBroker, historyCache),
+    [historyCache, byBroker]
+  );
+  React.useEffect(() => { setHistoryCoverage(realHistoryCoverage); }, [realHistoryCoverage]);
+  const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
 
   // Valor real de la cartera filtrada, calculado directo de las tenencias con precio
   // en vivo -- esta es la fuente de verdad. El histórico (SERIES) sigue siendo una
