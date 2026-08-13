@@ -147,6 +147,11 @@ const HOLDINGS = [
 ];
 
 const MOVIMIENTOS = [
+  // Splits (llegaron como "Dividendo en acciones" en el export original, no
+  // como Compra/Venta -- se agregan acá con costo 0 para que el histórico
+  // cuente la cantidad real de acciones en cada fecha, no la subestime).
+  { fecha: "2026-08-04", activo: "YPFD", tipo: "Compra", cantidad: 18.0, precio: 0, broker: "Balanz" },
+  { fecha: "2026-06-01", activo: "SPY", tipo: "Compra", cantidad: 8.0, precio: 0, broker: "Balanz" },
   { fecha: "2026-08-07", activo: "YPFD", tipo: "Compra", cantidad: 20.0, precio: 7867.009, broker: "Balanz" },
   { fecha: "2026-08-03", activo: "AMD", tipo: "Compra", cantidad: 1.0, precio: 76430.28, broker: "Balanz" },
   { fecha: "2026-07-29", activo: "CEPU", tipo: "Compra", cantidad: 43.0, precio: 2313.293, broker: "Balanz" },
@@ -624,11 +629,40 @@ function buildQtyTimeline(ticker, broker) {
 // respetando el filtro de cartera activo), cuánto tenías comprado a esa fecha
 // multiplicado por tu costo promedio real. A diferencia del valor de mercado,
 // esto no es una estimación -- sale directo de tus movimientos reales.
+// Costo invertido real, día por día -- reproduce el método de costo promedio
+// ponderado: cada compra suma cantidad y costo; cada venta descuenta la
+// proporción correspondiente del costo acumulado (no el costo total). Así el
+// "invertido" de una fecha vieja refleja lo que realmente habías puesto en
+// ese momento, no el promedio final aplicado hacia atrás.
+function buildCostBasisTimeline(ticker, broker) {
+  const trades = MOVIMIENTOS.filter(
+    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta")
+  )
+    .slice()
+    .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  return (date) => {
+    let qty = 0, cost = 0;
+    for (const t of trades) {
+      if (t.fecha > date) break;
+      if (t.tipo === "Compra") {
+        qty += t.cantidad;
+        cost += t.cantidad * t.precio;
+      } else if (qty > 0) {
+        const avgCostPerUnit = cost / qty;
+        const soldQty = Math.min(t.cantidad, qty);
+        cost -= soldQty * avgCostPerUnit;
+        qty -= soldQty;
+      }
+    }
+    return cost;
+  };
+}
+
 function buildInvestedSeries(holdings, dates) {
-  const perHolding = holdings.map((h) => ({ qtyAt: buildQtyTimeline(h.name, h.broker), avgCost: h.avgCost }));
+  const perHolding = holdings.map((h) => buildCostBasisTimeline(h.name, h.broker));
   return dates.map((date) => ({
     date,
-    invertido: perHolding.reduce((s, h) => s + h.qtyAt(date) * h.avgCost, 0),
+    invertido: perHolding.reduce((s, costAt) => s + costAt(date), 0),
   }));
 }
 
@@ -907,6 +941,7 @@ export default function InvestmentDashboard() {
   const chartTrades = MOVIMIENTOS.filter(
     (m) =>
       (m.tipo === "Compra" || m.tipo === "Venta") &&
+      m.precio > 0 && // splits/acciones recibidas a costo 0 no son "operaciones" visibles
       (brokerFilter.length === 0 || brokerFilter.includes(m.broker)) &&
       m.fecha >= chartData[0]?.date &&
       m.fecha <= chartData[chartData.length - 1]?.date
@@ -1496,7 +1531,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
 
   // Marcas de compra/venta sobre el gráfico, a partir de tus movimientos reales.
   const trades = MOVIMIENTOS.filter(
-    (m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta") && m.fecha >= sliced[0].date && m.fecha <= sliced[sliced.length - 1].date
+    (m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta") && m.precio > 0 && m.fecha >= sliced[0].date && m.fecha <= sliced[sliced.length - 1].date
   ).map((m) => {
     const point = sliced.find((p) => p.date === m.fecha) || [...sliced].reverse().find((p) => p.date <= m.fecha);
     return { ...m, y: point ? point.price : m.precio };
