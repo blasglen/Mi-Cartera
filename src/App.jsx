@@ -690,6 +690,16 @@ function fmt(n, currency, fxRate) {
   return "$" + Math.round(n).toLocaleString("es-AR");
 }
 
+// Formato corto para las etiquetas del eje (ej: "1,2M" en vez de "1234567").
+function fmtCompact(n, currency, fxRate) {
+  const val = currency === "USD" ? n / fxRate : n;
+  const prefix = currency === "USD" ? "US$" : "$";
+  const abs = Math.abs(val);
+  if (abs >= 1_000_000) return prefix + (val / 1_000_000).toLocaleString("es-AR", { maximumFractionDigits: 1 }) + "M";
+  if (abs >= 1_000) return prefix + (val / 1_000).toLocaleString("es-AR", { maximumFractionDigits: 1 }) + "k";
+  return prefix + val.toLocaleString("es-AR", { maximumFractionDigits: abs >= 10 ? 0 : 2 });
+}
+
 function pct(a, b) {
   if (b === 0) return 0;
   return ((a - b) / b) * 100;
@@ -763,7 +773,10 @@ export default function InvestmentDashboard() {
   const goToAsset = (symbol) => { setJumpSymbol(symbol); setView("buscar"); };
   const [hoverDot, setHoverDot] = useState(null); // { x, y, text } en píxeles del gráfico
   const [collapsed, setCollapsed] = useState(false);
-  const [themeMode, setThemeMode] = useState("dark");
+  const [themeMode, setThemeMode] = useState(() => {
+    const hour = new Date().getHours();
+    return hour >= 7 && hour < 20 ? "light" : "dark"; // de día (7-20hs) claro, de noche oscuro
+  });
   const C = themeMode === "dark" ? DARK : LIGHT;
 
   const [rangeIdx, setRangeIdx] = useState(1);
@@ -1106,7 +1119,14 @@ export default function InvestmentDashboard() {
                       </defs>
                       <CartesianGrid stroke={C.rowLine} vertical={false} />
                       <XAxis dataKey="date" tick={{ fill: C.faint, fontSize: 10 }} tickFormatter={(d) => d.slice(5)} axisLine={{ stroke: C.border }} tickLine={false} minTickGap={40} />
-                      <YAxis hide domain={["auto", "auto"]} />
+                      <YAxis
+                        domain={["auto", "auto"]}
+                        tick={{ fill: C.faint, fontSize: 10 }}
+                        tickFormatter={(v) => fmtCompact(v, currency, fx)}
+                        axisLine={{ stroke: C.border }}
+                        tickLine={false}
+                        width={56}
+                      />
                       <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v, name) => [f(v), name]} />
                       <Area type="monotone" dataKey="total" name="Valor actual" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
                       <Line type="monotone" dataKey="invertido" name="Invertido" stroke={C.muted} strokeWidth={1.5} strokeDasharray="4 3" dot={false} isAnimationActive={false} />
@@ -1309,7 +1329,7 @@ export default function InvestmentDashboard() {
   );
 }
 
-function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache, initialSymbol }) {
+function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache, initialSymbol }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
@@ -1583,7 +1603,14 @@ function BuscarView({ fx, f, C, livePrices, liveCatalog, cryptoUsd, historyCache
               </defs>
               <CartesianGrid stroke={C.rowLine} vertical={false} />
               <XAxis dataKey="date" tick={{ fill: C.faint, fontSize: 10 }} tickFormatter={(d) => d.slice(5)} axisLine={{ stroke: C.border }} tickLine={false} minTickGap={40} />
-              <YAxis hide domain={["auto", "auto"]} />
+              <YAxis
+                domain={["auto", "auto"]}
+                tick={{ fill: C.faint, fontSize: 10 }}
+                tickFormatter={(v) => fmtCompact(v, currency, fx)}
+                axisLine={{ stroke: C.border }}
+                tickLine={false}
+                width={56}
+              />
               <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v) => [f(v), "Precio"]} />
               <Area type="monotone" dataKey="price" stroke={abs >= 0 ? C.gain : C.loss} strokeWidth={2} fill="url(#fillAsset)" />
               {trades.map((t, i) => {
