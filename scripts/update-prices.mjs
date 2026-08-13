@@ -44,7 +44,12 @@ const EXTRA_TICKERS = [
   ["AL29", "Bonos"], ["AE38", "Bonos"], ["GD29", "Bonos"], ["GD46", "Bonos"],
 ];
 
-const TICKERS = [...HOLDINGS_TICKERS, ...EXTRA_TICKERS];
+// Cripto: mismo tratamiento que el resto -- histórico cacheado una vez al día,
+// para no depender de pedirle en vivo a CoinGecko cada vez que alguien mira el
+// gráfico (eso fue justo lo que disparó el límite de pedidos gratis).
+const CRYPTO_TICKERS = [["BTC", "Cripto"], ["ETH", "Cripto"], ["SOL", "Cripto"], ["USDT", "Cripto"]];
+
+const TICKERS = [...HOLDINGS_TICKERS, ...EXTRA_TICKERS, ...CRYPTO_TICKERS];
 
 const TYPE_MAP = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
 // El CEDEAR se llama distinto al ticker real de EE.UU. en algunos casos puntuales.
@@ -134,7 +139,12 @@ async function fetchHistoryFor(ticker, cat, fxMep) {
   if (!type) return null; // ej: Fondos, no cubierto por data912
   const requestTicker = (cat === "CEDEARs" && US_TICKER_ALIAS[ticker]) || ticker;
   const data = await fetchJson(`https://data912.com/historical/${type}/${requestTicker}`);
-  const fxAdjust = (price) => (cat === "Bonos" ? price / 100 : cat === "CEDEARs" ? price * fxMep : price);
+  // Los bonos vienen cada 100 de nominal -- eso sí se corrige acá (es una
+  // convención de cotización, no un valor real distinto). Las CEDEARs, en
+  // cambio, se guardan tal cual -- es el precio real en dólares de la acción
+  // en EE.UU., y la app decide cómo mostrarlo (como acción real, o convertido
+  // a la escala del CEDEAR según el precio en vivo del día).
+  const fxAdjust = (price) => (cat === "Bonos" ? price / 100 : price);
 
   // Formato A (stocks/bonds argentinos): lista de objetos [{date, c, ...}, ...]
   if (Array.isArray(data) && data.length > 0) {
