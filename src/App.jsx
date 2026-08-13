@@ -1687,7 +1687,7 @@ function BuscarView({ currency, fx, f, C, livePrices, liveCatalog, cryptoUsd, hi
                   />
                 );
               })}
-              {(sliced.length > 120 ? sliced.filter((_, i) => i % Math.ceil(sliced.length / 120) === 0) : sliced).map((p, i) => (
+              {sliced.map((p, i) => (
                 <ReferenceDot
                   key={`hit-${i}`}
                   x={p.date}
