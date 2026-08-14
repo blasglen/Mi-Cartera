@@ -627,14 +627,27 @@ function liveAdjustedPrice(holding, livePrices, fx) {
 // CONIOLA) aportan su valor actual "plano" hacia atrás -- no es ideal, pero es
 // mejor que inventar una caminata aleatoria, y queda claramente marcado.
 
+// Si un ticker+broker no tiene NINGÚN movimiento cargado (ej: Bull Market,
+// que por ahora solo tiene el snapshot de tenencias, sin órdenes históricas
+// importadas), devuelve la cantidad actual de HOLDINGS para ese broker --
+// mismo criterio "plano hacia atrás" que ya se usa cuando falta precio
+// histórico, en vez de mostrar 0 y un salto vertical el último día.
+function flatQtyFallback(ticker, broker) {
+  const brokersWithTrades = new Set(
+    MOVIMIENTOS.filter((m) => m.activo === ticker && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")).map((m) => m.broker)
+  );
+  return HOLDINGS.filter((h) => h.name === ticker && (broker == null || h.broker === broker) && !brokersWithTrades.has(h.broker));
+}
+
 function buildQtyTimeline(ticker, broker) {
   const trades = MOVIMIENTOS.filter(
     (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
   )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  const flatQty = flatQtyFallback(ticker, broker).reduce((s, h) => s + h.qty, 0);
   return (date) => {
-    let q = 0;
+    let q = flatQty;
     for (const t of trades) {
       if (t.fecha > date) break;
       // Un split suma acciones igual que una compra, pero a costo 0 (no es
@@ -662,8 +675,11 @@ function buildCostBasisTimeline(ticker, broker) {
   )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  const flatHoldings = flatQtyFallback(ticker, broker);
+  const flatQty = flatHoldings.reduce((s, h) => s + h.qty, 0);
+  const flatCost = flatHoldings.reduce((s, h) => s + h.qty * h.avgCost, 0);
   return (date) => {
-    let qty = 0, cost = 0;
+    let qty = flatQty, cost = flatCost;
     for (const t of trades) {
       if (t.fecha > date) break;
       if (t.tipo === "Compra" || t.tipo === "Split") {
