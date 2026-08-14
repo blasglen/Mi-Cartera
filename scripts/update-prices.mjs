@@ -55,8 +55,17 @@ const TYPE_MAP = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
 // El CEDEAR se llama distinto al ticker real de EE.UU. en algunos casos puntuales.
 const US_TICKER_ALIAS = { DISN: "DIS" };
 const CRYPTO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
+// Pares de Coinbase Exchange para histórico de cripto (ver fetchCoinbaseHistory
+// más abajo). USDT no tiene par propio ahí -- se trata aparte, vale ~1 siempre.
+const COINBASE_PRODUCTS = { BTC: "BTC-USD", ETH: "ETH-USD", SOL: "SOL-USD" };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// GitHub ya enmascara automáticamente el valor de los secrets en los logs de
+// Actions, pero por las dudas no lo dejamos ni pasar por la URL que se loguea.
+function redact(url) {
+  return url.replace(/([?&]api_key=)[^&]+/, "$1***");
+}
 
 async function fetchJson(url) {
   let res;
@@ -68,18 +77,18 @@ async function fetchJson(url) {
       },
     });
   } catch (err) {
-    console.log(`    [red] ${err.message} -- ${url}`);
+    console.log(`    [red] ${err.message} -- ${redact(url)}`);
     return null;
   }
   if (!res.ok) {
-    console.log(`    [${res.status}] ${url}`);
+    console.log(`    [${res.status}] ${redact(url)}`);
     return null;
   }
   const text = await res.text();
   try {
     return JSON.parse(text);
   } catch {
-    console.log(`    [no-json] ${url} -- primeros 150 caracteres: ${text.slice(0, 150).replace(/\n/g, " ")}`);
+    console.log(`    [no-json] ${redact(url)} -- primeros 150 caracteres: ${text.slice(0, 150).replace(/\n/g, " ")}`);
     return null;
   }
 }
@@ -130,30 +139,47 @@ async function fetchFx() {
 }
 
 // Histórico de cripto: CoinGecko en el plan gratuito solo deja pedir los
-// últimos 365 días (es un límite del plan, no del parámetro que mandemos), y
-// eso fue justo lo que capó el histórico de BTC/ETH/SOL/USDT a 1 año en la
-// calculadora. Para el histórico usamos CryptoCompare (histoday) en su lugar,
-// que da hasta 2000 días por pedido y se puede paginar hacia atrás sin key.
+// últimos 365 días (límite del plan, no del parámetro que mandemos), que fue
+// justo lo que capó el histórico de BTC/ETH/SOL/USDT a 1 año en la
+// calculadora. Probamos CryptoCompare pero ahora exige API key hasta en el
+// plan gratis, y ESE plan gratis también viene capado a 365 días -- no
+// serviría igual. Usamos en su lugar las velas públicas de Coinbase Exchange
+// (api.exchange.coinbase.com/products/.../candles): sin key, sin bloqueo a
+// IPs de EE.UU. (a diferencia de Binance), con histórico completo desde que
+// el par se lista ahí, paginando de a 300 días por pedido.
 // El precio EN VIVO sigue en CoinGecko (fetchCryptoPricesUsd más abajo) --
 // ese endpoint nunca tuvo problema, no hace falta tocarlo.
-async function fetchCryptoCompareHistory(symbol) {
-  const out = [];
-  let toTs = Math.floor(Date.now() / 1000);
-  const limit = 2000;
-  for (let i = 0; i < 6; i++) {
-    const url = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${symbol}&tsym=USD&limit=${limit}&toTs=${toTs}`;
-    const data = await fetchJson(url);
-    const rows = data?.Data?.Data;
-    if (!Array.isArray(rows) || rows.length === 0) break;
-    for (const row of rows) {
-      // CryptoCompare devuelve ceros para fechas anteriores al listado del
-      // par -- los filtramos para no arrastrar "precio 0" al principio de la serie.
-      if (row.close) out.push({ date: new Date(row.time * 1000).toISOString().slice(0, 10), price: row.close });
+async function fetchCoinbaseHistory(symbol) {
+  // USDT no cotiza contra sí mismo en Coinbase -- por definición vale ~1 dólar
+  // siempre, así que generamos la serie plana en vez de buscar un par que no existe.
+  if (symbol === "USDT") {
+    const out = [];
+    const d = new Date("2015-01-01T00:00:00Z");
+    const today = new Date();
+    while (d <= today) {
+      out.push({ date: d.toISOString().slice(0, 10), price: 1 });
+      d.setUTCDate(d.getUTCDate() + 1);
     }
-    const earliest = rows[0]?.time;
-    if (!earliest || rows.length < limit) break; // llegamos al principio de la serie disponible
-    toTs = earliest - 86400;
-    await sleep(300);
+    return out;
+  }
+  const product = COINBASE_PRODUCTS[symbol];
+  if (!product) return [];
+  const granularitySec = 86400; // 1 día
+  const earliestFloor = new Date("2014-01-01T00:00:00Z").getTime();
+  const out = [];
+  let end = Date.now();
+  for (let i = 0; i < 30 && end > earliestFloor; i++) {
+    const start = end - 299 * granularitySec * 1000; // máx. 300 velas por pedido
+    const url = `https://api.exchange.coinbase.com/products/${product}/candles?granularity=${granularitySec}&start=${new Date(start).toISOString()}&end=${new Date(end).toISOString()}`;
+    const data = await fetchJson(url);
+    if (!Array.isArray(data) || data.length === 0) break; // llegamos antes del listado del par
+    for (const row of data) {
+      // Formato: [time (unix seg), low, high, open, close, volume]
+      const [time, , , , close] = row;
+      if (time != null && close != null) out.push({ date: new Date(time * 1000).toISOString().slice(0, 10), price: close });
+    }
+    end = start - granularitySec * 1000;
+    await sleep(400); // Coinbase pública es generosa, pero no hay apuro
   }
   const byDate = new Map();
   for (const p of out) byDate.set(p.date, p.price);
@@ -162,7 +188,7 @@ async function fetchCryptoCompareHistory(symbol) {
 
 async function fetchHistoryFor(ticker, cat, fxMep) {
   if (CRYPTO_IDS[ticker]) {
-    const usdHistory = await fetchCryptoCompareHistory(ticker);
+    const usdHistory = await fetchCoinbaseHistory(ticker);
     if (!usdHistory || usdHistory.length === 0) return null;
     return usdHistory.map((p) => ({ date: p.date, price: p.price * fxMep }));
   }
