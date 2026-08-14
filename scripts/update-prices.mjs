@@ -54,10 +54,22 @@ const TICKERS = [...HOLDINGS_TICKERS, ...EXTRA_TICKERS, ...CRYPTO_TICKERS];
 const TYPE_MAP = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
 // El CEDEAR se llama distinto al ticker real de EE.UU. en algunos casos puntuales.
 const US_TICKER_ALIAS = { DISN: "DIS" };
-const CRYPTO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
+const CRYPTO_IDS = {
+  BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether",
+  // Sumados por la cartera de Nexo -- si alguno tira "sin datos" en el log,
+  // es que el id de CoinGecko cambió (pasa con rebrands, ej. MATIC -> POL) y
+  // hay que ajustarlo acá.
+  NEXO: "nexo", POL: "polygon-ecosystem-token", DOT: "polkadot", DOGE: "dogecoin",
+  RENDER: "render-token", AVAX: "avalanche-2", LINK: "chainlink", BNB: "binancecoin",
+};
 // Pares de Coinbase Exchange para histórico de cripto (ver fetchCoinbaseHistory
 // más abajo). USDT no tiene par propio ahí -- se trata aparte, vale ~1 siempre.
-const COINBASE_PRODUCTS = { BTC: "BTC-USD", ETH: "ETH-USD", SOL: "SOL-USD" };
+// NEXO y POL no están listados en Coinbase -- esos dos caen al fallback plano
+// (precio actual hacia atrás), como cualquier ticker sin histórico real.
+const COINBASE_PRODUCTS = {
+  BTC: "BTC-USD", ETH: "ETH-USD", SOL: "SOL-USD",
+  DOT: "DOT-USD", DOGE: "DOGE-USD", RENDER: "RENDER-USD", AVAX: "AVAX-USD", LINK: "LINK-USD",
+};
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
