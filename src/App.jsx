@@ -1073,7 +1073,10 @@ export default function InvestmentDashboard() {
                   <div className="display tabular" style={{ fontSize: 34, fontWeight: 600, lineHeight: 1 }}>
                     {f(currentTotal)}
                   </div>
-                  <div className="tabular" style={{ fontSize: 13, marginTop: 6, color: dayAbs >= 0 ? C.gain : C.loss }}>
+                  <div className="tabular" style={{ fontSize: 13, marginTop: 6, color: pnlAbs >= 0 ? C.gain : C.loss }}>
+                    {pnlAbs >= 0 ? "+" : ""}{f(pnlAbs)} ({pnlPct >= 0 ? "+" : ""}{pnlPct.toFixed(1)}%) {useCustom ? `· ${from} a ${to}` : RANGE_PRESETS[rangeIdx].label}
+                  </div>
+                  <div className="tabular" style={{ fontSize: 11, marginTop: 2, color: dayAbs >= 0 ? C.gain : C.loss, opacity: 0.75 }}>
                     {dayAbs >= 0 ? "+" : ""}{f(dayAbs)} ({dayPct >= 0 ? "+" : ""}{dayPct.toFixed(1)}%) vs. ayer
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: liveStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
@@ -2766,9 +2769,10 @@ function MovimientosView({ f, C }) {
             onChange={(e) => setTipoFilter(e.target.value)}
             style={{ padding: "6px 10px", borderRadius: 6, fontSize: 13, border: `1px solid ${C.border}`, background: C.surface, color: C.text, cursor: "pointer", fontFamily: "inherit" }}
           >
-            <option value="Ambos">Compras y ventas</option>
+            <option value="Ambos">Todos los movimientos</option>
             <option value="Compra">Solo compras</option>
             <option value="Venta">Solo ventas</option>
+            <option value="Split">Solo splits</option>
           </select>
         </label>
         <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
