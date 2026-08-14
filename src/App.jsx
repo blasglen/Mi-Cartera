@@ -964,12 +964,18 @@ export default function InvestmentDashboard() {
     [byBroker, chartDataRaw.length ? chartDataRaw[0].date : null, chartDataRaw.length ? chartDataRaw[chartDataRaw.length - 1].date : null]
   );
   const chartData = chartDataRaw.map((p, i) => ({ ...p, invertido: investedSeries[i]?.invertido ?? null }));
-  // Ganancia neta real: valor actual vs. lo que efectivamente invertiste (no
-  // contra el valor de arranque del período -- eso da porcentajes absurdos
-  // cuando el rango es largo y arrancás de una cartera casi vacía).
+  // Ganancia neta real del PERÍODO elegido: se compara la "ganancia no
+  // realizada" (valor - costo invertido de lo que tenés) al final del rango
+  // contra la misma foto al principio del rango. Restar así, en vez de comparar
+  // directo valor final vs. costo final, es lo que hace que el número cambie
+  // según elijas 7D/90D/Todo -- antes siempre anclaba al costo de HOY sin
+  // importar el rango, y por eso daba igual en cualquier período.
+  const investedAtStart = investedSeries[0]?.invertido || 0;
   const investedAtEnd = investedSeries[investedSeries.length - 1]?.invertido || 0;
-  const pnlAbs = rangeEndPoint.total - investedAtEnd;
-  const pnlPct = pct(rangeEndPoint.total, investedAtEnd);
+  const netContribInRange = investedAtEnd - investedAtStart;
+  const pnlAbs = (rangeEndPoint.total - investedAtEnd) - (rangeStartPoint.total - investedAtStart);
+  const pnlBase = rangeStartPoint.total + Math.max(netContribInRange, 0);
+  const pnlPct = pnlBase !== 0 ? (pnlAbs / pnlBase) * 100 : 0;
   const chartTrades = MOVIMIENTOS.filter(
     (m) =>
       (m.tipo === "Compra" || m.tipo === "Venta") &&
