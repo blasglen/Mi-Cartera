@@ -149,12 +149,11 @@ const HOLDINGS = [
 ];
 
 const MOVIMIENTOS = [
-  // Splits (llegaron como "Dividendo en acciones" en el export original, no
-  // como Compra/Venta -- se agregan acá con costo 0 para que el histórico
-  // cuente la cantidad real de acciones en cada fecha, no la subestime).
-  { fecha: "2026-08-04", activo: "YPFD", tipo: "Compra", cantidad: 18.0, precio: 0, broker: "Balanz" },
-  { fecha: "2026-06-01", activo: "SPY", tipo: "Compra", cantidad: 8.0, precio: 0, broker: "Balanz" },
+  // Splits (llegaron como "Dividendo en acciones" en el export original --
+  // se registran con tipo "Split" y costo 0, para que el histórico cuente la
+  // cantidad real de acciones en cada fecha sin tratarlos como una compra).
   { fecha: "2026-08-07", activo: "YPFD", tipo: "Compra", cantidad: 20.0, precio: 7867.009, broker: "Balanz" },
+  { fecha: "2026-08-04", activo: "YPFD", tipo: "Split", cantidad: 18.0, precio: 0, broker: "Balanz" },
   { fecha: "2026-08-03", activo: "AMD", tipo: "Compra", cantidad: 1.0, precio: 76430.28, broker: "Balanz" },
   { fecha: "2026-07-29", activo: "CEPU", tipo: "Compra", cantidad: 43.0, precio: 2313.293, broker: "Balanz" },
   { fecha: "2026-07-23", activo: "TSM", tipo: "Compra", cantidad: 2.0, precio: 73812.975, broker: "Balanz" },
@@ -170,6 +169,7 @@ const MOVIMIENTOS = [
   { fecha: "2026-06-17", activo: "TSM", tipo: "Compra", cantidad: 1.0, precio: 73208.99, broker: "Balanz" },
   { fecha: "2026-06-10", activo: "YPFD", tipo: "Compra", cantidad: 1.0, precio: 83552.37, broker: "Balanz" },
   { fecha: "2026-06-01", activo: "GOOGL", tipo: "Compra", cantidad: 5.0, precio: 9704.154, broker: "Balanz" },
+  { fecha: "2026-06-01", activo: "SPY", tipo: "Split", cantidad: 8.0, precio: 0, broker: "Balanz" },
   { fecha: "2026-05-22", activo: "TSM", tipo: "Compra", cantidad: 1.0, precio: 67596.89, broker: "Balanz" },
   { fecha: "2026-05-18", activo: "PFE", tipo: "Compra", cantidad: 10.0, precio: 9452.491, broker: "Balanz" },
   { fecha: "2026-05-11", activo: "MELI", tipo: "Compra", cantidad: 7.0, precio: 19599.5729, broker: "Balanz" },
@@ -615,7 +615,7 @@ function liveAdjustedPrice(holding, livePrices, fx) {
 
 function buildQtyTimeline(ticker, broker) {
   const trades = MOVIMIENTOS.filter(
-    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta")
+    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
   )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
@@ -623,7 +623,9 @@ function buildQtyTimeline(ticker, broker) {
     let q = 0;
     for (const t of trades) {
       if (t.fecha > date) break;
-      q += (t.tipo === "Compra" ? 1 : -1) * t.cantidad;
+      // Un split suma acciones igual que una compra, pero a costo 0 (no es
+      // plata nueva invertida -- ver buildCostBasisTimeline más abajo).
+      q += (t.tipo === "Venta" ? -1 : 1) * t.cantidad;
     }
     return q;
   };
@@ -637,10 +639,12 @@ function buildQtyTimeline(ticker, broker) {
 // ponderado: cada compra suma cantidad y costo; cada venta descuenta la
 // proporción correspondiente del costo acumulado (no el costo total). Así el
 // "invertido" de una fecha vieja refleja lo que realmente habías puesto en
-// ese momento, no el promedio final aplicado hacia atrás.
+// ese momento, no el promedio final aplicado hacia atrás. Los splits suman
+// cantidad igual que una compra pero a precio 0 -- no mueven el costo
+// invertido, solo diluyen el costo promedio por unidad (como corresponde).
 function buildCostBasisTimeline(ticker, broker) {
   const trades = MOVIMIENTOS.filter(
-    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta")
+    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
   )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
@@ -648,9 +652,9 @@ function buildCostBasisTimeline(ticker, broker) {
     let qty = 0, cost = 0;
     for (const t of trades) {
       if (t.fecha > date) break;
-      if (t.tipo === "Compra") {
+      if (t.tipo === "Compra" || t.tipo === "Split") {
         qty += t.cantidad;
-        cost += t.cantidad * t.precio;
+        cost += t.cantidad * t.precio; // precio es 0 en los splits
       } else if (qty > 0) {
         const avgCostPerUnit = cost / qty;
         const soldQty = Math.min(t.cantidad, qty);
@@ -2732,7 +2736,7 @@ function MovimientosView({ f, C }) {
     if (dateFrom && m.fecha < dateFrom) return false;
     if (dateTo && m.fecha > dateTo) return false;
     return true;
-  });
+  }).sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
 
   const totalComprado = filtered.filter((m) => m.tipo === "Compra").reduce((s, m) => s + m.cantidad * m.precio, 0);
   const totalVendido = filtered.filter((m) => m.tipo === "Venta").reduce((s, m) => s + m.cantidad * m.precio, 0);
