@@ -923,15 +923,28 @@ export default function InvestmentDashboard() {
   const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
 
   // Valor real de la cartera filtrada, calculado directo de las tenencias con precio
-  // en vivo -- esta es la fuente de verdad. El histórico (SERIES) sigue siendo una
-  // caminata simulada porque no tenemos valuaciones diarias reales, pero se reescala
-  // para que su último punto coincida exactamente con este valor real, y respeta el
-  // filtro de broker seleccionado.
+  // en vivo -- esta es la fuente de verdad.
   const realCurrentTotal = byBroker.reduce((s, h) => s + h.qty * h.price, 0);
-  const baseSeries = realPortfolioHistory && realPortfolioHistory.length > 1 ? realPortfolioHistory : SERIES;
-  const seriesLastFull = baseSeries[baseSeries.length - 1].total;
-  const scale = seriesLastFull > 0 ? realCurrentTotal / seriesLastFull : 1;
-  const scaledSeries = useMemo(() => baseSeries.map((p) => ({ ...p, total: p.total * scale })), [scale, baseSeries]);
+  const usingRealHistory = realPortfolioHistory && realPortfolioHistory.length > 1;
+  const baseSeries = usingRealHistory ? realPortfolioHistory : SERIES;
+  const scaledSeries = useMemo(() => {
+    if (baseSeries.length === 0) return baseSeries;
+    if (usingRealHistory) {
+      // Serie real: cada punto ya sale de precio histórico real x cantidad real,
+      // no hace falta "estirar" toda la serie -- eso distorsiona días que sí son
+      // reales. Solo se reemplaza el ÚLTIMO punto (hoy) por el valor en vivo,
+      // por si el caché diario todavía no tiene un cierre propio para hoy (en
+      // ese caso el último punto cacheado repetiría el de ayer).
+      const last = baseSeries[baseSeries.length - 1];
+      if (last.total === realCurrentTotal) return baseSeries;
+      return [...baseSeries.slice(0, -1), { ...last, total: realCurrentTotal }];
+    }
+    // Serie simulada (sin histórico real todavía): sigue necesitando el
+    // reescalado uniforme para anclarse a un valor real conocido.
+    const seriesLastFull = baseSeries[baseSeries.length - 1].total;
+    const scale = seriesLastFull > 0 ? realCurrentTotal / seriesLastFull : 1;
+    return baseSeries.map((p) => ({ ...p, total: p.total * scale }));
+  }, [baseSeries, usingRealHistory, realCurrentTotal]);
 
   const earliestDateForFilter = useMemo(() => {
     const relevant = MOVIMIENTOS.filter(
@@ -1087,10 +1100,7 @@ export default function InvestmentDashboard() {
                   <div className="display tabular" style={{ fontSize: 34, fontWeight: 600, lineHeight: 1 }}>
                     {f(currentTotal)}
                   </div>
-                  <div className="tabular" style={{ fontSize: 13, marginTop: 6, color: pnlAbs >= 0 ? C.gain : C.loss }}>
-                    {pnlAbs >= 0 ? "+" : ""}{f(pnlAbs)} ({pnlPct >= 0 ? "+" : ""}{pnlPct.toFixed(1)}%) {useCustom ? `· ${from} a ${to}` : RANGE_PRESETS[rangeIdx].label}
-                  </div>
-                  <div className="tabular" style={{ fontSize: 11, marginTop: 2, color: dayAbs >= 0 ? C.gain : C.loss, opacity: 0.75 }}>
+                  <div className="tabular" style={{ fontSize: 13, marginTop: 6, color: dayAbs >= 0 ? C.gain : C.loss }}>
                     {dayAbs >= 0 ? "+" : ""}{f(dayAbs)} ({dayPct >= 0 ? "+" : ""}{dayPct.toFixed(1)}%) vs. ayer
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: liveStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
