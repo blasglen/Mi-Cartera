@@ -695,7 +695,7 @@ function priceAt(historyMap, sortedDates, date) {
 const EARLIEST_TRADE_DATE = MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
   .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
 
-function buildRealPortfolioHistory(holdings, historyCache) {
+function buildRealPortfolioHistory(holdings, historyCache, livePrices) {
   const uniqueTickers = [...new Map(holdings.map((h) => [`${h.name}__${h.broker}`, h])).values()];
   const today = new Date();
   const start = new Date(EARLIEST_TRADE_DATE);
@@ -716,7 +716,22 @@ function buildRealPortfolioHistory(holdings, historyCache) {
       const historyMap = {};
       for (const p of hist) historyMap[p.date] = p.price;
       const sortedDates = Object.keys(historyMap).sort();
-      return { valueAt: (date) => qtyAt(date) * (priceAt(historyMap, sortedDates, date) ?? h.price) };
+      // Las CEDEARs se cachean en dólares reales de la acción subyacente en
+      // EE.UU. (así responde data912), no en pesos -- hay que reescalar al
+      // precio ARS real de hoy del CEDEAR (mismo truco que "Buscar activo"),
+      // si no, el valor sale ~1000x más chico de lo real.
+      let scaleFix = 1;
+      if (h.cat === "CEDEARs") {
+        const livePriceArs = livePrices?.[h.name];
+        const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
+        if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
+      }
+      return {
+        valueAt: (date) => {
+          const raw = priceAt(historyMap, sortedDates, date);
+          return qtyAt(date) * (raw != null ? raw * scaleFix : h.price);
+        },
+      };
     }
     return { valueAt: (date) => qtyAt(date) * h.price };
   });
@@ -897,8 +912,8 @@ export default function InvestmentDashboard() {
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
   const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
-    () => buildRealPortfolioHistory(byBroker, historyCache),
-    [historyCache, byBroker]
+    () => buildRealPortfolioHistory(byBroker, historyCache, livePrices),
+    [historyCache, byBroker, livePrices]
   );
   React.useEffect(() => { setHistoryCoverage(realHistoryCoverage); }, [realHistoryCoverage]);
   const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
@@ -2439,13 +2454,25 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
 
   const priceAtDate = useMemo(() => {
     const cache = {};
-    return (ticker, date) => {
+    return (ticker, date, cat) => {
       if (!(ticker in cache)) {
         const hist = historyCache[ticker];
         if (hist && hist.length > 1) {
           const historyMap = {};
           for (const p of hist) historyMap[p.date] = p.price;
-          cache[ticker] = { map: historyMap, dates: Object.keys(historyMap).sort() };
+          const sortedDates = Object.keys(historyMap).sort();
+          // Las CEDEARs se cachean en dólares reales de la acción subyacente
+          // en EE.UU. (así responde data912), no en pesos -- hay que
+          // reescalar al precio ARS real de hoy del CEDEAR (mismo truco que
+          // "Buscar activo" y buildRealPortfolioHistory), o el valor sale
+          // ~1000x más chico de lo real.
+          let scaleFix = 1;
+          if (cat === "CEDEARs") {
+            const livePriceArs = livePrices[ticker];
+            const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
+            if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
+          }
+          cache[ticker] = { map: historyMap, dates: sortedDates, scaleFix };
         } else {
           cache[ticker] = null;
         }
@@ -2453,7 +2480,7 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
       const entry = cache[ticker];
       if (entry) {
         const p = priceAt(entry.map, entry.dates, date);
-        if (p != null) return p;
+        if (p != null) return p * entry.scaleFix;
       }
       // Sin histórico real cacheado para este ticker -- se usa el precio en
       // vivo/actual "hacia atrás" como mejor aproximación disponible.
@@ -2470,7 +2497,7 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
       const qty = qtyAtDate(ticker, date);
       if (!qty) continue;
       const cat = TICKER_CAT[ticker] || "Acciones";
-      const val = qty * priceAtDate(ticker, date);
+      const val = qty * priceAtDate(ticker, date, cat);
       out[cat] = (out[cat] || 0) + val;
       out.total += val;
     }
@@ -2505,7 +2532,7 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
       const net = contrib[cat] || 0;
       const gain = end - start - net;
       const base = start + Math.max(net, 0);
-      return { cat, start, end, gain, gainPct: base !== 0 ? (gain / base) * 100 : 0 };
+      return { cat, start, end, net, gain, gainPct: base !== 0 ? (gain / base) * 100 : 0 };
     });
     const gainTotal = valTo.total - valFrom.total - contrib.total;
     const baseTotal = valFrom.total + Math.max(contrib.total, 0);
@@ -2575,17 +2602,21 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
             </span>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr 1fr", gap: 10, fontSize: 12, color: C.faint, marginBottom: 6 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1.1fr", gap: 10, fontSize: 12, color: C.faint, marginBottom: 6 }}>
             <span>Categoría</span>
             <span style={{ textAlign: "right" }}>{from}</span>
+            <span style={{ textAlign: "right" }}>Compras/ventas</span>
             <span style={{ textAlign: "right" }}>{to}</span>
             <span style={{ textAlign: "right" }}>Resultado</span>
           </div>
           {result.rows.map((r) => (
-            <div key={r.cat} style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr 1fr", gap: 10, fontSize: 13, padding: "8px 0", borderTop: `1px solid ${C.rowLine}`, alignItems: "center" }}>
+            <div key={r.cat} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1.1fr", gap: 10, fontSize: 13, padding: "8px 0", borderTop: `1px solid ${C.rowLine}`, alignItems: "center" }}>
               <span>{r.cat}</span>
-              <span className="tabular" style={{ textAlign: "right", color: C.muted }}>{f(r.start)}</span>
-              <span className="tabular" style={{ textAlign: "right" }}>{f(r.end)}</span>
+              <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(r.start)}</span>
+              <span className="tabular" style={{ textAlign: "right", color: C.faint, fontSize: 12 }}>
+                {r.net !== 0 ? `${r.net >= 0 ? "+" : ""}${f(r.net)}` : "—"}
+              </span>
+              <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(r.end)}</span>
               <span className="tabular" style={{ textAlign: "right", color: r.gain >= 0 ? C.gain : C.loss, fontWeight: 600 }}>
                 {r.gain >= 0 ? "+" : ""}{f(r.gain)} <span style={{ fontWeight: 400, opacity: 0.85 }}>({r.gainPct >= 0 ? "+" : ""}{r.gainPct.toFixed(1)}%)</span>
               </span>
