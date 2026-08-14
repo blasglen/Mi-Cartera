@@ -39,6 +39,7 @@ import {
   FileText,
   Layers,
   Globe,
+  Calculator,
 } from "lucide-react";
 
 // ---------- Datos simulados (después se reemplazan por el import real) ----------
@@ -669,6 +670,13 @@ function buildInvestedSeries(holdings, dates) {
   }));
 }
 
+// Suma N meses a una fecha "YYYY-MM-DD" (para la Calculadora de aportes periódicos).
+function addMonths(dateStr, n) {
+  const d = new Date(dateStr + "T00:00:00");
+  d.setMonth(d.getMonth() + n);
+  return d.toISOString().slice(0, 10);
+}
+
 function priceAt(historyMap, sortedDates, date) {
   if (historyMap[date] != null) return historyMap[date];
   let lo = 0, hi = sortedDates.length - 1, ans = null;
@@ -773,6 +781,7 @@ function closestPoint(dateStr) {
 const NAV = [
   { key: "inicio", label: "Inicio", icon: Home },
   { key: "buscar", label: "Buscar activo", icon: Search },
+  { key: "calculadora", label: "Calculadora", icon: Calculator },
   { key: "importar", label: "Importar archivos", icon: Upload },
   { key: "pnl", label: "P&L de fecha específica", icon: CalendarRange },
   { key: "movimientos", label: "Movimientos", icon: History },
@@ -1378,6 +1387,7 @@ export default function InvestmentDashboard() {
             </>
           )}
 
+          {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
@@ -2023,6 +2033,300 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
             })}
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+// --- Calculadora de aportes periódicos (DCA) -------------------------------
+// "Si hubiera metido $X cada N meses en TICKER desde tal fecha, ¿cuánto
+// tendría hoy?". Usa el mismo historyCache (ARS, cacheado a diario) que el
+// resto de la app, reescalado para que el último punto coincida con el precio
+// en vivo real -- igual truco que "Buscar activo". Limitación conocida y
+// declarada en la interfaz: no tenemos tipo de cambio histórico día a día,
+// así que un monto ingresado en USD se pasa a pesos con el dólar de HOY para
+// cada aporte (no con el dólar del día de cada aporte). El *precio* del
+// activo en cada fecha sí es el real/histórico.
+function CalculadoraView({ currency, fx, f, C, livePrices, cryptoUsd, historyCache }) {
+  const withData = ASSET_UNIVERSE_FULL.filter((a) => (historyCache[a.symbol] || []).length > 1);
+  const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState(() => withData.find((a) => a.symbol === "BTC") || withData[0] || ASSET_UNIVERSE_FULL[0]);
+  const [montoStr, setMontoStr] = useState("100");
+  const [moneda, setMoneda] = useState("USD");
+  const [frecuencia, setFrecuencia] = useState(1);
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const [fechaInicio, setFechaInicio] = useState(() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 1);
+    return d.toISOString().slice(0, 10);
+  });
+
+  const results =
+    query.trim() === ""
+      ? []
+      : ASSET_UNIVERSE_FULL.filter(
+          (a) => a.symbol.toLowerCase().includes(query.toLowerCase()) || a.name.toLowerCase().includes(query.toLowerCase())
+        ).slice(0, 30);
+
+  const hist = historyCache[selected.symbol];
+  const hasHistory = hist && hist.length > 1;
+
+  const calc = useMemo(() => {
+    if (!hasHistory) return null;
+    const monto = parseFloat(montoStr);
+    const freq = Math.max(1, Math.round(frecuencia));
+    if (!monto || monto <= 0 || !fechaInicio || fechaInicio > todayStr) return null;
+
+    // Precio en vivo real (ARS interno), igual criterio que "Buscar activo".
+    let livePriceArs = null;
+    if (selected.cat === "Cripto" && cryptoUsd[selected.symbol] != null) livePriceArs = cryptoUsd[selected.symbol] * fx;
+    else if (livePrices[selected.symbol] != null) livePriceArs = selected.cat === "Bonos" ? livePrices[selected.symbol] / 100 : livePrices[selected.symbol];
+
+    const lastHistPrice = hist[hist.length - 1].price;
+    const scaleFix = livePriceArs != null && lastHistPrice > 0 ? livePriceArs / lastHistPrice : 1;
+    const currentPriceArs = livePriceArs ?? lastHistPrice;
+
+    const historyMap = {};
+    for (const p of hist) historyMap[p.date] = p.price * scaleFix;
+    const sortedDates = Object.keys(historyMap).sort();
+    const firstAvailable = sortedDates[0];
+
+    const montoArs = moneda === "USD" ? monto * fx : monto;
+
+    const purchases = [];
+    let i = 0;
+    let cumQty = 0;
+    let cumInvertido = 0;
+    while (true) {
+      const fecha = addMonths(fechaInicio, i * freq);
+      if (fecha > todayStr) break;
+      if (i > 1200) break; // resguardo ante frecuencia inválida
+      let precio = priceAt(historyMap, sortedDates, fecha);
+      let estimado = false;
+      if (precio == null) {
+        precio = historyMap[firstAvailable];
+        estimado = true;
+      }
+      const cantidad = precio > 0 ? montoArs / precio : 0;
+      cumQty += cantidad;
+      cumInvertido += montoArs;
+      purchases.push({ fecha, precio, monto: montoArs, cantidad, estimado, valorAcumulado: cumQty * precio });
+      i++;
+    }
+
+    const totalQty = cumQty;
+    const totalInvertidoArs = cumInvertido;
+    const valorActualArs = totalQty * currentPriceArs;
+    const gananciaArs = valorActualArs - totalInvertidoArs;
+    const gananciaPct = pct(valorActualArs, totalInvertidoArs);
+    const precioPromedio = totalQty > 0 ? totalInvertidoArs / totalQty : 0;
+
+    const chartData = purchases.map((p) => ({ date: p.fecha, valor: p.valorAcumulado, invertido: purchases.filter((x) => x.fecha <= p.fecha).length * montoArs }));
+    if (chartData.length > 0 && chartData[chartData.length - 1].date !== todayStr) {
+      chartData.push({ date: todayStr, valor: valorActualArs, invertido: totalInvertidoArs });
+    }
+
+    return { purchases, totalQty, totalInvertidoArs, valorActualArs, gananciaArs, gananciaPct, precioPromedio, currentPriceArs, chartData, coverageStart: firstAvailable };
+  }, [hasHistory, hist, montoStr, moneda, frecuencia, fechaInicio, todayStr, selected, livePrices, cryptoUsd, fx]);
+
+  return (
+    <div>
+      <SectionTitle C={C} sub="Simulá cuánto tendrías hoy si hubieras invertido un monto fijo cada cierto tiempo en un activo, desde una fecha determinada.">
+        Calculadora
+      </SectionTitle>
+
+      <div style={{ position: "relative", marginBottom: 16 }}>
+        <Search size={15} color={C.faint} style={{ position: "absolute", left: 12, top: 10 }} />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Buscá el activo — ej: BTC, SPY, GGAL..."
+          style={{ width: "100%", boxSizing: "border-box", background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, padding: "9px 12px 9px 34px", fontSize: 13 }}
+        />
+      </div>
+
+      {query.trim() !== "" && (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
+          {results.map((a) => {
+            const dataOk = (historyCache[a.symbol] || []).length > 1;
+            return (
+              <button
+                key={a.symbol}
+                onClick={() => { setSelected(a); setQuery(""); }}
+                style={{
+                  padding: "6px 12px",
+                  borderRadius: 999,
+                  fontSize: 12,
+                  border: `1px solid ${selected.symbol === a.symbol ? C.gold : C.border}`,
+                  background: selected.symbol === a.symbol ? C.chipActive : "transparent",
+                  color: selected.symbol === a.symbol ? C.gold : dataOk ? C.muted : C.faint,
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  opacity: dataOk ? 1 : 0.6,
+                }}
+                title={dataOk ? undefined : "Sin histórico de precios disponible todavía"}
+              >
+                {a.symbol} <span style={{ opacity: 0.7 }}>· {a.cat}</span>
+              </button>
+            );
+          })}
+          {results.length === 0 && <span style={{ fontSize: 13, color: C.faint }}>No encontramos nada con ese nombre.</span>}
+        </div>
+      )}
+
+      <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "20px", marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+          <span className="display" style={{ fontSize: 18, fontWeight: 600 }}>{selected.symbol}</span>
+          <span style={{ fontSize: 12, color: C.faint }}>{selected.name}</span>
+        </div>
+
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-end" }}>
+          <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+            Monto por aporte
+            <div style={{ display: "flex" }}>
+              <input
+                type="number"
+                min="0"
+                value={montoStr}
+                onChange={(e) => setMontoStr(e.target.value)}
+                style={{ width: 110, background: C.bg, border: `1px solid ${C.border}`, borderRight: "none", color: C.text, borderRadius: "6px 0 0 6px", padding: "6px 10px", fontSize: 13 }}
+              />
+              <div style={{ display: "flex", border: `1px solid ${C.border}`, borderRadius: "0 6px 6px 0", overflow: "hidden" }}>
+                {["USD", "ARS"].map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setMoneda(m)}
+                    style={{ padding: "0 10px", fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", background: moneda === m ? C.gold : "transparent", color: moneda === m ? C.bg : C.muted }}
+                  >
+                    {m}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </label>
+
+          <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+            Frecuencia
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 13, color: C.text }}>cada</span>
+              <input
+                type="number"
+                min="1"
+                value={frecuencia}
+                onChange={(e) => setFrecuencia(Math.max(1, parseInt(e.target.value) || 1))}
+                style={{ width: 56, background: C.bg, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 8px", fontSize: 13 }}
+              />
+              <span style={{ fontSize: 13, color: C.text }}>{frecuencia === 1 ? "mes" : "meses"}</span>
+            </div>
+          </label>
+
+          <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+            Desde
+            <input
+              type="date"
+              value={fechaInicio}
+              max={todayStr}
+              onChange={(e) => setFechaInicio(e.target.value)}
+              style={{ background: C.bg, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px", fontSize: 13 }}
+            />
+          </label>
+        </div>
+
+        {!hasHistory && (
+          <div style={{ marginTop: 14, fontSize: 12, color: C.loss }}>
+            Todavía no tenemos histórico de precios cacheado para {selected.symbol}, así que no podemos simular aportes pasados.
+          </div>
+        )}
+      </div>
+
+      {calc && (
+        <>
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "22px", marginBottom: 20 }}>
+            <div style={{ fontSize: 12, color: C.muted, marginBottom: 8 }}>Tendrías hoy</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4, flexWrap: "wrap" }}>
+              <span className="tabular display" style={{ fontSize: 32, fontWeight: 600 }}>{f(calc.valorActualArs)}</span>
+              {calc.gananciaArs >= 0 ? <TrendingUp size={20} color={C.gain} /> : <TrendingDown size={20} color={C.loss} />}
+            </div>
+            <div className="tabular" style={{ fontSize: 15, color: calc.gananciaArs >= 0 ? C.gain : C.loss, marginBottom: 20 }}>
+              {calc.gananciaArs >= 0 ? "+" : ""}{f(calc.gananciaArs)} ({calc.gananciaPct >= 0 ? "+" : ""}{calc.gananciaPct.toFixed(1)}%) sobre lo invertido
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 14 }}>
+              {[
+                { label: "Invertido en total", value: f(calc.totalInvertidoArs) },
+                { label: "Aportes realizados", value: calc.purchases.length },
+                { label: `Cantidad de ${selected.symbol}`, value: calc.totalQty.toLocaleString("es-AR", { maximumFractionDigits: calc.totalQty < 1 ? 8 : 4 }) },
+                { label: "Precio promedio de compra", value: f(calc.precioPromedio) },
+              ].map((s) => (
+                <div key={s.label}>
+                  <div style={{ fontSize: 11, color: C.faint, marginBottom: 3 }}>{s.label}</div>
+                  <div className="tabular" style={{ fontSize: 15, fontWeight: 600 }}>{s.value}</div>
+                </div>
+              ))}
+            </div>
+
+            {calc.purchases.some((p) => p.estimado) && (
+              <div style={{ marginTop: 16, fontSize: 11, color: C.faint }}>
+                Algunos aportes caen antes de nuestro histórico real de precios ({calc.coverageStart}) y se estimaron con el primer precio disponible.
+                {moneda === "USD" && " El monto en USD de cada aporte se convirtió a pesos con el tipo de cambio de hoy, no con el de cada fecha histórica (no tenemos series de tipo de cambio históricas)."}
+              </div>
+            )}
+          </div>
+
+          {calc.chartData.length > 1 && (
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "20px", marginBottom: 20 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 12 }}>Evolución del valor vs. lo invertido</div>
+              <div style={{ height: 260 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={calc.chartData} margin={{ top: 6, right: 8, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="fillCalc" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={C.gold} stopOpacity={0.35} />
+                        <stop offset="100%" stopColor={C.gold} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid stroke={C.rowLine} vertical={false} />
+                    <XAxis dataKey="date" tick={{ fill: C.faint, fontSize: 10 }} tickFormatter={(d) => d.slice(0, 7)} axisLine={{ stroke: C.border }} tickLine={false} minTickGap={40} />
+                    <YAxis domain={["auto", "auto"]} tick={{ fill: C.faint, fontSize: 10 }} tickFormatter={(v) => fmtCompact(v, currency, fx)} axisLine={{ stroke: C.border }} tickLine={false} width={56} />
+                    <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v, name) => [f(v), name]} />
+                    <Area type="monotone" dataKey="valor" name="Valor" stroke={C.gold} strokeWidth={2} fill="url(#fillCalc)" />
+                    <Line type="monotone" dataKey="invertido" name="Invertido" stroke={C.muted} strokeWidth={1.5} strokeDasharray="4 3" dot={false} isAnimationActive={false} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          )}
+
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
+            <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, fontSize: 13, fontWeight: 600 }}>Detalle de aportes ({calc.purchases.length})</div>
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                <thead>
+                  <tr style={{ position: "sticky", top: 0, background: C.surface }}>
+                    <th style={{ textAlign: "left", padding: "8px 18px", color: C.faint, fontWeight: 500, fontSize: 11 }}>Fecha</th>
+                    <th style={{ textAlign: "right", padding: "8px 12px", color: C.faint, fontWeight: 500, fontSize: 11 }}>Precio</th>
+                    <th style={{ textAlign: "right", padding: "8px 12px", color: C.faint, fontWeight: 500, fontSize: 11 }}>Aporte</th>
+                    <th style={{ textAlign: "right", padding: "8px 18px", color: C.faint, fontWeight: 500, fontSize: 11 }}>Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...calc.purchases].reverse().map((p, i) => (
+                    <tr key={i} style={{ borderTop: `1px solid ${C.rowLine}` }}>
+                      <td className="tabular" style={{ padding: "8px 18px", color: C.muted }}>
+                        {p.fecha}{p.estimado && <span style={{ color: C.faint }}> ~</span>}
+                      </td>
+                      <td className="tabular" style={{ padding: "8px 12px", textAlign: "right" }}>{f(p.precio)}</td>
+                      <td className="tabular" style={{ padding: "8px 12px", textAlign: "right" }}>{f(p.monto)}</td>
+                      <td className="tabular" style={{ padding: "8px 18px", textAlign: "right", color: C.muted }}>
+                        {p.cantidad.toLocaleString("es-AR", { maximumFractionDigits: p.cantidad < 1 ? 8 : 4 })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
