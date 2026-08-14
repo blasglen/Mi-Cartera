@@ -2721,9 +2721,91 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
 }
 
 function MovimientosView({ f, C }) {
+  const [brokerFilter, setBrokerFilter] = useState("Todas");
+  const [tipoFilter, setTipoFilter] = useState("Ambos");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+
+  const filtered = MOVIMIENTOS.filter((m) => {
+    if (brokerFilter !== "Todas" && m.broker !== brokerFilter) return false;
+    if (tipoFilter !== "Ambos" && m.tipo !== tipoFilter) return false;
+    if (dateFrom && m.fecha < dateFrom) return false;
+    if (dateTo && m.fecha > dateTo) return false;
+    return true;
+  });
+
+  const totalComprado = filtered.filter((m) => m.tipo === "Compra").reduce((s, m) => s + m.cantidad * m.precio, 0);
+  const totalVendido = filtered.filter((m) => m.tipo === "Venta").reduce((s, m) => s + m.cantidad * m.precio, 0);
+
   return (
     <div>
       <SectionTitle C={C} sub="Todas las compras, ventas y rentas registradas, en un solo lugar.">Movimientos</SectionTitle>
+
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 16, alignItems: "flex-end" }}>
+        <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+          Cartera
+          <select
+            value={brokerFilter}
+            onChange={(e) => setBrokerFilter(e.target.value)}
+            style={{ padding: "6px 10px", borderRadius: 6, fontSize: 13, border: `1px solid ${C.border}`, background: C.surface, color: C.text, cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <option value="Todas">Todas las carteras</option>
+            {BROKER_LIST.map((b) => (
+              <option key={b} value={b}>{b}</option>
+            ))}
+          </select>
+        </label>
+        <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+          Tipo
+          <select
+            value={tipoFilter}
+            onChange={(e) => setTipoFilter(e.target.value)}
+            style={{ padding: "6px 10px", borderRadius: 6, fontSize: 13, border: `1px solid ${C.border}`, background: C.surface, color: C.text, cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <option value="Ambos">Compras y ventas</option>
+            <option value="Compra">Solo compras</option>
+            <option value="Venta">Solo ventas</option>
+          </select>
+        </label>
+        <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+          Desde
+          <input
+            type="date"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+            style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }}
+          />
+        </label>
+        <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+          Hasta
+          <input
+            type="date"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+            style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }}
+          />
+        </label>
+        {(dateFrom || dateTo || brokerFilter !== "Todas" || tipoFilter !== "Ambos") && (
+          <button
+            onClick={() => { setBrokerFilter("Todas"); setTipoFilter("Ambos"); setDateFrom(""); setDateTo(""); }}
+            style={{ padding: "6px 12px", borderRadius: 6, fontSize: 12, border: `1px solid ${C.border}`, background: "transparent", color: C.faint, cursor: "pointer" }}
+          >
+            Limpiar filtros
+          </button>
+        )}
+      </div>
+
+      <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 16 }}>
+        <div>
+          <div style={{ fontSize: 11, color: C.faint, marginBottom: 2 }}>Total comprado</div>
+          <div className="tabular" style={{ fontSize: 16, fontWeight: 600, color: C.gain }}>{f(totalComprado)}</div>
+        </div>
+        <div>
+          <div style={{ fontSize: 11, color: C.faint, marginBottom: 2 }}>Total vendido</div>
+          <div className="tabular" style={{ fontSize: 16, fontWeight: 600, color: C.loss }}>{f(totalVendido)}</div>
+        </div>
+      </div>
+
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
           <thead>
@@ -2732,19 +2814,29 @@ function MovimientosView({ f, C }) {
               <th style={{ padding: "10px 12px", fontWeight: 500 }}>Activo</th>
               <th style={{ padding: "10px 12px", fontWeight: 500 }}>Tipo</th>
               <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Cantidad</th>
+              <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>PPC</th>
               <th style={{ padding: "10px 18px", fontWeight: 500 }}>Origen</th>
             </tr>
           </thead>
           <tbody>
-            {MOVIMIENTOS.map((m, i) => (
-              <tr key={i} style={{ borderTop: `1px solid ${C.rowLine}` }}>
-                <td className="tabular" style={{ padding: "10px 18px", color: C.muted }}>{m.fecha}</td>
-                <td style={{ padding: "10px 12px", fontWeight: 500 }}>{m.activo}</td>
-                <td style={{ padding: "10px 12px", color: m.tipo === "Venta" ? C.loss : m.tipo === "Compra" ? C.gain : C.gold }}>{m.tipo}</td>
-                <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{m.cantidad}</td>
-                <td style={{ padding: "10px 18px", color: C.muted }}>{m.broker}</td>
+            {filtered.length === 0 ? (
+              <tr>
+                <td colSpan={6} style={{ padding: "24px 18px", textAlign: "center", color: C.faint, fontSize: 13 }}>
+                  No hay movimientos que coincidan con estos filtros.
+                </td>
               </tr>
-            ))}
+            ) : (
+              filtered.map((m, i) => (
+                <tr key={i} style={{ borderTop: `1px solid ${C.rowLine}` }}>
+                  <td className="tabular" style={{ padding: "10px 18px", color: C.muted }}>{m.fecha}</td>
+                  <td style={{ padding: "10px 12px", fontWeight: 500 }}>{m.activo}</td>
+                  <td style={{ padding: "10px 12px", color: m.tipo === "Venta" ? C.loss : m.tipo === "Compra" ? C.gain : C.gold }}>{m.tipo}</td>
+                  <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{m.cantidad}</td>
+                  <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(m.precio)}</td>
+                  <td style={{ padding: "10px 18px", color: C.muted }}>{m.broker}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
