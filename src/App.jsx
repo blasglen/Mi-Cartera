@@ -478,6 +478,17 @@ function extractPrice(o) {
   if (typeof o.px_bid === "number" && typeof o.px_ask === "number") return (o.px_bid + o.px_ask) / 2;
   return null;
 }
+// Variación % contra el cierre del día anterior -- data912 ya la manda
+// calculada (campo "pct_change") en la moneda propia de cada panel, así que
+// para CEDEARs viene en pesos reales del CEDEAR, no en dólares del
+// subyacente -- no hace falta ningún reescalado acá.
+function extractPctChange(o) {
+  if (typeof o.pct_change === "number") return o.pct_change;
+  if (typeof o.change_percent === "number") return o.change_percent;
+  if (typeof o.changePercent === "number") return o.changePercent;
+  if (typeof o.variation === "number") return o.variation;
+  return null;
+}
 
 // Precios en vivo: data912.com, 3 paneles nada más -- liviano, nunca causó problema.
 async function fetchLivePrices() {
@@ -490,17 +501,20 @@ async function fetchLivePrices() {
     endpoints.map((e) => fetchWithTimeout(`https://data912.com/live/${e.path}`).then((r) => r.json()))
   );
   const prices = {};
+  const pctChanges = {};
   const catalog = [];
   results.forEach((r, i) => {
     if (r.status !== "fulfilled" || !Array.isArray(r.value)) return;
     for (const item of r.value) {
       const sym = extractSymbol(item);
       const price = extractPrice(item);
+      const pctChange = extractPctChange(item);
       if (sym && price) prices[sym] = price;
+      if (sym && pctChange != null) pctChanges[sym] = pctChange;
       if (sym) catalog.push({ symbol: sym, cat: endpoints[i].cat });
     }
   });
-  return { prices, catalog };
+  return { prices, pctChanges, catalog };
 }
 
 // Histórico de TODA la cartera (42 tickers) -- este sí queda cacheado,
@@ -862,6 +876,7 @@ export default function InvestmentDashboard() {
 
   const [liveFxRates, setLiveFxRates] = useState(null); // null hasta que carguen
   const [livePrices, setLivePrices] = useState({});
+  const [livePctChange, setLivePctChange] = useState({});
   const [liveCatalog, setLiveCatalog] = useState([]);
   const [cryptoUsd, setCryptoUsd] = useState({});
   const [historyCache, setHistoryCache] = useState({});
@@ -881,6 +896,7 @@ export default function InvestmentDashboard() {
         }
         if (pxRes.status === "fulfilled" && pxRes.value.prices && Object.keys(pxRes.value.prices).length > 0) {
           setLivePrices(pxRes.value.prices);
+          setLivePctChange(pxRes.value.pctChanges || {});
           setLiveCatalog(pxRes.value.catalog || []);
         }
         if (histRes.status === "fulfilled") {
@@ -1399,10 +1415,15 @@ export default function InvestmentDashboard() {
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
-                                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
                                   {enVivo && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block" }} />}
                                   {f(h.price)}
-                                </span>
+                                </div>
+                                {livePctChange[h.name] != null && (
+                                  <div style={{ fontSize: 11, color: livePctChange[h.name] >= 0 ? C.gain : C.loss, marginTop: 1 }}>
+                                    {livePctChange[h.name] >= 0 ? "+" : ""}{livePctChange[h.name].toFixed(1)}%
+                                  </div>
+                                )}
                               </td>
                               <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: p >= 0 ? C.gain : C.loss }}>{p >= 0 ? "+" : ""}{p.toFixed(1)}%</td>
                             </tr>
