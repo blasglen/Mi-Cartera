@@ -989,7 +989,15 @@ export default function InvestmentDashboard() {
   }).filter((m) => m.y != null);
 
   const current = scaledSeries[scaledSeries.length - 1];
-  const yesterday = scaledSeries[scaledSeries.length - 2];
+  // "Ayer" real: caminamos hacia atrás hasta encontrar el último punto con un
+  // valor genuinamente distinto al de hoy. Esto evita un bug donde, si el
+  // caché diario (una vez al día) todavía no tiene un cierre propio para la
+  // fecha de HOY, el punto "hoy" cae al mismo último precio cacheado que
+  // "ayer" -- y quedaban idénticos, mostrando siempre +US$0 (+0.0%) aunque
+  // el mercado sí se haya movido.
+  let yesterdayIdx = scaledSeries.length - 2;
+  while (yesterdayIdx > 0 && scaledSeries[yesterdayIdx].total === current.total) yesterdayIdx--;
+  const yesterday = scaledSeries[yesterdayIdx];
 
   const currentTotal = realCurrentTotal;
   const yesterdayTotal = yesterday.total;
