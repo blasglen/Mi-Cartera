@@ -146,59 +146,263 @@ const HOLDINGS = [
   { name: "DIA", cat: "CEDEARs", qty: 1.0, avgCost: 17814.14, price: 16781.81, broker: "IOL", manual: false },
   { name: "AMD", cat: "CEDEARs", qty: 1.0, avgCost: 20392.11, price: 20774.05, broker: "IOL", manual: false },
   { name: "LOMA", cat: "Acciones", qty: 40.0, avgCost: 2590.55, price: 2977.76, broker: "IOL", manual: false },
+  { name: "AAPL", cat: "CEDEARs", qty: 0.393527, avgCost: 329250.5978, price: 329250.5978, broker: "Nexo", manual: false },
+  { name: "AVAX", cat: "Cripto", qty: 4.85770256, avgCost: 38290.322988, price: 38290.322988, broker: "Nexo", manual: false },
+  { name: "BNB", cat: "Cripto", qty: 0.39021382, avgCost: 883867.977818, price: 883867.977818, broker: "Nexo", manual: false },
+  { name: "BTC", cat: "Cripto", qty: 0.07212047, avgCost: 82507106.673558, price: 82507106.673558, broker: "Nexo", manual: false },
+  { name: "DOGE", cat: "Cripto", qty: 271.89774259, avgCost: 416.035084, price: 416.035084, broker: "Nexo", manual: false },
+  { name: "DOT", cat: "Cripto", qty: 38.66604277, avgCost: 5920.883451, price: 5920.883451, broker: "Nexo", manual: false },
+  { name: "ETH", cat: "Cripto", qty: 0.10999919, avgCost: 3653206.628769, price: 3653206.628769, broker: "Nexo", manual: false },
+  { name: "GGAL", cat: "Acciones", qty: 2.529191, avgCost: 57330.5852, price: 57330.5852, broker: "Nexo", manual: false },
+  { name: "LINK", cat: "Cripto", qty: 5.39068771, avgCost: 19828.45339, price: 19828.45339, broker: "Nexo", manual: false },
+  { name: "LOMA", cat: "CEDEARs", qty: 5.337977, avgCost: 15902.6888, price: 15902.6888, broker: "Nexo", manual: false },
+  { name: "MELI", cat: "CEDEARs", qty: 0.119748, avgCost: 3130987.5138, price: 3130987.5138, broker: "Nexo", manual: false },
+  { name: "MSFT", cat: "CEDEARs", qty: 0.136891, avgCost: 553237.7074, price: 553237.7074, broker: "Nexo", manual: false },
+  { name: "NEXO", cat: "Cripto", qty: 1408.1530209, avgCost: 1287.171129, price: 1287.171129, broker: "Nexo", manual: false },
+  { name: "PAM", cat: "CEDEARs", qty: 0.503029, avgCost: 103805.1484, price: 103805.1484, broker: "Nexo", manual: false },
+  { name: "POL", cat: "Cripto", qty: 577.04928319, avgCost: 523.973946, price: 523.973946, broker: "Nexo", manual: false },
+  { name: "RENDER", cat: "Cripto", qty: 23.68130544, avgCost: 9290.366216, price: 9290.366216, broker: "Nexo", manual: false },
+  { name: "SOL", cat: "Cripto", qty: 1.33853572, avgCost: 168616.680622, price: 168616.680622, broker: "Nexo", manual: false },
+  { name: "SPY", cat: "CEDEARs", qty: 0.60623199, avgCost: 976446.9688, price: 976446.9688, broker: "Nexo", manual: false },
+  { name: "USDT", cat: "Cripto", qty: 651.775679, avgCost: 230.14053, price: 230.14053, broker: "Nexo", manual: false },
 ];
 
 const MOVIMIENTOS = [
+  { fecha: "2026-08-08", activo: "BNB", tipo: "Compra", cantidad: 0.24216698, precio: 943475.035284, broker: "Nexo" },
+  { fecha: "2026-08-08", activo: "BTC", tipo: "Compra", cantidad: 0.00153958, precio: 103924446.927084, broker: "Nexo" },
   { fecha: "2026-08-07", activo: "YPFD", tipo: "Compra", cantidad: 20.0, precio: 7867.009, broker: "Balanz" },
   { fecha: "2026-08-04", activo: "YPFD", tipo: "Split", cantidad: 18.0, precio: 0, broker: "Balanz" },
   { fecha: "2026-08-03", activo: "AMD", tipo: "Compra", cantidad: 1.0, precio: 76430.28, broker: "Balanz" },
+  { fecha: "2026-08-01", activo: "BNB", tipo: "Split", cantidad: 0.00146229, precio: 0, broker: "Nexo" },
+  { fecha: "2026-08-01", activo: "BTC", tipo: "Split", cantidad: 0.00008054, precio: 0, broker: "Nexo" },
+  { fecha: "2026-08-01", activo: "ETH", tipo: "Split", cantidad: 0.00013431, precio: 0, broker: "Nexo" },
+  { fecha: "2026-08-01", activo: "NEXO", tipo: "Split", cantidad: 1.59673436, precio: 0, broker: "Nexo" },
+  { fecha: "2026-08-01", activo: "SOL", tipo: "Split", cantidad: 0.00250253, precio: 0, broker: "Nexo" },
+  { fecha: "2026-08-01", activo: "USDT", tipo: "Split", cantidad: 3.293011, precio: 0, broker: "Nexo" },
   { fecha: "2026-07-29", activo: "CEPU", tipo: "Compra", cantidad: 43.0, precio: 2313.293, broker: "Balanz" },
   { fecha: "2026-07-23", activo: "TSM", tipo: "Compra", cantidad: 2.0, precio: 73812.975, broker: "Balanz" },
+  { fecha: "2026-07-18", activo: "NEXO", tipo: "Compra", cantidad: 133.36427879, precio: 1141.160147, broker: "Nexo" },
   { fecha: "2026-07-13", activo: "YPFD", tipo: "Compra", cantidad: 1.0, precio: 77411.77, broker: "Balanz" },
   { fecha: "2026-07-13", activo: "BABA", tipo: "Compra", cantidad: 4.0, precio: 19821.0375, broker: "Balanz" },
   { fecha: "2026-07-13", activo: "AL30", tipo: "Compra", cantidad: 34.0, precio: 857.4, broker: "IOL" },
   { fecha: "2026-07-13", activo: "AL30D", tipo: "Venta", cantidad: 34.0, precio: 698.694, broker: "IOL" },
+  { fecha: "2026-07-10", activo: "BTC", tipo: "Compra", cantidad: 0.0015543, precio: 102960721.868365, broker: "Nexo" },
   { fecha: "2026-07-06", activo: "TSM", tipo: "Compra", cantidad: 1.0, precio: 80406.57, broker: "Balanz" },
   { fecha: "2026-07-06", activo: "GOOGL", tipo: "Compra", cantidad: 8.0, precio: 9905.4862, broker: "Balanz" },
+  { fecha: "2026-07-01", activo: "BTC", tipo: "Split", cantidad: 0.00016483, precio: 0, broker: "Nexo" },
+  { fecha: "2026-07-01", activo: "ETH", tipo: "Split", cantidad: 0.00029536, precio: 0, broker: "Nexo" },
+  { fecha: "2026-07-01", activo: "NEXO", tipo: "Split", cantidad: 3.66785294, precio: 0, broker: "Nexo" },
+  { fecha: "2026-07-01", activo: "SOL", tipo: "Split", cantidad: 0.00285431, precio: 0, broker: "Nexo" },
+  { fecha: "2026-07-01", activo: "USDT", tipo: "Split", cantidad: 53.066874, precio: 0, broker: "Nexo" },
   { fecha: "2026-06-30", activo: "MSFT", tipo: "Compra", cantidad: 4.0, precio: 19398.24, broker: "Balanz" },
+  { fecha: "2026-06-30", activo: "BTC", tipo: "Compra", cantidad: 0.00171821, precio: 93120165.753895, broker: "Nexo" },
   { fecha: "2026-06-29", activo: "GOOGL", tipo: "Compra", cantidad: 14.0, precio: 7732.3215, broker: "Balanz" },
   { fecha: "2026-06-26", activo: "ADBE", tipo: "Venta", cantidad: 20.0, precio: 5732.6, broker: "Balanz" },
+  { fecha: "2026-06-24", activo: "BTC", tipo: "Compra", cantidad: 0.01638268, precio: 92072847.66595, broker: "Nexo" },
+  { fecha: "2026-06-24", activo: "NEXO", tipo: "Compra", cantidad: 94.01376792, precio: 1123.112097, broker: "Nexo" },
   { fecha: "2026-06-17", activo: "TSM", tipo: "Compra", cantidad: 1.0, precio: 73208.99, broker: "Balanz" },
   { fecha: "2026-06-10", activo: "YPFD", tipo: "Compra", cantidad: 1.0, precio: 83552.37, broker: "Balanz" },
+  { fecha: "2026-06-09", activo: "BTC", tipo: "Compra", cantidad: 0.00159489, precio: 97195079.284465, broker: "Nexo" },
+  { fecha: "2026-06-04", activo: "BTC", tipo: "Compra", cantidad: 0.00381894, precio: 95582805.700011, broker: "Nexo" },
   { fecha: "2026-06-01", activo: "GOOGL", tipo: "Compra", cantidad: 5.0, precio: 9704.154, broker: "Balanz" },
   { fecha: "2026-06-01", activo: "SPY", tipo: "Split", cantidad: 8.0, precio: 0, broker: "Balanz" },
   { fecha: "2026-06-01", activo: "SPY", tipo: "Split", cantidad: 32.0, precio: 0, broker: "Bull Market" },
+  { fecha: "2026-06-01", activo: "BTC", tipo: "Split", cantidad: 0.0002327, precio: 0, broker: "Nexo" },
+  { fecha: "2026-06-01", activo: "ETH", tipo: "Split", cantidad: 0.00028502, precio: 0, broker: "Nexo" },
+  { fecha: "2026-06-01", activo: "NEXO", tipo: "Split", cantidad: 3.13500124, precio: 0, broker: "Nexo" },
+  { fecha: "2026-06-01", activo: "SOL", tipo: "Split", cantidad: 0.00265298, precio: 0, broker: "Nexo" },
+  { fecha: "2026-06-01", activo: "USDT", tipo: "Split", cantidad: 44.973828, precio: 0, broker: "Nexo" },
+  { fecha: "2026-05-28", activo: "NEXO", tipo: "Compra", cantidad: 60.48977702, precio: 1183.76201, broker: "Nexo" },
   { fecha: "2026-05-22", activo: "TSM", tipo: "Compra", cantidad: 1.0, precio: 67596.89, broker: "Balanz" },
   { fecha: "2026-05-18", activo: "PFE", tipo: "Compra", cantidad: 10.0, precio: 9452.491, broker: "Balanz" },
   { fecha: "2026-05-11", activo: "MELI", tipo: "Compra", cantidad: 7.0, precio: 19599.5729, broker: "Balanz" },
+  { fecha: "2026-05-07", activo: "BTC", tipo: "Compra", cantidad: 0.00124866, precio: 120128778.05007, broker: "Nexo" },
+  { fecha: "2026-05-01", activo: "BTC", tipo: "Split", cantidad: 0.00010687, precio: 0, broker: "Nexo" },
+  { fecha: "2026-05-01", activo: "ETH", tipo: "Split", cantidad: 0.00029378, precio: 0, broker: "Nexo" },
+  { fecha: "2026-05-01", activo: "NEXO", tipo: "Split", cantidad: 2.95589888, precio: 0, broker: "Nexo" },
+  { fecha: "2026-05-01", activo: "SOL", tipo: "Split", cantidad: 0.00548459, precio: 0, broker: "Nexo" },
+  { fecha: "2026-05-01", activo: "USDT", tipo: "Split", cantidad: 2.846465, precio: 0, broker: "Nexo" },
   { fecha: "2026-04-30", activo: "MSFT", tipo: "Compra", cantidad: 5.0, precio: 20102.9, broker: "Balanz" },
+  { fecha: "2026-04-26", activo: "USDT", tipo: "Compra", cantidad: 99.882458, precio: 1501.765205, broker: "Nexo" },
+  { fecha: "2026-04-06", activo: "MELI", tipo: "Compra", cantidad: 0.02372095, precio: 3130987.5138, broker: "Nexo" },
+  { fecha: "2026-04-06", activo: "MSFT", tipo: "Compra", cantidad: 0.136891, precio: 553237.7074, broker: "Nexo" },
+  { fecha: "2026-04-01", activo: "BTC", tipo: "Split", cantidad: 0.00009876, precio: 0, broker: "Nexo" },
+  { fecha: "2026-04-01", activo: "ETH", tipo: "Split", cantidad: 0.00029571, precio: 0, broker: "Nexo" },
+  { fecha: "2026-04-01", activo: "NEXO", tipo: "Split", cantidad: 2.69328134, precio: 0, broker: "Nexo" },
+  { fecha: "2026-04-01", activo: "SOL", tipo: "Split", cantidad: 0.00530283, precio: 0, broker: "Nexo" },
+  { fecha: "2026-04-01", activo: "USDT", tipo: "Split", cantidad: 53.869542, precio: 0, broker: "Nexo" },
+  { fecha: "2026-03-11", activo: "SPY", tipo: "Compra", cantidad: 0.07418324, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2026-03-01", activo: "BTC", tipo: "Split", cantidad: 0.00009409, precio: 0, broker: "Nexo" },
+  { fecha: "2026-03-01", activo: "ETH", tipo: "Split", cantidad: 0.0002922, precio: 0, broker: "Nexo" },
+  { fecha: "2026-03-01", activo: "NEXO", tipo: "Split", cantidad: 2.41836502, precio: 0, broker: "Nexo" },
+  { fecha: "2026-03-01", activo: "SOL", tipo: "Split", cantidad: 0.0047544, precio: 0, broker: "Nexo" },
+  { fecha: "2026-03-01", activo: "USDT", tipo: "Split", cantidad: 42.983855, precio: 0, broker: "Nexo" },
   { fecha: "2026-02-05", activo: "MELI", tipo: "Compra", cantidad: 3.0, precio: 25891.1667, broker: "Balanz" },
   { fecha: "2026-02-05", activo: "META", tipo: "Compra", cantidad: 2.0, precio: 42702.305, broker: "Balanz" },
   { fecha: "2026-02-05", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 51440.07, broker: "Balanz" },
+  { fecha: "2026-02-05", activo: "NEXO", tipo: "Compra", cantidad: 132.47003549, precio: 1102.739948, broker: "Nexo" },
+  { fecha: "2026-02-01", activo: "BTC", tipo: "Split", cantidad: 0.00008699, precio: 0, broker: "Nexo" },
+  { fecha: "2026-02-01", activo: "NEXO", tipo: "Split", cantidad: 2.33333483, precio: 0, broker: "Nexo" },
   { fecha: "2026-01-29", activo: "MSFT", tipo: "Compra", cantidad: 4.0, precio: 22720.2025, broker: "Balanz" },
+  { fecha: "2026-01-29", activo: "SPY", tipo: "Compra", cantidad: 0.07636769, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2026-01-29", activo: "MELI", tipo: "Compra", cantidad: 0.02383242, precio: 3130987.5138, broker: "Nexo" },
+  { fecha: "2026-01-29", activo: "AAPL", tipo: "Compra", cantidad: 0.22648099, precio: 329250.5978, broker: "Nexo" },
+  { fecha: "2026-01-26", activo: "NEXO", tipo: "Compra", cantidad: 65.53040408, precio: 1344.960423, broker: "Nexo" },
   { fecha: "2026-01-22", activo: "ADBE", tipo: "Compra", cantidad: 20.0, precio: 10328.2805, broker: "Balanz" },
   { fecha: "2026-01-13", activo: "VIST", tipo: "Compra", cantidad: 3.0, precio: 25428.1067, broker: "Balanz" },
   { fecha: "2026-01-13", activo: "MELI", tipo: "Compra", cantidad: 6.0, precio: 26475.0267, broker: "Balanz" },
   { fecha: "2026-01-13", activo: "CEPU", tipo: "Compra", cantidad: 39.0, precio: 2549.3538, broker: "Balanz" },
   { fecha: "2026-01-13", activo: "GGAL", tipo: "Compra", cantidad: 2.0, precio: 8204.24, broker: "Balanz" },
+  { fecha: "2026-01-12", activo: "SPY", tipo: "Compra", cantidad: 0.07783321, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2026-01-12", activo: "MELI", tipo: "Compra", cantidad: 0.02428127, precio: 3130987.5138, broker: "Nexo" },
+  { fecha: "2026-01-01", activo: "BTC", tipo: "Split", cantidad: 0.00011555, precio: 0, broker: "Nexo" },
+  { fecha: "2026-01-01", activo: "NEXO", tipo: "Split", cantidad: 2.45778141, precio: 0, broker: "Nexo" },
+  { fecha: "2026-01-01", activo: "USDT", tipo: "Split", cantidad: 53.913553, precio: 0, broker: "Nexo" },
+  { fecha: "2025-12-04", activo: "MELI", tipo: "Compra", cantidad: 0.0239541, precio: 3130987.5138, broker: "Nexo" },
+  { fecha: "2025-12-04", activo: "SPY", tipo: "Compra", cantidad: 0.07681427, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2025-12-01", activo: "BTC", tipo: "Split", cantidad: 0.00011631, precio: 0, broker: "Nexo" },
+  { fecha: "2025-12-01", activo: "NEXO", tipo: "Split", cantidad: 2.26166448, precio: 0, broker: "Nexo" },
+  { fecha: "2025-12-01", activo: "USDT", tipo: "Split", cantidad: 7.392687, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-07", activo: "GGAL", tipo: "Compra", cantidad: 1.27331685, precio: 57330.5852, broker: "Nexo" },
+  { fecha: "2025-11-07", activo: "SPY", tipo: "Compra", cantidad: 0.03738042, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2025-11-07", activo: "LOMA", tipo: "Compra", cantidad: 2.29572416, precio: 15902.6888, broker: "Nexo" },
   { fecha: "2025-11-05", activo: "MU", tipo: "Compra", cantidad: 1.0, precio: 71321.5, broker: "Balanz" },
+  { fecha: "2025-11-01", activo: "AVAX", tipo: "Split", cantidad: 0.015559, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "BNB", tipo: "Split", cantidad: 0.0004694, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "BTC", tipo: "Split", cantidad: 0.0001308, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "DOGE", tipo: "Split", cantidad: 0.17783544, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "DOT", tipo: "Split", cantidad: 0.28705863, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "ETH", tipo: "Split", cantidad: 0.00034582, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "LINK", tipo: "Split", cantidad: 0.01388398, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "NEXO", tipo: "Split", cantidad: 2.75336268, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "POL", tipo: "Split", cantidad: 1.12045795, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "SOL", tipo: "Split", cantidad: 0.00421175, precio: 0, broker: "Nexo" },
+  { fecha: "2025-11-01", activo: "USDT", tipo: "Split", cantidad: 69.796603, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-31", activo: "NEXO", tipo: "Compra", cantidad: 43.60583314, precio: 1694.108212, broker: "Nexo" },
   { fecha: "2025-10-30", activo: "META", tipo: "Compra", cantidad: 3.0, precio: 41816.45, broker: "Balanz" },
+  { fecha: "2025-10-10", activo: "BTC", tipo: "Compra", cantidad: 0.00169548, precio: 173992884.73, broker: "Nexo" },
   { fecha: "2025-10-08", activo: "AMZN", tipo: "Compra", cantidad: 31.0, precio: 2442.1452, broker: "Balanz" },
+  { fecha: "2025-10-08", activo: "SPY", tipo: "Compra", cantidad: 0.07783321, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2025-10-08", activo: "MELI", tipo: "Compra", cantidad: 0.02395926, precio: 3130987.5138, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "AVAX", tipo: "Split", cantidad: 0.01964402, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "BNB", tipo: "Split", cantidad: 0.00059837, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "BTC", tipo: "Split", cantidad: 0.00013647, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "DOGE", tipo: "Split", cantidad: 0.21845762, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "DOT", tipo: "Split", cantidad: 0.36483007, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "ETH", tipo: "Split", cantidad: 0.00044083, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "LINK", tipo: "Split", cantidad: 0.01766831, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "NEXO", tipo: "Split", cantidad: 2.94666957, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "POL", tipo: "Split", cantidad: 1.39797043, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "SOL", tipo: "Split", cantidad: 0.00536903, precio: 0, broker: "Nexo" },
+  { fecha: "2025-10-01", activo: "USDT", tipo: "Split", cantidad: 5.673032, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-15", activo: "NEXO", tipo: "Compra", cantidad: 76.44058259, precio: 1946.68846, broker: "Nexo" },
+  { fecha: "2025-09-12", activo: "GGAL", tipo: "Compra", cantidad: 1.25587415, precio: 57330.5852, broker: "Nexo" },
+  { fecha: "2025-09-12", activo: "SPY", tipo: "Compra", cantidad: 0.07375154, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "AVAX", tipo: "Split", cantidad: 0.01879632, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "BNB", tipo: "Split", cantidad: 0.00057466, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "BTC", tipo: "Split", cantidad: 0.00013107, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "DOGE", tipo: "Split", cantidad: 0.20719773, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "DOT", tipo: "Split", cantidad: 0.3487439, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "ETH", tipo: "Split", cantidad: 0.00042336, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "LINK", tipo: "Split", cantidad: 0.01696571, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "NEXO", tipo: "Split", cantidad: 2.80481774, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "POL", tipo: "Split", cantidad: 1.33284007, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "SOL", tipo: "Split", cantidad: 0.00515624, precio: 0, broker: "Nexo" },
+  { fecha: "2025-09-01", activo: "USDT", tipo: "Split", cantidad: 21.625605, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-13", activo: "NEXO", tipo: "Compra", cantidad: 71.50231885, precio: 1844.303823, broker: "Nexo" },
+  { fecha: "2025-08-05", activo: "LOMA", tipo: "Compra", cantidad: 3.04225284, precio: 15902.6888, broker: "Nexo" },
+  { fecha: "2025-08-05", activo: "PAM", tipo: "Compra", cantidad: 0.503029, precio: 103805.1484, broker: "Nexo" },
+  { fecha: "2025-08-05", activo: "SPY", tipo: "Compra", cantidad: 0.03525319, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "AVAX", tipo: "Split", cantidad: 0.01986434, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "BNB", tipo: "Split", cantidad: 0.00059922, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "BTC", tipo: "Split", cantidad: 0.00013722, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "DOGE", tipo: "Split", cantidad: 0.22917241, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "DOT", tipo: "Split", cantidad: 0.36079687, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "ETH", tipo: "Split", cantidad: 0.00044147, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "LINK", tipo: "Split", cantidad: 0.01776539, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "NEXO", tipo: "Split", cantidad: 2.63570762, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "POL", tipo: "Split", cantidad: 1.43719181, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "SOL", tipo: "Split", cantidad: 0.00537669, precio: 0, broker: "Nexo" },
+  { fecha: "2025-08-01", activo: "USDT", tipo: "Split", cantidad: 37.195423, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-11", activo: "BTC", tipo: "Venta", cantidad: 0.00860681, precio: 146719408.25, broker: "Nexo" },
+  { fecha: "2025-07-11", activo: "NEXO", tipo: "Compra", cantidad: 22.69323002, precio: 1677.725029, broker: "Nexo" },
+  { fecha: "2025-07-09", activo: "BTC", tipo: "Venta", cantidad: 0.00455367, precio: 137562215.87, broker: "Nexo" },
+  { fecha: "2025-07-07", activo: "AAPL", tipo: "Compra", cantidad: 0.16704601, precio: 329250.5978, broker: "Nexo" },
+  { fecha: "2025-07-07", activo: "SPY", tipo: "Compra", cantidad: 0.07681522, precio: 976446.9688, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "AVAX", tipo: "Split", cantidad: 0.01978221, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "BNB", tipo: "Split", cantidad: 0.00059674, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "BTC", tipo: "Split", cantidad: 0.00015134, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "DOGE", tipo: "Split", cantidad: 0.22897881, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "DOT", tipo: "Split", cantidad: 0.35734079, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "ETH", tipo: "Split", cantidad: 0.00043965, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "LINK", tipo: "Split", cantidad: 0.01770632, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "NEXO", tipo: "Split", cantidad: 2.34799577, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "POL", tipo: "Split", cantidad: 1.43358828, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "SOL", tipo: "Split", cantidad: 0.00535446, precio: 0, broker: "Nexo" },
+  { fecha: "2025-07-01", activo: "USDT", tipo: "Split", cantidad: 16.741861, precio: 0, broker: "Nexo" },
   { fecha: "2025-06-10", activo: "AAPL", tipo: "Compra", cantidad: 5.0, precio: 12125.0, broker: "Bull Market" },
   { fecha: "2025-06-10", activo: "MELI", tipo: "Compra", cantidad: 1.0, precio: 23975.0, broker: "Bull Market" },
   { fecha: "2025-06-10", activo: "SPY", tipo: "Compra", cantidad: 1.0, precio: 35950.0, broker: "Bull Market" },
   { fecha: "2025-06-05", activo: "GGAL", tipo: "Compra", cantidad: 7.0, precio: 6515.4057, broker: "Balanz" },
   { fecha: "2025-06-05", activo: "BBAR", tipo: "Compra", cantidad: 6.0, precio: 7018.915, broker: "Balanz" },
   { fecha: "2025-06-05", activo: "BMA", tipo: "Compra", cantidad: 3.0, precio: 9103.4433, broker: "Balanz" },
+  { fecha: "2025-06-01", activo: "AVAX", tipo: "Split", cantidad: 0.01894176, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "BNB", tipo: "Split", cantidad: 0.00057328, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "BTC", tipo: "Split", cantidad: 0.00017353, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "DOGE", tipo: "Split", cantidad: 0.21772874, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "DOT", tipo: "Split", cantidad: 0.34165475, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "ETH", tipo: "Split", cantidad: 0.00042234, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "LINK", tipo: "Split", cantidad: 0.01700923, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "NEXO", tipo: "Split", cantidad: 2.16288565, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "POL", tipo: "Split", cantidad: 1.36871341, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "SOL", tipo: "Split", cantidad: 0.00514386, precio: 0, broker: "Nexo" },
+  { fecha: "2025-06-01", activo: "USDT", tipo: "Split", cantidad: 10.466349, precio: 0, broker: "Nexo" },
   { fecha: "2025-05-29", activo: "MSFT", tipo: "Compra", cantidad: 2.0, precio: 18252.2, broker: "Balanz" },
   { fecha: "2025-05-29", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 35245.63, broker: "Balanz" },
   { fecha: "2025-05-07", activo: "AAPL", tipo: "Compra", cantidad: 7.0, precio: 11775.0, broker: "Bull Market" },
   { fecha: "2025-05-07", activo: "SPY", tipo: "Compra", cantidad: 1.0, precio: 33250.0, broker: "Bull Market" },
+  { fecha: "2025-05-01", activo: "AVAX", tipo: "Split", cantidad: 0.01962208, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "BNB", tipo: "Split", cantidad: 0.00059191, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "BTC", tipo: "Split", cantidad: 0.00017946, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "DOGE", tipo: "Split", cantidad: 0.22860147, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "DOT", tipo: "Split", cantidad: 0.35064509, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "ETH", tipo: "Split", cantidad: 0.00043608, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "LINK", tipo: "Split", cantidad: 0.01759087, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "NEXO", tipo: "Split", cantidad: 2.22766907, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "POL", tipo: "Split", cantidad: 1.42656202, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "SOL", tipo: "Split", cantidad: 0.00531105, precio: 0, broker: "Nexo" },
+  { fecha: "2025-05-01", activo: "USDT", tipo: "Split", cantidad: 16.592002, precio: 0, broker: "Nexo" },
   { fecha: "2025-04-28", activo: "GD35", tipo: "Compra", cantidad: 62.0, precio: 811.8592, broker: "Balanz" },
+  { fecha: "2025-04-23", activo: "NEXO", tipo: "Compra", cantidad: 14.96259352, precio: 1331.131051, broker: "Nexo" },
+  { fecha: "2025-04-22", activo: "NEXO", tipo: "Compra", cantidad: 46.88279302, precio: 1212.567445, broker: "Nexo" },
   { fecha: "2025-04-07", activo: "AMD", tipo: "Compra", cantidad: 6.0, precio: 11475.0, broker: "Bull Market" },
   { fecha: "2025-04-07", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 34475.0, broker: "Bull Market" },
+  { fecha: "2025-04-01", activo: "AVAX", tipo: "Split", cantidad: 0.01792458, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "BNB", tipo: "Split", cantidad: 0.00055563, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "BTC", tipo: "Split", cantidad: 0.00016744, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "DOGE", tipo: "Split", cantidad: 0.19165449, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "DOT", tipo: "Split", cantidad: 0.32907421, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "ETH", tipo: "Split", cantidad: 0.00040936, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "LINK", tipo: "Split", cantidad: 0.01641261, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "NEXO", tipo: "Split", cantidad: 2.1553664, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "POL", tipo: "Split", cantidad: 1.25606235, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "SOL", tipo: "Split", cantidad: 0.00498554, precio: 0, broker: "Nexo" },
+  { fecha: "2025-04-01", activo: "USDT", tipo: "Split", cantidad: 0.104293, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-31", activo: "NEXO", tipo: "Compra", cantidad: 18.08355498, precio: 1453.220898, broker: "Nexo" },
+  { fecha: "2025-03-27", activo: "NEXO", tipo: "Compra", cantidad: 15.98945273, precio: 1616.428056, broker: "Nexo" },
   { fecha: "2025-03-18", activo: "BABA", tipo: "Compra", cantidad: 2.0, precio: 20500.0, broker: "Bull Market" },
   { fecha: "2025-03-18", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 35825.0, broker: "Bull Market" },
+  { fecha: "2025-03-01", activo: "AVAX", tipo: "Split", cantidad: 0.01922099, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "BNB", tipo: "Split", cantidad: 0.00058348, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "BTC", tipo: "Split", cantidad: 0.0001769, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "DOGE", tipo: "Split", cantidad: 0.22090493, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "DOT", tipo: "Split", cantidad: 0.34238541, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "ETH", tipo: "Split", cantidad: 0.00042985, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "LINK", tipo: "Split", cantidad: 0.01733948, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "NEXO", tipo: "Split", cantidad: 2.02573895, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "POL", tipo: "Split", cantidad: 1.3896387, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "SOL", tipo: "Split", cantidad: 0.00523529, precio: 0, broker: "Nexo" },
+  { fecha: "2025-03-01", activo: "USDT", tipo: "Split", cantidad: 0.347141, precio: 0, broker: "Nexo" },
   { fecha: "2025-02-24", activo: "GGAL", tipo: "Compra", cantidad: 4.0, precio: 7321.02, broker: "Balanz" },
   { fecha: "2025-02-11", activo: "MELI", tipo: "Compra", cantidad: 2.0, precio: 20492.82, broker: "Balanz" },
   { fecha: "2025-02-03", activo: "GGAL", tipo: "Compra", cantidad: 6.0, precio: 7810.0, broker: "IOL" },
@@ -209,10 +413,28 @@ const MOVIMIENTOS = [
   { fecha: "2025-02-03", activo: "BABA", tipo: "Compra", cantidad: 2.0, precio: 13175.0, broker: "Bull Market" },
   { fecha: "2025-02-03", activo: "MELI", tipo: "Compra", cantidad: 5.0, precio: 18200.0, broker: "Bull Market" },
   { fecha: "2025-02-03", activo: "SPY", tipo: "Compra", cantidad: 1.0, precio: 35550.0, broker: "Bull Market" },
+  { fecha: "2025-02-02", activo: "BTC", tipo: "Compra", cantidad: 0.00400713, precio: 117672249.215773, broker: "Nexo" },
+  { fecha: "2025-02-02", activo: "NEXO", tipo: "Compra", cantidad: 35.93646586, precio: 1640.144588, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "AVAX", tipo: "Split", cantidad: 0.01751464, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "BNB", tipo: "Split", cantidad: 0.00052828, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "BTC", tipo: "Split", cantidad: 0.00017929, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "DOGE", tipo: "Split", cantidad: 0.20599796, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "DOT", tipo: "Split", cantidad: 0.30801163, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "ETH", tipo: "Split", cantidad: 0.00038919, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "LINK", tipo: "Split", cantidad: 0.01573686, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "NEXO", tipo: "Split", cantidad: 1.87306331, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "POL", tipo: "Split", cantidad: 1.27944064, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "SOL", tipo: "Split", cantidad: 0.00474001, precio: 0, broker: "Nexo" },
+  { fecha: "2025-02-01", activo: "USDT", tipo: "Split", cantidad: 0.525164, precio: 0, broker: "Nexo" },
   { fecha: "2025-01-30", activo: "GGALX", tipo: "Venta", cantidad: 51.0, precio: 20.7, broker: "IOL" },
   { fecha: "2025-01-28", activo: "GGALX", tipo: "Venta", cantidad: 14.0, precio: 14.0, broker: "Bull Market" },
   { fecha: "2025-01-21", activo: "GD38", tipo: "Compra", cantidad: 118.0, precio: 843.9, broker: "IOL" },
   { fecha: "2025-01-21", activo: "GD41", tipo: "Compra", cantidad: 133.0, precio: 743.3, broker: "IOL" },
+  { fecha: "2025-01-09", activo: "BNB", tipo: "Compra", cantidad: 0.139812, precio: 832682.459302, broker: "Nexo" },
+  { fecha: "2025-01-09", activo: "BTC", tipo: "Compra", cantidad: 0.00171054, precio: 110558744.107779, broker: "Nexo" },
+  { fecha: "2025-01-09", activo: "DOT", tipo: "Compra", cantidad: 14.510659, precio: 8022.998818, broker: "Nexo" },
+  { fecha: "2025-01-09", activo: "POL", tipo: "Compra", cantidad: 212.022296, precio: 549.088479, broker: "Nexo" },
+  { fecha: "2025-01-09", activo: "NEXO", tipo: "Compra", cantidad: 39.90024938, precio: 1476.55381, broker: "Nexo" },
   { fecha: "2025-01-07", activo: "GD38", tipo: "Compra", cantidad: 79.0, precio: 894.4723, broker: "Balanz" },
   { fecha: "2025-01-07", activo: "GD41", tipo: "Compra", cantidad: 86.0, precio: 791.9597, broker: "Balanz" },
   { fecha: "2025-01-07", activo: "GGAL", tipo: "Compra", cantidad: 7.0, precio: 8560.0, broker: "IOL" },
@@ -222,20 +444,67 @@ const MOVIMIENTOS = [
   { fecha: "2025-01-03", activo: "AL30", tipo: "Compra", cantidad: 12.0, precio: 887.1, broker: "Bull Market" },
   { fecha: "2025-01-03", activo: "MELI", tipo: "Compra", cantidad: 2.0, precio: 18075.0, broker: "Bull Market" },
   { fecha: "2025-01-03", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 34800.0, broker: "Bull Market" },
+  { fecha: "2025-01-01", activo: "AVAX", tipo: "Split", cantidad: 0.01931488, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "BNB", tipo: "Split", cantidad: 0.00110158, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "BTC", tipo: "Split", cantidad: 0.00017049, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "DOGE", tipo: "Split", cantidad: 0.22788583, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "DOT", tipo: "Split", cantidad: 0.36527054, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "ETH", tipo: "Split", cantidad: 0.00042919, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "LINK", tipo: "Split", cantidad: 0.01736775, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "NEXO", tipo: "Split", cantidad: 1.81844312, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "POL", tipo: "Split", cantidad: 2.30085034, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "SOL", tipo: "Split", cantidad: 0.00522721, precio: 0, broker: "Nexo" },
+  { fecha: "2025-01-01", activo: "USDT", tipo: "Split", cantidad: 0.281364, precio: 0, broker: "Nexo" },
   { fecha: "2024-12-19", activo: "AL30D", tipo: "Venta", cantidad: 9.0, precio: 921.9225, broker: "IOL" },
+  { fecha: "2024-12-19", activo: "RENDER", tipo: "Compra", cantidad: 12.465761, precio: 9074.375804, broker: "Nexo" },
+  { fecha: "2024-12-19", activo: "DOGE", tipo: "Compra", cantidad: 268.114592, precio: 421.905422, broker: "Nexo" },
+  { fecha: "2024-12-19", activo: "NEXO", tipo: "Compra", cantidad: 19.70665944, precio: 1585.792652, broker: "Nexo" },
   { fecha: "2024-12-18", activo: "LOMA", tipo: "Compra", cantidad: 20.0, precio: 3025.0, broker: "IOL" },
   { fecha: "2024-12-18", activo: "GGAL", tipo: "Compra", cantidad: 10.0, precio: 8190.0, broker: "IOL" },
   { fecha: "2024-12-18", activo: "AL30", tipo: "Compra", cantidad: 9.0, precio: 850.6, broker: "IOL" },
   { fecha: "2024-12-04", activo: "AMD", tipo: "Compra", cantidad: 2.0, precio: 15600.0, broker: "Bull Market" },
   { fecha: "2024-12-04", activo: "MELI", tipo: "Compra", cantidad: 3.0, precio: 18125.0, broker: "Bull Market" },
   { fecha: "2024-12-04", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 33350.0, broker: "Bull Market" },
+  { fecha: "2024-12-01", activo: "ETH", tipo: "Compra", cantidad: 0.026447, precio: 4041630.430673, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "AVAX", tipo: "Compra", cantidad: 2.196709, precio: 48658.69808, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "LINK", tipo: "Compra", cantidad: 5.16323, precio: 20701.963693, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "POL", tipo: "Compra", cantidad: 163.42593, precio: 654.051655, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "RENDER", tipo: "Compra", cantidad: 11.097727, precio: 9631.611951, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "AVAX", tipo: "Split", cantidad: 0.02962991, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "BTC", tipo: "Split", cantidad: 0.00015756, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "DOGE", tipo: "Split", cantidad: 1.42873516, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "DOT", tipo: "Split", cantidad: 0.19540736, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "ETH", tipo: "Split", cantidad: 0.00055442, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "LINK", tipo: "Split", cantidad: 0.0420112, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "NEXO", tipo: "Split", cantidad: 1.68104329, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "POL", tipo: "Split", cantidad: 1.66636264, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "RENDER", tipo: "Split", cantidad: 0.11781744, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "SOL", tipo: "Split", cantidad: 0.0052056, precio: 0, broker: "Nexo" },
+  { fecha: "2024-12-01", activo: "USDT", tipo: "Split", cantidad: 0.610112, precio: 0, broker: "Nexo" },
   { fecha: "2024-11-15", activo: "AL30D", tipo: "Venta", cantidad: 320.0, precio: 861.789, broker: "IOL" },
   { fecha: "2024-11-14", activo: "AL30", tipo: "Compra", cantidad: 320.0, precio: 773.0, broker: "IOL" },
+  { fecha: "2024-11-12", activo: "NEXO", tipo: "Compra", cantidad: 32.9209976, precio: 1366.179742, broker: "Nexo" },
+  { fecha: "2024-11-09", activo: "ETH", tipo: "Compra", cantidad: 0.0228865, precio: 3456797.675486, broker: "Nexo" },
+  { fecha: "2024-11-09", activo: "DOT", tipo: "Compra", cantidad: 15.7188332, precio: 5033.070775, broker: "Nexo" },
+  { fecha: "2024-11-09", activo: "SOL", tipo: "Compra", cantidad: 0.3504389, precio: 225756.900846, broker: "Nexo" },
+  { fecha: "2024-11-09", activo: "AVAX", tipo: "Compra", cantidad: 2.4066707, precio: 32872.798094, broker: "Nexo" },
+  { fecha: "2024-11-09", activo: "POL", tipo: "Compra", cantidad: 182.97840099, precio: 432.022521, broker: "Nexo" },
+  { fecha: "2024-11-09", activo: "NEXO", tipo: "Compra", cantidad: 17.9769624, precio: 1257.387066, broker: "Nexo" },
   { fecha: "2024-11-08", activo: "AL30D", tipo: "Venta", cantidad: 577.0, precio: 837.5115, broker: "IOL" },
   { fecha: "2024-11-07", activo: "AL30", tipo: "Compra", cantidad: 577.0, precio: 772.5, broker: "IOL" },
   { fecha: "2024-11-07", activo: "MELI", tipo: "Compra", cantidad: 4.0, precio: 17125.0, broker: "IOL" },
   { fecha: "2024-11-05", activo: "AL30D", tipo: "Venta", cantidad: 47.0, precio: 808.752, broker: "IOL" },
   { fecha: "2024-11-04", activo: "AL30", tipo: "Compra", cantidad: 47.0, precio: 747.4, broker: "IOL" },
+  { fecha: "2024-11-03", activo: "BTC", tipo: "Compra", cantidad: 0.02178, precio: 79307162.534435, broker: "Nexo" },
+  { fecha: "2024-11-03", activo: "NEXO", tipo: "Compra", cantidad: 41.074298, precio: 1121.421479, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "AVAX", tipo: "Split", cantidad: 0.01850813, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "BTC", tipo: "Split", cantidad: 0.00025617, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "DOT", tipo: "Split", cantidad: 0.21696675, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "ETH", tipo: "Split", cantidad: 0.00038931, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "NEXO", tipo: "Split", cantidad: 1.77926508, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "POL", tipo: "Split", cantidad: 1.21297756, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "SOL", tipo: "Split", cantidad: 0.00629915, precio: 0, broker: "Nexo" },
+  { fecha: "2024-11-01", activo: "USDT", tipo: "Split", cantidad: 41.561337, precio: 0, broker: "Nexo" },
   { fecha: "2024-10-31", activo: "BABA", tipo: "Compra", cantidad: 4.0, precio: 12575.0, broker: "Bull Market" },
   { fecha: "2024-10-31", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 33050.0, broker: "Bull Market" },
   { fecha: "2024-10-30", activo: "AL30D", tipo: "Venta", cantidad: 155.0, precio: 808.254, broker: "IOL" },
@@ -244,6 +513,7 @@ const MOVIMIENTOS = [
   { fecha: "2024-10-29", activo: "AMZN", tipo: "Compra", cantidad: 10.0, precio: 1540.0, broker: "IOL" },
   { fecha: "2024-10-29", activo: "LOMA", tipo: "Compra", cantidad: 20.0, precio: 2120.0, broker: "IOL" },
   { fecha: "2024-10-29", activo: "AL30", tipo: "Compra", cantidad: 155.0, precio: 742.8529, broker: "IOL" },
+  { fecha: "2024-10-29", activo: "NEXO", tipo: "Compra", cantidad: 39.16647131, precio: 1148.446387, broker: "Nexo" },
   { fecha: "2024-10-17", activo: "AL30D", tipo: "Venta", cantidad: 128.0, precio: 771.402, broker: "IOL" },
   { fecha: "2024-10-16", activo: "NVDA", tipo: "Compra", cantidad: 8.0, precio: 6630.0, broker: "IOL" },
   { fecha: "2024-10-16", activo: "MSFT", tipo: "Compra", cantidad: 2.0, precio: 16300.0, broker: "IOL" },
@@ -251,6 +521,16 @@ const MOVIMIENTOS = [
   { fecha: "2024-10-16", activo: "AL30", tipo: "Compra", cantidad: 128.0, precio: 729.3, broker: "IOL" },
   { fecha: "2024-10-04", activo: "BABA", tipo: "Compra", cantidad: 4.0, precio: 15750.0, broker: "Bull Market" },
   { fecha: "2024-10-04", activo: "MELI", tipo: "Compra", cantidad: 3.0, precio: 19900.0, broker: "Bull Market" },
+  { fecha: "2024-10-03", activo: "BTC", tipo: "Compra", cantidad: 0.0039528, precio: 72358227.079539, broker: "Nexo" },
+  { fecha: "2024-10-03", activo: "NEXO", tipo: "Compra", cantidad: 31.3613325, precio: 1140.008958, broker: "Nexo" },
+  { fecha: "2024-10-01", activo: "BTC", tipo: "Split", cantidad: 0.00010249, precio: 0, broker: "Nexo" },
+  { fecha: "2024-10-01", activo: "DOT", tipo: "Split", cantidad: 0.04078268, precio: 0, broker: "Nexo" },
+  { fecha: "2024-10-01", activo: "ETH", tipo: "Split", cantidad: 0.00021882, precio: 0, broker: "Nexo" },
+  { fecha: "2024-10-01", activo: "NEXO", tipo: "Split", cantidad: 1.28065829, precio: 0, broker: "Nexo" },
+  { fecha: "2024-10-01", activo: "SOL", tipo: "Split", cantidad: 0.00369718, precio: 0, broker: "Nexo" },
+  { fecha: "2024-10-01", activo: "USDT", tipo: "Split", cantidad: 0.306554, precio: 0, broker: "Nexo" },
+  { fecha: "2024-09-25", activo: "SOL", tipo: "Compra", cantidad: 0.29477475, precio: 184685.255437, broker: "Nexo" },
+  { fecha: "2024-09-25", activo: "BTC", tipo: "Compra", cantidad: 0.0021574, precio: 78506813.7573, broker: "Nexo" },
   { fecha: "2024-09-24", activo: "AL30D", tipo: "Venta", cantidad: 59.0, precio: 723.4695, broker: "IOL" },
   { fecha: "2024-09-23", activo: "AL30", tipo: "Compra", cantidad: 59.0, precio: 700.2, broker: "IOL" },
   { fecha: "2024-09-19", activo: "AL30D", tipo: "Venta", cantidad: 176.0, precio: 726.7065, broker: "IOL" },
@@ -258,9 +538,17 @@ const MOVIMIENTOS = [
   { fecha: "2024-09-18", activo: "AL30", tipo: "Venta", cantidad: 12.0, precio: 693.26, broker: "Bull Market" },
   { fecha: "2024-09-17", activo: "AL30", tipo: "Compra", cantidad: 12.0, precio: 698.3, broker: "Bull Market" },
   { fecha: "2024-09-05", activo: "QQQ", tipo: "Compra", cantidad: 4.0, precio: 30000.0, broker: "Bull Market" },
+  { fecha: "2024-09-01", activo: "BTC", tipo: "Split", cantidad: 0.00007431, precio: 0, broker: "Nexo" },
+  { fecha: "2024-09-01", activo: "DOT", tipo: "Split", cantidad: 0.03919562, precio: 0, broker: "Nexo" },
+  { fecha: "2024-09-01", activo: "ETH", tipo: "Split", cantidad: 0.00021156, precio: 0, broker: "Nexo" },
+  { fecha: "2024-09-01", activo: "NEXO", tipo: "Split", cantidad: 0.96895854, precio: 0, broker: "Nexo" },
+  { fecha: "2024-09-01", activo: "SOL", tipo: "Split", cantidad: 0.00406022, precio: 0, broker: "Nexo" },
+  { fecha: "2024-09-01", activo: "USDT", tipo: "Split", cantidad: 0.447673, precio: 0, broker: "Nexo" },
   { fecha: "2024-08-26", activo: "AL30", tipo: "Venta", cantidad: 8.0, precio: 646.04, broker: "Bull Market" },
   { fecha: "2024-08-23", activo: "AL30", tipo: "Compra", cantidad: 8.0, precio: 639.6, broker: "Bull Market" },
   { fecha: "2024-08-22", activo: "AL30D", tipo: "Venta", cantidad: 58.0, precio: 607.3732, broker: "IOL" },
+  { fecha: "2024-08-22", activo: "BTC", tipo: "Compra", cantidad: 0.004075, precio: 78725766.871166, broker: "Nexo" },
+  { fecha: "2024-08-22", activo: "NEXO", tipo: "Compra", cantidad: 24.87562189, precio: 1316.728719, broker: "Nexo" },
   { fecha: "2024-08-21", activo: "AMZN", tipo: "Compra", cantidad: 15.0, precio: 1615.0, broker: "IOL" },
   { fecha: "2024-08-21", activo: "MSFT", tipo: "Compra", cantidad: 1.0, precio: 18200.0, broker: "IOL" },
   { fecha: "2024-08-21", activo: "META", tipo: "Compra", cantidad: 1.0, precio: 28600.0, broker: "IOL" },
@@ -270,22 +558,49 @@ const MOVIMIENTOS = [
   { fecha: "2024-08-12", activo: "AL30", tipo: "Compra", cantidad: 10.0, precio: 629.7, broker: "IOL" },
   { fecha: "2024-08-05", activo: "BABA", tipo: "Compra", cantidad: 8.0, precio: 11400.0, broker: "Bull Market" },
   { fecha: "2024-08-05", activo: "PFE", tipo: "Compra", cantidad: 5.0, precio: 10025.0, broker: "Bull Market" },
+  { fecha: "2024-08-05", activo: "NEXO", tipo: "Compra", cantidad: 39.90024938, precio: 1218.157583, broker: "Nexo" },
+  { fecha: "2024-08-02", activo: "BTC", tipo: "Compra", cantidad: 0.00304888, precio: 86794831.116804, broker: "Nexo" },
+  { fecha: "2024-08-02", activo: "NEXO", tipo: "Compra", cantidad: 17.404621, precio: 1532.972192, broker: "Nexo" },
+  { fecha: "2024-08-01", activo: "BTC", tipo: "Split", cantidad: 0.00008875, precio: 0, broker: "Nexo" },
+  { fecha: "2024-08-01", activo: "DOT", tipo: "Split", cantidad: 0.04001847, precio: 0, broker: "Nexo" },
+  { fecha: "2024-08-01", activo: "ETH", tipo: "Split", cantidad: 0.00021705, precio: 0, broker: "Nexo" },
+  { fecha: "2024-08-01", activo: "NEXO", tipo: "Split", cantidad: 2.4998538, precio: 0, broker: "Nexo" },
+  { fecha: "2024-08-01", activo: "SOL", tipo: "Split", cantidad: 0.00245008, precio: 0, broker: "Nexo" },
+  { fecha: "2024-08-01", activo: "USDT", tipo: "Split", cantidad: 34.381592, precio: 0, broker: "Nexo" },
   { fecha: "2024-07-18", activo: "AL30D", tipo: "Venta", cantidad: 9.0, precio: 597.9112, broker: "IOL" },
   { fecha: "2024-07-17", activo: "AL30", tipo: "Compra", cantidad: 9.0, precio: 627.6, broker: "IOL" },
+  { fecha: "2024-07-06", activo: "NEXO", tipo: "Compra", cantidad: 9.3870271, precio: 1487.414477, broker: "Nexo" },
   { fecha: "2024-07-03", activo: "AMD", tipo: "Compra", cantidad: 1.0, precio: 22840.0, broker: "Bull Market" },
   { fecha: "2024-07-03", activo: "MELI", tipo: "Compra", cantidad: 2.0, precio: 18829.0, broker: "Bull Market" },
   { fecha: "2024-07-03", activo: "SPY", tipo: "Compra", cantidad: 1.0, precio: 38440.0, broker: "Bull Market" },
+  { fecha: "2024-07-03", activo: "BTC", tipo: "Compra", cantidad: 0.004923, precio: 84247410.115783, broker: "Nexo" },
+  { fecha: "2024-07-03", activo: "NEXO", tipo: "Compra", cantidad: 34.6095608, precio: 1597.824379, broker: "Nexo" },
   { fecha: "2024-07-02", activo: "MSFT", tipo: "Compra", cantidad: 1.0, precio: 21757.0, broker: "IOL" },
   { fecha: "2024-07-02", activo: "SPY", tipo: "Compra", cantidad: 3.0, precio: 39041.0, broker: "IOL" },
   { fecha: "2024-07-02", activo: "AAPL", tipo: "Compra", cantidad: 2.0, precio: 15640.0, broker: "IOL" },
   { fecha: "2024-07-02", activo: "HMY", tipo: "Compra", cantidad: 2.0, precio: 12939.0, broker: "IOL" },
+  { fecha: "2024-07-01", activo: "BTC", tipo: "Split", cantidad: 0.00006217, precio: 0, broker: "Nexo" },
+  { fecha: "2024-07-01", activo: "DOT", tipo: "Split", cantidad: 0.0396361, precio: 0, broker: "Nexo" },
+  { fecha: "2024-07-01", activo: "ETH", tipo: "Split", cantidad: 0.00021614, precio: 0, broker: "Nexo" },
+  { fecha: "2024-07-01", activo: "NEXO", tipo: "Split", cantidad: 0.60329943, precio: 0, broker: "Nexo" },
+  { fecha: "2024-07-01", activo: "SOL", tipo: "Split", cantidad: 0.00243998, precio: 0, broker: "Nexo" },
+  { fecha: "2024-07-01", activo: "USDT", tipo: "Split", cantidad: 2.180365, precio: 0, broker: "Nexo" },
+  { fecha: "2024-06-24", activo: "NEXO", tipo: "Compra", cantidad: 7.98004988, precio: 1544.95132, broker: "Nexo" },
   { fecha: "2024-06-13", activo: "AL30", tipo: "Compra", cantidad: 1.0, precio: 704.5, broker: "IOL" },
   { fecha: "2024-06-13", activo: "SPY", tipo: "Compra", cantidad: 1.0, precio: 34588.0, broker: "IOL" },
   { fecha: "2024-06-13", activo: "NVDA", tipo: "Compra", cantidad: 10.0, precio: 6840.0, broker: "IOL" },
   { fecha: "2024-06-13", activo: "AL30", tipo: "Compra", cantidad: 100.0, precio: 698.8, broker: "IOL" },
   { fecha: "2024-06-13", activo: "BBAR", tipo: "Compra", cantidad: 20.0, precio: 4550.0, broker: "IOL" },
   { fecha: "2024-06-13", activo: "GGAL", tipo: "Compra", cantidad: 8.0, precio: 4475.0, broker: "IOL" },
+  { fecha: "2024-06-06", activo: "ETH", tipo: "Compra", cantidad: 0.0235215, precio: 4867074.803903, broker: "Nexo" },
+  { fecha: "2024-06-06", activo: "BTC", tipo: "Compra", cantidad: 0.0016824, precio: 90728245.363766, broker: "Nexo" },
   { fecha: "2024-06-03", activo: "AL30", tipo: "Venta", cantidad: 22.0, precio: 685.41, broker: "Bull Market" },
+  { fecha: "2024-06-01", activo: "BTC", tipo: "Split", cantidad: 0.00002967, precio: 0, broker: "Nexo" },
+  { fecha: "2024-06-01", activo: "DOT", tipo: "Split", cantidad: 0.03749354, precio: 0, broker: "Nexo" },
+  { fecha: "2024-06-01", activo: "ETH", tipo: "Split", cantidad: 0.00030044, precio: 0, broker: "Nexo" },
+  { fecha: "2024-06-01", activo: "NEXO", tipo: "Split", cantidad: 0.35351491, precio: 0, broker: "Nexo" },
+  { fecha: "2024-06-01", activo: "SOL", tipo: "Split", cantidad: 0.00231305, precio: 0, broker: "Nexo" },
+  { fecha: "2024-06-01", activo: "USDT", tipo: "Split", cantidad: 2.664613, precio: 0, broker: "Nexo" },
   { fecha: "2024-05-31", activo: "AL30", tipo: "Compra", cantidad: 22.0, precio: 684.8, broker: "Bull Market" },
   { fecha: "2024-05-30", activo: "AMD", tipo: "Compra", cantidad: 1.0, precio: 20293.5, broker: "Bull Market" },
   { fecha: "2024-05-30", activo: "SPY", tipo: "Compra", cantidad: 2.0, precio: 31806.0, broker: "Bull Market" },
@@ -297,8 +612,45 @@ const MOVIMIENTOS = [
   { fecha: "2024-05-06", activo: "BBAR", tipo: "Compra", cantidad: 7.0, precio: 4135.0, broker: "IOL" },
   { fecha: "2024-05-06", activo: "SUPV", tipo: "Compra", cantidad: 15.0, precio: 1614.0, broker: "IOL" },
   { fecha: "2024-05-06", activo: "GGAL", tipo: "Compra", cantidad: 11.0, precio: 4000.0, broker: "IOL" },
+  { fecha: "2024-05-01", activo: "SOL", tipo: "Compra", cantidad: 0.3167948, precio: 134416.347743, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "BTC", tipo: "Compra", cantidad: 0.0021541, precio: 64246228.123114, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "NEXO", tipo: "Compra", cantidad: 39.58254878, precio: 1263.355748, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "BTC", tipo: "Split", cantidad: 0.00002803, precio: 0, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "DOT", tipo: "Split", cantidad: 0.03899822, precio: 0, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "ETH", tipo: "Split", cantidad: 0.00011741, precio: 0, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "NEXO", tipo: "Split", cantidad: 1.73784265, precio: 0, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "SOL", tipo: "Split", cantidad: 0.00396946, precio: 0, broker: "Nexo" },
+  { fecha: "2024-05-01", activo: "USDT", tipo: "Split", cantidad: 25.487764, precio: 0, broker: "Nexo" },
+  { fecha: "2024-04-18", activo: "NEXO", tipo: "Compra", cantidad: 5.98503741, precio: 1236.523155, broker: "Nexo" },
+  { fecha: "2024-04-14", activo: "NEXO", tipo: "Compra", cantidad: 7.98004988, precio: 1303.497717, broker: "Nexo" },
+  { fecha: "2024-04-11", activo: "ETH", tipo: "Compra", cantidad: 0.01664847, precio: 3531629.392971, broker: "Nexo" },
+  { fecha: "2024-04-11", activo: "BTC", tipo: "Compra", cantidad: 0.00056622, precio: 70456511.603264, broker: "Nexo" },
+  { fecha: "2024-04-11", activo: "NEXO", tipo: "Compra", cantidad: 11.10340032, precio: 1433.593272, broker: "Nexo" },
+  { fecha: "2024-04-03", activo: "DOT", tipo: "Compra", cantidad: 3.98021371, precio: 8392.547535, broker: "Nexo" },
+  { fecha: "2024-04-03", activo: "BTC", tipo: "Compra", cantidad: 0.00076916, precio: 65558385.121431, broker: "Nexo" },
+  { fecha: "2024-04-03", activo: "SOL", tipo: "Compra", cantidad: 0.264195, precio: 187598.17559, broker: "Nexo" },
+  { fecha: "2024-04-03", activo: "NEXO", tipo: "Compra", cantidad: 18.95261845, precio: 1308.449772, broker: "Nexo" },
+  { fecha: "2024-04-02", activo: "NEXO", tipo: "Compra", cantidad: 2.98507463, precio: 1268.799825, broker: "Nexo" },
+  { fecha: "2024-04-02", activo: "NEXO", tipo: "Compra", cantidad: 2.9925187, precio: 1267.808612, broker: "Nexo" },
+  { fecha: "2024-04-01", activo: "BTC", tipo: "Split", cantidad: 0.00001538, precio: 0, broker: "Nexo" },
+  { fecha: "2024-04-01", activo: "DOT", tipo: "Split", cantidad: 0.05202623, precio: 0, broker: "Nexo" },
+  { fecha: "2024-04-01", activo: "ETH", tipo: "Split", cantidad: 0.00017054, precio: 0, broker: "Nexo" },
+  { fecha: "2024-04-01", activo: "NEXO", tipo: "Split", cantidad: 0.28060336, precio: 0, broker: "Nexo" },
+  { fecha: "2024-04-01", activo: "SOL", tipo: "Split", cantidad: 0.00223478, precio: 0, broker: "Nexo" },
+  { fecha: "2024-04-01", activo: "USDT", tipo: "Split", cantidad: 2.423887, precio: 0, broker: "Nexo" },
+  { fecha: "2024-03-20", activo: "ETH", tipo: "Compra", cantidad: 0.0118223, precio: 3600792.068142, broker: "Nexo" },
+  { fecha: "2024-03-20", activo: "BTC", tipo: "Compra", cantidad: 0.00125015, precio: 69867783.625965, broker: "Nexo" },
+  { fecha: "2024-03-20", activo: "NEXO", tipo: "Compra", cantidad: 7.98004988, precio: 1407.280456, broker: "Nexo" },
+  { fecha: "2024-03-01", activo: "BTC", tipo: "Split", cantidad: 0.00000625, precio: 0, broker: "Nexo" },
+  { fecha: "2024-03-01", activo: "ETH", tipo: "Split", cantidad: 0.00007421, precio: 0, broker: "Nexo" },
+  { fecha: "2024-03-01", activo: "NEXO", tipo: "Split", cantidad: 0.03557003, precio: 0, broker: "Nexo" },
+  { fecha: "2024-03-01", activo: "USDT", tipo: "Split", cantidad: 0.140672, precio: 0, broker: "Nexo" },
+  { fecha: "2024-02-08", activo: "NEXO", tipo: "Compra", cantidad: 1.08932461, precio: 1086.498909, broker: "Nexo" },
   { fecha: "2024-02-05", activo: "META", tipo: "Compra", cantidad: 1.0, precio: 25829.5, broker: "IOL" },
   { fecha: "2024-02-05", activo: "SPY", tipo: "Compra", cantidad: 1.0, precio: 32050.0, broker: "IOL" },
+  { fecha: "2024-02-01", activo: "NEXO", tipo: "Compra", cantidad: 29.52637643, precio: 1098.34126, broker: "Nexo" },
+  { fecha: "2024-02-01", activo: "NEXO", tipo: "Compra", cantidad: 31.17221793, precio: 1070.074965, broker: "Nexo" },
+  { fecha: "2024-02-01", activo: "NEXO", tipo: "Split", cantidad: 0.08237143, precio: 0, broker: "Nexo" },
   { fecha: "2024-01-25", activo: "GGAL", tipo: "Compra", cantidad: 3.0, precio: 2522.0, broker: "IOL" },
   { fecha: "2024-01-25", activo: "GGAL", tipo: "Compra", cantidad: 1.0, precio: 2523.95, broker: "IOL" },
   { fecha: "2024-01-18", activo: "YPFD", tipo: "Compra", cantidad: 2.0, precio: 19500.0, broker: "IOL" },
@@ -342,6 +694,7 @@ const CATS = [
   { key: "CEDEARs", color: "#6C8FC7", icon: Globe },
   { key: "Bonos", color: "#C89B3C", icon: FileText },
   { key: "Fondos", color: "#A87CC8", icon: Layers },
+  { key: "Cripto", color: "#E8964F", icon: Bitcoin },
 ];
 
 const BROKER_LIST = [...new Set(HOLDINGS.map((h) => h.broker))];
@@ -390,6 +743,9 @@ const SYMBOL_NAMES = {
   AL30: "Bonar 2030", GD35: "Global 2035", GD38: "Global 2038", GD41: "Global 2041",
   BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana", USDT: "Tether", TSLA: "Tesla",
   CONIOLA: "AdCap Acciones - Fondo Común de Inversión",
+  NEXO: "Nexo", POL: "Polygon", DOT: "Polkadot", DOGE: "Dogecoin",
+  RENDER: "Render", AVAX: "Avalanche", LINK: "Chainlink", BNB: "BNB (Binance Coin)",
+  PAM: "Pampa Energía (ADR)",
 };
 
 function hashSeed(str) {
@@ -401,7 +757,7 @@ function hashSeed(str) {
 // Cualquier ticker que esté en tus tenencias reales pero no esté en el catálogo de
 // arriba se agrega automáticamente, para que "Buscar activo" siempre encuentre lo
 // que tenés en cartera (aunque el gráfico de precio siga siendo simulado).
-const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "CEDEARs" };
+const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "CEDEARs", Cripto: "Cripto" };
 const AUTO_ASSETS = [...new Set(HOLDINGS.map((h) => h.name))]
   .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
   .map((t) => {
@@ -564,7 +920,11 @@ async function fetchHistoryCache() {
   return { history: data.history || {}, coverage: data.coverage || null };
 }
 
-const COINGECKO_IDS = { BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether" };
+const COINGECKO_IDS = {
+  BTC: "bitcoin", ETH: "ethereum", SOL: "solana", USDT: "tether",
+  NEXO: "nexo", POL: "polygon-ecosystem-token", DOT: "polkadot", DOGE: "dogecoin",
+  RENDER: "render-token", AVAX: "avalanche-2", LINK: "chainlink", BNB: "binancecoin",
+};
 
 // Cripto en vivo: CoinGecko, endpoint confirmado y estable.
 async function fetchCryptoPricesUsd() {
@@ -651,7 +1011,11 @@ async function fetchAssetHistory(type, ticker, cat) {
 // está guardado en pesos por unidad. Confirmado con datos reales del usuario
 // (Balanz: GD38 a u$s0,8466/unidad; data912: "GD38" sin sufijo = ARS 1293,60,
 // cada 100 nominal) -- ya está en pesos, solo falta dividir por 100.
-function liveAdjustedPrice(holding, livePrices, fx) {
+function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd) {
+  if (holding.cat === "Cripto") {
+    const usd = cryptoUsd?.[holding.name];
+    return usd != null ? usd * fx : holding.price; // sin dato en vivo, se mantiene el estimado
+  }
   const raw = livePrices[holding.name];
   if (raw == null) return holding.price; // sin dato en vivo, se mantiene el estimado
   if (holding.cat === "Bonos") return raw / 100;
@@ -767,7 +1131,7 @@ function priceAt(historyMap, sortedDates, date) {
 const EARLIEST_TRADE_DATE = MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
   .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
 
-function buildRealPortfolioHistory(holdings, historyCache, livePrices) {
+function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd, fx) {
   const uniqueTickers = [...new Map(holdings.map((h) => [`${h.name}__${h.broker}`, h])).values()];
   const today = new Date();
   const start = new Date(EARLIEST_TRADE_DATE);
@@ -788,13 +1152,17 @@ function buildRealPortfolioHistory(holdings, historyCache, livePrices) {
       const historyMap = {};
       for (const p of hist) historyMap[p.date] = p.price;
       const sortedDates = Object.keys(historyMap).sort();
-      // Las CEDEARs se cachean en dólares reales de la acción subyacente en
-      // EE.UU. (así responde data912), no en pesos -- hay que reescalar al
-      // precio ARS real de hoy del CEDEAR (mismo truco que "Buscar activo"),
-      // si no, el valor sale ~1000x más chico de lo real.
+      // Las CEDEARs y las criptos (vía Coinbase) se cachean en dólares
+      // reales, no en pesos -- hay que reescalar al precio ARS real de hoy
+      // (mismo truco que "Buscar activo"), si no, el valor sale ~1000x más
+      // chico de lo real.
       let scaleFix = 1;
       if (h.cat === "CEDEARs") {
         const livePriceArs = livePrices?.[h.name];
+        const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
+        if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
+      } else if (h.cat === "Cripto") {
+        const livePriceArs = cryptoUsd?.[h.name] != null ? cryptoUsd[h.name] * fx : null;
         const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
         if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
       }
@@ -975,7 +1343,7 @@ export default function InvestmentDashboard() {
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
-  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx) })), [livePrices, fx]);
+  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd) })), [livePrices, fx, cryptoUsd]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
@@ -986,8 +1354,8 @@ export default function InvestmentDashboard() {
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
   const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
-    () => buildRealPortfolioHistory(byBroker, historyCache, livePrices),
-    [historyCache, byBroker, livePrices]
+    () => buildRealPortfolioHistory(byBroker, historyCache, livePrices, cryptoUsd, fx),
+    [historyCache, byBroker, livePrices, cryptoUsd, fx]
   );
   React.useEffect(() => { setHistoryCoverage(realHistoryCoverage); }, [realHistoryCoverage]);
   const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
@@ -1493,7 +1861,7 @@ export default function InvestmentDashboard() {
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
-          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} />}
+          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
           {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} />}
@@ -1629,7 +1997,7 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
   const coupons = COUPON_SCHEDULE[selected.symbol] || [];
   const events = CORPORATE_EVENTS[selected.symbol] || [];
   const held = consolidateByName(HOLDINGS.filter((h) => h.name === selected.symbol))[0];
-  if (held) held.price = liveAdjustedPrice(held, livePrices, fx);
+  if (held) held.price = liveAdjustedPrice(held, livePrices, fx, cryptoUsd);
   const heldQty = held?.qty || 0;
   const symbolTrades = MOVIMIENTOS.filter((m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta")).sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   const today = SERIES[SERIES.length - 1].date;
@@ -2540,7 +2908,7 @@ function tickerCatMap() {
   return { ...m, ...TICKER_CAT_OVERRIDES };
 }
 
-function PnlFechaView({ f, C, historyCache, livePrices }) {
+function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
   const todayStr = new Date().toISOString().slice(0, 10);
   const [dateA, setDateA] = useState(() => {
     const d = new Date();
@@ -2574,14 +2942,17 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
           const historyMap = {};
           for (const p of hist) historyMap[p.date] = p.price;
           const sortedDates = Object.keys(historyMap).sort();
-          // Las CEDEARs se cachean en dólares reales de la acción subyacente
-          // en EE.UU. (así responde data912), no en pesos -- hay que
-          // reescalar al precio ARS real de hoy del CEDEAR (mismo truco que
-          // "Buscar activo" y buildRealPortfolioHistory), o el valor sale
-          // ~1000x más chico de lo real.
+          // Las CEDEARs y las criptos (vía Coinbase) se cachean en dólares
+          // reales, no en pesos -- hay que reescalar al precio ARS real de
+          // hoy (mismo truco que "Buscar activo" y buildRealPortfolioHistory),
+          // o el valor sale ~1000x más chico de lo real.
           let scaleFix = 1;
           if (cat === "CEDEARs") {
             const livePriceArs = livePrices[ticker];
+            const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
+            if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
+          } else if (cat === "Cripto") {
+            const livePriceArs = cryptoUsd?.[ticker] != null ? cryptoUsd[ticker] * fx : null;
             const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
             if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
           }
@@ -2598,14 +2969,14 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
       // Sin histórico real cacheado para este ticker -- se usa el precio en
       // vivo/actual "hacia atrás" como mejor aproximación disponible.
       const h = HOLDINGS.find((x) => x.name === ticker);
-      return h ? liveAdjustedPrice(h, livePrices, 1) : 0;
+      return h ? liveAdjustedPrice(h, livePrices, fx, cryptoUsd) : 0;
     };
-  }, [historyCache, livePrices]);
+  }, [historyCache, livePrices, cryptoUsd, fx]);
 
-  const CATEGORIES = ["Acciones", "CEDEARs", "Bonos", "Fondos"];
+  const CATEGORIES = ["Acciones", "CEDEARs", "Bonos", "Fondos", "Cripto"];
 
   const valuesAtDate = (date) => {
-    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, total: 0 };
+    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, Cripto: 0, total: 0 };
     for (const ticker of allTickers) {
       const qty = qtyAtDate(ticker, date);
       if (!qty) continue;
@@ -2618,7 +2989,7 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
   };
 
   const contributionsBetween = (from, to) => {
-    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, total: 0 };
+    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, Cripto: 0, total: 0 };
     for (const m of MOVIMIENTOS) {
       if (m.tipo !== "Compra" && m.tipo !== "Venta") continue;
       if (brokerFilter !== "Todas" && m.broker !== brokerFilter) continue;
@@ -2634,7 +3005,7 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
   // Detalle de movimientos por categoría en el período, para el desplegable
   // que se abre al tocar la columna "Compras/ventas" de cada fila.
   const movementsBetween = (from, to) => {
-    const out = { Acciones: [], CEDEARs: [], Bonos: [], Fondos: [] };
+    const out = { Acciones: [], CEDEARs: [], Bonos: [], Fondos: [], Cripto: [] };
     for (const m of MOVIMIENTOS) {
       if (m.tipo !== "Compra" && m.tipo !== "Venta") continue;
       if (brokerFilter !== "Todas" && m.broker !== brokerFilter) continue;
