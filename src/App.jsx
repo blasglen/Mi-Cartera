@@ -972,7 +972,7 @@ export default function InvestmentDashboard() {
   const dayPct = pct(currentTotal, yesterdayTotal);
 
   return (
-    <div style={{ fontFamily: "'IBM Plex Sans', sans-serif", background: C.bg, color: C.text, minHeight: "100%", display: "flex" }}>
+    <div style={{ fontFamily: "'IBM Plex Sans', sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
         .tabular { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
@@ -1372,7 +1372,7 @@ export default function InvestmentDashboard() {
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
-          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} />}
+          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
           {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} />}
@@ -2401,55 +2401,202 @@ function ImportarView({ C }) {
   );
 }
 
-function PnlFechaView({ f, C }) {
-  const [dateA, setDateA] = useState(SERIES[SERIES.length - 60].date);
-  const [dateB, setDateB] = useState(SERIES[SERIES.length - 1].date);
+// P&L de fecha específica -- a diferencia de simplemente restar "valor hoy -
+// valor antes" (que cuenta cualquier plata que hayas metido en el medio como
+// si fuera ganancia), acá se resta el aporte neto real (compras - ventas)
+// que hiciste ENTRE las dos fechas. Así, si tenías $50, metiste $100 más, y
+// terminaste con $145, el resultado es -$5 (pérdida), no +$95.
+function tickerCatMap() {
+  const m = {};
+  for (const h of HOLDINGS) m[h.name] = h.cat;
+  return m;
+}
 
-  const pA = closestPoint(dateA);
-  const pB = closestPoint(dateB);
-  const abs = pB.total - pA.total;
-  const p = pct(pB.total, pA.total);
+function PnlFechaView({ f, C, historyCache, livePrices }) {
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const [dateA, setDateA] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() - 60);
+    const iso = d.toISOString().slice(0, 10);
+    return iso < EARLIEST_TRADE_DATE ? EARLIEST_TRADE_DATE : iso;
+  });
+  const [dateB, setDateB] = useState(todayStr);
+  const [brokerFilter, setBrokerFilter] = useState("Todas");
 
-  const rows = [
-    { label: "Acciones y CEDEARs", key: "equities" },
-    { label: "Bonos", key: "bonos" },
-    { label: "Fondos", key: "fondos" },
-  ];
+  const TICKER_CAT = useMemo(tickerCatMap, []);
+  // Todos los tickers que aparecieron alguna vez en movimientos -- incluye
+  // posiciones ya cerradas del todo, que no estarían en HOLDINGS actual.
+  const allTickers = useMemo(() => [...new Set(MOVIMIENTOS.map((m) => m.activo))], []);
+
+  const qtyAtDate = useMemo(() => {
+    const cache = {};
+    const brokerArg = brokerFilter === "Todas" ? null : brokerFilter;
+    return (ticker, date) => {
+      if (!cache[ticker]) cache[ticker] = buildQtyTimeline(ticker, brokerArg);
+      return cache[ticker](date);
+    };
+  }, [brokerFilter]);
+
+  const priceAtDate = useMemo(() => {
+    const cache = {};
+    return (ticker, date) => {
+      if (!(ticker in cache)) {
+        const hist = historyCache[ticker];
+        if (hist && hist.length > 1) {
+          const historyMap = {};
+          for (const p of hist) historyMap[p.date] = p.price;
+          cache[ticker] = { map: historyMap, dates: Object.keys(historyMap).sort() };
+        } else {
+          cache[ticker] = null;
+        }
+      }
+      const entry = cache[ticker];
+      if (entry) {
+        const p = priceAt(entry.map, entry.dates, date);
+        if (p != null) return p;
+      }
+      // Sin histórico real cacheado para este ticker -- se usa el precio en
+      // vivo/actual "hacia atrás" como mejor aproximación disponible.
+      const h = HOLDINGS.find((x) => x.name === ticker);
+      return h ? liveAdjustedPrice(h, livePrices, 1) : 0;
+    };
+  }, [historyCache, livePrices]);
+
+  const CATEGORIES = ["Acciones", "CEDEARs", "Bonos", "Fondos"];
+
+  const valuesAtDate = (date) => {
+    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, total: 0 };
+    for (const ticker of allTickers) {
+      const qty = qtyAtDate(ticker, date);
+      if (!qty) continue;
+      const cat = TICKER_CAT[ticker] || "Acciones";
+      const val = qty * priceAtDate(ticker, date);
+      out[cat] = (out[cat] || 0) + val;
+      out.total += val;
+    }
+    return out;
+  };
+
+  const contributionsBetween = (from, to) => {
+    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, total: 0 };
+    for (const m of MOVIMIENTOS) {
+      if (m.tipo !== "Compra" && m.tipo !== "Venta") continue;
+      if (brokerFilter !== "Todas" && m.broker !== brokerFilter) continue;
+      if (!(m.fecha > from && m.fecha <= to)) continue;
+      const cat = TICKER_CAT[m.activo] || "Acciones";
+      const amount = m.cantidad * m.precio * (m.tipo === "Compra" ? 1 : -1);
+      out[cat] = (out[cat] || 0) + amount;
+      out.total += amount;
+    }
+    return out;
+  };
+
+  const hasBothDates = !!dateA && !!dateB;
+  const [from, to] = hasBothDates ? (dateA <= dateB ? [dateA, dateB] : [dateB, dateA]) : [null, null];
+
+  const result = useMemo(() => {
+    if (!hasBothDates) return null;
+    const valFrom = valuesAtDate(from);
+    const valTo = valuesAtDate(to);
+    const contrib = contributionsBetween(from, to);
+    const rows = CATEGORIES.map((cat) => {
+      const start = valFrom[cat] || 0;
+      const end = valTo[cat] || 0;
+      const net = contrib[cat] || 0;
+      const gain = end - start - net;
+      const base = start + Math.max(net, 0);
+      return { cat, start, end, gain, gainPct: base !== 0 ? (gain / base) * 100 : 0 };
+    });
+    const gainTotal = valTo.total - valFrom.total - contrib.total;
+    const baseTotal = valFrom.total + Math.max(contrib.total, 0);
+    return { rows, valFrom, valTo, gainTotal, gainPctTotal: baseTotal !== 0 ? (gainTotal / baseTotal) * 100 : 0 };
+  }, [from, to, brokerFilter, historyCache, livePrices]);
 
   return (
     <div>
-      <SectionTitle C={C} sub="Elegí dos fechas cualquiera y calculamos el resultado exacto entre esos dos momentos.">P&L de fecha específica</SectionTitle>
+      <SectionTitle C={C} sub="Elegí dos fechas cualquiera y calculamos el resultado real entre esos dos momentos (descontando lo que hayas metido o sacado en el medio, no solo la diferencia de valor).">
+        P&L de fecha específica
+      </SectionTitle>
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20, alignItems: "flex-end" }}>
         <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
           Desde
-          <input type="date" value={dateA} min={SERIES[0].date} max={SERIES[SERIES.length - 1].date} onChange={(e) => setDateA(e.target.value)} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }} />
+          <input
+            type="date"
+            value={dateA}
+            min={EARLIEST_TRADE_DATE}
+            max={todayStr}
+            onChange={(e) => { if (e.target.value) setDateA(e.target.value); }}
+            style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }}
+          />
         </label>
         <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
           Hasta
-          <input type="date" value={dateB} min={SERIES[0].date} max={SERIES[SERIES.length - 1].date} onChange={(e) => setDateB(e.target.value)} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }} />
+          <input
+            type="date"
+            value={dateB}
+            min={EARLIEST_TRADE_DATE}
+            max={todayStr}
+            onChange={(e) => { if (e.target.value) setDateB(e.target.value); }}
+            style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }}
+          />
+        </label>
+        <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+          Cartera
+          <select
+            value={brokerFilter}
+            onChange={(e) => setBrokerFilter(e.target.value)}
+            style={{ padding: "6px 10px", borderRadius: 6, fontSize: 13, border: `1px solid ${C.border}`, background: C.surface, color: C.text, cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <option value="Todas">Todas las carteras</option>
+            {BROKER_LIST.map((b) => (
+              <option key={b} value={b}>{b}</option>
+            ))}
+          </select>
         </label>
       </div>
 
-      <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "22px" }}>
-        <div style={{ fontSize: 12, color: C.muted, marginBottom: 8 }}>Resultado del período</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
-          {abs >= 0 ? <TrendingUp size={24} color={C.gain} /> : <TrendingDown size={24} color={C.loss} />}
-          <span className="tabular" style={{ fontSize: 30, fontWeight: 600, color: abs >= 0 ? C.gain : C.loss }}>{abs >= 0 ? "+" : ""}{f(abs)}</span>
-          <span className="tabular" style={{ fontSize: 16, color: abs >= 0 ? C.gain : C.loss, opacity: 0.85 }}>({p >= 0 ? "+" : ""}{p.toFixed(1)}%)</span>
+      {!result ? (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "22px", fontSize: 13, color: C.faint }}>
+          Elegí las dos fechas para ver el resultado.
         </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, fontSize: 12, color: C.faint, marginBottom: 6 }}>
-          <span>Categoría</span><span style={{ textAlign: "right" }}>{dateA}</span><span style={{ textAlign: "right" }}>{dateB}</span>
-        </div>
-        {rows.map((r) => (
-          <div key={r.key} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, fontSize: 13, padding: "8px 0", borderTop: `1px solid ${C.rowLine}` }}>
-            <span>{r.label}</span>
-            <span className="tabular" style={{ textAlign: "right", color: C.muted }}>{f(pA[r.key])}</span>
-            <span className="tabular" style={{ textAlign: "right" }}>{f(pB[r.key])}</span>
+      ) : (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "22px" }}>
+          <div style={{ fontSize: 12, color: C.muted, marginBottom: 8 }}>
+            Resultado del período{brokerFilter !== "Todas" ? ` · ${brokerFilter}` : ""}
           </div>
-        ))}
-      </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, flexWrap: "wrap" }}>
+            {result.gainTotal >= 0 ? <TrendingUp size={24} color={C.gain} /> : <TrendingDown size={24} color={C.loss} />}
+            <span className="tabular" style={{ fontSize: 30, fontWeight: 600, color: result.gainTotal >= 0 ? C.gain : C.loss }}>
+              {result.gainTotal >= 0 ? "+" : ""}{f(result.gainTotal)}
+            </span>
+            <span className="tabular" style={{ fontSize: 16, color: result.gainTotal >= 0 ? C.gain : C.loss, opacity: 0.85 }}>
+              ({result.gainPctTotal >= 0 ? "+" : ""}{result.gainPctTotal.toFixed(1)}%)
+            </span>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr 1fr", gap: 10, fontSize: 12, color: C.faint, marginBottom: 6 }}>
+            <span>Categoría</span>
+            <span style={{ textAlign: "right" }}>{from}</span>
+            <span style={{ textAlign: "right" }}>{to}</span>
+            <span style={{ textAlign: "right" }}>Resultado</span>
+          </div>
+          {result.rows.map((r) => (
+            <div key={r.cat} style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr 1fr", gap: 10, fontSize: 13, padding: "8px 0", borderTop: `1px solid ${C.rowLine}`, alignItems: "center" }}>
+              <span>{r.cat}</span>
+              <span className="tabular" style={{ textAlign: "right", color: C.muted }}>{f(r.start)}</span>
+              <span className="tabular" style={{ textAlign: "right" }}>{f(r.end)}</span>
+              <span className="tabular" style={{ textAlign: "right", color: r.gain >= 0 ? C.gain : C.loss, fontWeight: 600 }}>
+                {r.gain >= 0 ? "+" : ""}{f(r.gain)} <span style={{ fontWeight: 400, opacity: 0.85 }}>({r.gainPct >= 0 ? "+" : ""}{r.gainPct.toFixed(1)}%)</span>
+              </span>
+            </div>
+          ))}
+
+          <div style={{ marginTop: 16, fontSize: 11, color: C.faint }}>
+            "Resultado" ya descuenta lo que compraste o vendiste entre esas dos fechas -- es la ganancia o pérdida real de lo que ya tenías más lo que fuiste sumando, valuado a precio de mercado de cada categoría.
+          </div>
+        </div>
+      )}
     </div>
   );
 }
