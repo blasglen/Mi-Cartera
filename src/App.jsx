@@ -837,7 +837,7 @@ export default function InvestmentDashboard() {
   const [customTo, setCustomTo] = useState("");
   const [useCustom, setUseCustom] = useState(false);
   const [catFilter, setCatFilter] = useState("Todas");
-  const [brokerFilter, setBrokerFilter] = useState([]); // [] = todas las carteras
+  const [brokerFilter, setBrokerFilter] = useState("Todas"); // "Todas" o el nombre de una cartera puntual
   const [currency, setCurrency] = useState("USD");
   const [fxType, setFxType] = useState("mep");
 
@@ -889,7 +889,7 @@ export default function InvestmentDashboard() {
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx) })), [livePrices, fx]);
 
   const byBroker = useMemo(
-    () => (brokerFilter.length === 0 ? holdingsLive : holdingsLive.filter((h) => brokerFilter.includes(h.broker))),
+    () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
     [holdingsLive, brokerFilter]
   );
   const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
@@ -916,7 +916,7 @@ export default function InvestmentDashboard() {
 
   const earliestDateForFilter = useMemo(() => {
     const relevant = MOVIMIENTOS.filter(
-      (m) => (m.tipo === "Compra" || m.tipo === "Venta") && (brokerFilter.length === 0 || brokerFilter.includes(m.broker))
+      (m) => (m.tipo === "Compra" || m.tipo === "Venta") && (brokerFilter === "Todas" || m.broker === brokerFilter)
     );
     return relevant.length > 0 ? relevant.reduce((min, m) => (m.fecha < min ? m.fecha : min), relevant[0].fecha) : EARLIEST_TRADE_DATE;
   }, [brokerFilter]);
@@ -955,7 +955,7 @@ export default function InvestmentDashboard() {
     (m) =>
       (m.tipo === "Compra" || m.tipo === "Venta") &&
       m.precio > 0 && // splits/acciones recibidas a costo 0 no son "operaciones" visibles
-      (brokerFilter.length === 0 || brokerFilter.includes(m.broker)) &&
+      (brokerFilter === "Todas" || m.broker === brokerFilter) &&
       m.fecha >= chartData[0]?.date &&
       m.fecha <= chartData[chartData.length - 1]?.date
   ).map((m) => {
@@ -970,10 +970,6 @@ export default function InvestmentDashboard() {
   const yesterdayTotal = yesterday.total;
   const dayAbs = currentTotal - yesterdayTotal;
   const dayPct = pct(currentTotal, yesterdayTotal);
-
-  const toggleBroker = (b) => {
-    setBrokerFilter((prev) => (prev.includes(b) ? prev.filter((x) => x !== b) : [...prev, b]));
-  };
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans', sans-serif", background: C.bg, color: C.text, minHeight: "100%", display: "flex" }}>
@@ -1069,43 +1065,29 @@ export default function InvestmentDashboard() {
                       ? "Conectando cotizaciones…"
                       : "Estimado — sin conexión a las fuentes de cotización"}
                   </div>
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
-                    <button
-                      onClick={() => setBrokerFilter([])}
+                  <div style={{ marginTop: 12 }}>
+                    <select
+                      value={brokerFilter}
+                      onChange={(e) => setBrokerFilter(e.target.value)}
                       style={{
-                        padding: "5px 12px",
-                        borderRadius: 999,
+                        padding: "6px 12px",
+                        borderRadius: 8,
                         fontSize: 12,
                         border: `1px solid ${C.border}`,
-                        background: brokerFilter.length === 0 ? C.gold : "transparent",
-                        color: brokerFilter.length === 0 ? C.bg : C.muted,
+                        background: C.surface,
+                        color: C.text,
                         cursor: "pointer",
                         fontWeight: 500,
+                        fontFamily: "inherit",
                       }}
                     >
-                      Todas las carteras
-                    </button>
-                    {BROKER_LIST.map((b) => {
-                      const active = brokerFilter.includes(b);
-                      return (
-                        <button
-                          key={b}
-                          onClick={() => toggleBroker(b)}
-                          style={{
-                            padding: "5px 12px",
-                            borderRadius: 999,
-                            fontSize: 12,
-                            border: `1px solid ${active ? C.gold : C.border}`,
-                            background: active ? C.chipActive : "transparent",
-                            color: active ? C.gold : C.muted,
-                            cursor: "pointer",
-                            fontWeight: 500,
-                          }}
-                        >
+                      <option value="Todas">Todas las carteras</option>
+                      {BROKER_LIST.map((b) => (
+                        <option key={b} value={b}>
                           {b}
-                        </button>
-                      );
-                    })}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
@@ -1197,7 +1179,7 @@ export default function InvestmentDashboard() {
                         tickLine={false}
                         width={56}
                       />
-                      <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.muted }} formatter={(v, name) => [f(v), name]} />
+                      <Tooltip content={<HomeChartTooltip C={C} f={f} />} />
                       <Area type="monotone" dataKey="total" name="Valor actual" stroke={C.gold} strokeWidth={2} fill="url(#fillTotal)" />
                       <Line type="monotone" dataKey="invertido" name="Invertido" stroke={C.muted} strokeWidth={1.5} strokeDasharray="4 3" dot={false} isAnimationActive={false} />
                       {chartTrades.map((t, i) => {
@@ -2327,6 +2309,32 @@ function CalculadoraView({ currency, fx, f, C, livePrices, cryptoUsd, historyCac
             </div>
           </div>
         </>
+      )}
+    </div>
+  );
+}
+
+// Tooltip del gráfico de "Ganancia neta" en Inicio: además de Invertido/Valor
+// actual (que ya traía el tooltip por defecto de Recharts), agrega una línea
+// con el % de ganancia o pérdida entre esos dos valores para ese punto.
+function HomeChartTooltip({ active, payload, label, C, f }) {
+  if (!active || !payload || payload.length === 0) return null;
+  const total = payload.find((p) => p.dataKey === "total")?.value;
+  const invertido = payload.find((p) => p.dataKey === "invertido")?.value;
+  const gananciaPct = invertido ? pct(total, invertido) : null;
+  const isGain = gananciaPct != null && gananciaPct >= 0;
+  return (
+    <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, padding: "8px 12px" }}>
+      <div style={{ color: C.muted, marginBottom: 4 }}>{label}</div>
+      {payload.map((p, i) => (
+        <div key={i} style={{ color: p.color }}>
+          {p.name} : {f(p.value)}
+        </div>
+      ))}
+      {gananciaPct != null && (
+        <div style={{ color: isGain ? C.gain : C.loss, marginTop: 4, fontWeight: 600 }}>
+          {isGain ? "Ganancia" : "Pérdida"} {Math.abs(gananciaPct).toFixed(1)}%
+        </div>
       )}
     </div>
   );
