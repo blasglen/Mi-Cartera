@@ -2518,25 +2518,51 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
     return out;
   };
 
+  // Detalle de movimientos por categoría en el período, para el desplegable
+  // que se abre al tocar la columna "Compras/ventas" de cada fila.
+  const movementsBetween = (from, to) => {
+    const out = { Acciones: [], CEDEARs: [], Bonos: [], Fondos: [] };
+    for (const m of MOVIMIENTOS) {
+      if (m.tipo !== "Compra" && m.tipo !== "Venta") continue;
+      if (brokerFilter !== "Todas" && m.broker !== brokerFilter) continue;
+      if (!(m.fecha > from && m.fecha <= to)) continue;
+      const cat = TICKER_CAT[m.activo] || "Acciones";
+      (out[cat] || (out[cat] = [])).push(m);
+    }
+    for (const cat of Object.keys(out)) out[cat].sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+    return out;
+  };
+
   const hasBothDates = !!dateA && !!dateB;
   const [from, to] = hasBothDates ? (dateA <= dateB ? [dateA, dateB] : [dateB, dateA]) : [null, null];
+
+  const [expandedCats, setExpandedCats] = useState(() => new Set());
+  const toggleCat = (cat) => {
+    setExpandedCats((prev) => {
+      const next = new Set(prev);
+      next.has(cat) ? next.delete(cat) : next.add(cat);
+      return next;
+    });
+  };
 
   const result = useMemo(() => {
     if (!hasBothDates) return null;
     const valFrom = valuesAtDate(from);
     const valTo = valuesAtDate(to);
     const contrib = contributionsBetween(from, to);
+    const movs = movementsBetween(from, to);
     const rows = CATEGORIES.map((cat) => {
       const start = valFrom[cat] || 0;
       const end = valTo[cat] || 0;
       const net = contrib[cat] || 0;
       const gain = end - start - net;
       const base = start + Math.max(net, 0);
-      return { cat, start, end, net, gain, gainPct: base !== 0 ? (gain / base) * 100 : 0 };
+      return { cat, start, end, net, gain, gainPct: base !== 0 ? (gain / base) * 100 : 0, movs: movs[cat] || [] };
     });
     const gainTotal = valTo.total - valFrom.total - contrib.total;
     const baseTotal = valFrom.total + Math.max(contrib.total, 0);
-    return { rows, valFrom, valTo, gainTotal, gainPctTotal: baseTotal !== 0 ? (gainTotal / baseTotal) * 100 : 0 };
+    const totalStart = valFrom.total, totalEnd = valTo.total;
+    return { rows, valFrom, valTo, gainTotal, gainPctTotal: baseTotal !== 0 ? (gainTotal / baseTotal) * 100 : 0, totalStart, totalEnd, totalNet: contrib.total };
   }, [from, to, brokerFilter, historyCache, livePrices]);
 
   return (
@@ -2609,19 +2635,81 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
             <span style={{ textAlign: "right" }}>{to}</span>
             <span style={{ textAlign: "right" }}>Resultado</span>
           </div>
-          {result.rows.map((r) => (
-            <div key={r.cat} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1.1fr", gap: 10, fontSize: 13, padding: "8px 0", borderTop: `1px solid ${C.rowLine}`, alignItems: "center" }}>
-              <span>{r.cat}</span>
-              <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(r.start)}</span>
-              <span className="tabular" style={{ textAlign: "right", color: C.faint, fontSize: 12 }}>
-                {r.net !== 0 ? `${r.net >= 0 ? "+" : ""}${f(r.net)}` : "—"}
-              </span>
-              <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(r.end)}</span>
-              <span className="tabular" style={{ textAlign: "right", color: r.gain >= 0 ? C.gain : C.loss, fontWeight: 600 }}>
-                {r.gain >= 0 ? "+" : ""}{f(r.gain)} <span style={{ fontWeight: 400, opacity: 0.85 }}>({r.gainPct >= 0 ? "+" : ""}{r.gainPct.toFixed(1)}%)</span>
-              </span>
-            </div>
-          ))}
+          {result.rows.map((r) => {
+            const isOpen = expandedCats.has(r.cat);
+            return (
+              <div key={r.cat}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1.1fr", gap: 10, fontSize: 13, padding: "8px 0", borderTop: `1px solid ${C.rowLine}`, alignItems: "center" }}>
+                  <span>{r.cat}</span>
+                  <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(r.start)}</span>
+                  {r.movs.length > 0 ? (
+                    <button
+                      onClick={() => toggleCat(r.cat)}
+                      className="tabular"
+                      style={{
+                        textAlign: "right",
+                        color: C.faint,
+                        fontSize: 12,
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-end",
+                        gap: 4,
+                        textDecoration: "underline",
+                        textDecorationStyle: "dotted",
+                        textUnderlineOffset: 3,
+                      }}
+                      title="Ver movimientos de este período"
+                    >
+                      <ChevronDown size={12} style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.15s ease" }} />
+                      {r.net >= 0 ? "+" : ""}{f(r.net)} ({r.movs.length})
+                    </button>
+                  ) : (
+                    <span className="tabular" style={{ textAlign: "right", color: C.faint, fontSize: 12 }}>—</span>
+                  )}
+                  <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(r.end)}</span>
+                  <span className="tabular" style={{ textAlign: "right", color: r.gain >= 0 ? C.gain : C.loss, fontWeight: 600 }}>
+                    {r.gain >= 0 ? "+" : ""}{f(r.gain)} <span style={{ fontWeight: 400, opacity: 0.85 }}>({r.gainPct >= 0 ? "+" : ""}{r.gainPct.toFixed(1)}%)</span>
+                  </span>
+                </div>
+                {isOpen && r.movs.length > 0 && (
+                  <div style={{ background: C.bg, borderRadius: 8, padding: "10px 14px", marginBottom: 6 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 8, fontSize: 11, color: C.faint, marginBottom: 4 }}>
+                      <span>Fecha</span>
+                      <span>Activo</span>
+                      <span>Tipo</span>
+                      <span style={{ textAlign: "right" }}>Cantidad</span>
+                      <span style={{ textAlign: "right" }}>Precio</span>
+                    </div>
+                    {r.movs.map((m, i) => (
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 8, fontSize: 12, padding: "4px 0", borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none" }}>
+                        <span className="tabular" style={{ color: C.muted }}>{m.fecha}</span>
+                        <span style={{ fontWeight: 500 }}>{m.activo}</span>
+                        <span style={{ color: m.tipo === "Venta" ? C.loss : C.gain }}>{m.tipo}</span>
+                        <span className="tabular" style={{ textAlign: "right" }}>{m.cantidad}</span>
+                        <span className="tabular" style={{ textAlign: "right" }}>{f(m.precio)}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1.1fr", gap: 10, fontSize: 14, padding: "12px 0 4px", marginTop: 4, borderTop: `2px solid ${C.gold}` }}>
+            <span style={{ fontWeight: 700 }}>TOTAL</span>
+            <span className="tabular" style={{ textAlign: "right", fontWeight: 700 }}>{f(result.totalStart)}</span>
+            <span className="tabular" style={{ textAlign: "right", color: C.faint, fontSize: 12, fontWeight: 700 }}>
+              {result.totalNet !== 0 ? `${result.totalNet >= 0 ? "+" : ""}${f(result.totalNet)}` : "—"}
+            </span>
+            <span className="tabular" style={{ textAlign: "right", fontWeight: 700 }}>{f(result.totalEnd)}</span>
+            <span className="tabular" style={{ textAlign: "right", color: result.gainTotal >= 0 ? C.gain : C.loss, fontWeight: 700 }}>
+              {result.gainTotal >= 0 ? "+" : ""}{f(result.gainTotal)} <span style={{ fontWeight: 500, opacity: 0.85 }}>({result.gainPctTotal >= 0 ? "+" : ""}{result.gainPctTotal.toFixed(1)}%)</span>
+            </span>
+          </div>
 
           <div style={{ marginTop: 16, fontSize: 11, color: C.faint }}>
             "Resultado" ya descuenta lo que compraste o vendiste entre esas dos fechas -- es la ganancia o pérdida real de lo que ya tenías más lo que fuiste sumando, valuado a precio de mercado de cada categoría.
