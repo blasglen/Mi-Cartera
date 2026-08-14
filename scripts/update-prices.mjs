@@ -129,11 +129,42 @@ async function fetchFx() {
   return out;
 }
 
+// Histórico de cripto: CoinGecko en el plan gratuito solo deja pedir los
+// últimos 365 días (es un límite del plan, no del parámetro que mandemos), y
+// eso fue justo lo que capó el histórico de BTC/ETH/SOL/USDT a 1 año en la
+// calculadora. Para el histórico usamos CryptoCompare (histoday) en su lugar,
+// que da hasta 2000 días por pedido y se puede paginar hacia atrás sin key.
+// El precio EN VIVO sigue en CoinGecko (fetchCryptoPricesUsd más abajo) --
+// ese endpoint nunca tuvo problema, no hace falta tocarlo.
+async function fetchCryptoCompareHistory(symbol) {
+  const out = [];
+  let toTs = Math.floor(Date.now() / 1000);
+  const limit = 2000;
+  for (let i = 0; i < 6; i++) {
+    const url = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${symbol}&tsym=USD&limit=${limit}&toTs=${toTs}`;
+    const data = await fetchJson(url);
+    const rows = data?.Data?.Data;
+    if (!Array.isArray(rows) || rows.length === 0) break;
+    for (const row of rows) {
+      // CryptoCompare devuelve ceros para fechas anteriores al listado del
+      // par -- los filtramos para no arrastrar "precio 0" al principio de la serie.
+      if (row.close) out.push({ date: new Date(row.time * 1000).toISOString().slice(0, 10), price: row.close });
+    }
+    const earliest = rows[0]?.time;
+    if (!earliest || rows.length < limit) break; // llegamos al principio de la serie disponible
+    toTs = earliest - 86400;
+    await sleep(300);
+  }
+  const byDate = new Map();
+  for (const p of out) byDate.set(p.date, p.price);
+  return [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([date, price]) => ({ date, price }));
+}
+
 async function fetchHistoryFor(ticker, cat, fxMep) {
   if (CRYPTO_IDS[ticker]) {
-    const data = await fetchJson(`https://api.coingecko.com/api/v3/coins/${CRYPTO_IDS[ticker]}/market_chart?vs_currency=usd&days=365`);
-    if (!data?.prices) return null;
-    return data.prices.map(([ts, usd]) => ({ date: new Date(ts).toISOString().slice(0, 10), price: usd * fxMep }));
+    const usdHistory = await fetchCryptoCompareHistory(ticker);
+    if (!usdHistory || usdHistory.length === 0) return null;
+    return usdHistory.map((p) => ({ date: p.date, price: p.price * fxMep }));
   }
   const type = TYPE_MAP[cat];
   if (!type) return null; // ej: Fondos, no cubierto por data912
