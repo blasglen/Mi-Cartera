@@ -2527,10 +2527,17 @@ function ImportarView({ C }) {
 // si fuera ganancia), acá se resta el aporte neto real (compras - ventas)
 // que hiciste ENTRE las dos fechas. Así, si tenías $50, metiste $100 más, y
 // terminaste con $145, el resultado es -$5 (pérdida), no +$95.
+// Excepciones manuales de categoría para tickers que ya no están en HOLDINGS
+// (posiciones totalmente cerradas) y por eso no se pueden inferir de ahí.
+// AL30D es el mismo bono que AL30, solo que se liquida en dólares -- durante
+// el cepo era común comprar AL30 un día y venderlo como AL30D al siguiente
+// para "pasarse a dólares" (dólar MEP/bono). Sigue siendo un bono.
+const TICKER_CAT_OVERRIDES = { AL30D: "Bonos" };
+
 function tickerCatMap() {
   const m = {};
   for (const h of HOLDINGS) m[h.name] = h.cat;
-  return m;
+  return { ...m, ...TICKER_CAT_OVERRIDES };
 }
 
 function PnlFechaView({ f, C, historyCache, livePrices }) {
@@ -2783,20 +2790,22 @@ function PnlFechaView({ f, C, historyCache, livePrices }) {
                 </div>
                 {isOpen && r.movs.length > 0 && (
                   <div style={{ background: C.bg, borderRadius: 8, padding: "10px 14px", marginBottom: 6 }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 8, fontSize: 11, color: C.faint, marginBottom: 4 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr", gap: 8, fontSize: 11, color: C.faint, marginBottom: 4 }}>
                       <span>Fecha</span>
                       <span>Activo</span>
                       <span>Tipo</span>
                       <span style={{ textAlign: "right" }}>Cantidad</span>
-                      <span style={{ textAlign: "right" }}>Precio</span>
+                      <span style={{ textAlign: "right" }}>PPC</span>
+                      <span style={{ textAlign: "right" }}>Total</span>
                     </div>
                     {r.movs.map((m, i) => (
-                      <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 8, fontSize: 12, padding: "4px 0", borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none" }}>
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr", gap: 8, fontSize: 12, padding: "4px 0", borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none" }}>
                         <span className="tabular" style={{ color: C.muted }}>{m.fecha}</span>
                         <span style={{ fontWeight: 500 }}>{m.activo}</span>
                         <span style={{ color: m.tipo === "Venta" ? C.loss : C.gain }}>{m.tipo}</span>
                         <span className="tabular" style={{ textAlign: "right" }}>{m.cantidad}</span>
                         <span className="tabular" style={{ textAlign: "right" }}>{f(m.precio)}</span>
+                        <span className="tabular" style={{ textAlign: "right", fontWeight: 600 }}>{f(m.cantidad * m.precio)}</span>
                       </div>
                     ))}
                   </div>
