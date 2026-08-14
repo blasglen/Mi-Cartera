@@ -194,7 +194,12 @@ async function main() {
   for (const [ticker, cat] of TICKERS) {
     process.stdout.write(`  ${ticker}... `);
     const h = await fetchHistoryFor(ticker, cat, fxMep);
-    if (h && h.length > 1) { history[ticker] = h; ok++; console.log(`ok (${h.length} puntos)`); }
+    if (h && h.length > 1) {
+      history[ticker] = h;
+      ok++;
+      const dates = h.map((p) => p.date).sort();
+      console.log(`ok (${h.length} puntos, desde ${dates[0]} hasta ${dates[dates.length - 1]})`);
+    }
     else console.log("sin datos");
     await sleep(1000);
   }
