@@ -47,7 +47,11 @@ const EXTRA_TICKERS = [
 // Cripto: mismo tratamiento que el resto -- histórico cacheado una vez al día,
 // para no depender de pedirle en vivo a CoinGecko cada vez que alguien mira el
 // gráfico (eso fue justo lo que disparó el límite de pedidos gratis).
-const CRYPTO_TICKERS = [["BTC", "Cripto"], ["ETH", "Cripto"], ["SOL", "Cripto"], ["USDT", "Cripto"]];
+const CRYPTO_TICKERS = [
+  ["BTC", "Cripto"], ["ETH", "Cripto"], ["SOL", "Cripto"], ["USDT", "Cripto"],
+  ["NEXO", "Cripto"], ["POL", "Cripto"], ["DOT", "Cripto"], ["DOGE", "Cripto"],
+  ["RENDER", "Cripto"], ["AVAX", "Cripto"], ["LINK", "Cripto"], ["BNB", "Cripto"],
+];
 
 const TICKERS = [...HOLDINGS_TICKERS, ...EXTRA_TICKERS, ...CRYPTO_TICKERS];
 
@@ -251,10 +255,13 @@ async function main() {
 
   console.log("Actualizando cripto en vivo...");
   const cryptoLive = {};
+  // Un solo pedido con todos los ids juntos -- pedir uno por uno (como antes)
+  // fue justo lo que empezó a pegar contra el límite gratis de CoinGecko al
+  // sumar más monedas.
+  const allIds = Object.values(CRYPTO_IDS).join(",");
+  const cryptoData = await fetchJson(`https://api.coingecko.com/api/v3/simple/price?ids=${allIds}&vs_currencies=usd`);
   for (const [symbol, id] of Object.entries(CRYPTO_IDS)) {
-    const data = await fetchJson(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
-    if (data?.[id]?.usd) cryptoLive[symbol] = data[id].usd;
-    await sleep(1500); // CoinGecko free tier es más estricto con el rate limit
+    if (cryptoData?.[id]?.usd) cryptoLive[symbol] = cryptoData[id].usd;
   }
 
   console.log("Actualizando históricos (uno por vez, con pausa)...");
