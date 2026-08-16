@@ -535,10 +535,16 @@ async function main() {
 
   // Estos 4 no tienen un fondo/índice de respaldo como CONIOLA -- si IOL no
   // los tiene, quedan directamente en "sin datos" (fallback plano en la app).
+  // PLC2O es un BONO, no un fondo -- vía el mismo endpoint de IOL, los bonos
+  // cotizan cada 100 de nominal (misma convención que AL30/GD35/GD38/GD41 en
+  // data912), así que necesita la misma corrección /100. Los otros 3 son
+  // fondos comunes (cuotaparte directa), no la necesitan.
+  const IOL_PER_100_NOMINAL = new Set(["PLC2O"]);
   for (const ticker of ["ADCGLOA", "IOLDOLD", "PRPEDOB", "PLC2O"]) {
     const series = await fetchFromIol(iolToken, ticker);
     if (series) {
-      history[ticker] = series.map((p) => ({ date: p.date, price: p.price }));
+      const fxAdjust = IOL_PER_100_NOMINAL.has(ticker) ? (p) => p / 100 : (p) => p;
+      history[ticker] = series.map((p) => ({ date: p.date, price: fxAdjust(p.price) }));
       ok++;
       console.log(`  ${ticker}... ok vía IOL (${series.length} puntos, desde ${series[0].date} hasta ${series[series.length - 1].date})`);
     } else {
