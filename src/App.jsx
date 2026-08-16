@@ -2394,6 +2394,8 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
               ? `Precio en vivo${selected.cat === "Cripto" ? " (CoinGecko, cada 20s)" : mode === "accion" ? " (Finnhub, cada 20s)" : " (data912)"}.`
               : mode === "accion" && historyStatus === "ok"
               ? "Precio real de la acción, último cierre (no en vivo — configurá FINNHUB_API_KEY para tenerlo en vivo)."
+              : historyStatus === "ok"
+              ? "Precio real, último cierre disponible (se actualiza una vez al día, no en vivo)."
               : "Precio simulado — no encontramos cotización para este símbolo todavía."}
           </div>
           {trades.length > 0 && (
@@ -2987,7 +2989,11 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
   const TICKER_CAT = useMemo(tickerCatMap, []);
   // Todos los tickers que aparecieron alguna vez en movimientos -- incluye
   // posiciones ya cerradas del todo, que no estarían en HOLDINGS actual.
-  const allTickers = useMemo(() => [...new Set(MOVIMIENTOS.map((m) => m.activo))], []);
+  // Incluye tickers de HOLDINGS también, no solo los que tienen movimientos
+  // cargados -- si no, una tenencia sin historial de compras real (ej:
+  // CONIOLA, del cual no tenemos el detalle) queda directamente afuera del
+  // cálculo entero, en vez de contar con su valor actual "plano".
+  const allTickers = useMemo(() => [...new Set([...MOVIMIENTOS.map((m) => m.activo), ...HOLDINGS.map((h) => h.name)])], []);
 
   const qtyAtDate = useMemo(() => {
     const cache = {};
