@@ -1329,6 +1329,7 @@ export default function InvestmentDashboard() {
   const [customTo, setCustomTo] = useState("");
   const [useCustom, setUseCustom] = useState(false);
   const [catFilter, setCatFilter] = useState("Todas");
+  const [tenenciasSort, setTenenciasSort] = useState({ key: "value", dir: -1 }); // dir: 1 asc, -1 desc
   const [brokerFilter, setBrokerFilter] = useState("Todas"); // "Todas" o el nombre de una cartera puntual
   const [currency, setCurrency] = useState("USD");
   const [fxType, setFxType] = useState("mep");
@@ -1847,21 +1848,46 @@ export default function InvestmentDashboard() {
                   <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                     <thead>
                       <tr style={{ color: C.faint, textAlign: "left" }}>
-                        <th style={{ padding: "10px 18px", fontWeight: 500 }}>Activo</th>
-                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Valor actual</th>
-                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Cantidad</th>
-                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>PPC</th>
-                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Precio</th>
-                        <th style={{ padding: "10px 18px", fontWeight: 500, textAlign: "right" }}>P&amp;L</th>
+                        {[
+                          { key: "name", label: "Activo", align: "left", pad: "10px 18px" },
+                          { key: "value", label: "Valor actual", align: "right", pad: "10px 12px" },
+                          { key: "qty", label: "Cantidad", align: "right", pad: "10px 12px" },
+                          { key: "avgCost", label: "PPC", align: "right", pad: "10px 12px" },
+                          { key: "price", label: "Precio", align: "right", pad: "10px 12px" },
+                          { key: "pl", label: "P&L", align: "right", pad: "10px 18px" },
+                        ].map((col) => (
+                          <th
+                            key={col.key}
+                            onClick={() =>
+                              setTenenciasSort((prev) =>
+                                prev.key === col.key ? { key: col.key, dir: -prev.dir } : { key: col.key, dir: -1 }
+                              )
+                            }
+                            style={{ padding: col.pad, fontWeight: 500, textAlign: col.align, cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}
+                          >
+                            {col.label}
+                            {tenenciasSort.key === col.key && <span style={{ marginLeft: 4, opacity: 0.7 }}>{tenenciasSort.dir === 1 ? "↑" : "↓"}</span>}
+                          </th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
                       {consolidateByName(filteredHoldings)
-                        .sort((a, b) => b.qty * b.price - a.qty * a.price)
                         .map((h) => {
                           const value = h.qty * h.price;
                           const cost = h.qty * h.avgCost;
                           const p = pct(value, cost);
+                          return { ...h, value, cost, p };
+                        })
+                        .sort((a, b) => {
+                          const { key, dir } = tenenciasSort;
+                          if (key === "name") return dir * a.name.localeCompare(b.name);
+                          const field = key === "pl" ? "p" : key;
+                          return dir * (a[field] - b[field]);
+                        })
+                        .map((h) => {
+                          const value = h.value;
+                          const p = h.p;
                           const enVivo = livePrices[h.name] != null;
                           return (
                             <tr
