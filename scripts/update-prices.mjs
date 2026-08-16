@@ -245,6 +245,114 @@ async function fetchHistoryFor(ticker, cat, fxMep) {
   return null;
 }
 
+// CONIOLA vía la API de IOL: requiere una cuenta de IOL con el producto
+// "APIs" habilitado (gratis, se pide desde Mi Cuenta > Mensajes) y los
+// secrets IOL_USERNAME / IOL_PASSWORD cargados en el repo (Settings ->
+// Secrets and variables -> Actions). El bearer token dura 15-20 minutos,
+// pero acá alcanza con pedirlo una vez por corrida.
+async function fetchIolToken() {
+  const username = process.env.IOL_USERNAME;
+  const password = process.env.IOL_PASSWORD;
+  if (!username || !password) return null;
+  try {
+    const res = await fetch("https://api.invertironline.com/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`,
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.access_token || null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchConiolaFromIol(token) {
+  if (!token) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  const url = `https://api.invertironline.com/api/v2/bCBA/Titulos/CONIOLA/Cotizacion/seriehistorica/2015-01-01/${today}/sinAjustar`;
+  try {
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const rows = data?.value;
+    if (!Array.isArray(rows) || rows.length === 0) return null;
+    // Puede haber varias cotizaciones intradía en el mismo día -- nos
+    // quedamos con la más reciente de cada fecha como cierre de ese día.
+    const byDate = {};
+    for (const r of rows) {
+      const date = r.fechaHora?.slice(0, 10);
+      if (!date || r.ultimoPrecio == null) continue;
+      if (!byDate[date] || r.fechaHora > byDate[date].fechaHora) byDate[date] = r;
+    }
+    const series = Object.entries(byDate)
+      .map(([date, r]) => ({ date, price: r.ultimoPrecio, variacion: r.variacion }))
+      .sort((a, b) => (a.date < b.date ? -1 : 1));
+    return series.length > 1 ? series : null;
+  } catch {
+    return null;
+  }
+}
+
+// CONIOLA (fondo AdCap Acciones) -- respaldo si la API de IOL no está
+// configurada o falla ese día: se aproxima con un índice ponderado de sus 5
+// principales tenencias reales, según el informe de calificación de Moody's
+// Local del 13/8/2025 (~65,6% de la cartera -- el ~34% restante, entre otras
+// acciones, plazo fijo y liquidez, no está representado acá):
+//   YPFD 19,0% · Pampa Energía (PAMP) 18,4% · Galicia (GGAL) 12,9% ·
+//   BBVA Argentina (BBAR) 7,7% · Transp. Gas del Sur (TGSU2) 7,6%
+// Esos 5 pesos se renormalizan a 100% entre sí, y el índice resultante se
+// ancla al último precio real conocido de CONIOLA (183,29 ARS al 14/08/2026).
+const CONIOLA_PROXY = {
+  anchorDate: "2026-08-14",
+  anchorPrice: 183.29,
+  weights: { YPFD: 0.2896, PAMP: 0.2805, GGAL: 0.1967, BBAR: 0.1174, TGSU2: 0.1159 },
+};
+
+function buildConiolaProxy(history) {
+  const tickers = Object.keys(CONIOLA_PROXY.weights);
+  const maps = {};
+  for (const t of tickers) {
+    if (!history[t]) return null;
+    maps[t] = {};
+    for (const p of history[t]) maps[t][p.date] = p.price;
+  }
+
+  // Precio de anclaje de cada componente -- el de la fecha de referencia, o
+  // el disponible más cercano hacia atrás si no hay dato exacto ese día.
+  const anchorPrices = {};
+  for (const t of tickers) {
+    const dates = Object.keys(maps[t]).sort();
+    let closest = null;
+    for (const d of dates) {
+      if (d > CONIOLA_PROXY.anchorDate) break;
+      closest = d;
+    }
+    anchorPrices[t] = closest ? maps[t][closest] : null;
+  }
+  if (Object.values(anchorPrices).some((v) => v == null)) return null;
+
+  const allDates = new Set();
+  for (const t of tickers) for (const d of Object.keys(maps[t])) allDates.add(d);
+
+  const out = [];
+  for (const date of [...allDates].sort()) {
+    let ratioSum = 0;
+    let weightSum = 0;
+    for (const t of tickers) {
+      const p = maps[t][date];
+      if (p == null) continue;
+      ratioSum += CONIOLA_PROXY.weights[t] * (p / anchorPrices[t]);
+      weightSum += CONIOLA_PROXY.weights[t];
+    }
+    if (weightSum === 0) continue;
+    const index = ratioSum / weightSum; // renormaliza si algún componente falta justo ese día
+    out.push({ date, price: CONIOLA_PROXY.anchorPrice * index });
+  }
+  return out.length > 1 ? out : null;
+}
+
 async function main() {
   console.log("Actualizando dólar...");
   const fx = await fetchFx();
@@ -280,6 +388,24 @@ async function main() {
     await sleep(1000);
   }
   console.log(`Histórico conseguido para ${ok} de ${TICKERS.length} tickers.`);
+
+  console.log("Buscando CONIOLA en la API de IOL...");
+  const iolToken = await fetchIolToken();
+  const coniolaReal = await fetchConiolaFromIol(iolToken);
+  if (coniolaReal) {
+    history.CONIOLA = coniolaReal.map((p) => ({ date: p.date, price: p.price }));
+    ok++;
+    console.log(`  CONIOLA... ok vía IOL (${coniolaReal.length} puntos, desde ${coniolaReal[0].date} hasta ${coniolaReal[coniolaReal.length - 1].date})`);
+  } else {
+    const coniolaProxy = buildConiolaProxy(history);
+    if (coniolaProxy) {
+      history.CONIOLA = coniolaProxy;
+      ok++;
+      console.log(`  CONIOLA... IOL no disponible, aproximado con índice ponderado de 5 tenencias (${coniolaProxy.length} puntos)`);
+    } else {
+      console.log("  CONIOLA... no se pudo obtener ni real (IOL) ni aproximado");
+    }
+  }
 
   const outDir = path.join(process.cwd(), "public", "data");
   await fs.mkdir(outDir, { recursive: true });
