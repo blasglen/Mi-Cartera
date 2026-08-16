@@ -68,12 +68,17 @@ const CRYPTO_IDS = {
 };
 // Pares de Coinbase Exchange para histórico de cripto (ver fetchCoinbaseHistory
 // más abajo). USDT no tiene par propio ahí -- se trata aparte, vale ~1 siempre.
-// NEXO y POL no están listados en Coinbase -- esos dos caen al fallback plano
-// (precio actual hacia atrás), como cualquier ticker sin histórico real.
+// NEXO no está en Coinbase ni en Kraken -- no encontramos fuente gratis
+// viable, cae al fallback plano (precio actual hacia atrás).
 const COINBASE_PRODUCTS = {
   BTC: "BTC-USD", ETH: "ETH-USD", SOL: "SOL-USD",
   DOT: "DOT-USD", DOGE: "DOGE-USD", RENDER: "RENDER-USD", AVAX: "AVAX-USD", LINK: "LINK-USD",
 };
+// Pares de Kraken -- se usan solo como respaldo para lo que Coinbase no
+// tiene. POL sí está listado en Kraken (por el rebrand de MATIC). BNB no
+// está en ningún exchange competidor de Binance por conflicto de interés, así
+// que no hay fuente gratis para eso tampoco -- cae al fallback plano.
+const KRAKEN_PRODUCTS = { POL: "POLUSD" };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -202,9 +207,39 @@ async function fetchCoinbaseHistory(symbol) {
   return [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([date, price]) => ({ date, price }));
 }
 
+// Respaldo para lo que Coinbase no tiene (por ahora, solo POL). Kraken es
+// pública, sin key, sin bloqueo geográfico. Su OHLC diario pagina con el
+// parámetro "since" (timestamp del último dato recibido).
+async function fetchKrakenHistory(pair) {
+  const out = [];
+  let since = 0;
+  for (let i = 0; i < 15; i++) {
+    const url = `https://api.kraken.com/0/public/OHLC?pair=${pair}&interval=1440&since=${since}`;
+    const data = await fetchJson(url);
+    const resultKeys = data?.result ? Object.keys(data.result).filter((k) => k !== "last") : [];
+    const rows = resultKeys.length > 0 ? data.result[resultKeys[0]] : null;
+    if (!Array.isArray(rows) || rows.length === 0) break;
+    for (const row of rows) {
+      // Formato: [time (unix seg), open, high, low, close, vwap, volume, count]
+      const [time, , , , close] = row;
+      if (time != null && close != null) out.push({ date: new Date(time * 1000).toISOString().slice(0, 10), price: parseFloat(close) });
+    }
+    const newSince = data.result.last;
+    if (!newSince || newSince === since) break; // no avanzó, ya llegamos al final
+    since = newSince;
+    await sleep(500);
+  }
+  const byDate = new Map();
+  for (const p of out) byDate.set(p.date, p.price);
+  return [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([date, price]) => ({ date, price }));
+}
+
 async function fetchHistoryFor(ticker, cat, fxMep) {
   if (CRYPTO_IDS[ticker]) {
-    const usdHistory = await fetchCoinbaseHistory(ticker);
+    let usdHistory = await fetchCoinbaseHistory(ticker);
+    if ((!usdHistory || usdHistory.length === 0) && KRAKEN_PRODUCTS[ticker]) {
+      usdHistory = await fetchKrakenHistory(KRAKEN_PRODUCTS[ticker]);
+    }
     if (!usdHistory || usdHistory.length === 0) return null;
     return usdHistory.map((p) => ({ date: p.date, price: p.price * fxMep }));
   }
@@ -277,15 +312,15 @@ async function fetchIolToken() {
   }
 }
 
-async function fetchConiolaFromIol(token) {
+async function fetchFromIol(token, ticker) {
   if (!token) return null;
   const today = new Date().toISOString().slice(0, 10);
-  const url = `https://api.invertironline.com/api/v2/bCBA/Titulos/CONIOLA/Cotizacion/seriehistorica/2015-01-01/${today}/sinAjustar`;
+  const url = `https://api.invertironline.com/api/v2/bCBA/Titulos/${ticker}/Cotizacion/seriehistorica/2015-01-01/${today}/sinAjustar`;
   try {
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.log(`    [IOL] pedido de cotización falló, status ${res.status} -- ${text.slice(0, 200)}`);
+      console.log(`    [IOL] pedido de cotización de ${ticker} falló, status ${res.status} -- ${text.slice(0, 200)}`);
       return null;
     }
     const data = await res.json();
@@ -296,7 +331,7 @@ async function fetchConiolaFromIol(token) {
     // por las dudas.
     const rows = Array.isArray(data) ? data : data?.value;
     if (!Array.isArray(rows) || rows.length === 0) {
-      console.log(`    [IOL] respuesta sin datos utilizables: ${JSON.stringify(data).slice(0, 200)}`);
+      console.log(`    [IOL] ${ticker}: respuesta sin datos utilizables: ${JSON.stringify(data).slice(0, 200)}`);
       return null;
     }
     // Puede haber varias cotizaciones intradía en el mismo día -- nos
@@ -411,9 +446,9 @@ async function main() {
   }
   console.log(`Histórico conseguido para ${ok} de ${TICKERS.length} tickers.`);
 
-  console.log("Buscando CONIOLA en la API de IOL...");
+  console.log("Buscando activos de IOL sin otra fuente (CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O)...");
   const iolToken = await fetchIolToken();
-  const coniolaReal = await fetchConiolaFromIol(iolToken);
+  const coniolaReal = await fetchFromIol(iolToken, "CONIOLA");
   if (coniolaReal) {
     history.CONIOLA = coniolaReal.map((p) => ({ date: p.date, price: p.price }));
     ok++;
@@ -427,6 +462,20 @@ async function main() {
     } else {
       console.log("  CONIOLA... no se pudo obtener ni real (IOL) ni aproximado");
     }
+  }
+
+  // Estos 4 no tienen un fondo/índice de respaldo como CONIOLA -- si IOL no
+  // los tiene, quedan directamente en "sin datos" (fallback plano en la app).
+  for (const ticker of ["ADCGLOA", "IOLDOLD", "PRPEDOB", "PLC2O"]) {
+    const series = await fetchFromIol(iolToken, ticker);
+    if (series) {
+      history[ticker] = series.map((p) => ({ date: p.date, price: p.price }));
+      ok++;
+      console.log(`  ${ticker}... ok vía IOL (${series.length} puntos, desde ${series[0].date} hasta ${series[series.length - 1].date})`);
+    } else {
+      console.log(`  ${ticker}... sin datos (IOL no lo tiene disponible)`);
+    }
+    await sleep(500);
   }
 
   const outDir = path.join(process.cwd(), "public", "data");
