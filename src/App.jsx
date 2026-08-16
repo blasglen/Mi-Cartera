@@ -1850,6 +1850,7 @@ export default function InvestmentDashboard() {
                         <th style={{ padding: "10px 18px", fontWeight: 500 }}>Activo</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Valor actual</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Cantidad</th>
+                        <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>PPC</th>
                         <th style={{ padding: "10px 12px", fontWeight: 500, textAlign: "right" }}>Precio</th>
                         <th style={{ padding: "10px 18px", fontWeight: 500, textAlign: "right" }}>P&amp;L</th>
                       </tr>
@@ -1873,6 +1874,7 @@ export default function InvestmentDashboard() {
                               <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.avgCost)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
                                   {enVivo && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block" }} />}
