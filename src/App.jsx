@@ -1873,7 +1873,7 @@ export default function InvestmentDashboard() {
                             >
                               <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.avgCost)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
