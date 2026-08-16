@@ -794,7 +794,7 @@ function hashSeed(str) {
 // Cualquier ticker que esté en tus tenencias reales pero no esté en el catálogo de
 // arriba se agrega automáticamente, para que "Buscar activo" siempre encuentre lo
 // que tenés en cartera (aunque el gráfico de precio siga siendo simulado).
-const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "CEDEARs", Cripto: "Cripto" };
+const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "Fondos", Cripto: "Cripto" };
 const AUTO_ASSETS = [...new Set(HOLDINGS.map((h) => h.name))]
   .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
   .map((t) => {
