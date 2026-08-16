@@ -253,17 +253,26 @@ async function fetchHistoryFor(ticker, cat, fxMep) {
 async function fetchIolToken() {
   const username = process.env.IOL_USERNAME;
   const password = process.env.IOL_PASSWORD;
-  if (!username || !password) return null;
+  if (!username || !password) {
+    console.log("    [IOL] faltan IOL_USERNAME / IOL_PASSWORD como secrets");
+    return null;
+  }
   try {
     const res = await fetch("https://api.invertironline.com/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`,
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      console.log(`    [IOL] login falló, status ${res.status} -- ${text.slice(0, 200)}`);
+      return null;
+    }
     const data = await res.json();
+    if (!data?.access_token) console.log(`    [IOL] login ok pero sin access_token en la respuesta: ${JSON.stringify(data).slice(0, 200)}`);
     return data?.access_token || null;
-  } catch {
+  } catch (err) {
+    console.log(`    [IOL] excepción al pedir el token: ${err.message}`);
     return null;
   }
 }
@@ -274,10 +283,17 @@ async function fetchConiolaFromIol(token) {
   const url = `https://api.invertironline.com/api/v2/bCBA/Titulos/CONIOLA/Cotizacion/seriehistorica/2015-01-01/${today}/sinAjustar`;
   try {
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      console.log(`    [IOL] pedido de cotización falló, status ${res.status} -- ${text.slice(0, 200)}`);
+      return null;
+    }
     const data = await res.json();
     const rows = data?.value;
-    if (!Array.isArray(rows) || rows.length === 0) return null;
+    if (!Array.isArray(rows) || rows.length === 0) {
+      console.log(`    [IOL] respuesta sin "value" o vacía: ${JSON.stringify(data).slice(0, 200)}`);
+      return null;
+    }
     // Puede haber varias cotizaciones intradía en el mismo día -- nos
     // quedamos con la más reciente de cada fecha como cierre de ese día.
     const byDate = {};
@@ -290,7 +306,8 @@ async function fetchConiolaFromIol(token) {
       .map(([date, r]) => ({ date, price: r.ultimoPrecio, variacion: r.variacion }))
       .sort((a, b) => (a.date < b.date ? -1 : 1));
     return series.length > 1 ? series : null;
-  } catch {
+  } catch (err) {
+    console.log(`    [IOL] excepción al pedir la cotización: ${err.message}`);
     return null;
   }
 }
