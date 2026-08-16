@@ -40,6 +40,7 @@ import {
   Layers,
   Globe,
   Calculator,
+  Bell,
 } from "lucide-react";
 
 // ---------- Datos simulados (después se reemplazan por el import real) ----------
@@ -862,6 +863,41 @@ const CORPORATE_EVENTS = {
   TSLA: [
     { fecha: "2026-09-02", tipo: "Presenta balance", detalle: "Earnings Q2 2026" },
   ],
+  // --- Acciones argentinas -- fechas confirmadas por la propia empresa donde
+  // se pudo, estimadas por patrón trimestral (mismo mes que el año anterior)
+  // donde no había aviso oficial todavía.
+  BBAR: [{ fecha: "2026-08-27", tipo: "Presenta balance", detalle: "Resultados 2º trimestre 2026 (confirmado por la empresa)" }],
+  BMA: [{ fecha: "2026-08-26", tipo: "Presenta balance", detalle: "Resultados 2º trimestre 2026 (estimado por patrón)" }],
+  CEPU: [{ fecha: "2026-11-10", tipo: "Presenta balance", detalle: "Resultados 3º trimestre 2026 (estimado por patrón)" }],
+  LOMA: [{ fecha: "2026-11-06", tipo: "Presenta balance", detalle: "Resultados 3º trimestre 2026 (estimado por patrón)" }],
+  PAM: [{ fecha: "2026-11-04", tipo: "Presenta balance", detalle: "Resultados 3º trimestre 2026 (estimado por patrón)" }],
+  SUPV: [{ fecha: "2026-11-10", tipo: "Presenta balance", detalle: "Resultados 3º trimestre 2026 (estimado por patrón)" }],
+  TGSU2: [{ fecha: "2026-11-03", tipo: "Presenta balance", detalle: "Resultados 3º trimestre 2026 (estimado por patrón)" }],
+  // --- CEDEARs de EE.UU. -- las más grandes tienen calendario trimestral muy
+  // consistente año a año; estimado por ese patrón salvo que se indique lo
+  // contrario. No incluye ETFs (DIA/QQQ/SPY) ni las que no encontramos dato.
+  MSFT: [{ fecha: "2026-10-27", tipo: "Presenta balance", detalle: "Earnings Q1 fiscal 2027 (estimado por patrón)" }],
+  AMZN: [{ fecha: "2026-10-29", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  GOOGL: [{ fecha: "2026-10-27", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  META: [{ fecha: "2026-10-28", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  NVDA: [{ fecha: "2026-11-19", tipo: "Presenta balance", detalle: "Earnings Q3 fiscal 2027 (estimado por patrón)" }],
+  AMD: [{ fecha: "2026-10-27", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  MU: [{ fecha: "2026-09-23", tipo: "Presenta balance", detalle: "Earnings Q4 fiscal 2026 (estimado por patrón)" }],
+  IBM: [{ fecha: "2026-10-21", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  MELI: [{ fecha: "2026-11-04", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  MCD: [{ fecha: "2026-10-27", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  KO: [{ fecha: "2026-10-20", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  PYPL: [{ fecha: "2026-10-28", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  CSCO: [{ fecha: "2026-11-11", tipo: "Presenta balance", detalle: "Earnings Q1 fiscal 2027 (estimado por patrón)" }],
+  T: [{ fecha: "2026-10-22", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  DISN: [{ fecha: "2026-11-12", tipo: "Presenta balance", detalle: "Earnings Q4 fiscal 2026 (estimado por patrón)" }],
+  PFE: [{ fecha: "2026-11-04", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  BABA: [{ fecha: "2026-11-19", tipo: "Presenta balance", detalle: "Earnings Q2 fiscal 2027 (estimado por patrón)" }],
+  TSM: [{ fecha: "2026-10-16", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  PBR: [{ fecha: "2026-11-13", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  HMY: [{ fecha: "2026-11-10", tipo: "Presenta balance", detalle: "Earnings 1º semestre fiscal (estimado por patrón)" }],
+  VIST: [{ fecha: "2026-11-11", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
+  KEEL: [{ fecha: "2026-11-13", tipo: "Presenta balance", detalle: "Earnings Q3 2026 (estimado por patrón)" }],
 };
 
 const COUPON_SCHEDULE = {
@@ -871,6 +907,13 @@ const COUPON_SCHEDULE = {
     { fecha: "2027-07-09", tipo: "Cupón", monto: 0.5 },
     { fecha: "2028-01-09", tipo: "Amortización + Cupón", monto: 4.5 },
   ],
+  // GD35/GD38/GD41 (Globales ley extranjera, canje 2020) pagan semestral el
+  // 9 de enero y el 9 de julio -- el de julio 2026 ya pasó, el próximo es
+  // enero 2027. Monto aproximado según la tasa "step-up" vigente, puede
+  // variar levemente respecto al pago real.
+  GD35: [{ fecha: "2027-01-09", tipo: "Cupón", monto: 2.06 }],
+  GD38: [{ fecha: "2027-01-09", tipo: "Cupón", monto: 2.5 }],
+  GD41: [{ fecha: "2027-01-09", tipo: "Cupón", monto: 1.75 }],
 };
 
 const RANGE_PRESETS = [
@@ -1298,6 +1341,7 @@ function closestPoint(dateStr) {
 const NAV = [
   { key: "inicio", label: "Inicio", icon: Home },
   { key: "buscar", label: "Buscar activo", icon: Search },
+  { key: "novedades", label: "Novedades de mi cartera", icon: Bell },
   { key: "calculadora", label: "Calculadora", icon: Calculator },
   { key: "importar", label: "Importar archivos", icon: Upload },
   { key: "pnl", label: "P&L de fecha específica", icon: CalendarRange },
@@ -1948,6 +1992,7 @@ export default function InvestmentDashboard() {
             </>
           )}
 
+          {view === "novedades" && <NovedadesView C={C} f={f} fx={fx} />}
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
@@ -2915,6 +2960,85 @@ function HomeChartTooltip({ active, payload, label, C, f }) {
       {gananciaPct != null && (
         <div style={{ color: isGain ? C.gain : C.loss, marginTop: 4, fontWeight: 600 }}>
           {isGain ? "Ganancia" : "Pérdida"} {Math.abs(gananciaPct).toFixed(1)}%
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Novedades de mi cartera -- junta los eventos (balances, dividendos, cupones
+// de bonos) de CORPORATE_EVENTS y COUPON_SCHEDULE, pero solo de los activos
+// que REALMENTE tenés en HOLDINGS (no cualquier ticker del universo de
+// búsqueda), y solo los que todavía no pasaron, ordenados por fecha.
+function NovedadesView({ C, f, fx }) {
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  const heldQty = {};
+  for (const h of HOLDINGS) heldQty[h.name] = (heldQty[h.name] || 0) + h.qty;
+  const heldTickers = Object.keys(heldQty).filter((t) => heldQty[t] > 0);
+
+  const events = [];
+  for (const ticker of heldTickers) {
+    for (const e of CORPORATE_EVENTS[ticker] || []) {
+      events.push({ ticker, fecha: e.fecha, tipo: e.tipo, detalle: e.detalle });
+    }
+    for (const c of COUPON_SCHEDULE[ticker] || []) {
+      const qty = heldQty[ticker] || 0;
+      const montoTotalUsd = (c.monto * qty) / 100; // el monto viene cada 100 nominal
+      events.push({
+        ticker,
+        fecha: c.fecha,
+        tipo: c.tipo,
+        detalle: `US$${c.monto} por cada 100 nominal${qty > 0 ? ` · vos tenés ${qty.toLocaleString("es-AR")} → ~${f(montoTotalUsd * fx)}` : ""}`,
+      });
+    }
+  }
+
+  const upcoming = events.filter((e) => e.fecha >= todayStr).sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+
+  const daysUntil = (fecha) => Math.round((new Date(fecha) - new Date(todayStr)) / 86400000);
+
+  return (
+    <div>
+      <SectionTitle C={C} sub="Balances, dividendos y cupones de bonos que se vienen, de los activos que ya tenés -- ordenados por fecha.">
+        Novedades de mi cartera
+      </SectionTitle>
+
+      {upcoming.length === 0 ? (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "24px", fontSize: 13, color: C.faint, textAlign: "center" }}>
+          No tenemos eventos próximos cargados para tus tenencias actuales.
+        </div>
+      ) : (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
+          {upcoming.map((e, i) => {
+            const d = daysUntil(e.fecha);
+            return (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 16,
+                  padding: "16px 20px",
+                  borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none",
+                }}
+              >
+                <div style={{ minWidth: 76, textAlign: "center" }}>
+                  <div className="tabular" style={{ fontSize: 12, color: C.faint }}>{e.fecha}</div>
+                  <div style={{ fontSize: 11, color: C.gold, marginTop: 2 }}>
+                    {d === 0 ? "hoy" : d === 1 ? "mañana" : `en ${d} días`}
+                  </div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                    <span style={{ fontWeight: 600, fontSize: 14 }}>{e.ticker}</span>
+                    <span style={{ fontSize: 11, color: C.muted, background: C.chipActive, padding: "2px 8px", borderRadius: 999 }}>{e.tipo}</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: C.muted }}>{e.detalle}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
