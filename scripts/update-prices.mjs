@@ -289,9 +289,14 @@ async function fetchConiolaFromIol(token) {
       return null;
     }
     const data = await res.json();
-    const rows = data?.value;
+    // La API devuelve un array directo -- el {"value": [...]} que vimos al
+    // probar con PowerShell era un artefacto de cómo ConvertTo-Json
+    // re-serializa lo que Invoke-RestMethod ya había parseado, no la forma
+    // real de la respuesta. Se acepta cualquiera de las dos formas igual,
+    // por las dudas.
+    const rows = Array.isArray(data) ? data : data?.value;
     if (!Array.isArray(rows) || rows.length === 0) {
-      console.log(`    [IOL] respuesta sin "value" o vacía: ${JSON.stringify(data).slice(0, 200)}`);
+      console.log(`    [IOL] respuesta sin datos utilizables: ${JSON.stringify(data).slice(0, 200)}`);
       return null;
     }
     // Puede haber varias cotizaciones intradía en el mismo día -- nos
