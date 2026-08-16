@@ -79,6 +79,12 @@ const COINBASE_PRODUCTS = {
 // está en ningún exchange competidor de Binance por conflicto de interés, así
 // que no hay fuente gratis para eso tampoco -- cae al fallback plano.
 const KRAKEN_PRODUCTS = { POL: "POLUSD" };
+// Binance.US -- solo para BNB, el único caso donde ni Coinbase ni Kraken
+// tienen el par por ser el token del exchange competidor.
+const BINANCE_US_PRODUCTS = { BNB: "BNBUSD" };
+// MEXC -- solo para NEXO, el único caso donde no lo tienen ni Coinbase, ni
+// Kraken, ni Binance.US.
+const MEXC_PRODUCTS = { NEXO: "NEXOUSDT" };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -234,11 +240,74 @@ async function fetchKrakenHistory(pair) {
   return [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([date, price]) => ({ date, price }));
 }
 
+// Respaldo específico para BNB: Coinbase y Kraken no lo listan (conflicto de
+// interés, es el token del exchange competidor), pero Binance.US -- la
+// entidad separada y regulada para EE.UU., no el Binance.com principal que sí
+// bloquea IPs de EE.UU. -- lo tiene y su API pública no debería tener ese
+// bloqueo (fue pensada justo para usuarios de EE.UU., como los runners de
+// GitHub Actions). Si algún día empieza a fallar por bloqueo regional
+// igual, cae al fallback plano como cualquier otro ticker sin datos.
+async function fetchBinanceUsHistory(symbol) {
+  const out = [];
+  let endTime = Date.now();
+  const earliestFloor = new Date("2018-01-01T00:00:00Z").getTime();
+  for (let i = 0; i < 15 && endTime > earliestFloor; i++) {
+    const url = `https://api.binance.us/api/v3/klines?symbol=${symbol}&interval=1d&limit=1000&endTime=${endTime}`;
+    const data = await fetchJson(url);
+    if (!Array.isArray(data) || data.length === 0) break;
+    for (const row of data) {
+      // Formato: [openTime, open, high, low, close, volume, closeTime, ...]
+      const [openTime, , , , close] = row;
+      if (openTime != null && close != null) out.push({ date: new Date(openTime).toISOString().slice(0, 10), price: parseFloat(close) });
+    }
+    const earliestOpenTime = data[0][0];
+    if (data.length < 1000) break; // ya llegamos al principio del listado
+    endTime = earliestOpenTime - 1;
+    await sleep(500);
+  }
+  const byDate = new Map();
+  for (const p of out) byDate.set(p.date, p.price);
+  return [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([date, price]) => ({ date, price }));
+}
+
+// Respaldo específico para NEXO: ni Coinbase, ni Kraken, ni Binance.US lo
+// tienen (es chico). MEXC sí lo lista, con API pública sin key -- pero puso
+// restricciones a pares de su "Assessment Zone" en 2025, y no confirmamos si
+// NEXO sigue ahí, así que esto puede fallar. Si falla, cae al fallback plano
+// como cualquier otro ticker, sin romper nada.
+async function fetchMexcHistory(symbol) {
+  const out = [];
+  let endTime = Date.now();
+  const earliestFloor = new Date("2018-01-01T00:00:00Z").getTime();
+  for (let i = 0; i < 15 && endTime > earliestFloor; i++) {
+    const url = `https://api.mexc.com/api/v3/klines?symbol=${symbol}&interval=1d&limit=1000&endTime=${endTime}`;
+    const data = await fetchJson(url);
+    if (!Array.isArray(data) || data.length === 0) break;
+    for (const row of data) {
+      const [openTime, , , , close] = row;
+      if (openTime != null && close != null) out.push({ date: new Date(openTime).toISOString().slice(0, 10), price: parseFloat(close) });
+    }
+    const earliestOpenTime2 = data[0][0];
+    if (data.length < 1000) break;
+    endTime = earliestOpenTime2 - 1;
+    await sleep(500);
+  }
+  const byDate = new Map();
+  for (const p of out) byDate.set(p.date, p.price);
+  return [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([date, price]) => ({ date, price }));
+}
+
 async function fetchHistoryFor(ticker, cat, fxMep) {
   if (CRYPTO_IDS[ticker]) {
     let usdHistory = await fetchCoinbaseHistory(ticker);
     if ((!usdHistory || usdHistory.length === 0) && KRAKEN_PRODUCTS[ticker]) {
       usdHistory = await fetchKrakenHistory(KRAKEN_PRODUCTS[ticker]);
+    }
+    if ((!usdHistory || usdHistory.length === 0) && BINANCE_US_PRODUCTS[ticker]) {
+      usdHistory = await fetchBinanceUsHistory(BINANCE_US_PRODUCTS[ticker]);
+    }
+    if ((!usdHistory || usdHistory.length === 0) && MEXC_PRODUCTS[ticker]) {
+      usdHistory = await fetchMexcHistory(MEXC_PRODUCTS[ticker]);
     }
     if (!usdHistory || usdHistory.length === 0) return null;
     return usdHistory.map((p) => ({ date: p.date, price: p.price * fxMep }));
