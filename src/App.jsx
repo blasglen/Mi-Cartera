@@ -1618,6 +1618,8 @@ function InvestmentDashboard({ user }) {
   const [catFilter, setCatFilter] = useState("Todas");
   const [tenenciasSort, setTenenciasSort] = useState({ key: "value", dir: -1 }); // dir: 1 asc, -1 desc
   const [brokerFilter, setBrokerFilter] = useState("Todas"); // "Todas" o el nombre de una cartera puntual
+  const [confirmandoBorradoCartera, setConfirmandoBorradoCartera] = useState(false);
+  const [borrandoCartera, setBorrandoCartera] = useState(false);
   const [currency, setCurrency] = useState("USD");
   const [fxType, setFxType] = useState("mep");
 
@@ -1874,10 +1876,10 @@ function InvestmentDashboard({ user }) {
                       ? "Conectando cotizaciones…"
                       : "Estimado — sin conexión a las fuentes de cotización"}
                   </div>
-                  <div style={{ marginTop: 12 }}>
+                  <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
                     <select
                       value={brokerFilter}
-                      onChange={(e) => setBrokerFilter(e.target.value)}
+                      onChange={(e) => { setBrokerFilter(e.target.value); setConfirmandoBorradoCartera(false); }}
                       style={{
                         padding: "6px 12px",
                         borderRadius: 8,
@@ -1897,7 +1899,42 @@ function InvestmentDashboard({ user }) {
                         </option>
                       ))}
                     </select>
+                    {brokerFilter !== "Todas" && !confirmandoBorradoCartera && (
+                      <button
+                        onClick={() => setConfirmandoBorradoCartera(true)}
+                        title={`Borrar todo lo de "${brokerFilter}"`}
+                        style={{ display: "flex", alignItems: "center", padding: 6, borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.loss, cursor: "pointer" }}
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    )}
                   </div>
+                  {confirmandoBorradoCartera && (
+                    <div style={{ marginTop: 10, background: C.surface, border: `1px solid ${C.loss}`, borderRadius: 10, padding: 12, maxWidth: 320 }}>
+                      <div style={{ fontSize: 12, color: C.loss, marginBottom: 8 }}>
+                        Esto borra TODOS los movimientos y tenencias de "{brokerFilter}" (no toca otras carteras). No se puede deshacer.
+                      </div>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <button
+                          onClick={async () => {
+                            setBorrandoCartera(true);
+                            try {
+                              await borrarCarteraCompleta(user.uid, brokerFilter);
+                            } catch (err) {
+                              setBorrandoCartera(false);
+                            }
+                          }}
+                          disabled={borrandoCartera}
+                          style={{ padding: "6px 14px", borderRadius: 8, border: "none", background: C.loss, color: "#fff", fontSize: 12, cursor: borrandoCartera ? "default" : "pointer", opacity: borrandoCartera ? 0.6 : 1 }}
+                        >
+                          {borrandoCartera ? "Borrando..." : "Sí, borrar todo"}
+                        </button>
+                        <button onClick={() => setConfirmandoBorradoCartera(false)} style={{ padding: "6px 14px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 12, cursor: "pointer" }}>
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
                   <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -3408,9 +3445,37 @@ const BALANZ_INSTRUCTIONS = [
   { title: "Subilo acá abajo", desc: "Arrastralo al recuadro, o hacé click para elegirlo desde tu computadora." },
 ];
 
+// Borra por completo una cartera puntual (movimientos, tenencias e
+// historial de importaciones) -- usable desde Importar archivos y desde
+// Inicio. Recarga la página al final porque reasignar HOLDINGS/MOVIMIENTOS
+// no alcanza para refrescar solas otras pantallas ya montadas.
+async function borrarCarteraCompleta(uid, cuenta) {
+  const snap = await getDoc(doc(db, "users", uid));
+  const data = snap.exists() ? snap.data() : {};
+  const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+  const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+  const prevImportaciones = Array.isArray(data.importaciones) ? data.importaciones : [];
+
+  const movimientosFinal = prevMovimientos.filter((m) => m.broker !== cuenta);
+  const holdingsFinal = prevHoldings.filter((h) => h.broker !== cuenta);
+  const importacionesFinal = prevImportaciones.filter((imp) => imp.broker !== cuenta);
+
+  await setDoc(doc(db, "users", uid), { holdings: holdingsFinal, movimientos: movimientosFinal, importaciones: importacionesFinal });
+
+  HOLDINGS = holdingsFinal;
+  MOVIMIENTOS = movimientosFinal;
+  BROKER_LIST = computeBrokerList();
+  AUTO_ASSETS = computeAutoAssets();
+  ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+  EARLIEST_TRADE_DATE = computeEarliestTradeDate();
+
+  window.location.reload();
+}
+
 function ImportarView({ C, user }) {
   const [dragOver, setDragOver] = useState(false);
-  const [broker, setBroker] = useState(null);
+  const [broker, setBroker] = useState(null); // qué plataforma/parser -- ej "Balanz"
+  const [cuenta, setCuenta] = useState(""); // nombre elegido para ESTA cuenta puntual, puede repetir plataforma
   const [status, setStatus] = useState("idle"); // idle | parsing | preview | guardando | listo | error
   const [preview, setPreview] = useState(null); // { fileName, cargables, ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm }
   const [bondAnswers, setBondAnswers] = useState({}); // { [ticker]: {type:'keep'|'exclude'|'custom', qty?} | null }
@@ -3484,26 +3549,7 @@ function ImportarView({ C, user }) {
     setReseteando(true);
     setErrorMsg("");
     try {
-      const snap = await getDoc(doc(db, "users", user.uid));
-      const data = snap.exists() ? snap.data() : {};
-      const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
-      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
-      const prevImportaciones = Array.isArray(data.importaciones) ? data.importaciones : [];
-
-      const movimientosFinal = prevMovimientos.filter((m) => m.broker !== brokerAResetear);
-      const holdingsFinal = prevHoldings.filter((h) => h.broker !== brokerAResetear);
-      const importacionesFinal = prevImportaciones.filter((imp) => imp.broker !== brokerAResetear);
-
-      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: movimientosFinal, importaciones: importacionesFinal });
-
-      HOLDINGS = holdingsFinal;
-      MOVIMIENTOS = movimientosFinal;
-      BROKER_LIST = computeBrokerList();
-      AUTO_ASSETS = computeAutoAssets();
-      ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
-      EARLIEST_TRADE_DATE = computeEarliestTradeDate();
-
-      window.location.reload();
+      await borrarCarteraCompleta(user.uid, brokerAResetear);
     } catch (err) {
       setErrorMsg(err.message || "No pudimos borrar esos datos.");
     } finally {
@@ -3535,12 +3581,13 @@ function ImportarView({ C, user }) {
       });
 
       if (broker !== "Balanz") throw new Error("Todavía no armamos el lector para ese broker.");
+      const nombreCartera = cuenta.trim() || broker;
 
-      const result = parseBalanzMovimientos(rows);
+      const result = parseBalanzMovimientos(rows, nombreCartera);
 
       // Buscamos tus datos actuales ahora (no recién al confirmar) para
       // poder mostrarte una vista previa real de cómo quedarían tus
-      // tenencias de Balanz después de esta importación.
+      // tenencias de esta cartera después de esta importación.
       const snap = await getDoc(doc(db, "users", user.uid));
       const data = snap.exists() ? snap.data() : {};
       const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
@@ -3553,7 +3600,7 @@ function ImportarView({ C, user }) {
 
       const catByTicker = {};
       for (const m of result.cargables) catByTicker[m.activo] = m.cat;
-      const holdingsBalanz = recomputeHoldingsForBroker(movimientosFinal, "Balanz", prevHoldings, catByTicker);
+      const holdingsBalanz = recomputeHoldingsForBroker(movimientosFinal, nombreCartera, prevHoldings, catByTicker);
 
       // Los bonos se usan seguido para comprar dólar MEP (comprar hoy,
       // vender al día siguiente) -- si el archivo tiene el ciclo completo,
@@ -3563,7 +3610,7 @@ function ImportarView({ C, user }) {
       const initialAnswers = {};
       for (const b of bondsToConfirm) initialAnswers[b.name] = null;
 
-      setPreview({ fileName: file.name, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
+      setPreview({ fileName: file.name, nombreCartera, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
       setBondAnswers(initialAnswers);
       setStatus("preview");
     } catch (err) {
@@ -3602,7 +3649,7 @@ function ImportarView({ C, user }) {
         })
         .filter(Boolean);
 
-      const holdingsOtrosBrokers = preview.prevHoldings.filter((h) => h.broker !== "Balanz");
+      const holdingsOtrosBrokers = preview.prevHoldings.filter((h) => h.broker !== preview.nombreCartera);
       const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanzFinal];
 
       // Cada movimiento nuevo queda marcado con el ID de esta importación,
@@ -3616,7 +3663,7 @@ function ImportarView({ C, user }) {
       const nuevaImportacion = {
         id: importId,
         fileName: preview.fileName,
-        broker: "Balanz",
+        broker: preview.nombreCartera,
         fecha: new Date().toISOString().slice(0, 10),
         cantidad: nuevosConImportId.length,
       };
@@ -3657,7 +3704,7 @@ function ImportarView({ C, user }) {
           {["Balanz"].map((b) => (
             <span
               key={b}
-              onClick={() => { setBroker(b); reset(); }}
+              onClick={() => { setBroker(b); setCuenta(""); reset(); }}
               style={{
                 padding: "6px 14px",
                 borderRadius: 999,
@@ -3694,6 +3741,22 @@ function ImportarView({ C, user }) {
             ))}
           </div>
 
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 6 }}>
+              Nombre de esta cartera
+              <input
+                type="text"
+                value={cuenta}
+                onChange={(e) => setCuenta(e.target.value)}
+                placeholder={broker}
+                style={{ width: "100%", maxWidth: 320, boxSizing: "border-box", background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, padding: "10px 12px", fontSize: 13 }}
+              />
+            </label>
+            <div style={{ fontSize: 11, color: C.faint, marginTop: 4 }}>
+              Si tenés más de una cuenta en {broker} (ej: titular y cotitular), ponele un nombre distinto a cada una -- así podés seguirlas por separado. Si la dejás vacía, se usa "{broker}".
+            </div>
+          </div>
+
           <div
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
@@ -3721,16 +3784,16 @@ function ImportarView({ C, user }) {
                 onClick={() => setConfirmandoReset(true)}
                 style={{ fontSize: 11, color: C.faint, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
               >
-                ¿Un archivo se cargó mal? Borrar todo lo de Balanz y empezar de nuevo
+                ¿Un archivo se cargó mal? Borrar todo lo de "{cuenta.trim() || broker}" y empezar de nuevo
               </button>
             ) : (
               <div style={{ background: C.surface, border: `1px solid ${C.loss}`, borderRadius: 10, padding: 14, textAlign: "left" }}>
                 <div style={{ fontSize: 12, color: C.loss, marginBottom: 10 }}>
-                  Esto borra TODOS los movimientos y tenencias de Balanz de tu cuenta (no toca otros brokers). No se puede deshacer. ¿Confirmás?
+                  Esto borra TODOS los movimientos y tenencias de "{cuenta.trim() || broker}" (no toca otras carteras). No se puede deshacer. ¿Confirmás?
                 </div>
                 <div style={{ display: "flex", gap: 8 }}>
                   <button
-                    onClick={() => resetearBroker("Balanz")}
+                    onClick={() => resetearBroker(cuenta.trim() || broker)}
                     disabled={reseteando}
                     style={{ padding: "6px 14px", borderRadius: 8, border: "none", background: C.loss, color: "#fff", fontSize: 12, cursor: reseteando ? "default" : "pointer", opacity: reseteando ? 0.6 : 1 }}
                   >
