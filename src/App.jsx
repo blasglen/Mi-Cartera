@@ -3338,6 +3338,64 @@ function normalizeFecha(value) {
 // que se puede cargar automático (Compra/Venta/Split) y lo que se ignora a
 // propósito porque no cambia cantidad de acciones (dividendos, rentas,
 // movimientos manuales, recibos de cobro).
+// Splits reales confirmados con datos de varias cuentas distintas -- se
+// aplican para brokers ARGENTINOS de CEDEARs (ver PLATAFORMAS_CEDEAR_AR más
+// abajo), aunque el archivo de la persona puntual no traiga la fila de
+// "Dividendo en acciones" (pasa: algunos exports no la incluyen).
+// "ratioExtra" es cuánto se agrega por cada unidad que ya tenías (ej: 2 =
+// split 3 a 1, terminás con el triple).
+//
+// Por qué solo brokers argentinos: confirmado que el ratio de conversión de
+// un CEDEAR lo define acá la CNV (Comisión Nacional de Valores) o el banco
+// depositario (ej. Banco COMAFI), totalmente aparte de si la acción real
+// en EEUU tuvo o no un split -- es un ajuste local, no una acción
+// corporativa de la empresa. No aplica a alguien que tenga la acción real
+// en un broker de EEUU, ni a exchanges de cripto (Nexo, Bybit, etc.).
+//
+// OJO: antes de agregar un split acá, confirmar el ratio con al menos 2
+// cuentas reales distintas -- si el ratio no da limpio en todas, NO es un
+// split proporcional real (puede ser otra cosa, como pasó con YPFD del
+// 04/08/26, que dio 0.82 en una cuenta y 9.00 en otra -- eso NO se agrega
+// acá, se deja que cada archivo lo traiga por su cuenta si corresponde).
+const PLATAFORMAS_CEDEAR_AR = ["Balanz", "IOL", "Bull Market"];
+
+const KNOWN_SPLITS = [
+  { ticker: "SPY", fecha: "2026-06-01", ratioExtra: 2 }, // confirmado 3 a 1 en Balanz, IOL y Bull Market
+];
+
+// Revisa si algún split conocido falta en lo que se parseó de este archivo
+// puntual, y si falta, lo agrega -- calculando la cantidad en base a lo que
+// esta cuenta tenía hasta esa fecha (no un número fijo, cada cuenta tiene
+// su propia base). "plataforma" es el broker/exchange real (para saber si
+// aplica), "cuenta" es el nombre que la persona le puso a esa cartera
+// puntual (puede diferir del nombre de la plataforma).
+function aplicarSplitsConocidos(cargables, plataforma, cuenta) {
+  if (!PLATAFORMAS_CEDEAR_AR.includes(plataforma)) return [];
+  const extra = [];
+  for (const split of KNOWN_SPLITS) {
+    const yaEsta = cargables.some((m) => m.activo === split.ticker && m.tipo === "Split" && m.fecha === split.fecha);
+    if (yaEsta) continue;
+
+    const trades = cargables
+      .filter((m) => m.activo === split.ticker && (m.tipo === "Compra" || m.tipo === "Venta") && m.fecha < split.fecha)
+      .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+    let qty = 0;
+    for (const t of trades) qty += (t.tipo === "Venta" ? -1 : 1) * t.cantidad;
+    if (qty <= 0) continue; // esta cuenta no tenía el activo en esa fecha, no le corresponde
+
+    extra.push({
+      fecha: split.fecha,
+      activo: split.ticker,
+      tipo: "Split",
+      cantidad: qty * split.ratioExtra,
+      precio: 0,
+      broker: cuenta,
+      cat: cargables.find((m) => m.activo === split.ticker)?.cat || "CEDEARs",
+    });
+  }
+  return extra;
+}
+
 function parseBalanzMovimientos(rows, broker = "Balanz") {
   const cargables = [];
   const ignoradas = {}; // { "Dividendo en efectivo": count, ... }
@@ -3392,7 +3450,8 @@ function parseBalanzMovimientos(rows, broker = "Balanz") {
     ignoradas[tipoIgnorado] = (ignoradas[tipoIgnorado] || 0) + 1;
   }
 
-  return { cargables, ignoradas };
+  const splitsFaltantes = aplicarSplitsConocidos(cargables, "Balanz", broker);
+  return { cargables: [...cargables, ...splitsFaltantes], ignoradas };
 }
 
 // A partir de una lista de movimientos ya fusionada (los que ya tenías +
