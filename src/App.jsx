@@ -3462,7 +3462,10 @@ function ImportarView({ C, user }) {
       ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
       EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
-      setImportaciones(importacionesFinal);
+      // Reasignar estas variables no alcanza para que se actualicen SOLAS
+      // otras pantallas ya abiertas (Tenencias, Inicio, etc.) -- recargamos
+      // la página para que todo se lea de cero, sin nada viejo en memoria.
+      window.location.reload();
     } catch (err) {
       setErrorMsg(err.message || "No pudimos borrar esa importación.");
     } finally {
@@ -3500,8 +3503,7 @@ function ImportarView({ C, user }) {
       ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
       EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
-      setImportaciones(importacionesFinal);
-      setConfirmandoReset(false);
+      window.location.reload();
     } catch (err) {
       setErrorMsg(err.message || "No pudimos borrar esos datos.");
     } finally {
