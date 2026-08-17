@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import {
   AreaChart,
   Area,
@@ -90,7 +90,7 @@ function buildSeries() {
 
 const SERIES = buildSeries();
 
-const HOLDINGS = [
+let HOLDINGS = [
   { name: "YPFD", cat: "Acciones", qty: 40.0, avgCost: 7957.61, price: 13973.27, broker: "Balanz", manual: false },
   { name: "AMD", cat: "CEDEARs", qty: 1.0, avgCost: 76430.28, price: 75607.89, broker: "Balanz", manual: false },
   { name: "CEPU", cat: "Acciones", qty: 82.0, avgCost: 2425.57, price: 2949.73, broker: "Balanz", manual: false },
@@ -184,7 +184,7 @@ const HOLDINGS = [
   { name: "PLC2O", cat: "Bonos", qty: 298.0, avgCost: 1531.52, price: 1622.19, broker: "IOL", manual: false },
 ];
 
-const MOVIMIENTOS = [
+let MOVIMIENTOS = [
   { fecha: "2026-08-08", activo: "BNB", tipo: "Compra", cantidad: 0.24216698, precio: 943475.035284, broker: "Nexo" },
   { fecha: "2026-08-08", activo: "BTC", tipo: "Compra", cantidad: 0.00153958, precio: 103924446.927084, broker: "Nexo" },
   { fecha: "2026-08-07", activo: "YPFD", tipo: "Compra", cantidad: 20.0, precio: 7867.009, broker: "Balanz" },
@@ -766,7 +766,10 @@ const CATS = [
   { key: "Cripto", color: "#E8964F", icon: Bitcoin },
 ];
 
-const BROKER_LIST = [...new Set(HOLDINGS.map((h) => h.broker))];
+function computeBrokerList() {
+  return [...new Set(HOLDINGS.map((h) => h.broker))];
+}
+let BROKER_LIST = computeBrokerList();
 
 function genPriceSeries(seed, basePrice, points, volatility) {
   const rand = seededRandom(seed);
@@ -827,20 +830,23 @@ function hashSeed(str) {
 // arriba se agrega automáticamente, para que "Buscar activo" siempre encuentre lo
 // que tenés en cartera (aunque el gráfico de precio siga siendo simulado).
 const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "Fondos", Cripto: "Cripto" };
-const AUTO_ASSETS = [...new Set(HOLDINGS.map((h) => h.name))]
-  .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
-  .map((t) => {
-    const h = HOLDINGS.find((x) => x.name === t);
-    return {
-      symbol: t,
-      name: SYMBOL_NAMES[t] || t,
-      cat: HOLDINGS_CAT_TO_SEARCH_CAT[h.cat] || "CEDEARs",
-      ccy: "ARS",
-      seed: hashSeed(t),
-      base: h.price || h.avgCost || 100,
-    };
-  });
-const ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+function computeAutoAssets() {
+  return [...new Set(HOLDINGS.map((h) => h.name))]
+    .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
+    .map((t) => {
+      const h = HOLDINGS.find((x) => x.name === t);
+      return {
+        symbol: t,
+        name: SYMBOL_NAMES[t] || t,
+        cat: HOLDINGS_CAT_TO_SEARCH_CAT[h.cat] || "CEDEARs",
+        ccy: "ARS",
+        seed: hashSeed(t),
+        base: h.price || h.avgCost || 100,
+      };
+    });
+}
+let AUTO_ASSETS = computeAutoAssets();
+let ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
 
 const CHART_RANGES = [
   { label: "1S", days: 7 },
@@ -1239,8 +1245,11 @@ function priceAt(historyMap, sortedDates, date) {
 // archivo, una sola vez) así que cruzar todo es instantáneo.
 // Fecha de tu primer movimiento real -- no tiene sentido mostrar histórico de
 // antes de eso, tu cartera todavía no existía.
-const EARLIEST_TRADE_DATE = MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
-  .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
+function computeEarliestTradeDate() {
+  return MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
+    .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
+}
+let EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
 function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd, fx) {
   const uniqueTickers = [...new Map(holdings.map((h) => [`${h.name}__${h.broker}`, h])).values()];
@@ -1508,32 +1517,84 @@ function LoginView({ C }) {
   );
 }
 
+function LoadingScreen({ C, text }) {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, color: C.faint, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 13 }}>
+      {text}
+    </div>
+  );
+}
+
 // Puerta de entrada: mientras se confirma si hay sesión, muestra un loader;
-// si no hay nadie logueado, muestra el login; si hay sesión, recién ahí
-// monta la app completa. Así InvestmentDashboard nunca queda "a medio
-// montar" con datos de nadie logueado.
+// si no hay nadie logueado, muestra el login; si hay sesión, busca los datos
+// de ESE usuario en Firestore (users/{uid}) y recién ahí monta la app
+// completa -- nunca con datos de otro usuario, ni por un instante. Así
+// InvestmentDashboard nunca queda "a medio montar" sin datos listos.
 export default function AuthGate() {
   const [authUser, setAuthUser] = useState(undefined); // undefined = cargando, null = sin sesión
+  const [userData, setUserData] = useState(undefined); // undefined = cargando los datos de Firestore
+  const [dataError, setDataError] = useState(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, setAuthUser);
     return unsub;
   }, []);
 
+  useEffect(() => {
+    if (!authUser) {
+      setUserData(undefined);
+      return;
+    }
+    let cancelled = false;
+    setUserData(undefined);
+    setDataError(null);
+    (async () => {
+      try {
+        const snap = await getDoc(doc(db, "users", authUser.uid));
+        if (cancelled) return;
+        const data = snap.exists() ? snap.data() : {};
+        setUserData({
+          holdings: Array.isArray(data.holdings) ? data.holdings : [],
+          movimientos: Array.isArray(data.movimientos) ? data.movimientos : [],
+        });
+      } catch (err) {
+        if (!cancelled) setDataError(err.message || "No se pudieron cargar tus datos.");
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [authUser]);
+
   const hour = new Date().getHours();
   const C = hour >= 7 && hour < 20 ? LIGHT : DARK;
 
-  if (authUser === undefined) {
+  if (authUser === undefined) return <LoadingScreen C={C} text="Cargando..." />;
+  if (authUser === null) return <LoginView C={C} />;
+
+  if (dataError) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, color: C.faint, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 13 }}>
-        Cargando...
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: C.bg, color: C.loss, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 13, padding: 20, textAlign: "center" }}>
+        <div>No pudimos cargar tus datos: {dataError}</div>
+        <button onClick={() => signOut(auth)} style={{ padding: "8px 16px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 12, cursor: "pointer" }}>
+          Cerrar sesión e intentar de nuevo
+        </button>
       </div>
     );
   }
 
-  if (authUser === null) return <LoginView C={C} />;
+  if (userData === undefined) return <LoadingScreen C={C} text="Cargando tus datos..." />;
 
-  return <InvestmentDashboard user={authUser} />;
+  // Reemplaza los arrays hardcodeados por los datos reales de ESTE usuario,
+  // ya confirmados y listos -- InvestmentDashboard recién se monta después
+  // de esta línea, así que todos sus hooks arrancan viendo los datos
+  // correctos desde el primer render (sin problemas de orden de hooks).
+  HOLDINGS = userData.holdings;
+  MOVIMIENTOS = userData.movimientos;
+  BROKER_LIST = computeBrokerList();
+  AUTO_ASSETS = computeAutoAssets();
+  ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+  EARLIEST_TRADE_DATE = computeEarliestTradeDate();
+
+  return <InvestmentDashboard key={authUser.uid} user={authUser} />;
 }
 
 function InvestmentDashboard({ user }) {
@@ -2150,7 +2211,7 @@ function InvestmentDashboard({ user }) {
 
           {view === "novedades" && <NovedadesView C={C} f={f} fx={fx} />}
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
-          {view === "importar" && <ImportarView C={C} />}
+          {view === "importar" && <ImportarView C={C} user={user} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
@@ -3210,54 +3271,377 @@ function SectionTitle({ children, sub, C }) {
   );
 }
 
-function ImportarView({ C }) {
+// --- Importar archivos --------------------------------------------------
+
+// Balanz: mapea "Tipo de Instrumento" de su export a nuestras categorías.
+function mapBalanzCategoria(tipoInstrumento) {
+  const t = (tipoInstrumento || "").trim();
+  if (t === "Cedears") return "CEDEARs";
+  if (t === "Acciones") return "Acciones";
+  if (t === "Bonos") return "Bonos";
+  return "Acciones"; // fallback razonable, no debería pasar con el export real
+}
+
+// Excel guarda fechas como objetos Date (o a veces como string) según cómo
+// las haya escrito la librería que las lee -- esto normaliza ambos casos al
+// formato YYYY-MM-DD que usa el resto de la app.
+function normalizeFecha(value) {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (typeof value === "string") {
+    const m = value.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (m) return m[1];
+    const d = new Date(value);
+    if (!isNaN(d)) return d.toISOString().slice(0, 10);
+  }
+  return null;
+}
+
+// Lee la hoja "movimientos" del export de Balanz y separa las filas en lo
+// que se puede cargar automático (Compra/Venta/Split) y lo que se ignora a
+// propósito porque no cambia cantidad de acciones (dividendos, rentas,
+// movimientos manuales, recibos de cobro).
+function parseBalanzMovimientos(rows, broker = "Balanz") {
+  const cargables = [];
+  const ignoradas = {}; // { "Dividendo en efectivo": count, ... }
+
+  for (const row of rows) {
+    const desc = String(row["Descripcion"] ?? "").trim();
+    if (!desc) continue;
+    const fecha = normalizeFecha(row["Concertacion"]);
+    const ticker = row["Ticker"] ? String(row["Ticker"]).trim() : null;
+
+    if (desc.startsWith("Boleto") && ticker) {
+      const esCompra = /\bCOMPRA\b/.test(desc);
+      const esVenta = /\bVENTA\b/.test(desc);
+      if ((esCompra || esVenta) && fecha) {
+        cargables.push({
+          fecha,
+          activo: ticker,
+          tipo: esCompra ? "Compra" : "Venta",
+          cantidad: Number(row["Cantidad"]) || 0,
+          precio: Number(row["Precio"]) || 0,
+          broker,
+          cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
+        });
+        continue;
+      }
+    }
+
+    if (desc.startsWith("Dividendo en acciones") && ticker && fecha) {
+      cargables.push({
+        fecha,
+        activo: ticker,
+        tipo: "Split",
+        cantidad: Number(row["Cantidad"]) || 0,
+        precio: 0,
+        broker,
+        cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
+      });
+      continue;
+    }
+
+    // Todo lo demás (Dividendo en efectivo, Renta, Movimiento Manual, Recibo
+    // de Cobro, Comprobante de Pago) no cambia cantidad de acciones -- se
+    // cuenta para mostrarlo en el resumen, pero no se carga.
+    const tipoIgnorado = desc.split("/")[0].trim();
+    ignoradas[tipoIgnorado] = (ignoradas[tipoIgnorado] || 0) + 1;
+  }
+
+  return { cargables, ignoradas };
+}
+
+// A partir de una lista de movimientos ya fusionada (los que ya tenías +
+// los nuevos), recalcula HOLDINGS desde cero para un broker puntual --
+// mismo método de costo promedio ponderado que ya usa el resto de la app
+// (buildQtyTimeline/buildCostBasisTimeline), pero recibiendo el array
+// directo en vez de leer el global, porque esto corre ANTES de guardar.
+function recomputeHoldingsForBroker(allMovimientos, broker, prevHoldings, catByTicker) {
+  const trades = allMovimientos.filter(
+    (m) => m.broker === broker && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
+  );
+  const tickers = [...new Set(trades.map((m) => m.activo))];
+
+  const result = [];
+  for (const ticker of tickers) {
+    const tickerTrades = trades.filter((m) => m.activo === ticker).sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+    let qty = 0, cost = 0;
+    for (const t of tickerTrades) {
+      if (t.tipo === "Compra" || t.tipo === "Split") {
+        qty += t.cantidad;
+        cost += t.cantidad * t.precio;
+      } else if (qty > 0) {
+        const avgCostPerUnit = cost / qty;
+        const soldQty = Math.min(t.cantidad, qty);
+        cost -= soldQty * avgCostPerUnit;
+        qty -= soldQty;
+      }
+    }
+    if (qty <= 0) continue; // posición cerrada del todo, no se lista
+    const prev = prevHoldings.find((h) => h.name === ticker && h.broker === broker);
+    result.push({
+      name: ticker,
+      cat: prev?.cat || catByTicker[ticker] || "Acciones",
+      qty,
+      avgCost: cost / qty,
+      price: prev?.price ?? cost / qty, // sin precio en vivo todavía, usamos el costo como estimado inicial
+      broker,
+      manual: false,
+    });
+  }
+  return result;
+}
+
+const BALANZ_INSTRUCTIONS = [
+  { title: "Iniciá sesión en Balanz", desc: "Entrá a tu cuenta con tu usuario habitual." },
+  { title: "Andá a \"Actividad\"", desc: "En el menú de la izquierda, buscá la opción \"Actividad\"." },
+  { title: "Entrá a \"Movimientos\"", desc: "Dentro de Actividad, elegí la sección \"Movimientos\"." },
+  { title: "Elegí el rango de fechas", desc: "Poné como \"desde\" la fecha de tu primera inversión, y como \"hasta\" hoy -- así se incluye todo tu historial." },
+  { title: "Descargá el archivo", desc: "Tocá el botón de descarga. Va a bajar un archivo llamado movimientos.xlsx -- es el único que necesitás." },
+  { title: "Subilo acá abajo", desc: "Arrastralo al recuadro, o hacé click para elegirlo desde tu computadora." },
+];
+
+function ImportarView({ C, user }) {
   const [dragOver, setDragOver] = useState(false);
+  const [broker, setBroker] = useState(null);
+  const [status, setStatus] = useState("idle"); // idle | parsing | preview | guardando | listo | error
+  const [parsed, setParsed] = useState(null); // { cargables, ignoradas, fileName }
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleFile = async (file) => {
+    setStatus("parsing");
+    setErrorMsg("");
+    try {
+      const { default: ExcelJS } = await import("exceljs");
+      const buf = await file.arrayBuffer();
+      const wb = new ExcelJS.Workbook();
+      await wb.xlsx.load(buf);
+      const sheet = wb.worksheets.find((s) => s.name.toLowerCase() === "movimientos") || wb.worksheets[0];
+      if (!sheet) throw new Error("El archivo no tiene ninguna hoja legible.");
+
+      const headerRow = sheet.getRow(1).values; // índice 1-based, [0] vacío
+      const headers = headerRow.slice(1).map((h) => String(h ?? "").trim());
+      const rows = [];
+      sheet.eachRow((row, rowNumber) => {
+        if (rowNumber === 1) return;
+        const obj = {};
+        row.values.slice(1).forEach((val, i) => {
+          obj[headers[i]] = val && typeof val === "object" && "result" in val ? val.result : val;
+        });
+        rows.push(obj);
+      });
+
+      if (broker === "Balanz") {
+        const result = parseBalanzMovimientos(rows);
+        setParsed({ ...result, fileName: file.name });
+        setStatus("preview");
+      } else {
+        throw new Error("Todavía no armamos el lector para ese broker.");
+      }
+    } catch (err) {
+      setErrorMsg(err.message || "No pudimos leer el archivo.");
+      setStatus("error");
+    }
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleFile(file);
+  };
+
+  const onFileInput = (e) => {
+    const file = e.target.files?.[0];
+    if (file) handleFile(file);
+  };
+
+  const confirmarImportacion = async () => {
+    if (!parsed) return;
+    setStatus("guardando");
+    setErrorMsg("");
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+
+      // Evita duplicar si el usuario sube un archivo con fechas que se
+      // solapan con algo que ya tenía cargado.
+      const existingKeys = new Set(prevMovimientos.map((m) => `${m.fecha}|${m.activo}|${m.tipo}|${m.cantidad}|${m.precio}|${m.broker}`));
+      const nuevos = parsed.cargables.filter((m) => !existingKeys.has(`${m.fecha}|${m.activo}|${m.tipo}|${m.cantidad}|${m.precio}|${m.broker}`));
+      const nuevosSinCat = nuevos.map(({ cat, ...m }) => m); // "cat" era solo para el recálculo de tenencias, no se guarda en el movimiento
+
+      const catByTicker = {};
+      for (const m of parsed.cargables) catByTicker[m.activo] = m.cat;
+
+      const movimientosFinal = [...prevMovimientos, ...nuevosSinCat];
+      const holdingsOtrosBrokers = prevHoldings.filter((h) => h.broker !== "Balanz");
+      const holdingsBalanz = recomputeHoldingsForBroker(movimientosFinal, "Balanz", prevHoldings, catByTicker);
+      const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanz];
+
+      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: movimientosFinal });
+
+      HOLDINGS = holdingsFinal;
+      MOVIMIENTOS = movimientosFinal;
+      BROKER_LIST = computeBrokerList();
+      AUTO_ASSETS = computeAutoAssets();
+      ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+      EARLIEST_TRADE_DATE = computeEarliestTradeDate();
+
+      setStatus("listo");
+    } catch (err) {
+      setErrorMsg(err.message || "No pudimos guardar los datos.");
+      setStatus("error");
+    }
+  };
+
+  const reset = () => {
+    setStatus("idle");
+    setParsed(null);
+    setErrorMsg("");
+  };
+
   return (
     <div>
       <SectionTitle C={C} sub="Subí el estado de cuenta o histórico de movimientos exportado desde tu broker o exchange.">Importar archivos</SectionTitle>
 
-      <div
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => { e.preventDefault(); setDragOver(false); }}
-        style={{
-          border: `2px dashed ${dragOver ? C.gold : C.border}`,
-          borderRadius: 12,
-          padding: "40px 20px",
-          textAlign: "center",
-          background: dragOver ? C.rowLine : C.surface,
-          transition: "all 0.15s ease",
-        }}
-      >
-        <FileSpreadsheet size={28} color={C.muted} style={{ marginBottom: 10 }} />
-        <div style={{ fontSize: 14, marginBottom: 4 }}>Arrastrá el archivo acá, o hacé click para elegirlo</div>
-        <div style={{ fontSize: 12, color: C.faint }}>.xlsx, .xls o .csv — máx. 10MB</div>
-      </div>
-
-      <div style={{ marginTop: 22 }}>
+      <div style={{ marginBottom: 22 }}>
         <div style={{ fontSize: 12, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Origen del archivo</div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {["Balanz", "IOL", "Bull Market", "Binance", "Buenbit", "Otro"].map((b) => (
-            <span key={b} style={{ padding: "6px 14px", borderRadius: 999, border: `1px solid ${C.border}`, fontSize: 12, color: C.muted, cursor: "pointer" }}>{b}</span>
+          {["Balanz"].map((b) => (
+            <span
+              key={b}
+              onClick={() => { setBroker(b); reset(); }}
+              style={{
+                padding: "6px 14px",
+                borderRadius: 999,
+                border: `1px solid ${broker === b ? C.gold : C.border}`,
+                fontSize: 12,
+                color: broker === b ? C.gold : C.muted,
+                background: broker === b ? C.chipActive : "transparent",
+                cursor: "pointer",
+              }}
+            >
+              {b}
+            </span>
           ))}
         </div>
       </div>
 
-      <div style={{ marginTop: 28, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
-        <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, fontSize: 13, fontWeight: 600 }}>Importaciones recientes</div>
-        {[
-          { nombre: "balanz_movimientos_julio.xlsx", fecha: "05 ago 2026", filas: 34 },
-          { nombre: "iol_estado_cuenta.csv", fecha: "28 jul 2026", filas: 19 },
-        ].map((row) => (
-          <div key={row.nombre} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 18px", borderTop: `1px solid ${C.rowLine}`, fontSize: 13 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <CheckCircle2 size={14} color={C.gain} />
-              {row.nombre}
-            </span>
-            <span style={{ color: C.faint, fontSize: 12 }}>{row.filas} movimientos · {row.fecha}</span>
+      {!broker && (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "24px", fontSize: 13, color: C.faint, textAlign: "center" }}>
+          Elegí de qué broker es tu archivo para ver las instrucciones.
+        </div>
+      )}
+
+      {broker === "Balanz" && status === "idle" && (
+        <>
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 22 }}>
+            {BALANZ_INSTRUCTIONS.map((step, i) => (
+              <div key={i} style={{ display: "flex", gap: 14, padding: "14px 18px", borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none" }}>
+                <div style={{ minWidth: 22, height: 22, borderRadius: 999, background: C.chipActive, color: C.gold, fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{step.title}</div>
+                  <div style={{ fontSize: 12, color: C.faint }}>{step.desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+
+          <div
+            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={onDrop}
+            onClick={() => document.getElementById("import-file-input").click()}
+            style={{
+              border: `2px dashed ${dragOver ? C.gold : C.border}`,
+              borderRadius: 12,
+              padding: "40px 20px",
+              textAlign: "center",
+              background: dragOver ? C.rowLine : C.surface,
+              transition: "all 0.15s ease",
+              cursor: "pointer",
+            }}
+          >
+            <input id="import-file-input" type="file" accept=".xlsx,.xls,.csv" style={{ display: "none" }} onChange={onFileInput} />
+            <FileSpreadsheet size={28} color={C.muted} style={{ marginBottom: 10 }} />
+            <div style={{ fontSize: 14, marginBottom: 4 }}>Arrastrá el archivo movimientos.xlsx acá, o hacé click para elegirlo</div>
+            <div style={{ fontSize: 12, color: C.faint }}>.xlsx — máx. 10MB</div>
+          </div>
+        </>
+      )}
+
+      {status === "parsing" && (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "24px", fontSize: 13, color: C.faint, textAlign: "center" }}>
+          Leyendo el archivo...
+        </div>
+      )}
+
+      {status === "error" && (
+        <div style={{ background: C.surface, border: `1px solid ${C.loss}`, borderRadius: 12, padding: "18px", fontSize: 13, color: C.loss }}>
+          {errorMsg}
+          <div style={{ marginTop: 12 }}>
+            <button onClick={reset} style={{ padding: "8px 14px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 12, cursor: "pointer" }}>Probar de nuevo</button>
+          </div>
+        </div>
+      )}
+
+      {status === "preview" && parsed && (
+        <div>
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 16 }}>
+            <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, fontSize: 13, fontWeight: 600 }}>
+              Se van a cargar {parsed.cargables.length} movimientos de {parsed.fileName}
+            </div>
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              {parsed.cargables.map((m, i) => (
+                <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "8px 18px", borderTop: `1px solid ${C.rowLine}`, fontSize: 12 }}>
+                  <span className="tabular" style={{ color: C.faint }}>{m.fecha}</span>
+                  <span style={{ fontWeight: 600 }}>{m.activo}</span>
+                  <span style={{ color: m.tipo === "Venta" ? C.loss : m.tipo === "Split" ? C.gold : C.gain }}>{m.tipo}</span>
+                  <span className="tabular">{m.cantidad}</span>
+                  <span className="tabular" style={{ color: C.faint }}>{m.precio > 0 ? `$${m.precio}` : "—"}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {Object.keys(parsed.ignoradas).length > 0 && (
+            <div style={{ fontSize: 12, color: C.faint, marginBottom: 16, padding: "0 4px" }}>
+              También encontramos {Object.entries(parsed.ignoradas).map(([tipo, n]) => `${n} ${tipo.toLowerCase()}`).join(", ")} — no se cargan porque no cambian tu cantidad de acciones.
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: 10 }}>
+            <button
+              onClick={confirmarImportacion}
+              style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 13, cursor: "pointer" }}
+            >
+              Confirmar e importar
+            </button>
+            <button onClick={reset} style={{ padding: "10px 20px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 13, cursor: "pointer" }}>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {status === "guardando" && (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "24px", fontSize: 13, color: C.faint, textAlign: "center" }}>
+          Guardando en tu cuenta...
+        </div>
+      )}
+
+      {status === "listo" && (
+        <div style={{ background: C.surface, border: `1px solid ${C.gain}`, borderRadius: 12, padding: "18px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: C.gain, fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
+            <CheckCircle2 size={16} />
+            Listo, se importó correctamente
+          </div>
+          <button onClick={reset} style={{ padding: "8px 14px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 12, cursor: "pointer" }}>
+            Importar otro archivo
+          </button>
+        </div>
+      )}
     </div>
   );
 }
