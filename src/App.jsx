@@ -3313,13 +3313,20 @@ function parseBalanzMovimientos(rows, broker = "Balanz") {
     if (desc.startsWith("Boleto") && ticker) {
       const esCompra = /\bCOMPRA\b/.test(desc);
       const esVenta = /\bVENTA\b/.test(desc);
-      if ((esCompra || esVenta) && fecha) {
+      const precio = Number(row["Precio"]);
+      // Cuando la operación es en moneda extranjera, Balanz exporta cada
+      // boleto como DOS filas: una con el precio real, y una "sombra" en
+      // Pesos con precio -1 (su forma de marcar "no aplica acá"). Sin
+      // filtrar esto, cada operación se contaba el doble.
+      if ((esCompra || esVenta) && fecha && precio !== -1) {
         cargables.push({
           fecha,
           activo: ticker,
           tipo: esCompra ? "Compra" : "Venta",
-          cantidad: Number(row["Cantidad"]) || 0,
-          precio: Number(row["Precio"]) || 0,
+          // Balanz anota las ventas con cantidad negativa -- acá siempre
+          // guardamos el valor absoluto, el signo ya lo da "tipo".
+          cantidad: Math.abs(Number(row["Cantidad"]) || 0),
+          precio: precio || 0,
           broker,
           cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
         });
@@ -3404,7 +3411,8 @@ function ImportarView({ C, user }) {
   const [dragOver, setDragOver] = useState(false);
   const [broker, setBroker] = useState(null);
   const [status, setStatus] = useState("idle"); // idle | parsing | preview | guardando | listo | error
-  const [parsed, setParsed] = useState(null); // { cargables, ignoradas, fileName }
+  const [preview, setPreview] = useState(null); // { fileName, cargables, ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm }
+  const [bondAnswers, setBondAnswers] = useState({}); // { [ticker]: {type:'keep'|'exclude'|'custom', qty?} | null }
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleFile = async (file) => {
@@ -3430,13 +3438,38 @@ function ImportarView({ C, user }) {
         rows.push(obj);
       });
 
-      if (broker === "Balanz") {
-        const result = parseBalanzMovimientos(rows);
-        setParsed({ ...result, fileName: file.name });
-        setStatus("preview");
-      } else {
-        throw new Error("Todavía no armamos el lector para ese broker.");
-      }
+      if (broker !== "Balanz") throw new Error("Todavía no armamos el lector para ese broker.");
+
+      const result = parseBalanzMovimientos(rows);
+
+      // Buscamos tus datos actuales ahora (no recién al confirmar) para
+      // poder mostrarte una vista previa real de cómo quedarían tus
+      // tenencias de Balanz después de esta importación.
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+
+      const existingKeys = new Set(prevMovimientos.map((m) => `${m.fecha}|${m.activo}|${m.tipo}|${m.cantidad}|${m.precio}|${m.broker}`));
+      const nuevos = result.cargables.filter((m) => !existingKeys.has(`${m.fecha}|${m.activo}|${m.tipo}|${m.cantidad}|${m.precio}|${m.broker}`));
+      const nuevosSinCat = nuevos.map(({ cat, ...m }) => m);
+      const movimientosFinal = [...prevMovimientos, ...nuevosSinCat];
+
+      const catByTicker = {};
+      for (const m of result.cargables) catByTicker[m.activo] = m.cat;
+      const holdingsBalanz = recomputeHoldingsForBroker(movimientosFinal, "Balanz", prevHoldings, catByTicker);
+
+      // Los bonos se usan seguido para comprar dólar MEP (comprar hoy,
+      // vender al día siguiente) -- si el archivo tiene el ciclo completo,
+      // esto ya da 0 solo. Pero si queda un resto, mejor confirmarlo con
+      // la persona en vez de asumir que es una tenencia real.
+      const bondsToConfirm = holdingsBalanz.filter((h) => h.cat === "Bonos" && h.qty > 0);
+      const initialAnswers = {};
+      for (const b of bondsToConfirm) initialAnswers[b.name] = null;
+
+      setPreview({ fileName: file.name, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm });
+      setBondAnswers(initialAnswers);
+      setStatus("preview");
     } catch (err) {
       setErrorMsg(err.message || "No pudimos leer el archivo.");
       setStatus("error");
@@ -3455,34 +3488,31 @@ function ImportarView({ C, user }) {
     if (file) handleFile(file);
   };
 
+  const faltaResponderBonos = preview?.bondsToConfirm.some((b) => !bondAnswers[b.name]);
+
   const confirmarImportacion = async () => {
-    if (!parsed) return;
+    if (!preview) return;
     setStatus("guardando");
     setErrorMsg("");
     try {
-      const snap = await getDoc(doc(db, "users", user.uid));
-      const data = snap.exists() ? snap.data() : {};
-      const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
-      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+      const holdingsBalanzFinal = preview.holdingsBalanz
+        .map((h) => {
+          if (h.cat !== "Bonos") return h;
+          const answer = bondAnswers[h.name];
+          if (!answer || answer.type === "keep") return h;
+          if (answer.type === "exclude") return null;
+          if (answer.type === "custom") return { ...h, qty: answer.qty, avgCost: h.avgCost };
+          return h;
+        })
+        .filter(Boolean);
 
-      // Evita duplicar si el usuario sube un archivo con fechas que se
-      // solapan con algo que ya tenía cargado.
-      const existingKeys = new Set(prevMovimientos.map((m) => `${m.fecha}|${m.activo}|${m.tipo}|${m.cantidad}|${m.precio}|${m.broker}`));
-      const nuevos = parsed.cargables.filter((m) => !existingKeys.has(`${m.fecha}|${m.activo}|${m.tipo}|${m.cantidad}|${m.precio}|${m.broker}`));
-      const nuevosSinCat = nuevos.map(({ cat, ...m }) => m); // "cat" era solo para el recálculo de tenencias, no se guarda en el movimiento
+      const holdingsOtrosBrokers = preview.prevHoldings.filter((h) => h.broker !== "Balanz");
+      const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanzFinal];
 
-      const catByTicker = {};
-      for (const m of parsed.cargables) catByTicker[m.activo] = m.cat;
-
-      const movimientosFinal = [...prevMovimientos, ...nuevosSinCat];
-      const holdingsOtrosBrokers = prevHoldings.filter((h) => h.broker !== "Balanz");
-      const holdingsBalanz = recomputeHoldingsForBroker(movimientosFinal, "Balanz", prevHoldings, catByTicker);
-      const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanz];
-
-      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: movimientosFinal });
+      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: preview.movimientosFinal });
 
       HOLDINGS = holdingsFinal;
-      MOVIMIENTOS = movimientosFinal;
+      MOVIMIENTOS = preview.movimientosFinal;
       BROKER_LIST = computeBrokerList();
       AUTO_ASSETS = computeAutoAssets();
       ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
@@ -3497,9 +3527,11 @@ function ImportarView({ C, user }) {
 
   const reset = () => {
     setStatus("idle");
-    setParsed(null);
+    setPreview(null);
+    setBondAnswers({});
     setErrorMsg("");
   };
+
 
   return (
     <div>
@@ -3586,14 +3618,14 @@ function ImportarView({ C, user }) {
         </div>
       )}
 
-      {status === "preview" && parsed && (
+      {status === "preview" && preview && (
         <div>
           <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 16 }}>
             <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, fontSize: 13, fontWeight: 600 }}>
-              Se van a cargar {parsed.cargables.length} movimientos de {parsed.fileName}
+              Se van a cargar {preview.cargables.length} movimientos de {preview.fileName}
             </div>
             <div style={{ maxHeight: 320, overflowY: "auto" }}>
-              {parsed.cargables.map((m, i) => (
+              {preview.cargables.map((m, i) => (
                 <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "8px 18px", borderTop: `1px solid ${C.rowLine}`, fontSize: 12 }}>
                   <span className="tabular" style={{ color: C.faint }}>{m.fecha}</span>
                   <span style={{ fontWeight: 600 }}>{m.activo}</span>
@@ -3605,16 +3637,62 @@ function ImportarView({ C, user }) {
             </div>
           </div>
 
-          {Object.keys(parsed.ignoradas).length > 0 && (
+          {Object.keys(preview.ignoradas).length > 0 && (
             <div style={{ fontSize: 12, color: C.faint, marginBottom: 16, padding: "0 4px" }}>
-              También encontramos {Object.entries(parsed.ignoradas).map(([tipo, n]) => `${n} ${tipo.toLowerCase()}`).join(", ")} — no se cargan porque no cambian tu cantidad de acciones.
+              También encontramos {Object.entries(preview.ignoradas).map(([tipo, n]) => `${n} ${tipo.toLowerCase()}`).join(", ")} — no se cargan porque no cambian tu cantidad de acciones.
+            </div>
+          )}
+
+          {preview.bondsToConfirm.length > 0 && (
+            <div style={{ background: C.surface, border: `1px solid ${C.gold}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Confirmá estos bonos antes de seguir</div>
+              <div style={{ fontSize: 12, color: C.faint, marginBottom: 14 }}>
+                Los bonos como estos se usan seguido para comprar dólar MEP (se compran y se venden al día siguiente). Según tus movimientos, te quedarían estas cantidades sin vender -- confirmanos si realmente las tenés hoy.
+              </div>
+              {preview.bondsToConfirm.map((b) => {
+                const answer = bondAnswers[b.name];
+                return (
+                  <div key={b.name} style={{ padding: "12px 0", borderTop: `1px solid ${C.rowLine}` }}>
+                    <div style={{ fontSize: 13, marginBottom: 8 }}>
+                      Encontramos <strong>{b.name}</strong> con <span className="tabular">{b.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</span> unidades sin vender. ¿Actualmente las tenés?
+                    </div>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+                      <button
+                        onClick={() => setBondAnswers((prev) => ({ ...prev, [b.name]: { type: "keep" } }))}
+                        style={{ padding: "6px 12px", borderRadius: 8, border: `1px solid ${answer?.type === "keep" ? C.gold : C.border}`, background: answer?.type === "keep" ? C.chipActive : "transparent", color: answer?.type === "keep" ? C.gold : C.text, fontSize: 12, cursor: "pointer" }}
+                      >
+                        Sí, la tengo
+                      </button>
+                      <button
+                        onClick={() => setBondAnswers((prev) => ({ ...prev, [b.name]: { type: "exclude" } }))}
+                        style={{ padding: "6px 12px", borderRadius: 8, border: `1px solid ${answer?.type === "exclude" ? C.gold : C.border}`, background: answer?.type === "exclude" ? C.chipActive : "transparent", color: answer?.type === "exclude" ? C.gold : C.text, fontSize: 12, cursor: "pointer" }}
+                      >
+                        No, era para dólares
+                      </button>
+                      <span style={{ fontSize: 12, color: C.faint }}>o escribí la cantidad real:</span>
+                      <input
+                        type="number"
+                        placeholder="cantidad"
+                        value={answer?.type === "custom" ? answer.qty : ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBondAnswers((prev) => ({ ...prev, [b.name]: val === "" ? null : { type: "custom", qty: Number(val) } }));
+                        }}
+                        style={{ width: 90, padding: "6px 10px", borderRadius: 8, border: `1px solid ${answer?.type === "custom" ? C.gold : C.border}`, background: C.bg, color: C.text, fontSize: 12 }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
 
           <div style={{ display: "flex", gap: 10 }}>
             <button
               onClick={confirmarImportacion}
-              style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 13, cursor: "pointer" }}
+              disabled={faltaResponderBonos}
+              title={faltaResponderBonos ? "Respondé sobre los bonos antes de continuar" : ""}
+              style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 13, cursor: faltaResponderBonos ? "not-allowed" : "pointer", opacity: faltaResponderBonos ? 0.5 : 1 }}
             >
               Confirmar e importar
             </button>
