@@ -182,7 +182,7 @@ let HOLDINGS = [
   { name: "ADCGLOA", cat: "Fondos", qty: 22.109, avgCost: 2043.90, price: 2053.34, broker: "IOL", manual: false },
   { name: "IOLDOLD", cat: "Fondos", qty: 17.4688, avgCost: 1655.83, price: 1658.29, broker: "IOL", manual: false },
   { name: "PRPEDOB", cat: "Fondos", qty: 46.1664, avgCost: 2338.11, price: 2749.90, broker: "IOL", manual: false },
-  { name: "PLC2O", cat: "Bonos", qty: 298.0, avgCost: 1531.52, price: 1622.19, broker: "IOL", manual: false },
+  { name: "PLC2O", cat: "Obligaciones Negociables", qty: 298.0, avgCost: 1531.52, price: 1622.19, broker: "IOL", manual: false },
 ];
 
 let MOVIMIENTOS = [
@@ -1137,7 +1137,7 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd) {
   }
   const raw = livePrices[holding.name];
   if (raw == null) return holding.price; // sin dato en vivo, se mantiene el estimado
-  if (holding.cat === "Bonos") return raw / 100;
+  if (holding.cat === "Bonos" || holding.cat === "Obligaciones Negociables") return raw / 100;
   return raw;
 }
 
@@ -2356,7 +2356,7 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
   if (selected.cat === "Cripto" && livePriceUsd != null) realLivePrice = livePriceUsd * fx;
   else if (selected.cat === "Cripto" && cryptoUsd[selected.symbol] != null) realLivePrice = cryptoUsd[selected.symbol] * fx;
   else if (mode === "accion" && accionLiveUsd != null) realLivePrice = accionLiveUsd * fx;
-  else if (mode === "cedear" && liveRaw != null) realLivePrice = selected.cat === "Bonos" ? liveRaw / 100 : liveRaw;
+  else if (mode === "cedear" && liveRaw != null) realLivePrice = (selected.cat === "Bonos" || selected.cat === "Obligaciones Negociables") ? liveRaw / 100 : liveRaw;
 
   const isLive = realLivePrice != null;
 
@@ -2829,7 +2829,7 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
         )}
       </div>
 
-      {selected.cat === "Bonos" && (
+      {(selected.cat === "Bonos" || selected.cat === "Obligaciones Negociables") && (
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, marginTop: 16, overflow: "hidden" }}>
           <div style={{ padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
             <div style={{ fontSize: 14, fontWeight: 600 }}>Próximos pagos de {selected.symbol}</div>
@@ -2944,7 +2944,7 @@ function CalculadoraView({ currency, fx, f, C, livePrices, cryptoUsd, historyCac
     // Precio en vivo real (ARS interno), igual criterio que "Buscar activo".
     let livePriceArs = null;
     if (selected.cat === "Cripto" && cryptoUsd[selected.symbol] != null) livePriceArs = cryptoUsd[selected.symbol] * fx;
-    else if (livePrices[selected.symbol] != null) livePriceArs = selected.cat === "Bonos" ? livePrices[selected.symbol] / 100 : livePrices[selected.symbol];
+    else if (livePrices[selected.symbol] != null) livePriceArs = (selected.cat === "Bonos" || selected.cat === "Obligaciones Negociables") ? livePrices[selected.symbol] / 100 : livePrices[selected.symbol];
 
     const lastHistPrice = hist[hist.length - 1].price;
     const scaleFix = livePriceArs != null && lastHistPrice > 0 ? livePriceArs / lastHistPrice : 1;
