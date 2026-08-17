@@ -47,6 +47,7 @@ import {
   Mail,
   Lock,
   LogOut,
+  Trash2,
 } from "lucide-react";
 
 // ---------- Datos simulados (después se reemplazan por el import real) ----------
@@ -3414,6 +3415,60 @@ function ImportarView({ C, user }) {
   const [preview, setPreview] = useState(null); // { fileName, cargables, ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm }
   const [bondAnswers, setBondAnswers] = useState({}); // { [ticker]: {type:'keep'|'exclude'|'custom', qty?} | null }
   const [errorMsg, setErrorMsg] = useState("");
+  const [importaciones, setImportaciones] = useState(null); // null = cargando, [] = sin historial todavía
+  const [borrandoId, setBorrandoId] = useState(null);
+
+  const cargarHistorial = async () => {
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      setImportaciones(Array.isArray(data.importaciones) ? data.importaciones : []);
+    } catch {
+      setImportaciones([]);
+    }
+  };
+
+  useEffect(() => {
+    cargarHistorial();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const borrarImportacion = async (importacion) => {
+    setBorrandoId(importacion.id);
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+      const prevImportaciones = Array.isArray(data.importaciones) ? data.importaciones : [];
+
+      const movimientosFinal = prevMovimientos.filter((m) => m.importId !== importacion.id);
+      // Recalcula las tenencias de ese broker desde cero con lo que queda,
+      // igual que al importar -- así no arrastra ningún resto del archivo
+      // borrado. Los otros brokers no se tocan.
+      const catByTicker = {};
+      for (const h of prevHoldings) if (h.broker === importacion.broker) catByTicker[h.name] = h.cat;
+      const holdingsOtroBroker = prevHoldings.filter((h) => h.broker !== importacion.broker);
+      const holdingsRecalculado = recomputeHoldingsForBroker(movimientosFinal, importacion.broker, prevHoldings, catByTicker);
+      const holdingsFinal = [...holdingsOtroBroker, ...holdingsRecalculado];
+      const importacionesFinal = prevImportaciones.filter((imp) => imp.id !== importacion.id);
+
+      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: movimientosFinal, importaciones: importacionesFinal });
+
+      HOLDINGS = holdingsFinal;
+      MOVIMIENTOS = movimientosFinal;
+      BROKER_LIST = computeBrokerList();
+      AUTO_ASSETS = computeAutoAssets();
+      ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+      EARLIEST_TRADE_DATE = computeEarliestTradeDate();
+
+      setImportaciones(importacionesFinal);
+    } catch (err) {
+      setErrorMsg(err.message || "No pudimos borrar esa importación.");
+    } finally {
+      setBorrandoId(null);
+    }
+  };
 
   const handleFile = async (file) => {
     setStatus("parsing");
@@ -3467,7 +3522,7 @@ function ImportarView({ C, user }) {
       const initialAnswers = {};
       for (const b of bondsToConfirm) initialAnswers[b.name] = null;
 
-      setPreview({ fileName: file.name, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm });
+      setPreview({ fileName: file.name, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
       setBondAnswers(initialAnswers);
       setStatus("preview");
     } catch (err) {
@@ -3509,15 +3564,33 @@ function ImportarView({ C, user }) {
       const holdingsOtrosBrokers = preview.prevHoldings.filter((h) => h.broker !== "Balanz");
       const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanzFinal];
 
-      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: preview.movimientosFinal });
+      // Cada movimiento nuevo queda marcado con el ID de esta importación,
+      // para poder identificarlos y borrarlos juntos si hace falta.
+      const importId = `imp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      const nuevosConImportId = preview.nuevosSinCat.map((m) => ({ ...m, importId }));
+      const movimientosFinal = [...preview.prevMovimientos, ...nuevosConImportId];
+
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const prevImportaciones = Array.isArray(snap.data()?.importaciones) ? snap.data().importaciones : [];
+      const nuevaImportacion = {
+        id: importId,
+        fileName: preview.fileName,
+        broker: "Balanz",
+        fecha: new Date().toISOString().slice(0, 10),
+        cantidad: nuevosConImportId.length,
+      };
+      const importacionesFinal = [nuevaImportacion, ...prevImportaciones];
+
+      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: movimientosFinal, importaciones: importacionesFinal });
 
       HOLDINGS = holdingsFinal;
-      MOVIMIENTOS = preview.movimientosFinal;
+      MOVIMIENTOS = movimientosFinal;
       BROKER_LIST = computeBrokerList();
       AUTO_ASSETS = computeAutoAssets();
       ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
       EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
+      setImportaciones(importacionesFinal);
       setStatus("listo");
     } catch (err) {
       setErrorMsg(err.message || "No pudimos guardar los datos.");
@@ -3720,6 +3793,36 @@ function ImportarView({ C, user }) {
           </button>
         </div>
       )}
+
+      <div style={{ marginTop: 28, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
+        <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, fontSize: 13, fontWeight: 600 }}>Importaciones recientes</div>
+        {importaciones === null && (
+          <div style={{ padding: "18px", fontSize: 12, color: C.faint, textAlign: "center" }}>Cargando...</div>
+        )}
+        {importaciones && importaciones.length === 0 && (
+          <div style={{ padding: "18px", fontSize: 12, color: C.faint, textAlign: "center" }}>Todavía no importaste ningún archivo.</div>
+        )}
+        {importaciones && importaciones.map((imp) => (
+          <div key={imp.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 18px", borderTop: `1px solid ${C.rowLine}`, fontSize: 13 }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <CheckCircle2 size={14} color={C.gain} />
+              {imp.fileName}
+              <span style={{ fontSize: 11, color: C.faint }}>({imp.broker})</span>
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <span style={{ color: C.faint, fontSize: 12 }}>{imp.cantidad} movimientos · {imp.fecha}</span>
+              <button
+                onClick={() => borrarImportacion(imp)}
+                disabled={borrandoId === imp.id}
+                title="Borrar esta importación"
+                style={{ display: "flex", alignItems: "center", padding: 4, borderRadius: 6, border: "none", background: "transparent", color: C.loss, cursor: borrandoId === imp.id ? "default" : "pointer", opacity: borrandoId === imp.id ? 0.5 : 1 }}
+              >
+                <Trash2 size={14} />
+              </button>
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
