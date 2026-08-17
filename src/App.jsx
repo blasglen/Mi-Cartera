@@ -3470,6 +3470,45 @@ function ImportarView({ C, user }) {
     }
   };
 
+  const [confirmandoReset, setConfirmandoReset] = useState(false);
+  const [reseteando, setReseteando] = useState(false);
+
+  // Botón de emergencia para importaciones que pasaron ANTES de que
+  // existiera el borrado por importación puntual (esas no tienen importId,
+  // así que no se pueden identificar una por una) -- borra TODO lo de ese
+  // broker (movimientos, tenencias e historial) para poder reimportar limpio.
+  const resetearBroker = async (brokerAResetear) => {
+    setReseteando(true);
+    setErrorMsg("");
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const prevMovimientos = Array.isArray(data.movimientos) ? data.movimientos : [];
+      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+      const prevImportaciones = Array.isArray(data.importaciones) ? data.importaciones : [];
+
+      const movimientosFinal = prevMovimientos.filter((m) => m.broker !== brokerAResetear);
+      const holdingsFinal = prevHoldings.filter((h) => h.broker !== brokerAResetear);
+      const importacionesFinal = prevImportaciones.filter((imp) => imp.broker !== brokerAResetear);
+
+      await setDoc(doc(db, "users", user.uid), { holdings: holdingsFinal, movimientos: movimientosFinal, importaciones: importacionesFinal });
+
+      HOLDINGS = holdingsFinal;
+      MOVIMIENTOS = movimientosFinal;
+      BROKER_LIST = computeBrokerList();
+      AUTO_ASSETS = computeAutoAssets();
+      ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+      EARLIEST_TRADE_DATE = computeEarliestTradeDate();
+
+      setImportaciones(importacionesFinal);
+      setConfirmandoReset(false);
+    } catch (err) {
+      setErrorMsg(err.message || "No pudimos borrar esos datos.");
+    } finally {
+      setReseteando(false);
+    }
+  };
+
   const handleFile = async (file) => {
     setStatus("parsing");
     setErrorMsg("");
@@ -3672,6 +3711,35 @@ function ImportarView({ C, user }) {
             <FileSpreadsheet size={28} color={C.muted} style={{ marginBottom: 10 }} />
             <div style={{ fontSize: 14, marginBottom: 4 }}>Arrastrá el archivo movimientos.xlsx acá, o hacé click para elegirlo</div>
             <div style={{ fontSize: 12, color: C.faint }}>.xlsx — máx. 10MB</div>
+          </div>
+
+          <div style={{ marginTop: 18, textAlign: "right" }}>
+            {!confirmandoReset ? (
+              <button
+                onClick={() => setConfirmandoReset(true)}
+                style={{ fontSize: 11, color: C.faint, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+              >
+                ¿Un archivo se cargó mal? Borrar todo lo de Balanz y empezar de nuevo
+              </button>
+            ) : (
+              <div style={{ background: C.surface, border: `1px solid ${C.loss}`, borderRadius: 10, padding: 14, textAlign: "left" }}>
+                <div style={{ fontSize: 12, color: C.loss, marginBottom: 10 }}>
+                  Esto borra TODOS los movimientos y tenencias de Balanz de tu cuenta (no toca otros brokers). No se puede deshacer. ¿Confirmás?
+                </div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button
+                    onClick={() => resetearBroker("Balanz")}
+                    disabled={reseteando}
+                    style={{ padding: "6px 14px", borderRadius: 8, border: "none", background: C.loss, color: "#fff", fontSize: 12, cursor: reseteando ? "default" : "pointer", opacity: reseteando ? 0.6 : 1 }}
+                  >
+                    {reseteando ? "Borrando..." : "Sí, borrar todo"}
+                  </button>
+                  <button onClick={() => setConfirmandoReset(false)} style={{ padding: "6px 14px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 12, cursor: "pointer" }}>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}
