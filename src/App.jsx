@@ -2249,7 +2249,7 @@ function InvestmentDashboard({ user }) {
 
           {view === "novedades" && <NovedadesView C={C} f={f} fx={fx} />}
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
-          {view === "importar" && <ImportarView C={C} user={user} />}
+          {view === "importar" && <ImportarView C={C} user={user} fx={fx} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
@@ -3396,10 +3396,36 @@ function aplicarSplitsConocidos(cargables, plataforma, cuenta) {
   return extra;
 }
 
-function parseBalanzMovimientos(rows, broker = "Balanz") {
+// Dólar MEP de una fecha EXACTA -- ArgentinaDatos API, pública, sin key,
+// sin problemas de CORS desde el navegador. Si esa fecha puntual no tuvo
+// rueda (fin de semana/feriado), reintenta con el día hábil más cercano
+// hacia atrás, hasta 5 días.
+async function fetchHistoricalMep(fechaISO) {
+  let d = new Date(fechaISO + "T12:00:00Z");
+  for (let i = 0; i < 5; i++) {
+    const fechaApi = d.toISOString().slice(0, 10).replaceAll("-", "/");
+    try {
+      const res = await fetch(`https://api.argentinadatos.com/v1/cotizaciones/dolares/bolsa/${fechaApi}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.venta) return data.venta;
+      }
+    } catch {
+      // sigue probando el día anterior
+    }
+    d.setUTCDate(d.getUTCDate() - 1);
+  }
+  return null; // no se pudo conseguir en 5 intentos -- el llamador decide el respaldo
+}
+
+async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
   const cargables = [];
   const ignoradas = {}; // { "Dividendo en efectivo": count, ... }
 
+  // Primera pasada: arma las filas crudas y junta qué fechas exactas
+  // necesitan dólar histórico (una sola vez por fecha, no por fila).
+  const crudo = [];
+  const fechasNecesarias = new Set();
   for (const row of rows) {
     const desc = String(row["Descripcion"] ?? "").trim();
     if (!desc) continue;
@@ -3415,14 +3441,18 @@ function parseBalanzMovimientos(rows, broker = "Balanz") {
       // Pesos con precio -1 (su forma de marcar "no aplica acá"). Sin
       // filtrar esto, cada operación se contaba el doble.
       if ((esCompra || esVenta) && fecha && precio !== -1) {
-        cargables.push({
+        const moneda = String(row["Moneda"] ?? "").trim();
+        const esDolares = moneda !== "" && moneda !== "Pesos";
+        if (esDolares) fechasNecesarias.add(fecha);
+        crudo.push({
           fecha,
           activo: ticker,
           tipo: esCompra ? "Compra" : "Venta",
           // Balanz anota las ventas con cantidad negativa -- acá siempre
           // guardamos el valor absoluto, el signo ya lo da "tipo".
           cantidad: Math.abs(Number(row["Cantidad"]) || 0),
-          precio: precio || 0,
+          precioOriginal: precio || 0,
+          esDolares,
           broker,
           cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
         });
@@ -3448,6 +3478,30 @@ function parseBalanzMovimientos(rows, broker = "Balanz") {
     // cuenta para mostrarlo en el resumen, pero no se carga.
     const tipoIgnorado = desc.split("/")[0].trim();
     ignoradas[tipoIgnorado] = (ignoradas[tipoIgnorado] || 0) + 1;
+  }
+
+  // Busca el dólar MEP real de cada fecha exacta que hace falta -- una vez
+  // por fecha (no por fila), y con pausa chica para no saturar la API.
+  const fxPorFecha = {};
+  for (const fecha of fechasNecesarias) {
+    fxPorFecha[fecha] = await fetchHistoricalMep(fecha);
+    await new Promise((r) => setTimeout(r, 150));
+  }
+
+  // Segunda pasada: aplica el dólar de cada fecha -- si no se consiguió (la
+  // API falló, o ninguno de los 5 días previos tuvo rueda), cae al dólar de
+  // hoy como respaldo, mejor que dejar el precio en dólares crudo.
+  for (const m of crudo) {
+    const precioFinal = m.esDolares ? m.precioOriginal * (fxPorFecha[m.fecha] || fxHoy) : m.precioOriginal;
+    cargables.push({
+      fecha: m.fecha,
+      activo: m.activo,
+      tipo: m.tipo,
+      cantidad: m.cantidad,
+      precio: precioFinal,
+      broker: m.broker,
+      cat: m.cat,
+    });
   }
 
   const splitsFaltantes = aplicarSplitsConocidos(cargables, "Balanz", broker);
@@ -3531,7 +3585,7 @@ async function borrarCarteraCompleta(uid, cuenta) {
   window.location.reload();
 }
 
-function ImportarView({ C, user }) {
+function ImportarView({ C, user, fx }) {
   const [dragOver, setDragOver] = useState(false);
   const [broker, setBroker] = useState(null); // qué plataforma/parser -- ej "Balanz"
   const [cuenta, setCuenta] = useState(""); // nombre elegido para ESTA cuenta puntual, puede repetir plataforma
@@ -3642,7 +3696,7 @@ function ImportarView({ C, user }) {
       if (broker !== "Balanz") throw new Error("Todavía no armamos el lector para ese broker.");
       const nombreCartera = cuenta.trim() || broker;
 
-      const result = parseBalanzMovimientos(rows, nombreCartera);
+      const result = await parseBalanzMovimientos(rows, nombreCartera, fx);
 
       // Buscamos tus datos actuales ahora (no recién al confirmar) para
       // poder mostrarte una vista previa real de cómo quedarían tus
@@ -3870,7 +3924,7 @@ function ImportarView({ C, user }) {
 
       {status === "parsing" && (
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "24px", fontSize: 13, color: C.faint, textAlign: "center" }}>
-          Leyendo el archivo...
+          Leyendo el archivo y buscando el dólar de cada fecha con operaciones en dólares... puede tardar unos segundos.
         </div>
       )}
 
