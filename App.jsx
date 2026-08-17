@@ -766,7 +766,10 @@ const CATS = [
   { key: "Cripto", color: "#E8964F", icon: Bitcoin },
 ];
 
-const BROKER_LIST = [...new Set(HOLDINGS.map((h) => h.broker))];
+function computeBrokerList() {
+  return [...new Set(HOLDINGS.map((h) => h.broker))];
+}
+let BROKER_LIST = computeBrokerList();
 
 function genPriceSeries(seed, basePrice, points, volatility) {
   const rand = seededRandom(seed);
@@ -827,20 +830,23 @@ function hashSeed(str) {
 // arriba se agrega automáticamente, para que "Buscar activo" siempre encuentre lo
 // que tenés en cartera (aunque el gráfico de precio siga siendo simulado).
 const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "Fondos", Cripto: "Cripto" };
-const AUTO_ASSETS = [...new Set(HOLDINGS.map((h) => h.name))]
-  .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
-  .map((t) => {
-    const h = HOLDINGS.find((x) => x.name === t);
-    return {
-      symbol: t,
-      name: SYMBOL_NAMES[t] || t,
-      cat: HOLDINGS_CAT_TO_SEARCH_CAT[h.cat] || "CEDEARs",
-      ccy: "ARS",
-      seed: hashSeed(t),
-      base: h.price || h.avgCost || 100,
-    };
-  });
-const ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+function computeAutoAssets() {
+  return [...new Set(HOLDINGS.map((h) => h.name))]
+    .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
+    .map((t) => {
+      const h = HOLDINGS.find((x) => x.name === t);
+      return {
+        symbol: t,
+        name: SYMBOL_NAMES[t] || t,
+        cat: HOLDINGS_CAT_TO_SEARCH_CAT[h.cat] || "CEDEARs",
+        ccy: "ARS",
+        seed: hashSeed(t),
+        base: h.price || h.avgCost || 100,
+      };
+    });
+}
+let AUTO_ASSETS = computeAutoAssets();
+let ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
 
 const CHART_RANGES = [
   { label: "1S", days: 7 },
@@ -1239,8 +1245,11 @@ function priceAt(historyMap, sortedDates, date) {
 // archivo, una sola vez) así que cruzar todo es instantáneo.
 // Fecha de tu primer movimiento real -- no tiene sentido mostrar histórico de
 // antes de eso, tu cartera todavía no existía.
-const EARLIEST_TRADE_DATE = MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
-  .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
+function computeEarliestTradeDate() {
+  return MOVIMIENTOS.filter((m) => m.tipo === "Compra" || m.tipo === "Venta")
+    .reduce((min, m) => (m.fecha < min ? m.fecha : min), MOVIMIENTOS[0]?.fecha || "2020-01-01");
+}
+let EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
 function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd, fx) {
   const uniqueTickers = [...new Map(holdings.map((h) => [`${h.name}__${h.broker}`, h])).values()];
@@ -1580,6 +1589,10 @@ export default function AuthGate() {
   // correctos desde el primer render (sin problemas de orden de hooks).
   HOLDINGS = userData.holdings;
   MOVIMIENTOS = userData.movimientos;
+  BROKER_LIST = computeBrokerList();
+  AUTO_ASSETS = computeAutoAssets();
+  ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+  EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
   return <InvestmentDashboard key={authUser.uid} user={authUser} />;
 }
