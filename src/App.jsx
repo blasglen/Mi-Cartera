@@ -1,4 +1,6 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
+import { auth } from "./firebase.js";
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 import {
   AreaChart,
   Area,
@@ -41,6 +43,9 @@ import {
   Globe,
   Calculator,
   Bell,
+  Mail,
+  Lock,
+  LogOut,
 } from "lucide-react";
 
 // ---------- Datos simulados (después se reemplazan por el import real) ----------
@@ -1380,7 +1385,157 @@ const LIGHT = {
   scrollbar: "#E1D9C8",
 };
 
-export default function InvestmentDashboard() {
+function translateFirebaseError(code) {
+  const map = {
+    "auth/invalid-email": "Ese email no es válido.",
+    "auth/user-not-found": "No encontramos una cuenta con ese email.",
+    "auth/wrong-password": "Contraseña incorrecta.",
+    "auth/invalid-credential": "Email o contraseña incorrectos.",
+    "auth/email-already-in-use": "Ya existe una cuenta con ese email.",
+    "auth/weak-password": "La contraseña tiene que tener al menos 6 caracteres.",
+    "auth/too-many-requests": "Demasiados intentos. Probá de nuevo en un rato.",
+    "auth/network-request-failed": "No hay conexión. Revisá tu internet.",
+  };
+  return map[code] || "Algo salió mal. Probá de nuevo.";
+}
+
+// Pantalla previa a la app -- login/registro/recuperar contraseña. Se
+// muestra cuando no hay nadie logueado todavía.
+function LoginView({ C }) {
+  const [mode, setMode] = useState("login"); // "login" | "signup" | "reset"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      if (mode === "login") await signInWithEmailAndPassword(auth, email, password);
+      else if (mode === "signup") await createUserWithEmailAndPassword(auth, email, password);
+      else if (mode === "reset") {
+        await sendPasswordResetEmail(auth, email);
+        setResetSent(true);
+      }
+    } catch (err) {
+      setError(translateFirebaseError(err.code));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, fontFamily: "'IBM Plex Sans', sans-serif", padding: 20 }}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');`}</style>
+      <div style={{ width: "100%", maxWidth: 380, padding: "32px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16 }}>
+        <div style={{ fontFamily: "'Fraunces', serif", fontSize: 24, fontWeight: 600, marginBottom: 4, textAlign: "center", color: C.text }}>Cartera Personal</div>
+        <div style={{ fontSize: 13, color: C.faint, textAlign: "center", marginBottom: 24 }}>
+          {mode === "login" ? "Iniciá sesión para ver tu cartera" : mode === "signup" ? "Creá tu cuenta" : "Recuperar contraseña"}
+        </div>
+
+        {mode === "reset" && resetSent ? (
+          <div style={{ fontSize: 13, color: C.gain, textAlign: "center", padding: "16px 0" }}>
+            Te mandamos un mail para restablecer tu contraseña. Revisá tu bandeja de entrada.
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
+              Email
+              <div style={{ position: "relative" }}>
+                <Mail size={15} color={C.faint} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)" }} />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, padding: "10px 12px 10px 36px", fontSize: 14 }}
+                />
+              </div>
+            </label>
+
+            {mode !== "reset" && (
+              <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 6, marginBottom: 18 }}>
+                Contraseña
+                <div style={{ position: "relative" }}>
+                  <Lock size={15} color={C.faint} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)" }} />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, padding: "10px 12px 10px 36px", fontSize: 14 }}
+                  />
+                </div>
+              </label>
+            )}
+
+            {error && <div style={{ fontSize: 12, color: C.loss, marginBottom: 14 }}>{error}</div>}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{ width: "100%", padding: "11px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.6 : 1 }}
+            >
+              {loading ? "..." : mode === "login" ? "Iniciar sesión" : mode === "signup" ? "Crear cuenta" : "Enviar mail"}
+            </button>
+          </form>
+        )}
+
+        <div style={{ marginTop: 18, textAlign: "center", fontSize: 12 }}>
+          {mode === "login" && (
+            <>
+              <button type="button" onClick={() => { setMode("signup"); setError(""); }} style={{ background: "none", border: "none", color: C.gold, cursor: "pointer", fontSize: 12, marginRight: 14 }}>
+                Crear cuenta
+              </button>
+              <button type="button" onClick={() => { setMode("reset"); setError(""); setResetSent(false); }} style={{ background: "none", border: "none", color: C.faint, cursor: "pointer", fontSize: 12 }}>
+                Olvidé mi contraseña
+              </button>
+            </>
+          )}
+          {mode !== "login" && (
+            <button type="button" onClick={() => { setMode("login"); setError(""); setResetSent(false); }} style={{ background: "none", border: "none", color: C.gold, cursor: "pointer", fontSize: 12 }}>
+              Volver a iniciar sesión
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Puerta de entrada: mientras se confirma si hay sesión, muestra un loader;
+// si no hay nadie logueado, muestra el login; si hay sesión, recién ahí
+// monta la app completa. Así InvestmentDashboard nunca queda "a medio
+// montar" con datos de nadie logueado.
+export default function AuthGate() {
+  const [authUser, setAuthUser] = useState(undefined); // undefined = cargando, null = sin sesión
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, setAuthUser);
+    return unsub;
+  }, []);
+
+  const hour = new Date().getHours();
+  const C = hour >= 7 && hour < 20 ? LIGHT : DARK;
+
+  if (authUser === undefined) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, color: C.faint, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 13 }}>
+        Cargando...
+      </div>
+    );
+  }
+
+  if (authUser === null) return <LoginView C={C} />;
+
+  return <InvestmentDashboard user={authUser} />;
+}
+
+function InvestmentDashboard({ user }) {
   const [view, setView] = useState("inicio");
   const [jumpSymbol, setJumpSymbol] = useState(null);
   const goToAsset = (symbol) => { setJumpSymbol(symbol); setView("buscar"); };
@@ -1999,7 +2154,7 @@ export default function InvestmentDashboard() {
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
-          {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} />}
+          {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} user={user} />}
         </div>
       </div>
     </div>
@@ -3589,10 +3744,26 @@ function ManualView({ f, C }) {
   );
 }
 
-function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, liveStatus, livePrices }) {
+function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, liveStatus, livePrices, user }) {
+  const [loggingOut, setLoggingOut] = useState(false);
   return (
     <div>
       <SectionTitle C={C} sub="Moneda por defecto, fuente del tipo de cambio y qué cuentas están conectadas.">Configuración</SectionTitle>
+
+      <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>Cuenta</div>
+          <div style={{ fontSize: 12, color: C.faint }}>{user?.email}</div>
+        </div>
+        <button
+          onClick={async () => { setLoggingOut(true); await signOut(auth); }}
+          disabled={loggingOut}
+          style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.loss, fontSize: 12, cursor: loggingOut ? "default" : "pointer", opacity: loggingOut ? 0.6 : 1 }}
+        >
+          <LogOut size={13} />
+          Cerrar sesión
+        </button>
+      </div>
 
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
         <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10 }}>Moneda por defecto</div>
