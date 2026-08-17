@@ -763,6 +763,7 @@ const CATS = [
   { key: "Acciones", color: "#4FA184", icon: Landmark },
   { key: "CEDEARs", color: "#6C8FC7", icon: Globe },
   { key: "Bonos", color: "#C89B3C", icon: FileText },
+  { key: "Obligaciones Negociables", color: "#B3654A", icon: Coins },
   { key: "Fondos", color: "#A87CC8", icon: Layers },
   { key: "Cripto", color: "#E8964F", icon: Bitcoin },
 ];
@@ -830,7 +831,7 @@ function hashSeed(str) {
 // Cualquier ticker que esté en tus tenencias reales pero no esté en el catálogo de
 // arriba se agrega automáticamente, para que "Buscar activo" siempre encuentre lo
 // que tenés en cartera (aunque el gráfico de precio siga siendo simulado).
-const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", Fondos: "Fondos", Cripto: "Cripto" };
+const HOLDINGS_CAT_TO_SEARCH_CAT = { Acciones: "Acciones AR", CEDEARs: "CEDEARs", Bonos: "Bonos", "Obligaciones Negociables": "Obligaciones Negociables", Fondos: "Fondos", Cripto: "Cripto" };
 function computeAutoAssets() {
   return [...new Set(HOLDINGS.map((h) => h.name))]
     .filter((t) => !ASSET_UNIVERSE.some((a) => a.symbol === t))
@@ -3317,6 +3318,8 @@ function mapBalanzCategoria(tipoInstrumento) {
   if (t === "Cedears") return "CEDEARs";
   if (t === "Acciones") return "Acciones";
   if (t === "Bonos") return "Bonos";
+  if (t === "Corporativos") return "Obligaciones Negociables"; // ONs -- ej: DEC2O, IRCPO, LOC6O, etc.
+  if (t === "Fondos") return "Fondos";
   return "Acciones"; // fallback razonable, no debería pasar con el export real
 }
 
@@ -3433,7 +3436,14 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
     const ticker = row["Ticker"] ? String(row["Ticker"]).trim() : null;
 
     if (desc.startsWith("Boleto") && ticker) {
-      const esCompra = /\bCOMPRA\b/.test(desc);
+      // "COMPRA"/"VENTA" son operaciones de mercado secundario. Pero las ONs
+      // (y a veces bonos) también se consiguen por suscripción primaria --
+      // Balanz anota esas como "Licitación MAE" o, en un caso puntual visto,
+      // "CSBNG". Ambas mueven plata real (Importe negativo) y suman nominales
+      // reales, así que cuentan como compra igual que una "COMPRA" común.
+      // Sin esto, esas filas caían calladitas en "ignoradas" y la tenencia
+      // real de la ON quedaba en 0.
+      const esCompra = /\bCOMPRA\b|Licitaci[oó]n MAE|\bCSBNG\b/.test(desc);
       const esVenta = /\bVENTA\b/.test(desc);
       const precio = Number(row["Precio"]);
       // Cuando la operación es en moneda extranjera, Balanz exporta cada
@@ -4160,10 +4170,10 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
     };
   }, [historyCache, livePrices, cryptoUsd, fx]);
 
-  const CATEGORIES = ["Acciones", "CEDEARs", "Bonos", "Fondos", "Cripto"];
+  const CATEGORIES = ["Acciones", "CEDEARs", "Bonos", "Obligaciones Negociables", "Fondos", "Cripto"];
 
   const valuesAtDate = (date) => {
-    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, Cripto: 0, total: 0 };
+    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, "Obligaciones Negociables": 0, Fondos: 0, Cripto: 0, total: 0 };
     for (const ticker of allTickers) {
       const qty = qtyAtDate(ticker, date);
       if (!qty) continue;
@@ -4176,7 +4186,7 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
   };
 
   const contributionsBetween = (from, to) => {
-    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, Fondos: 0, Cripto: 0, total: 0 };
+    const out = { Acciones: 0, CEDEARs: 0, Bonos: 0, "Obligaciones Negociables": 0, Fondos: 0, Cripto: 0, total: 0 };
     for (const m of MOVIMIENTOS) {
       if (m.tipo !== "Compra" && m.tipo !== "Venta") continue;
       if (brokerFilter !== "Todas" && m.broker !== brokerFilter) continue;
@@ -4192,7 +4202,7 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
   // Detalle de movimientos por categoría en el período, para el desplegable
   // que se abre al tocar la columna "Compras/ventas" de cada fila.
   const movementsBetween = (from, to) => {
-    const out = { Acciones: [], CEDEARs: [], Bonos: [], Fondos: [], Cripto: [] };
+    const out = { Acciones: [], CEDEARs: [], Bonos: [], "Obligaciones Negociables": [], Fondos: [], Cripto: [] };
     for (const m of MOVIMIENTOS) {
       if (m.tipo !== "Compra" && m.tipo !== "Venta") continue;
       if (brokerFilter !== "Todas" && m.broker !== brokerFilter) continue;
