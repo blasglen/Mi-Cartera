@@ -55,6 +55,11 @@ const CRYPTO_TICKERS = [
 
 const TICKERS = [...HOLDINGS_TICKERS, ...EXTRA_TICKERS, ...CRYPTO_TICKERS];
 
+// Obligaciones negociables (ONs) -- no están en los paneles de data912 (eso
+// solo trae acciones/CEDEARs/bonos soberanos), así que van directo por la API
+// de IOL, igual que CONIOLA/ADCGLOA/IOLDOLD/PRPEDOB/PLC2O más abajo.
+const ON_TICKERS = ["DEC2O", "IRCPO", "LOC6O", "MIC6O", "PLC3O", "PQCSO", "YM34O", "YM42O", "ZZC1O"];
+
 const TYPE_MAP = { Acciones: "stocks", CEDEARs: "usa_stocks", Bonos: "bonds" };
 // El CEDEAR se llama distinto al ticker real de EE.UU. en algunos casos puntuales.
 const US_TICKER_ALIAS = { DISN: "DIS" };
@@ -513,9 +518,9 @@ async function main() {
     else console.log("sin datos");
     await sleep(1000);
   }
-  console.log(`Histórico conseguido para ${ok} de ${TICKERS.length} tickers.`);
+  console.log(`Histórico conseguido para ${ok} de ${TICKERS.length} tickers (más las ONs, que se cuentan aparte más abajo).`);
 
-  console.log("Buscando activos de IOL sin otra fuente (CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O)...");
+  console.log("Buscando activos de IOL sin otra fuente (CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O, ONs)...");
   const iolToken = await fetchIolToken();
   const coniolaReal = await fetchFromIol(iolToken, "CONIOLA");
   if (coniolaReal) {
@@ -533,14 +538,20 @@ async function main() {
     }
   }
 
-  // Estos 4 no tienen un fondo/índice de respaldo como CONIOLA -- si IOL no
-  // los tiene, quedan directamente en "sin datos" (fallback plano en la app).
+  // Estos no tienen un fondo/índice de respaldo como CONIOLA -- si IOL no los
+  // tiene, quedan directamente en "sin datos" (fallback plano en la app).
   // PLC2O es un BONO, no un fondo -- vía el mismo endpoint de IOL, los bonos
   // cotizan cada 100 de nominal (misma convención que AL30/GD35/GD38/GD41 en
-  // data912), así que necesita la misma corrección /100. Los otros 3 son
-  // fondos comunes (cuotaparte directa), no la necesitan.
+  // data912), así que necesita la misma corrección /100. ADCGLOA/IOLDOLD/
+  // PRPEDOB son fondos comunes (cuotaparte directa), no la necesitan.
+  // Las ONs (DEC2O, IRCPO, etc.) cotizan en u$s ~1,03-1,11 según la captura
+  // del usuario -- ya son precio por unidad de nominal, NO cada 100, así que
+  // tampoco llevan la corrección /100. Ojo: esto es una suposición a partir
+  // de un solo pantallazo -- si algún día alguna de estas ONs aparece en
+  // history.json con un valor ~100x mayor o menor de lo esperado, hay que
+  // sumarla acá a IOL_PER_100_NOMINAL (o sacarla si la lista está mal).
   const IOL_PER_100_NOMINAL = new Set(["PLC2O"]);
-  for (const ticker of ["ADCGLOA", "IOLDOLD", "PRPEDOB", "PLC2O"]) {
+  for (const ticker of ["ADCGLOA", "IOLDOLD", "PRPEDOB", "PLC2O", ...ON_TICKERS]) {
     const series = await fetchFromIol(iolToken, ticker);
     if (series) {
       const fxAdjust = IOL_PER_100_NOMINAL.has(ticker) ? (p) => p / 100 : (p) => p;
