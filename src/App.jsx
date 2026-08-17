@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import {
   AreaChart,
   Area,
@@ -3746,9 +3747,47 @@ function ManualView({ f, C }) {
 
 function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, liveStatus, livePrices, user }) {
   const [loggingOut, setLoggingOut] = useState(false);
+  const [seedStatus, setSeedStatus] = useState("idle"); // idle | cargando | ok | error
+  const [seedError, setSeedError] = useState("");
+
+  // Botón temporal, solo para la carga inicial de tus datos reales a
+  // Firestore -- chequea tu UID puntual para que no le aparezca a nadie
+  // más que se registre después. Se puede borrar una vez usado.
+  const isOwner = user?.uid === "hgKMkrqta4RIy0sSCAGSDbDUCzX2";
+
+  const cargarDatosIniciales = async () => {
+    setSeedStatus("cargando");
+    setSeedError("");
+    try {
+      await setDoc(doc(db, "users", user.uid), { holdings: HOLDINGS, movimientos: MOVIMIENTOS });
+      setSeedStatus("ok");
+    } catch (err) {
+      setSeedStatus("error");
+      setSeedError(err.message || "Error desconocido");
+    }
+  };
+
   return (
     <div>
       <SectionTitle C={C} sub="Moneda por defecto, fuente del tipo de cambio y qué cuentas están conectadas.">Configuración</SectionTitle>
+
+      {isOwner && (
+        <div style={{ background: C.surface, border: `1px solid ${C.gold}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Carga inicial a Firestore (temporal)</div>
+          <div style={{ fontSize: 12, color: C.faint, marginBottom: 12 }}>
+            Empuja tus {HOLDINGS.length} tenencias y {MOVIMIENTOS.length} movimientos actuales a tu documento en Firestore. Solo hace falta usarlo una vez.
+          </div>
+          <button
+            onClick={cargarDatosIniciales}
+            disabled={seedStatus === "cargando"}
+            style={{ padding: "8px 16px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 12, cursor: seedStatus === "cargando" ? "default" : "pointer", opacity: seedStatus === "cargando" ? 0.6 : 1 }}
+          >
+            {seedStatus === "cargando" ? "Cargando..." : seedStatus === "ok" ? "Listo ✓ -- volver a cargar" : "Cargar mis datos"}
+          </button>
+          {seedStatus === "ok" && <div style={{ fontSize: 12, color: C.gain, marginTop: 10 }}>Se guardaron correctamente en Firestore.</div>}
+          {seedStatus === "error" && <div style={{ fontSize: 12, color: C.loss, marginTop: 10 }}>Error: {seedError}</div>}
+        </div>
+      )}
 
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
