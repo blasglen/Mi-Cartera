@@ -3677,6 +3677,7 @@ function ImportarView({ C, user, fx }) {
   const [status, setStatus] = useState("idle"); // idle | parsing | preview | guardando | listo | error
   const [preview, setPreview] = useState(null); // { fileName, cargables, ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm }
   const [bondAnswers, setBondAnswers] = useState({}); // { [ticker]: {type:'keep'|'exclude'|'custom', qty?} | null }
+  const [ppcCorrections, setPpcCorrections] = useState({}); // { [ticker]: "6.15" } -- PPC real en USD, tipeado a mano, opcional
   const [errorMsg, setErrorMsg] = useState("");
   const [importaciones, setImportaciones] = useState(null); // null = cargando, [] = sin historial todavía
   const [borrandoId, setBorrandoId] = useState(null);
@@ -3845,7 +3846,19 @@ function ImportarView({ C, user, fx }) {
           if (answer.type === "custom") return { ...h, qty: answer.qty, avgCost: h.avgCost };
           return h;
         })
-        .filter(Boolean);
+        .filter(Boolean)
+        .map((h) => {
+          // Corrección manual de PPC (en dólares) -- si la persona escribió
+          // el PPC real que ve en su broker, lo usamos en vez del calculado.
+          // No tocamos "avgCost" (el costo real en pesos que sí sabemos
+          // bien) -- solo el "avgCostUsd" que se usa para mostrar el PPC en
+          // modo dólares.
+          const correccion = ppcCorrections[h.name];
+          if (correccion === undefined || correccion === "") return h;
+          const valor = Number(correccion);
+          if (!Number.isFinite(valor) || valor <= 0) return h;
+          return { ...h, avgCostUsd: valor };
+        });
 
       const holdingsOtrosBrokers = preview.prevHoldings.filter((h) => h.broker !== preview.nombreCartera);
       const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanzFinal];
@@ -3888,6 +3901,7 @@ function ImportarView({ C, user, fx }) {
     setStatus("idle");
     setPreview(null);
     setBondAnswers({});
+    setPpcCorrections({});
     setErrorMsg("");
   };
 
@@ -4088,6 +4102,36 @@ function ImportarView({ C, user, fx }) {
                   </div>
                 );
               })}
+            </div>
+          )}
+
+          {preview.holdingsBalanz.length > 0 && (
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>¿El PPC no coincide con lo que ves en Balanz? (opcional)</div>
+              <div style={{ fontSize: 12, color: C.faint, marginBottom: 14 }}>
+                Nuestro cálculo puede diferir un poco del que muestra Balanz (por amortizaciones u otros ajustes internos que no podemos replicar). Si querés que coincida exacto, mirá la pantalla principal de tu cartera en Balanz y escribí acá el PPC real en dólares para cualquier activo -- dejalo vacío si no hace falta corregirlo.
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: "8px 14px", alignItems: "center" }}>
+                <div style={{ fontSize: 11, color: C.faint, fontWeight: 600 }}>Activo</div>
+                <div style={{ fontSize: 11, color: C.faint, fontWeight: 600, textAlign: "right" }}>Nuestro PPC</div>
+                <div style={{ fontSize: 11, color: C.faint, fontWeight: 600, textAlign: "right" }}>PPC real (u$s)</div>
+                {preview.holdingsBalanz.map((h) => (
+                  <React.Fragment key={h.name}>
+                    <div style={{ fontSize: 13, fontWeight: 500 }}>{h.name}</div>
+                    <div className="tabular" style={{ fontSize: 12, color: C.faint, textAlign: "right" }}>
+                      {h.avgCostUsd != null ? `US$${h.avgCostUsd.toFixed(2)}` : "—"}
+                    </div>
+                    <input
+                      type="number"
+                      step="0.01"
+                      placeholder={h.avgCostUsd != null ? h.avgCostUsd.toFixed(2) : "—"}
+                      value={ppcCorrections[h.name] ?? ""}
+                      onChange={(e) => setPpcCorrections((prev) => ({ ...prev, [h.name]: e.target.value }))}
+                      style={{ width: 90, padding: "5px 8px", borderRadius: 6, border: `1px solid ${ppcCorrections[h.name] ? C.gold : C.border}`, background: C.bg, color: C.text, fontSize: 12, textAlign: "right", justifySelf: "end" }}
+                    />
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           )}
 
