@@ -2219,9 +2219,15 @@ function InvestmentDashboard({ user }) {
                       {consolidateByName(filteredHoldings)
                         .map((h) => {
                           const value = h.qty * h.price;
-                          const cost = h.qty * h.avgCost;
-                          const p = pct(value, cost);
-                          return { ...h, value, cost, p };
+                          // Si tenemos el costo en dólares REALES de cada fecha de
+                          // compra (avgCostUsd -- lo calculamos al importar de
+                          // Balanz), lo usamos en modo USD en vez de "pesos ÷ dólar
+                          // de HOY", que da un PPC y un % de ganancia distintos a
+                          // los que muestra el broker si compraste hace tiempo.
+                          const usaCostoUsdReal = currency === "USD" && h.avgCostUsd != null;
+                          const cost = usaCostoUsdReal ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
+                          const p = usaCostoUsdReal ? pct(value / fx, h.avgCostUsd * h.qty) : pct(value, cost);
+                          return { ...h, value, cost, p, usaCostoUsdReal };
                         })
                         .sort((a, b) => {
                           const { key, dir } = tenenciasSort;
@@ -2244,7 +2250,9 @@ function InvestmentDashboard({ user }) {
                               <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.avgCost)}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }} title={h.usaCostoUsdReal ? "Costo en dólares reales de cada fecha de compra" : ""}>
+                                {h.usaCostoUsdReal ? f(h.avgCostUsd * fx) : f(h.avgCost)}
+                              </td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
                                   {enVivo && <span style={{ width: 5, height: 5, borderRadius: 999, background: C.gain, display: "inline-block" }} />}
@@ -3411,6 +3419,7 @@ function aplicarSplitsConocidos(cargables, plataforma, cuenta) {
       tipo: "Split",
       cantidad: qty * split.ratioExtra,
       precio: 0,
+      precioUsd: 0,
       broker: cuenta,
       cat: cargables.find((m) => m.activo === split.ticker)?.cat || "CEDEARs",
     });
@@ -3472,7 +3481,12 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
       if ((esCompra || esVenta) && fecha && precio !== -1) {
         const moneda = String(row["Moneda"] ?? "").trim();
         const esDolares = moneda !== "" && moneda !== "Pesos";
-        if (esDolares) fechasNecesarias.add(fecha);
+        // Necesitamos el dólar histórico de TODAS las fechas con operaciones
+        // (no solo las que vienen en dólares) -- para poder calcular, de
+        // yapa, cuánto costó cada compra en dólares REALES de ese momento
+        // (el dólar del día que compraste, no el de hoy). Es lo que
+        // Balanz muestra como "PPC" en su propia pantalla.
+        fechasNecesarias.add(fecha);
         const cantidadAbs = Math.abs(Number(row["Cantidad"]) || 0);
         // "Precio" en el archivo de Balanz viene SIN comisiones (arancel +
         // costos de mercado) -- "Importe" sí las incluye, y es la plata real
@@ -3504,6 +3518,7 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
         tipo: "Split",
         cantidad: Number(row["Cantidad"]) || 0,
         precio: 0,
+        precioUsd: 0,
         broker,
         cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
       });
@@ -3527,15 +3542,23 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
 
   // Segunda pasada: aplica el dólar de cada fecha -- si no se consiguió (la
   // API falló, o ninguno de los 5 días previos tuvo rueda), cae al dólar de
-  // hoy como respaldo, mejor que dejar el precio en dólares crudo.
+  // hoy como respaldo, mejor que dejar el precio en dólares crudo. De yapa,
+  // calcula "precioUsd" -- el precio real en dólares de ESE día (exacto si
+  // la operación ya venía en dólares, o pesos ÷ dólar de esa fecha si venía
+  // en pesos). Esto es lo que después se usa para armar un PPC en dólares
+  // que coincida con lo que muestra el broker, en vez de "pesos ÷ dólar de
+  // HOY" (que da un número distinto y confunde si compraste hace tiempo).
   for (const m of crudo) {
-    const precioFinal = m.esDolares ? m.precioOriginal * (fxPorFecha[m.fecha] || fxHoy) : m.precioOriginal;
+    const fxDeEseDia = fxPorFecha[m.fecha] || fxHoy;
+    const precioFinal = m.esDolares ? m.precioOriginal * fxDeEseDia : m.precioOriginal;
+    const precioUsd = m.esDolares ? m.precioOriginal : m.precioOriginal / fxDeEseDia;
     cargables.push({
       fecha: m.fecha,
       activo: m.activo,
       tipo: m.tipo,
       cantidad: m.cantidad,
       precio: precioFinal,
+      precioUsd,
       broker: m.broker,
       cat: m.cat,
     });
@@ -3560,14 +3583,19 @@ function recomputeHoldingsForBroker(allMovimientos, broker, prevHoldings, catByT
   for (const ticker of tickers) {
     const tickerTrades = trades.filter((m) => m.activo === ticker).sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
     let qty = 0, cost = 0;
+    let costUsd = 0; // costo promedio ponderado en dólares REALES de cada fecha de compra (no el dólar de hoy)
+    const tieneUsd = tickerTrades.some((t) => t.precioUsd != null);
     for (const t of tickerTrades) {
       if (t.tipo === "Compra" || t.tipo === "Split") {
         qty += t.cantidad;
         cost += t.cantidad * t.precio;
+        if (tieneUsd) costUsd += t.cantidad * (t.precioUsd || 0);
       } else if (qty > 0) {
         const avgCostPerUnit = cost / qty;
+        const avgCostUsdPerUnit = tieneUsd ? costUsd / qty : 0;
         const soldQty = Math.min(t.cantidad, qty);
         cost -= soldQty * avgCostPerUnit;
+        if (tieneUsd) costUsd -= soldQty * avgCostUsdPerUnit;
         qty -= soldQty;
       }
     }
@@ -3578,6 +3606,7 @@ function recomputeHoldingsForBroker(allMovimientos, broker, prevHoldings, catByT
       cat: prev?.cat || catByTicker[ticker] || "Acciones",
       qty,
       avgCost: cost / qty,
+      ...(tieneUsd ? { avgCostUsd: costUsd / qty } : {}),
       price: prev?.price ?? cost / qty, // sin precio en vivo todavía, usamos el costo como estimado inicial
       broker,
       manual: false,
