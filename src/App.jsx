@@ -1720,6 +1720,7 @@ function InvestmentDashboard({ user }) {
   });
   const totalValueTenencias = tenenciasEnriquecidas.reduce((s, h) => s + h.value, 0);
   const totalCostTenencias = tenenciasEnriquecidas.reduce((s, h) => s + h.cost, 0);
+  const gananciaAbsTenencias = totalValueTenencias - totalCostTenencias;
   const totalPTenencias = pct(totalValueTenencias, totalCostTenencias);
 
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
@@ -2289,8 +2290,9 @@ function InvestmentDashboard({ user }) {
                         <td></td>
                         <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(totalValueTenencias)}</td>
                         <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(totalCostTenencias)}</td>
-                        <td></td>
-                        <td></td>
+                        <td className="tabular" colSpan={2} style={{ padding: "10px 12px", textAlign: "center", color: gananciaAbsTenencias >= 0 ? C.gain : C.loss }}>
+                          {gananciaAbsTenencias >= 0 ? "+" : "-"}{f(Math.abs(gananciaAbsTenencias))}
+                        </td>
                         <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: totalPTenencias >= 0 ? C.gain : C.loss }}>
                           {totalPTenencias >= 0 ? "+" : ""}{totalPTenencias.toFixed(1)}%
                         </td>
