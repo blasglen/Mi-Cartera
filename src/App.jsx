@@ -2204,8 +2204,9 @@ function InvestmentDashboard({ user }) {
                       <tr style={{ color: C.faint, textAlign: "left" }}>
                         {[
                           { key: "name", label: "Activo", align: "left", pad: "10px 18px" },
-                          { key: "value", label: "Valor actual", align: "right", pad: "10px 12px" },
                           { key: "qty", label: "Cantidad", align: "right", pad: "10px 12px" },
+                          { key: "value", label: "Valor actual", align: "right", pad: "10px 12px" },
+                          { key: "cost", label: "Valor inicial", align: "right", pad: "10px 12px" },
                           { key: "avgCost", label: "PPC", align: "right", pad: "10px 12px" },
                           { key: "price", label: "Precio", align: "right", pad: "10px 12px" },
                           { key: "pl", label: "P&L", align: "right", pad: "10px 18px" },
@@ -2258,8 +2259,9 @@ function InvestmentDashboard({ user }) {
                               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                             >
                               <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.cost)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }} title={h.usaCostoUsdReal ? "Costo en dólares reales de cada fecha de compra" : ""}>
                                 {h.usaCostoUsdReal ? f(h.avgCostUsd * fx) : f(h.avgCost)}
                               </td>
@@ -3471,6 +3473,12 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
     const desc = String(row["Descripcion"] ?? "").trim();
     if (!desc) continue;
     const fecha = normalizeFecha(row["Concertacion"]);
+    // Para buscar el dólar histórico usamos la fecha de LIQUIDACIÓN, no de
+    // concertación -- es más cercana a cuándo se movió la plata de verdad
+    // (la concertación es cuando pactás la operación, la liquidación es
+    // cuando se hace efectiva, unos días después). El movimiento en sí
+    // sigue guardándose con la fecha de concertación, como corresponde.
+    const fechaLiquidacion = normalizeFecha(row["Liquidacion"]) || fecha;
     const ticker = row["Ticker"] ? String(row["Ticker"]).trim() : null;
 
     if (desc.startsWith("Boleto") && ticker) {
@@ -3496,7 +3504,7 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
         // yapa, cuánto costó cada compra en dólares REALES de ese momento
         // (el dólar del día que compraste, no el de hoy). Es lo que
         // Balanz muestra como "PPC" en su propia pantalla.
-        fechasNecesarias.add(fecha);
+        fechasNecesarias.add(fechaLiquidacion);
         const cantidadAbs = Math.abs(Number(row["Cantidad"]) || 0);
         // "Precio" en el archivo de Balanz viene SIN comisiones (arancel +
         // costos de mercado) -- "Importe" sí las incluye, y es la plata real
@@ -3514,6 +3522,7 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
           cantidad: cantidadAbs,
           precioOriginal: precioConComision,
           esDolares,
+          fechaLiquidacion,
           broker,
           cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
         });
@@ -3559,7 +3568,7 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
   // que coincida con lo que muestra el broker, en vez de "pesos ÷ dólar de
   // HOY" (que da un número distinto y confunde si compraste hace tiempo).
   for (const m of crudo) {
-    const fxDeEseDia = fxPorFecha[m.fecha] || fxHoy;
+    const fxDeEseDia = fxPorFecha[m.fechaLiquidacion] || fxHoy;
     const precioFinal = m.esDolares ? m.precioOriginal * fxDeEseDia : m.precioOriginal;
     const precioUsd = m.esDolares ? m.precioOriginal : m.precioOriginal / fxDeEseDia;
     cargables.push({
