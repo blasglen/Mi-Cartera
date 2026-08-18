@@ -1707,6 +1707,20 @@ function InvestmentDashboard({ user }) {
     [holdingsLive, brokerFilter]
   );
   const filteredHoldings = catFilter === "Todas" ? byBroker : byBroker.filter((h) => h.cat === catFilter);
+  const tenenciasEnriquecidas = consolidateByName(filteredHoldings).map((h) => {
+    const value = h.qty * h.price;
+    // Si tenemos el costo en dólares REALES de cada fecha de compra
+    // (avgCostUsd -- lo calculamos al importar de Balanz), lo usamos en modo
+    // USD en vez de "pesos ÷ dólar de HOY", que da un PPC y un % de ganancia
+    // distintos a los que muestra el broker si compraste hace tiempo.
+    const usaCostoUsdReal = currency === "USD" && h.avgCostUsd != null;
+    const cost = usaCostoUsdReal ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
+    const p = usaCostoUsdReal ? pct(value / fx, h.avgCostUsd * h.qty) : pct(value, cost);
+    return { ...h, value, cost, p, usaCostoUsdReal };
+  });
+  const totalValueTenencias = tenenciasEnriquecidas.reduce((s, h) => s + h.value, 0);
+  const totalCostTenencias = tenenciasEnriquecidas.reduce((s, h) => s + h.cost, 0);
+  const totalPTenencias = pct(totalValueTenencias, totalCostTenencias);
 
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
@@ -2227,19 +2241,7 @@ function InvestmentDashboard({ user }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {consolidateByName(filteredHoldings)
-                        .map((h) => {
-                          const value = h.qty * h.price;
-                          // Si tenemos el costo en dólares REALES de cada fecha de
-                          // compra (avgCostUsd -- lo calculamos al importar de
-                          // Balanz), lo usamos en modo USD en vez de "pesos ÷ dólar
-                          // de HOY", que da un PPC y un % de ganancia distintos a
-                          // los que muestra el broker si compraste hace tiempo.
-                          const usaCostoUsdReal = currency === "USD" && h.avgCostUsd != null;
-                          const cost = usaCostoUsdReal ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
-                          const p = usaCostoUsdReal ? pct(value / fx, h.avgCostUsd * h.qty) : pct(value, cost);
-                          return { ...h, value, cost, p, usaCostoUsdReal };
-                        })
+                      {tenenciasEnriquecidas
                         .sort((a, b) => {
                           const { key, dir } = tenenciasSort;
                           if (key === "name") return dir * a.name.localeCompare(b.name);
@@ -2281,6 +2283,19 @@ function InvestmentDashboard({ user }) {
                           );
                         })}
                     </tbody>
+                    <tfoot>
+                      <tr style={{ borderTop: `2px solid ${C.border}`, fontWeight: 600 }}>
+                        <td style={{ padding: "10px 18px" }}>Total{catFilter !== "Todas" ? ` · ${catFilter}` : ""}</td>
+                        <td></td>
+                        <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(totalValueTenencias)}</td>
+                        <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(totalCostTenencias)}</td>
+                        <td></td>
+                        <td></td>
+                        <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: totalPTenencias >= 0 ? C.gain : C.loss }}>
+                          {totalPTenencias >= 0 ? "+" : ""}{totalPTenencias.toFixed(1)}%
+                        </td>
+                      </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>
