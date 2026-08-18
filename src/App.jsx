@@ -3461,6 +3461,23 @@ async function fetchHistoricalMep(fechaISO) {
   return null; // no se pudo conseguir en 5 intentos -- el llamador decide el respaldo
 }
 
+// Lee el export de "Mis Instrumentos" de Balanz (Cartera -> Exportar a
+// Excel, con el toggle en USD activado) -- trae el PPC REAL que calcula
+// Balanz por ticker, columna "Precio promedio de compra". Como el export se
+// hace con la pantalla en modo dólares, ese número ya viene en USD para
+// cualquier instrumento, sin importar su moneda nativa (columna "Moneda").
+function parseBalanzInstrumentos(rows) {
+  const porTicker = {};
+  for (const row of rows) {
+    const ticker = row["Ticker"] ? String(row["Ticker"]).trim() : null;
+    const ppc = Number(row["Precio promedio de compra"]);
+    if (ticker && Number.isFinite(ppc) && ppc > 0) {
+      porTicker[ticker] = ppc;
+    }
+  }
+  return porTicker;
+}
+
 async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
   const cargables = [];
   const ignoradas = {}; // { "Dividendo en efectivo": count, ... }
@@ -3678,6 +3695,50 @@ function ImportarView({ C, user, fx }) {
   const [preview, setPreview] = useState(null); // { fileName, cargables, ignoradas, prevMovimientos, prevHoldings, movimientosFinal, holdingsBalanz, bondsToConfirm }
   const [bondAnswers, setBondAnswers] = useState({}); // { [ticker]: {type:'keep'|'exclude'|'custom', qty?} | null }
   const [ppcCorrections, setPpcCorrections] = useState({}); // { [ticker]: "6.15" } -- PPC real en USD, tipeado a mano, opcional
+  const [cargandoInstrumentos, setCargandoInstrumentos] = useState(false);
+  const [instrumentosMsg, setInstrumentosMsg] = useState("");
+
+  const handleInstrumentosFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCargandoInstrumentos(true);
+    setInstrumentosMsg("");
+    try {
+      const { default: ExcelJS } = await import("exceljs");
+      const buf = await file.arrayBuffer();
+      const wb = new ExcelJS.Workbook();
+      await wb.xlsx.load(buf);
+      const sheet = wb.worksheets.find((s) => s.name.toLowerCase().includes("instrumento")) || wb.worksheets[0];
+      const headerRow = sheet.getRow(1).values;
+      const headers = headerRow.slice(1).map((h) => String(h ?? "").trim());
+      const rows = [];
+      sheet.eachRow((row, rowNumber) => {
+        if (rowNumber === 1) return;
+        const obj = {};
+        row.values.slice(1).forEach((val, i) => {
+          obj[headers[i]] = val && typeof val === "object" && "result" in val ? val.result : val;
+        });
+        rows.push(obj);
+      });
+      const porTicker = parseBalanzInstrumentos(rows);
+      const encontrados = preview.holdingsBalanz.filter((h) => porTicker[h.name] != null);
+      if (encontrados.length === 0) {
+        setInstrumentosMsg("No encontramos ninguno de tus activos en ese archivo -- ¿es el export correcto, con el toggle en USD activado?");
+      } else {
+        setPpcCorrections((prev) => {
+          const next = { ...prev };
+          for (const h of encontrados) next[h.name] = porTicker[h.name].toFixed(4);
+          return next;
+        });
+        setInstrumentosMsg(`Completado automático para ${encontrados.length} de ${preview.holdingsBalanz.length} activos.`);
+      }
+    } catch (err) {
+      setInstrumentosMsg("No pudimos leer ese archivo: " + (err.message || "error desconocido"));
+    } finally {
+      setCargandoInstrumentos(false);
+      e.target.value = ""; // permite volver a elegir el mismo archivo si hace falta
+    }
+  };
   const [errorMsg, setErrorMsg] = useState("");
   const [importaciones, setImportaciones] = useState(null); // null = cargando, [] = sin historial todavía
   const [borrandoId, setBorrandoId] = useState(null);
@@ -4108,8 +4169,32 @@ function ImportarView({ C, user, fx }) {
           {preview.holdingsBalanz.length > 0 && (
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
               <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>¿El PPC no coincide con lo que ves en Balanz? (opcional)</div>
-              <div style={{ fontSize: 12, color: C.faint, marginBottom: 14 }}>
-                Nuestro cálculo puede diferir un poco del que muestra Balanz (por amortizaciones u otros ajustes internos que no podemos replicar). Si querés que coincida exacto, mirá la pantalla principal de tu cartera en Balanz y escribí acá el PPC real en dólares para cualquier activo -- dejalo vacío si no hace falta corregirlo.
+              <div style={{ fontSize: 12, color: C.faint, marginBottom: 10 }}>
+                Nuestro cálculo puede diferir un poco del que muestra Balanz (por amortizaciones u otros ajustes internos que no podemos replicar).
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("instrumentos-file-input").click()}
+                  disabled={cargandoInstrumentos}
+                  style={{ padding: "7px 14px", borderRadius: 8, border: `1px solid ${C.gold}`, background: "transparent", color: C.gold, fontSize: 12, cursor: cargandoInstrumentos ? "default" : "pointer" }}
+                >
+                  {cargandoInstrumentos ? "Leyendo..." : "Completar automático desde \"Mis Instrumentos\""}
+                </button>
+                <input
+                  id="instrumentos-file-input"
+                  type="file"
+                  accept=".xlsx,.xls"
+                  style={{ display: "none" }}
+                  onChange={handleInstrumentosFile}
+                />
+                <span style={{ fontSize: 11, color: C.faint }}>
+                  En Balanz: Cartera → Mis Instrumentos → activá el toggle USD → "Exportar a Excel"
+                </span>
+              </div>
+              {instrumentosMsg && <div style={{ fontSize: 12, color: C.gain, marginBottom: 10 }}>{instrumentosMsg}</div>}
+              <div style={{ fontSize: 11, color: C.faint, marginBottom: 10 }}>
+                También podés escribir el PPC real a mano para cualquier activo puntual -- dejalo vacío si no hace falta corregirlo.
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: "8px 14px", alignItems: "center" }}>
                 <div style={{ fontSize: 11, color: C.faint, fontWeight: 600 }}>Activo</div>
