@@ -1145,12 +1145,19 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
   // al precio fijo viejo, usamos el último punto real del histórico
   // cacheado (se actualiza todos los días vía el cron), que es mucho más
   // reciente que lo que haya quedado hardcodeado al cargar la tenencia.
-  const hist = historyCache?.[holding.name];
-  if (hist && hist.length > 0) {
-    const ultimo = hist[hist.length - 1];
-    if (ultimo?.price > 0) return ultimo.price;
+  // OJO: esto NO vale para CEDEARs -- su histórico se guarda en dólares
+  // crudos de la acción real en EEUU, no en el precio del CEDEAR en pesos
+  // (necesita un reescalado que depende de tener un precio en vivo de
+  // referencia, que es justo lo que no tenemos acá). Sin ese reescalado,
+  // usar el crudo directo da un precio ~1500 veces más chico.
+  if (holding.cat !== "CEDEARs") {
+    const hist = historyCache?.[holding.name];
+    if (hist && hist.length > 0) {
+      const ultimo = hist[hist.length - 1];
+      if (ultimo?.price > 0) return ultimo.price;
+    }
   }
-  return holding.price; // ni en vivo ni histórico -- se mantiene el estimado
+  return holding.price; // ni en vivo ni histórico usable -- se mantiene el estimado
 }
 
 // --- Reconstrucción de histórico real de la cartera --------------------
