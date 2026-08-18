@@ -1130,15 +1130,27 @@ async function fetchAssetHistory(type, ticker, cat) {
 // está guardado en pesos por unidad. Confirmado con datos reales del usuario
 // (Balanz: GD38 a u$s0,8466/unidad; data912: "GD38" sin sufijo = ARS 1293,60,
 // cada 100 nominal) -- ya está en pesos, solo falta dividir por 100.
-function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd) {
+function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
   if (holding.cat === "Cripto") {
     const usd = cryptoUsd?.[holding.name];
     return usd != null ? usd * fx : holding.price; // sin dato en vivo, se mantiene el estimado
   }
   const raw = livePrices[holding.name];
-  if (raw == null) return holding.price; // sin dato en vivo, se mantiene el estimado
-  if (holding.cat === "Bonos" || holding.cat === "Obligaciones Negociables") return raw / 100;
-  return raw;
+  if (raw != null) {
+    if (holding.cat === "Bonos" || holding.cat === "Obligaciones Negociables") return raw / 100;
+    return raw;
+  }
+  // Sin dato en vivo de data912 (pasa con todo lo que viene solo por IOL:
+  // CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O, las ONs) -- antes de rendirse
+  // al precio fijo viejo, usamos el último punto real del histórico
+  // cacheado (se actualiza todos los días vía el cron), que es mucho más
+  // reciente que lo que haya quedado hardcodeado al cargar la tenencia.
+  const hist = historyCache?.[holding.name];
+  if (hist && hist.length > 0) {
+    const ultimo = hist[hist.length - 1];
+    if (ultimo?.price > 0) return ultimo.price;
+  }
+  return holding.price; // ni en vivo ni histórico -- se mantiene el estimado
 }
 
 // --- Reconstrucción de histórico real de la cartera --------------------
@@ -1671,7 +1683,7 @@ function InvestmentDashboard({ user }) {
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
-  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd) })), [livePrices, fx, cryptoUsd]);
+  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
@@ -2388,7 +2400,7 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
   const coupons = COUPON_SCHEDULE[selected.symbol] || [];
   const events = CORPORATE_EVENTS[selected.symbol] || [];
   const held = consolidateByName(HOLDINGS.filter((h) => h.name === selected.symbol))[0];
-  if (held) held.price = liveAdjustedPrice(held, livePrices, fx, cryptoUsd);
+  if (held) held.price = liveAdjustedPrice(held, livePrices, fx, cryptoUsd, historyCache);
   const heldQty = held?.qty || 0;
   const symbolTrades = MOVIMIENTOS.filter((m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta")).sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   const today = SERIES[SERIES.length - 1].date;
