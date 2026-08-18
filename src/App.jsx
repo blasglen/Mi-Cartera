@@ -1358,13 +1358,23 @@ function consolidateByName(holdings) {
   const map = new Map();
   for (const h of holdings) {
     if (!map.has(h.name)) {
-      map.set(h.name, { name: h.name, cat: h.cat, qty: 0, costSum: 0, price: h.price });
+      map.set(h.name, { name: h.name, cat: h.cat, qty: 0, costSum: 0, costUsdSum: 0, tieneUsd: true, price: h.price });
     }
     const e = map.get(h.name);
     e.qty += h.qty;
     e.costSum += h.qty * h.avgCost;
+    // Solo podemos dar un costo en dólares históricos consolidado si TODAS
+    // las tenencias que se están juntando lo tienen -- si falta en alguna
+    // (ej: una cargada a mano sin este dato), mejor no mostrar un número a
+    // medias, mezclado con "pesos ÷ dólar de hoy" de otra.
+    if (h.avgCostUsd != null) e.costUsdSum += h.qty * h.avgCostUsd;
+    else e.tieneUsd = false;
   }
-  return [...map.values()].map((e) => ({ ...e, avgCost: e.costSum / e.qty }));
+  return [...map.values()].map((e) => ({
+    ...e,
+    avgCost: e.costSum / e.qty,
+    ...(e.tieneUsd ? { avgCostUsd: e.costUsdSum / e.qty } : {}),
+  }));
 }
 
 function closestPoint(dateStr) {
