@@ -3466,14 +3466,22 @@ async function parseBalanzMovimientos(rows, broker = "Balanz", fxHoy = 1) {
         const moneda = String(row["Moneda"] ?? "").trim();
         const esDolares = moneda !== "" && moneda !== "Pesos";
         if (esDolares) fechasNecesarias.add(fecha);
+        const cantidadAbs = Math.abs(Number(row["Cantidad"]) || 0);
+        // "Precio" en el archivo de Balanz viene SIN comisiones (arancel +
+        // costos de mercado) -- "Importe" sí las incluye, y es la plata real
+        // que entró o salió de la cuenta. Usamos Importe/Cantidad como
+        // precio real, en vez del precio crudo, para que el costo promedio
+        // refleje lo que de verdad costó cada operación.
+        const importe = Math.abs(Number(row["Importe"]) || 0);
+        const precioConComision = cantidadAbs > 0 && importe > 0 ? importe / cantidadAbs : precio || 0;
         crudo.push({
           fecha,
           activo: ticker,
           tipo: esCompra ? "Compra" : "Venta",
           // Balanz anota las ventas con cantidad negativa -- acá siempre
           // guardamos el valor absoluto, el signo ya lo da "tipo".
-          cantidad: Math.abs(Number(row["Cantidad"]) || 0),
-          precioOriginal: precio || 0,
+          cantidad: cantidadAbs,
+          precioOriginal: precioConComision,
           esDolares,
           broker,
           cat: mapBalanzCategoria(row["Tipo de Instrumento"]),
