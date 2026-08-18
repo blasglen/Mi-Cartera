@@ -3915,7 +3915,41 @@ function ImportarView({ C, user, fx }) {
     setStatus("guardando");
     setErrorMsg("");
     try {
-      const holdingsBalanzFinal = preview.holdingsBalanz
+      // Cada movimiento nuevo queda marcado con el ID de esta importación,
+      // para poder identificarlos y borrarlos juntos si hace falta.
+      const importId = `imp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      const nuevosConImportId = preview.nuevosSinCat.map((m) => ({ ...m, importId }));
+      let movimientosFinal = [...preview.prevMovimientos, ...nuevosConImportId];
+
+      // Corrección manual de PPC: en vez de solo pisar el número final que
+      // se ve en Tenencias, reescalamos los movimientos HISTÓRICOS de ese
+      // activo (en esta cuenta puntual) para que el gráfico de Inicio y el
+      // P&L de fecha específica también queden consistentes -- todo sale
+      // de la misma fuente de verdad, en vez de tener dos números que no
+      // coinciden entre sí.
+      for (const h of preview.holdingsBalanz) {
+        const correccion = ppcCorrections[h.name];
+        if (correccion === undefined || correccion === "" || h.avgCostUsd == null) continue;
+        const valor = Number(correccion);
+        if (!Number.isFinite(valor) || valor <= 0) continue;
+        const factor = valor / h.avgCostUsd;
+        if (Math.abs(factor - 1) < 0.0001) continue; // sin cambio real
+        movimientosFinal = movimientosFinal.map((m) => {
+          if (m.activo !== h.name || m.broker !== preview.nombreCartera) return m;
+          if (m.tipo !== "Compra" && m.tipo !== "Venta") return m; // Split queda en precio 0, no se toca
+          return { ...m, precio: m.precio * factor, precioUsd: m.precioUsd != null ? m.precioUsd * factor : m.precioUsd };
+        });
+      }
+
+      const catByTicker = {};
+      for (const m of preview.cargables) catByTicker[m.activo] = m.cat;
+
+      // Recalculamos las tenencias DESPUÉS de reescalar -- el PPC que queda
+      // en Tenencias sale naturalmente del mismo dato ya corregido, sin
+      // pisarlo a mano por separado.
+      const holdingsBalanzRecalc = recomputeHoldingsForBroker(movimientosFinal, preview.nombreCartera, preview.prevHoldings, catByTicker);
+
+      const holdingsBalanzFinal = holdingsBalanzRecalc
         .map((h) => {
           if (h.cat !== "Bonos") return h;
           const answer = bondAnswers[h.name];
@@ -3924,28 +3958,10 @@ function ImportarView({ C, user, fx }) {
           if (answer.type === "custom") return { ...h, qty: answer.qty, avgCost: h.avgCost };
           return h;
         })
-        .filter(Boolean)
-        .map((h) => {
-          // Corrección manual de PPC (en dólares) -- si la persona escribió
-          // el PPC real que ve en su broker, lo usamos en vez del calculado.
-          // No tocamos "avgCost" (el costo real en pesos que sí sabemos
-          // bien) -- solo el "avgCostUsd" que se usa para mostrar el PPC en
-          // modo dólares.
-          const correccion = ppcCorrections[h.name];
-          if (correccion === undefined || correccion === "") return h;
-          const valor = Number(correccion);
-          if (!Number.isFinite(valor) || valor <= 0) return h;
-          return { ...h, avgCostUsd: valor };
-        });
+        .filter(Boolean);
 
       const holdingsOtrosBrokers = preview.prevHoldings.filter((h) => h.broker !== preview.nombreCartera);
       const holdingsFinal = [...holdingsOtrosBrokers, ...holdingsBalanzFinal];
-
-      // Cada movimiento nuevo queda marcado con el ID de esta importación,
-      // para poder identificarlos y borrarlos juntos si hace falta.
-      const importId = `imp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-      const nuevosConImportId = preview.nuevosSinCat.map((m) => ({ ...m, importId }));
-      const movimientosFinal = [...preview.prevMovimientos, ...nuevosConImportId];
 
       const snap = await getDoc(doc(db, "users", user.uid));
       const prevImportaciones = Array.isArray(snap.data()?.importaciones) ? snap.data().importaciones : [];
