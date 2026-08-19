@@ -2450,6 +2450,18 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
     const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
     const scaleFix = isLive && historyStatus === "ok" && rawLast > 0 ? realLivePrice / (rawLast * fx) : 1;
     sliced = rawSliced.map((p) => ({ ...p, price: p.price * fx * scaleFix }));
+  } else if (selected.cat === "Cripto" && historyStatus === "ok") {
+    // La cripto ya viene en las mismas unidades (USD reales) tanto en el
+    // caché diario como en vivo -- no tiene el problema de "ratio" que sí
+    // tienen los CEDEARs, así que NO conviene estirar toda la curva. Si
+    // estirásemos todo el histórico para que el último punto matchee el
+    // precio en vivo, una suba/baja real de HOY (como un salto puntual)
+    // se contagiaría hacia atrás a todo el mes, mostrando precios pasados
+    // que nunca existieron. Por eso acá solo se reemplaza el último punto
+    // (hoy) por el valor en vivo -- mismo criterio que ya usa el gráfico
+    // de Inicio para la serie real de la cartera.
+    const last = rawSliced[rawSliced.length - 1];
+    sliced = isLive && last ? [...rawSliced.slice(0, -1), { ...last, price: realLivePrice }] : rawSliced;
   } else {
     const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
     const scaleFix = isLive && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
