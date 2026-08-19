@@ -1305,19 +1305,28 @@ function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd
       const historyMap = {};
       for (const p of hist) historyMap[p.date] = p.price;
       const sortedDates = Object.keys(historyMap).sort();
-      // Las CEDEARs y las criptos (vía Coinbase) se cachean en dólares
-      // reales, no en pesos -- hay que reescalar al precio ARS real de hoy
-      // (mismo truco que "Buscar activo"), si no, el valor sale ~1000x más
-      // chico de lo real.
+      // Las CEDEARs se cachean en dólares reales del activo subyacente, no
+      // en pesos -- y como cotizan con un ratio propio (no son 1:1 con la
+      // acción real), hace falta reescalar al ratio ARS/USD real de HOY
+      // para que el valor no salga ~1000x más chico (mismo truco que
+      // "Buscar activo"). La cripto, en cambio, NO tiene ese problema de
+      // ratio: su precio en pesos es directamente precio-en-USD × dólar.
+      // Antes se usaba el mismo reescalado "cociente contra el último
+      // precio cacheado" para las dos -- pero para cripto eso tiene un
+      // efecto colateral: si el último dato cacheado es justo el de AYER,
+      // ese cociente se cancela matemáticamente y "ayer" termina usando el
+      // precio de HOY también. Una suba o baja fuerte del día quedaba
+      // "adelantada" a los días anteriores, y el "vs. ayer" no la mostraba.
+      // Por eso para cripto convertimos cada precio histórico real
+      // directamente al dólar de HOY (mismo criterio que "invertido"), sin
+      // ningún cociente de por medio.
       let scaleFix = 1;
       if (h.cat === "CEDEARs") {
         const livePriceArs = livePrices?.[h.name];
         const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
         if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
       } else if (h.cat === "Cripto") {
-        const livePriceArs = cryptoUsd?.[h.name] != null ? cryptoUsd[h.name] * fx : null;
-        const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
-        if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
+        scaleFix = fx;
       }
       return {
         valueAt: (date) => {
@@ -4455,19 +4464,21 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
           const historyMap = {};
           for (const p of hist) historyMap[p.date] = p.price;
           const sortedDates = Object.keys(historyMap).sort();
-          // Las CEDEARs y las criptos (vía Coinbase) se cachean en dólares
-          // reales, no en pesos -- hay que reescalar al precio ARS real de
-          // hoy (mismo truco que "Buscar activo" y buildRealPortfolioHistory),
-          // o el valor sale ~1000x más chico de lo real.
+          // Las CEDEARs se cachean en dólares reales del activo subyacente
+          // y cotizan con un ratio propio -- hace falta reescalar al ratio
+          // ARS/USD real de HOY (mismo truco que "Buscar activo" y
+          // buildRealPortfolioHistory), o el valor sale ~1000x más chico.
+          // La cripto no tiene ese problema de ratio: convertimos su precio
+          // histórico real directo al dólar de HOY, sin cociente contra el
+          // último dato cacheado (ese cociente, cuando el último dato es de
+          // ayer, terminaba usando el precio de HOY también para "ayer").
           let scaleFix = 1;
           if (cat === "CEDEARs") {
             const livePriceArs = livePrices[ticker];
             const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
             if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
           } else if (cat === "Cripto") {
-            const livePriceArs = cryptoUsd?.[ticker] != null ? cryptoUsd[ticker] * fx : null;
-            const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
-            if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
+            scaleFix = fx;
           }
           cache[ticker] = { map: historyMap, dates: sortedDates, scaleFix };
         } else {
