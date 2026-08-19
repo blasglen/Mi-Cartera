@@ -1305,21 +1305,17 @@ function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd
       const historyMap = {};
       for (const p of hist) historyMap[p.date] = p.price;
       const sortedDates = Object.keys(historyMap).sort();
-      // Las CEDEARs y las criptos se cachean en dólares reales, no en pesos
-      // -- hay que reescalar al precio ARS real de hoy (mismo truco que
-      // "Buscar activo"), si no, el valor sale ~1000x más chico de lo real.
-      // NOTA (revertido temporalmente): probamos usar directamente "raw*fx"
-      // para cripto, asumiendo que el caché guarda dólares puros -- pero eso
-      // rompió peor (valores ~1000x más GRANDES), así que el caché debe
-      // tener otra unidad de la que asumíamos. Volvemos al cociente
-      // original mientras confirmamos con datos reales cuál es.
+      // Las CEDEARs se cachean en dólares reales del activo subyacente, no
+      // en pesos -- y como cotizan con un ratio propio (no son 1:1 con la
+      // acción real), hace falta reescalar al ratio ARS/USD real de HOY
+      // (mismo truco que "Buscar activo"), o el valor sale ~1000x más chico.
+      // La cripto, confirmado con datos reales del caché, YA viene en pesos
+      // reales de cada fecha (no en dólares como se asumía antes) -- así que
+      // no necesita ningún reescalado, se usa el precio cacheado tal cual,
+      // igual que Acciones/Bonos/ONs.
       let scaleFix = 1;
       if (h.cat === "CEDEARs") {
         const livePriceArs = livePrices?.[h.name];
-        const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
-        if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
-      } else if (h.cat === "Cripto") {
-        const livePriceArs = cryptoUsd?.[h.name] != null ? cryptoUsd[h.name] * fx : null;
         const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
         if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
       }
@@ -1715,19 +1711,6 @@ function InvestmentDashboard({ user }) {
   const fx = activeFxRates[fxType].value;
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
-
-  // --- DEBUG TEMPORAL: ver la unidad real del histórico cacheado de cripto
-  // (BTC) para confirmar si es USD, ARS, o algo distinto, antes de tocar de
-  // nuevo el scaleFix. Sacar este bloque una vez confirmado. ---
-  React.useEffect(() => {
-    const hist = historyCache?.BTC;
-    if (!hist || hist.length === 0) return;
-    const ultimos = hist.slice(-5);
-    console.log("%c[DEBUG] BTC historyCache (últimos 5 puntos):", "color:orange;font-weight:bold;font-size:13px");
-    console.log(JSON.stringify(ultimos, null, 2));
-    console.log("[DEBUG] cryptoUsd.BTC (precio en vivo, USD):", cryptoUsd?.BTC);
-    console.log("[DEBUG] fx (dólar elegido, hoy):", fx, fxType);
-  }, [historyCache, cryptoUsd, fx, fxType]);
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
 
@@ -4476,17 +4459,12 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
           // y cotizan con un ratio propio -- hace falta reescalar al ratio
           // ARS/USD real de HOY (mismo truco que "Buscar activo" y
           // buildRealPortfolioHistory), o el valor sale ~1000x más chico.
-          // La cripto no tiene ese problema de ratio: convertimos su precio
-          // histórico real directo al dólar de HOY, sin cociente contra el
-          // último dato cacheado (ese cociente, cuando el último dato es de
-          // ayer, terminaba usando el precio de HOY también para "ayer").
+          // La cripto, confirmado con datos reales del caché, YA viene en
+          // pesos reales de cada fecha (no en dólares) -- no necesita
+          // ningún reescalado, se usa tal cual, igual que Acciones/Bonos.
           let scaleFix = 1;
           if (cat === "CEDEARs") {
             const livePriceArs = livePrices[ticker];
-            const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
-            if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
-          } else if (cat === "Cripto") {
-            const livePriceArs = cryptoUsd?.[ticker] != null ? cryptoUsd[ticker] * fx : null;
             const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
             if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
           }
