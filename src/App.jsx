@@ -3694,8 +3694,16 @@ const BALANZ_INSTRUCTIONS = [
   { title: "Andá a \"Actividad\"", desc: "En el menú de la izquierda, buscá la opción \"Actividad\"." },
   { title: "Entrá a \"Movimientos\"", desc: "Dentro de Actividad, elegí la sección \"Movimientos\"." },
   { title: "Elegí el rango de fechas", desc: "Poné como \"desde\" la fecha de tu primera inversión, y como \"hasta\" hoy -- así se incluye todo tu historial." },
-  { title: "Descargá el archivo", desc: "Tocá el botón de descarga. Va a bajar un archivo llamado movimientos.xlsx -- es el único que necesitás." },
-  { title: "Subilo acá abajo", desc: "Arrastralo al recuadro, o hacé click para elegirlo desde tu computadora." },
+  { title: "Descargá movimientos.xlsx", desc: "Tocá el botón de descarga. Va a bajar un archivo llamado movimientos.xlsx -- con esto solo ya podés importar." },
+  {
+    title: "Opcional: descargá también \"Mis Instrumentos\" (para un PPC exacto)",
+    desc:
+      "Nuestro PPC (precio promedio de compra) se calcula solo a partir de tus movimientos -- cada compra y venta, con su precio y fecha real. Balanz, en cambio, a veces ajusta ese número por dentro (amortizaciones de bonos, redondeos u otros movimientos que no vemos en el archivo de movimientos), así que puede diferir un poco del que ves en tu cuenta. Para que coincida exacto: andá a Cartera → Mis Instrumentos, activá el toggle en USD, y \"Exportar a Excel\". Ese archivo trae el PPC real, tal cual lo calcula Balanz, para cada activo.",
+  },
+  {
+    title: "Subilos acá abajo",
+    desc: "Arrastrá movimientos.xlsx solo, o los dos archivos juntos (movimientos.xlsx + Mis Instrumentos), al recuadro -- los reconocemos automáticamente y no importa el orden. También podés hacer click para elegirlos juntos.",
+  },
 ];
 
 // Borra por completo una cartera puntual (movimientos, tenencias e
@@ -3855,33 +3863,55 @@ function ImportarView({ C, user, fx }) {
     }
   };
 
-  const handleFile = async (file) => {
+  // Lee uno o más archivos sueltos en el recuadro y los clasifica solo:
+  // "instrumentos" si alguna de sus hojas se llama así (el export de "Mis
+  // Instrumentos"), "movimientos" cualquier otro caso. Así el mismo
+  // recuadro sirve para soltar solo movimientos.xlsx, o los dos archivos
+  // juntos (movimientos.xlsx + Mis Instrumentos) sin importar el orden.
+  const handleFiles = async (fileList) => {
+    const files = Array.from(fileList || []);
+    if (files.length === 0) return;
     setStatus("parsing");
     setErrorMsg("");
     try {
       const { default: ExcelJS } = await import("exceljs");
-      const buf = await file.arrayBuffer();
-      const wb = new ExcelJS.Workbook();
-      await wb.xlsx.load(buf);
-      const sheet = wb.worksheets.find((s) => s.name.toLowerCase() === "movimientos") || wb.worksheets[0];
-      if (!sheet) throw new Error("El archivo no tiene ninguna hoja legible.");
 
-      const headerRow = sheet.getRow(1).values; // índice 1-based, [0] vacío
-      const headers = headerRow.slice(1).map((h) => String(h ?? "").trim());
-      const rows = [];
-      sheet.eachRow((row, rowNumber) => {
-        if (rowNumber === 1) return;
-        const obj = {};
-        row.values.slice(1).forEach((val, i) => {
-          obj[headers[i]] = val && typeof val === "object" && "result" in val ? val.result : val;
+      const leidos = [];
+      for (const file of files) {
+        const buf = await file.arrayBuffer();
+        const wb = new ExcelJS.Workbook();
+        await wb.xlsx.load(buf);
+        const esInstrumentos = wb.worksheets.some((s) => s.name.toLowerCase().includes("instrumento"));
+        const sheet = esInstrumentos
+          ? wb.worksheets.find((s) => s.name.toLowerCase().includes("instrumento")) || wb.worksheets[0]
+          : wb.worksheets.find((s) => s.name.toLowerCase() === "movimientos") || wb.worksheets[0];
+        if (!sheet) throw new Error(`"${file.name}" no tiene ninguna hoja legible.`);
+
+        const headerRow = sheet.getRow(1).values; // índice 1-based, [0] vacío
+        const headers = headerRow.slice(1).map((h) => String(h ?? "").trim());
+        const rows = [];
+        sheet.eachRow((row, rowNumber) => {
+          if (rowNumber === 1) return;
+          const obj = {};
+          row.values.slice(1).forEach((val, i) => {
+            obj[headers[i]] = val && typeof val === "object" && "result" in val ? val.result : val;
+          });
+          rows.push(obj);
         });
-        rows.push(obj);
-      });
+        leidos.push({ file, esInstrumentos, rows });
+      }
+
+      const movimientosLeido = leidos.find((l) => !l.esInstrumentos);
+      const instrumentosLeido = leidos.find((l) => l.esInstrumentos);
+
+      if (!movimientosLeido) {
+        throw new Error('Para importar necesitás al menos movimientos.xlsx -- el de "Mis Instrumentos" solo sirve para afinar el PPC, no alcanza solo.');
+      }
 
       if (broker !== "Balanz") throw new Error("Todavía no armamos el lector para ese broker.");
       const nombreCartera = cuenta.trim() || broker;
 
-      const result = await parseBalanzMovimientos(rows, nombreCartera, fx);
+      const result = await parseBalanzMovimientos(movimientosLeido.rows, nombreCartera, fx);
 
       // Buscamos tus datos actuales ahora (no recién al confirmar) para
       // poder mostrarte una vista previa real de cómo quedarían tus
@@ -3908,9 +3938,26 @@ function ImportarView({ C, user, fx }) {
       const initialAnswers = {};
       for (const b of bondsToConfirm) initialAnswers[b.name] = null;
 
-      setPreview({ fileName: file.name, nombreCartera, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
+      setPreview({ fileName: movimientosLeido.file.name, nombreCartera, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
       setBondAnswers(initialAnswers);
       setStatus("preview");
+
+      // Si también soltaron "Mis Instrumentos" junto con movimientos.xlsx,
+      // completamos el PPC real de una, sin pedir un segundo paso aparte.
+      if (instrumentosLeido) {
+        const porTicker = parseBalanzInstrumentos(instrumentosLeido.rows);
+        const encontrados = holdingsBalanz.filter((h) => porTicker[h.name] != null);
+        if (encontrados.length === 0) {
+          setInstrumentosMsg('No encontramos ninguno de tus activos en el archivo de "Mis Instrumentos" -- ¿tenía el toggle en USD activado?');
+        } else {
+          setPpcCorrections((prev) => {
+            const next = { ...prev };
+            for (const h of encontrados) next[h.name] = porTicker[h.name].toFixed(4);
+            return next;
+          });
+          setInstrumentosMsg(`PPC real completado automático para ${encontrados.length} de ${holdingsBalanz.length} activos (desde "${instrumentosLeido.file.name}").`);
+        }
+      }
     } catch (err) {
       setErrorMsg(err.message || "No pudimos leer el archivo.");
       setStatus("error");
@@ -3920,13 +3967,12 @@ function ImportarView({ C, user, fx }) {
   const onDrop = (e) => {
     e.preventDefault();
     setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) handleFile(file);
+    handleFiles(e.dataTransfer.files);
   };
 
   const onFileInput = (e) => {
-    const file = e.target.files?.[0];
-    if (file) handleFile(file);
+    handleFiles(e.target.files);
+    e.target.value = ""; // permite volver a elegir los mismos archivos si hace falta
   };
 
   const faltaResponderBonos = preview?.bondsToConfirm.some((b) => !bondAnswers[b.name]);
@@ -4099,10 +4145,10 @@ function ImportarView({ C, user, fx }) {
               cursor: "pointer",
             }}
           >
-            <input id="import-file-input" type="file" accept=".xlsx,.xls,.csv" style={{ display: "none" }} onChange={onFileInput} />
+            <input id="import-file-input" type="file" accept=".xlsx,.xls,.csv" multiple style={{ display: "none" }} onChange={onFileInput} />
             <FileSpreadsheet size={28} color={C.muted} style={{ marginBottom: 10 }} />
-            <div style={{ fontSize: 14, marginBottom: 4 }}>Arrastrá el archivo movimientos.xlsx acá, o hacé click para elegirlo</div>
-            <div style={{ fontSize: 12, color: C.faint }}>.xlsx — máx. 10MB</div>
+            <div style={{ fontSize: 14, marginBottom: 4 }}>Arrastrá movimientos.xlsx (y, si querés, también "Mis Instrumentos") acá, o hacé click para elegirlos</div>
+            <div style={{ fontSize: 12, color: C.faint }}>.xlsx — máx. 10MB por archivo — los reconocemos automáticamente</div>
           </div>
 
           <div style={{ marginTop: 18, textAlign: "right" }}>
