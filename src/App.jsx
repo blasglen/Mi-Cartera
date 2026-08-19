@@ -1749,20 +1749,16 @@ function InvestmentDashboard({ user }) {
         ticker: h.name,
         broker: h.broker,
         qty: h.qty,
-        "avgCostUsd guardado": h.avgCostUsd ?? null,
-        "costo tabla (US$)": costoTablaPesos / fx,
-        "costo gráfico (US$)": costoGraficoPesos / fx,
-        "diferencia (US$)": (costoTablaPesos - costoGraficoPesos) / fx,
+        avgCostUsdGuardado: h.avgCostUsd ?? null,
+        costoTablaUsd: Number((costoTablaPesos / fx).toFixed(4)),
+        costoGraficoUsd: Number((costoGraficoPesos / fx).toFixed(4)),
+        diferenciaUsd: Number(((costoTablaPesos - costoGraficoPesos) / fx).toFixed(4)),
       };
     });
-    const conDiferencia = filas.filter((f) => Math.abs(f["diferencia (US$)"]) > 0.5);
-    if (conDiferencia.length > 0) {
-      console.log("%c[DEBUG] Activos con diferencia entre tabla y gráfico:", "color:orange;font-weight:bold");
-      console.table(conDiferencia);
-    } else {
-      console.log("[DEBUG] Sin diferencias > US$0.50 por activo (revisar redondeo acumulado).");
-      console.table(filas);
-    }
+    const totalDiferencia = filas.reduce((s, f) => s + f.diferenciaUsd, 0);
+    console.log("%c[DEBUG] Diferencia total tabla vs gráfico: US$" + totalDiferencia.toFixed(2), "color:orange;font-weight:bold;font-size:14px");
+    console.log("[DEBUG] JSON completo (copiar y pegar todo):");
+    console.log(JSON.stringify(filas, null, 2));
   }, [byBroker, fx]);
 
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
