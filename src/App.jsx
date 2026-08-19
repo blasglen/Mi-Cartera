@@ -3412,6 +3412,146 @@ function mapBalanzCategoria(tipoInstrumento) {
   return "Acciones"; // fallback razonable, no debería pasar con el export real
 }
 
+// IOL: "OperacionesFinalizadas.xls" (Operaciones -> Operaciones Finalizadas
+// -> Exportar) NO es un .xls real -- es una tabla HTML con esa extensión
+// (confirmado con un archivo real). ExcelJS no la puede leer, así que se
+// parsea como HTML directo con DOMParser, buscando la primera fila con
+// varias celdas como encabezado.
+function parseIOLHtmlTable(text) {
+  const doc = new DOMParser().parseFromString(text, "text/html");
+  const trs = Array.from(doc.querySelectorAll("table tr"));
+  let headerIdx = -1;
+  let headers = [];
+  for (let i = 0; i < trs.length; i++) {
+    const cells = Array.from(trs[i].querySelectorAll("td,th")).map((td) => td.textContent.trim());
+    if (cells.length >= 5 && cells.filter(Boolean).length >= 5) {
+      headerIdx = i;
+      headers = cells;
+      break;
+    }
+  }
+  if (headerIdx === -1) throw new Error('No pudimos encontrar la tabla dentro del archivo -- ¿es realmente el export de "Operaciones Finalizadas"?');
+  const rows = [];
+  for (let i = headerIdx + 1; i < trs.length; i++) {
+    const cells = Array.from(trs[i].querySelectorAll("td,th")).map((td) => td.textContent.trim());
+    if (cells.length === 0 || cells.every((c) => !c)) continue;
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = cells[idx] ?? ""; });
+    rows.push(obj);
+  }
+  return rows;
+}
+
+// "84.390,00" -> 84390.00 (punto de miles, coma decimal -- formato argentino).
+function parseArgNumber(str) {
+  if (str == null) return 0;
+  const s = String(str).trim().replace(/\$|US\$|AR\$/g, "").trim();
+  if (!s) return 0;
+  return Number(s.replace(/\./g, "").replace(",", ".")) || 0;
+}
+
+// IOL no manda una columna de categoría como Balanz -- se infiere de la
+// Descripción (siempre dice "Cedear ..." para CEDEARs, "Bono(s) ..." para
+// bonos en ley extranjera) y del Tipo de Transacción (las suscripciones de
+// fondos y las suscripciones primarias de ONs tienen su propio tipo).
+function mapIOLCategoria(descripcion, tipoTransaccion) {
+  const d = (descripcion || "").toLowerCase();
+  if (d.startsWith("cedear")) return "CEDEARs";
+  if (d.includes("bono")) return "Bonos";
+  if (tipoTransaccion === "Suscripción FCI") return "Fondos";
+  if (tipoTransaccion === "Suscripcion Primaria") return "Obligaciones Negociables";
+  return "Acciones";
+}
+
+async function parseIOLMovimientos(rows, broker = "IOL", fxHoy = 1) {
+  const cargables = [];
+  const ignoradas = {};
+  const crudo = [];
+  const fechasNecesarias = new Set();
+
+  for (const row of rows) {
+    const tipoTx = String(row["Tipo Transacción"] ?? "").trim();
+    const esCompra = tipoTx === "Compra" || tipoTx === "Suscripción FCI" || tipoTx === "Suscripcion Primaria";
+    const esVenta = tipoTx === "Venta";
+    if (!esCompra && !esVenta) {
+      ignoradas[tipoTx || "(sin tipo)"] = (ignoradas[tipoTx || "(sin tipo)"] || 0) + 1;
+      continue;
+    }
+
+    const ticker = String(row["Simbolo"] ?? "").trim();
+    const fecha = normalizeFechaArg(row["Fecha Transacción"]);
+    const fechaLiquidacion = normalizeFechaArg(row["Fecha Liquidación"]) || fecha;
+    if (!ticker || !fecha) continue;
+
+    const cantidad = parseArgNumber(row["Cantidad"]);
+    const precioCrudo = parseArgNumber(row["Precio Ponderado"]);
+    const monto = parseArgNumber(row["Monto"]);
+    if (cantidad <= 0 || precioCrudo <= 0) continue;
+
+    // Bonos y ONs cotizan "cada 100 de nominal" -- en vez de adivinar por
+    // categoría, lo verificamos con el propio Monto de la fila: si
+    // Cantidad×Precio no da el Monto real, es porque hay que dividir el
+    // precio por 100. Más confiable que una lista de tickers a mano.
+    const directo = cantidad * precioCrudo;
+    const dividido = directo / 100;
+    const usaDividido = monto > 0 && Math.abs(dividido - monto) < Math.abs(directo - monto);
+    const precioPorUnidad = usaDividido ? precioCrudo / 100 : precioCrudo;
+
+    const moneda = String(row["Moneda"] ?? "").trim();
+    const esDolares = moneda === "US$";
+    fechasNecesarias.add(fechaLiquidacion);
+
+    crudo.push({
+      fecha,
+      activo: ticker,
+      tipo: esCompra ? "Compra" : "Venta",
+      cantidad,
+      precioOriginal: precioPorUnidad,
+      esDolares,
+      fechaLiquidacion,
+      broker,
+      cat: mapIOLCategoria(row["Descripción"], tipoTx),
+    });
+  }
+
+  // Mismo mecanismo que Balanz: dólar MEP histórico real por fecha de
+  // liquidación, una sola vez por fecha.
+  const fxPorFecha = {};
+  for (const fecha of fechasNecesarias) {
+    fxPorFecha[fecha] = await fetchHistoricalMep(fecha);
+    await new Promise((r) => setTimeout(r, 150));
+  }
+
+  for (const m of crudo) {
+    const fxDeEseDia = fxPorFecha[m.fechaLiquidacion] || fxHoy;
+    const precioFinal = m.esDolares ? m.precioOriginal * fxDeEseDia : m.precioOriginal;
+    const precioUsd = m.esDolares ? m.precioOriginal : m.precioOriginal / fxDeEseDia;
+    cargables.push({
+      fecha: m.fecha,
+      activo: m.activo,
+      tipo: m.tipo,
+      cantidad: m.cantidad,
+      precio: precioFinal,
+      precioUsd,
+      broker: m.broker,
+      cat: m.cat,
+    });
+  }
+
+  const splitsFaltantes = aplicarSplitsConocidos(cargables, "IOL", broker);
+  return { cargables: [...cargables, ...splitsFaltantes], ignoradas };
+}
+
+// "2/1/2024 11:15:20" o "4/1/2024" (día/mes/año, con o sin hora) -> YYYY-MM-DD.
+function normalizeFechaArg(value) {
+  if (!value) return null;
+  const soloFecha = String(value).trim().split(" ")[0];
+  const m = soloFecha.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!m) return null;
+  const [, d, mo, y] = m;
+  return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`;
+}
+
 // Excel guarda fechas como objetos Date (o a veces como string) según cómo
 // las haya escrito la librería que las lee -- esto normaliza ambos casos al
 // formato YYYY-MM-DD que usa el resto de la app.
@@ -3511,12 +3651,13 @@ async function fetchHistoricalMep(fechaISO) {
   return null; // no se pudo conseguir en 5 intentos -- el llamador decide el respaldo
 }
 
-// Lee el export de "Mis Instrumentos" de Balanz (Cartera -> Exportar a
-// Excel, con el toggle en USD activado) -- trae el PPC REAL que calcula
-// Balanz por ticker, columna "Precio promedio de compra". Como el export se
-// hace con la pantalla en modo dólares, ese número ya viene en USD para
+// Lee el export de "Mis Instrumentos" (Balanz o IOL -- Cartera -> Exportar
+// a Excel, con el toggle en USD activado) -- trae el PPC REAL que calcula
+// el broker por ticker, columna "Precio promedio de compra". Como el export
+// se hace con la pantalla en modo dólares, ese número ya viene en USD para
 // cualquier instrumento, sin importar su moneda nativa (columna "Moneda").
-function parseBalanzInstrumentos(rows) {
+// Confirmado que Balanz e IOL usan las mismas columnas para este archivo.
+function parseInstrumentosPPC(rows) {
   const porTicker = {};
   for (const row of rows) {
     const ticker = row["Ticker"] ? String(row["Ticker"]).trim() : null;
@@ -3718,6 +3859,20 @@ const BALANZ_INSTRUCTIONS = [
   },
 ];
 
+const IOL_INSTRUCTIONS = [
+  { title: "Iniciá sesión en IOL (InvertirOnline)", desc: "Entrá a tu cuenta con tu usuario habitual." },
+  { title: "Andá a Mi Cuenta → Operaciones → Detalle de Operaciones", desc: "Ahí vas a encontrar el historial completo de todo lo que compraste y vendiste." },
+  { title: 'Elegí "Todas" en el tipo de operación', desc: "Así se incluyen compras, ventas y suscripciones (fondos y ONs) en un solo archivo." },
+  { title: "Elegí el rango de fechas", desc: "Poné como \"desde\" la fecha de tu primera inversión, y como \"hasta\" hoy -- así se incluye todo tu historial." },
+  { title: "Descargá / exportá el archivo", desc: "Va a bajar un archivo llamado OperacionesFinalizadas.xls (aunque diga .xls, es el único que necesitás -- no hace falta ningún otro para dar de alta la cuenta)." },
+  { title: "Subilo acá abajo", desc: "Arrastralo al recuadro, o hacé click para elegirlo. Por ahora, un archivo a la vez." },
+];
+// El PPC que muestra IOL en pantalla (Portafolio) no se puede exportar a
+// archivo como en Balanz -- para completarlo hay que pasar los valores a
+// mano, comparando "Ver portafolio en: Tradicional" (tickers reales) con
+// "Ver portafolio en: Dólar MEP" (PPC real en dólares), cantidad por
+// cantidad. Ver ppcCorrections más abajo.
+
 // Borra por completo una cartera puntual (movimientos, tenencias e
 // historial de importaciones) -- usable desde Importar archivos y desde
 // Inicio. Recarga la página al final porque reasignar HOLDINGS/MOVIMIENTOS
@@ -3778,7 +3933,7 @@ function ImportarView({ C, user, fx }) {
         });
         rows.push(obj);
       });
-      const porTicker = parseBalanzInstrumentos(rows);
+      const porTicker = parseInstrumentosPPC(rows);
       const encontrados = preview.holdingsBalanz.filter((h) => porTicker[h.name] != null);
       if (encontrados.length === 0) {
         setInstrumentosMsg("No encontramos ninguno de tus activos en ese archivo -- ¿es el export correcto, con el toggle en USD activado?");
@@ -3875,55 +4030,70 @@ function ImportarView({ C, user, fx }) {
     }
   };
 
-  // Lee uno o más archivos sueltos en el recuadro y los clasifica solo:
-  // "instrumentos" si alguna de sus hojas se llama así (el export de "Mis
-  // Instrumentos"), "movimientos" cualquier otro caso. Así el mismo
-  // recuadro sirve para soltar solo movimientos.xlsx, o los dos archivos
-  // juntos (movimientos.xlsx + Mis Instrumentos) sin importar el orden.
+  // Lee uno o más archivos sueltos en el recuadro. La FORMA de leerlos
+  // depende del broker: Balanz manda .xlsx reales (ExcelJS los lee bien,
+  // y clasifica solo "instrumentos" vs "movimientos" por el nombre de la
+  // hoja); IOL manda un .xls que en realidad es HTML (se lee como texto y
+  // se parsea la tabla a mano). De ahí en adelante, ambos caminos llegan al
+  // mismo lugar: un {cargables, ignoradas} que arma la vista previa.
   const handleFiles = async (fileList) => {
     const files = Array.from(fileList || []);
     if (files.length === 0) return;
     setStatus("parsing");
     setErrorMsg("");
     try {
-      const { default: ExcelJS } = await import("exceljs");
-
-      const leidos = [];
-      for (const file of files) {
-        const buf = await file.arrayBuffer();
-        const wb = new ExcelJS.Workbook();
-        await wb.xlsx.load(buf);
-        const esInstrumentos = wb.worksheets.some((s) => s.name.toLowerCase().includes("instrumento"));
-        const sheet = esInstrumentos
-          ? wb.worksheets.find((s) => s.name.toLowerCase().includes("instrumento")) || wb.worksheets[0]
-          : wb.worksheets.find((s) => s.name.toLowerCase() === "movimientos") || wb.worksheets[0];
-        if (!sheet) throw new Error(`"${file.name}" no tiene ninguna hoja legible.`);
-
-        const headerRow = sheet.getRow(1).values; // índice 1-based, [0] vacío
-        const headers = headerRow.slice(1).map((h) => String(h ?? "").trim());
-        const rows = [];
-        sheet.eachRow((row, rowNumber) => {
-          if (rowNumber === 1) return;
-          const obj = {};
-          row.values.slice(1).forEach((val, i) => {
-            obj[headers[i]] = val && typeof val === "object" && "result" in val ? val.result : val;
-          });
-          rows.push(obj);
-        });
-        leidos.push({ file, esInstrumentos, rows });
-      }
-
-      const movimientosLeido = leidos.find((l) => !l.esInstrumentos);
-      const instrumentosLeido = leidos.find((l) => l.esInstrumentos);
-
-      if (!movimientosLeido) {
-        throw new Error('Para importar necesitás al menos movimientos.xlsx -- el de "Mis Instrumentos" solo sirve para afinar el PPC, no alcanza solo.');
-      }
-
-      if (broker !== "Balanz") throw new Error("Todavía no armamos el lector para ese broker.");
       const nombreCartera = cuenta.trim() || broker;
+      let result;
+      let fileNameForPreview;
+      let instrumentosLeido = null;
 
-      const result = await parseBalanzMovimientos(movimientosLeido.rows, nombreCartera, fx);
+      if (broker === "IOL") {
+        if (files.length !== 1) throw new Error('Por ahora subí un solo archivo de operaciones de IOL a la vez.');
+        const file = files[0];
+        const text = await file.text();
+        const rows = parseIOLHtmlTable(text);
+        result = await parseIOLMovimientos(rows, nombreCartera, fx);
+        fileNameForPreview = file.name;
+      } else if (broker === "Balanz") {
+        const { default: ExcelJS } = await import("exceljs");
+
+        const leidos = [];
+        for (const file of files) {
+          const buf = await file.arrayBuffer();
+          const wb = new ExcelJS.Workbook();
+          await wb.xlsx.load(buf);
+          const esInstrumentos = wb.worksheets.some((s) => s.name.toLowerCase().includes("instrumento"));
+          const sheet = esInstrumentos
+            ? wb.worksheets.find((s) => s.name.toLowerCase().includes("instrumento")) || wb.worksheets[0]
+            : wb.worksheets.find((s) => s.name.toLowerCase() === "movimientos") || wb.worksheets[0];
+          if (!sheet) throw new Error(`"${file.name}" no tiene ninguna hoja legible.`);
+
+          const headerRow = sheet.getRow(1).values; // índice 1-based, [0] vacío
+          const headers = headerRow.slice(1).map((h) => String(h ?? "").trim());
+          const rows = [];
+          sheet.eachRow((row, rowNumber) => {
+            if (rowNumber === 1) return;
+            const obj = {};
+            row.values.slice(1).forEach((val, i) => {
+              obj[headers[i]] = val && typeof val === "object" && "result" in val ? val.result : val;
+            });
+            rows.push(obj);
+          });
+          leidos.push({ file, esInstrumentos, rows });
+        }
+
+        const movimientosLeido = leidos.find((l) => !l.esInstrumentos);
+        instrumentosLeido = leidos.find((l) => l.esInstrumentos) || null;
+
+        if (!movimientosLeido) {
+          throw new Error('Para importar necesitás al menos movimientos.xlsx -- el de "Mis Instrumentos" solo sirve para afinar el PPC, no alcanza solo.');
+        }
+
+        result = await parseBalanzMovimientos(movimientosLeido.rows, nombreCartera, fx);
+        fileNameForPreview = movimientosLeido.file.name;
+      } else {
+        throw new Error("Todavía no armamos el lector para ese broker.");
+      }
 
       // Buscamos tus datos actuales ahora (no recién al confirmar) para
       // poder mostrarte una vista previa real de cómo quedarían tus
@@ -3950,14 +4120,14 @@ function ImportarView({ C, user, fx }) {
       const initialAnswers = {};
       for (const b of bondsToConfirm) initialAnswers[b.name] = null;
 
-      setPreview({ fileName: movimientosLeido.file.name, nombreCartera, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
+      setPreview({ fileName: fileNameForPreview, nombreCartera, cargables: result.cargables, ignoradas: result.ignoradas, prevMovimientos, prevHoldings, nuevosSinCat, movimientosFinal, holdingsBalanz, bondsToConfirm });
       setBondAnswers(initialAnswers);
       setStatus("preview");
 
-      // Si también soltaron "Mis Instrumentos" junto con movimientos.xlsx,
-      // completamos el PPC real de una, sin pedir un segundo paso aparte.
+      // Si también soltaron "Mis Instrumentos" junto con movimientos.xlsx
+      // (Balanz), completamos el PPC real de una, sin pedir un segundo paso.
       if (instrumentosLeido) {
-        const porTicker = parseBalanzInstrumentos(instrumentosLeido.rows);
+        const porTicker = parseInstrumentosPPC(instrumentosLeido.rows);
         const encontrados = holdingsBalanz.filter((h) => porTicker[h.name] != null);
         if (encontrados.length === 0) {
           setInstrumentosMsg('No encontramos ninguno de tus activos en el archivo de "Mis Instrumentos" -- ¿tenía el toggle en USD activado?');
@@ -4086,7 +4256,7 @@ function ImportarView({ C, user, fx }) {
       <div style={{ marginBottom: 22 }}>
         <div style={{ fontSize: 12, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Origen del archivo</div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {["Balanz"].map((b) => (
+          {["Balanz", "IOL"].map((b) => (
             <span
               key={b}
               onClick={() => { setBroker(b); setCuenta(""); reset(); }}
@@ -4112,10 +4282,10 @@ function ImportarView({ C, user, fx }) {
         </div>
       )}
 
-      {broker === "Balanz" && status === "idle" && (
+      {(broker === "Balanz" || broker === "IOL") && status === "idle" && (
         <>
           <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 22 }}>
-            {BALANZ_INSTRUCTIONS.map((step, i) => (
+            {(broker === "Balanz" ? BALANZ_INSTRUCTIONS : IOL_INSTRUCTIONS).map((step, i) => (
               <div key={i} style={{ display: "flex", gap: 14, padding: "14px 18px", borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none" }}>
                 <div style={{ minWidth: 22, height: 22, borderRadius: 999, background: C.chipActive, color: C.gold, fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</div>
                 <div>
@@ -4125,6 +4295,12 @@ function ImportarView({ C, user, fx }) {
               </div>
             ))}
           </div>
+
+          {broker === "IOL" && (
+            <div style={{ background: C.chipActive, border: `1px solid ${C.gold}`, borderRadius: 10, padding: 14, marginBottom: 22, fontSize: 12, color: C.text }}>
+              A diferencia de Balanz, en IOL no hay forma de exportar el PPC a un archivo -- después de importar el historial de movimientos, vas a tener que completarlo a mano (comparando "Tradicional" y "Dólar MEP" en tu Portafolio, cantidad por cantidad) si querés que coincida exacto con lo que ves en tu cuenta.
+            </div>
+          )}
 
           <div style={{ marginBottom: 16 }}>
             <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 6 }}>
@@ -4159,7 +4335,11 @@ function ImportarView({ C, user, fx }) {
           >
             <input id="import-file-input" type="file" accept=".xlsx,.xls,.csv" multiple style={{ display: "none" }} onChange={onFileInput} />
             <FileSpreadsheet size={28} color={C.muted} style={{ marginBottom: 10 }} />
-            <div style={{ fontSize: 14, marginBottom: 4 }}>Arrastrá movimientos.xlsx (y, si querés, también "Mis Instrumentos") acá, o hacé click para elegirlos</div>
+            <div style={{ fontSize: 14, marginBottom: 4 }}>
+              {broker === "Balanz"
+                ? 'Arrastrá movimientos.xlsx (y, si querés, también "Mis Instrumentos") acá, o hacé click para elegirlos'
+                : "Arrastrá OperacionesFinalizadas.xls acá, o hacé click para elegirlo"}
+            </div>
             <div style={{ fontSize: 12, color: C.faint }}>.xlsx — máx. 10MB por archivo — los reconocemos automáticamente</div>
           </div>
 
