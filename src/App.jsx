@@ -3900,6 +3900,99 @@ async function borrarCarteraCompleta(uid, cuenta) {
   window.location.reload();
 }
 
+// Lee un PDF de "Mi Portafolio" de IOL (Portafolio -> Imprimir -> Guardar
+// como PDF, en cualquiera de las dos vistas: Tradicional o Dólar MEP) y
+// devuelve, EN ORDEN (mismo orden en el que aparecen los activos en la
+// tabla), un array de {ticker, cantidad, ppc, moneda} por fila -- o null en
+// los campos que no se pudieron leer con confianza. Nunca inventa un valor:
+// el layout de "imprimir a PDF" a veces mezcla el texto del encabezado de
+// página con el de la primera fila cuando esa fila cae justo en un salto de
+// página -- en esos casos preferimos dejar el campo en null y que se
+// complete a mano, antes que arriesgarnos a guardar un número mal.
+async function parseIOLPortfolioPdf(file) {
+  const pdfjsLib = await import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.mjs");
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.min.mjs";
+
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+
+  const items = []; // { text, x0 }, todas las páginas concatenadas en orden
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    const content = await page.getTextContent();
+    for (const it of content.items) {
+      const text = (it.str || "").trim();
+      if (text) items.push({ text, x0: it.transform[4] });
+    }
+  }
+
+  const bareRe = /^-?\d+(\.\d{3})*(,\d+)?$/;
+  const curRe = /^(\$|US\$)-?\d[\d.]*,\d+$/;
+  const tickerRe = /^[A-Z][A-Z0-9]{0,9}$/;
+
+  const x0Of = (text) => items.find((it) => it.text === text)?.x0;
+  const activoX = x0Of("Activo");
+  const cantidadX = x0Of("Cantidad");
+  const diariaX = x0Of("diaria");
+  if (activoX == null || cantidadX == null || diariaX == null) {
+    throw new Error('No pudimos encontrar la tabla de "Mi Portafolio" en ese PDF -- ¿es realmente esa pantalla, imprimida a PDF?');
+  }
+  const tickerHi = activoX + 20;
+  const cantLo = cantidadX - 20, cantHi = diariaX - 2;
+
+  const linkIdxs = [];
+  items.forEach((it, i) => { if (/^\(\/Titulo\/Index\/\d+\)$/.test(it.text)) linkIdxs.push(i); });
+
+  const filas = [];
+  let start = 0;
+  for (const li of linkIdxs) {
+    const block = items.slice(start, li);
+    start = li + 1;
+    if (block.length === 0) continue;
+    const ticker = block.find((it) => tickerRe.test(it.text) && it.x0 <= tickerHi)?.text ?? null;
+    const cantidad = block.find((it) => bareRe.test(it.text) && it.x0 >= cantLo && it.x0 <= cantHi)?.text ?? null;
+    const monedas = block.filter((it) => curRe.test(it.text)).map((it) => it.text);
+    const ppcRaw = monedas.length >= 2 ? monedas[1] : null; // 1ro = Último precio, 2do = Precio promedio de compra
+    filas.push({
+      ticker,
+      cantidad: cantidad ? parseArgNumber(cantidad) : null,
+      ppc: ppcRaw ? parseArgNumber(ppcRaw) : null,
+      moneda: ppcRaw ? (ppcRaw.startsWith("US$") ? "USD" : "ARS") : null,
+    });
+  }
+  return filas;
+}
+
+// Cruza las dos vistas del portafolio (Tradicional: tickers reales: MEP:
+// PPC real en dólares) por POSICIÓN -- ambas vistas listan los mismos
+// activos en el mismo orden (confirmado con datos reales), así que el
+// enésimo activo de una es el enésimo de la otra. Usamos la Cantidad como
+// chequeo de seguridad cuando está disponible en las dos: si no coincide,
+// no confiamos en ese par y lo dejamos para completar a mano -- muchos
+// activos de esta cartera comparten la misma cantidad (varios "1", por
+// ejemplo), así que emparejar solo por cantidad sería ambiguo; emparejar
+// por posición y usar la cantidad como verificación es lo que sí funciona.
+function cruzarPortafolioIOL(filasTradicional, filasMep) {
+  const n = Math.min(filasTradicional.length, filasMep.length);
+  const encontrados = {}; // { ticker: "6.15" }
+  const revisar = [];
+  for (let i = 0; i < n; i++) {
+    const t = filasTradicional[i];
+    const m = filasMep[i];
+    const ticker = t.ticker;
+    if (!ticker || m.ppc == null || m.moneda !== "USD") {
+      revisar.push(ticker || `fila ${i + 1}`);
+      continue;
+    }
+    if (t.cantidad != null && m.cantidad != null && Math.abs(t.cantidad - m.cantidad) > 0.01) {
+      revisar.push(ticker); // las cantidades no coinciden -- mejor no confiar
+      continue;
+    }
+    encontrados[ticker] = m.ppc.toFixed(4);
+  }
+  return { encontrados, revisar };
+}
+
 function ImportarView({ C, user, fx }) {
   const [dragOver, setDragOver] = useState(false);
   const [broker, setBroker] = useState(null); // qué plataforma/parser -- ej "Balanz"
@@ -3952,6 +4045,47 @@ function ImportarView({ C, user, fx }) {
       e.target.value = ""; // permite volver a elegir el mismo archivo si hace falta
     }
   };
+
+  // IOL no tiene forma de exportar el PPC a un archivo -- en cambio, se
+  // completa a partir de DOS PDFs impresos del Portafolio (Tradicional, que
+  // trae el ticker real, y Dólar MEP, que trae el PPC real en dólares).
+  const handleIOLPdfs = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length !== 2) {
+      setInstrumentosMsg("Subí los DOS PDFs juntos (Tradicional y Dólar MEP) -- de a uno no alcanza para cruzarlos.");
+      e.target.value = "";
+      return;
+    }
+    setCargandoInstrumentos(true);
+    setInstrumentosMsg("");
+    try {
+      const [filasA, filasB] = await Promise.all(files.map(parseIOLPortfolioPdf));
+      // No sabemos cuál de los dos es "Tradicional" y cuál "Dólar MEP" --
+      // se distingue solo: en Dólar MEP, todos los PPC vienen en USD; en
+      // Tradicional, la mayoría vienen en pesos (ARS). El que tenga más
+      // filas en USD es el de Dólar MEP.
+      const usdCount = (filas) => filas.filter((f) => f.moneda === "USD").length;
+      const [filasTradicional, filasMep] = usdCount(filasA) >= usdCount(filasB) ? [filasB, filasA] : [filasA, filasB];
+      if (usdCount(filasMep) < filasMep.length * 0.5) {
+        throw new Error('No pudimos distinguir cuál PDF es "Dólar MEP" -- ¿subiste las dos vistas correctas del Portafolio?');
+      }
+      const { encontrados, revisar } = cruzarPortafolioIOL(filasTradicional, filasMep);
+      const tickers = Object.keys(encontrados);
+      if (tickers.length === 0) {
+        setInstrumentosMsg("No pudimos cruzar ningún activo entre los dos PDFs -- revisá que sean del Portafolio de IOL, impreso a PDF.");
+      } else {
+        setPpcCorrections((prev) => ({ ...prev, ...encontrados }));
+        const msg = `PPC completado automático para ${tickers.length} activos.`;
+        setInstrumentosMsg(revisar.length > 0 ? `${msg} Revisá a mano: ${revisar.join(", ")}.` : msg);
+      }
+    } catch (err) {
+      setInstrumentosMsg("No pudimos leer esos PDFs: " + (err.message || "error desconocido"));
+    } finally {
+      setCargandoInstrumentos(false);
+      e.target.value = "";
+    }
+  };
+
   const [errorMsg, setErrorMsg] = useState("");
   const [importaciones, setImportaciones] = useState(null); // null = cargando, [] = sin historial todavía
   const [borrandoId, setBorrandoId] = useState(null);
@@ -4298,7 +4432,7 @@ function ImportarView({ C, user, fx }) {
 
           {broker === "IOL" && (
             <div style={{ background: C.chipActive, border: `1px solid ${C.gold}`, borderRadius: 10, padding: 14, marginBottom: 22, fontSize: 12, color: C.text }}>
-              A diferencia de Balanz, en IOL no hay forma de exportar el PPC a un archivo -- después de importar el historial de movimientos, vas a tener que completarlo a mano (comparando "Tradicional" y "Dólar MEP" en tu Portafolio, cantidad por cantidad) si querés que coincida exacto con lo que ves en tu cuenta.
+              A diferencia de Balanz, en IOL no hay forma de exportar el PPC a un archivo -- pero después de importar el historial de movimientos, vas a poder completarlo automático subiendo dos PDFs de tu Portafolio (imprimí la vista "Tradicional" y la vista "Dólar MEP", cada una a PDF) y los cruzamos solos.
             </div>
           )}
 
@@ -4460,29 +4594,48 @@ function ImportarView({ C, user, fx }) {
 
           {preview.holdingsBalanz.length > 0 && (
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>¿El PPC no coincide con lo que ves en Balanz? (opcional)</div>
+              <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>¿El PPC no coincide con lo que ves en {broker}? (opcional)</div>
               <div style={{ fontSize: 12, color: C.faint, marginBottom: 10 }}>
-                Nuestro cálculo puede diferir un poco del que muestra Balanz (por amortizaciones u otros ajustes internos que no podemos replicar).
+                Nuestro cálculo puede diferir un poco del que muestra {broker} (por amortizaciones u otros ajustes internos que no podemos replicar).
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
-                <button
-                  type="button"
-                  onClick={() => document.getElementById("instrumentos-file-input").click()}
-                  disabled={cargandoInstrumentos}
-                  style={{ padding: "7px 14px", borderRadius: 8, border: `1px solid ${C.gold}`, background: "transparent", color: C.gold, fontSize: 12, cursor: cargandoInstrumentos ? "default" : "pointer" }}
-                >
-                  {cargandoInstrumentos ? "Leyendo..." : "Completar automático desde \"Mis Instrumentos\""}
-                </button>
-                <input
-                  id="instrumentos-file-input"
-                  type="file"
-                  accept=".xlsx,.xls"
-                  style={{ display: "none" }}
-                  onChange={handleInstrumentosFile}
-                />
-                <span style={{ fontSize: 11, color: C.faint }}>
-                  En Balanz: Cartera → Mis Instrumentos → activá el toggle USD → "Exportar a Excel"
-                </span>
+                {broker === "IOL" ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById("iol-pdf-input").click()}
+                      disabled={cargandoInstrumentos}
+                      style={{ padding: "7px 14px", borderRadius: 8, border: `1px solid ${C.gold}`, background: "transparent", color: C.gold, fontSize: 12, cursor: cargandoInstrumentos ? "default" : "pointer" }}
+                    >
+                      {cargandoInstrumentos ? "Leyendo..." : "Completar automático desde 2 PDFs (Tradicional + Dólar MEP)"}
+                    </button>
+                    <input id="iol-pdf-input" type="file" accept=".pdf" multiple style={{ display: "none" }} onChange={handleIOLPdfs} />
+                    <span style={{ fontSize: 11, color: C.faint }}>
+                      En tu Portafolio de IOL: imprimí (Ctrl+P) → Guardar como PDF, una vez con "Ver portafolio en: Tradicional" y otra con "Dólar MEP" -- subí los dos juntos.
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById("instrumentos-file-input").click()}
+                      disabled={cargandoInstrumentos}
+                      style={{ padding: "7px 14px", borderRadius: 8, border: `1px solid ${C.gold}`, background: "transparent", color: C.gold, fontSize: 12, cursor: cargandoInstrumentos ? "default" : "pointer" }}
+                    >
+                      {cargandoInstrumentos ? "Leyendo..." : "Completar automático desde \"Mis Instrumentos\""}
+                    </button>
+                    <input
+                      id="instrumentos-file-input"
+                      type="file"
+                      accept=".xlsx,.xls"
+                      style={{ display: "none" }}
+                      onChange={handleInstrumentosFile}
+                    />
+                    <span style={{ fontSize: 11, color: C.faint }}>
+                      En Balanz: Cartera → Mis Instrumentos → activá el toggle USD → "Exportar a Excel"
+                    </span>
+                  </>
+                )}
               </div>
               {instrumentosMsg && <div style={{ fontSize: 12, color: C.gain, marginBottom: 10 }}>{instrumentosMsg}</div>}
               <div style={{ fontSize: 11, color: C.faint, marginBottom: 10 }}>
