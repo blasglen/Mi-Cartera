@@ -1735,32 +1735,6 @@ function InvestmentDashboard({ user }) {
   const gananciaAbsTenencias = totalValueTenencias - totalCostTenencias;
   const totalPTenencias = pct(totalValueTenencias, totalCostTenencias);
 
-  // --- DEBUG TEMPORAL: comparar costo de Tenencias (avgCostUsd guardado) vs.
-  // costo recalculado por buildCostBasisTimeline (el que usa el gráfico de
-  // Inicio), activo por activo, para encontrar dónde sale la diferencia de
-  // ~US$20 entre ambos números. Sacar este bloque una vez resuelto. ---
-  React.useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const filas = byBroker.map((h) => {
-      const costAt = buildCostBasisTimeline(h.name, h.broker, fx);
-      const costoTablaPesos = h.avgCostUsd != null ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
-      const costoGraficoPesos = costAt(today);
-      return {
-        ticker: h.name,
-        broker: h.broker,
-        qty: h.qty,
-        avgCostUsdGuardado: h.avgCostUsd ?? null,
-        costoTablaUsd: Number((costoTablaPesos / fx).toFixed(4)),
-        costoGraficoUsd: Number((costoGraficoPesos / fx).toFixed(4)),
-        diferenciaUsd: Number(((costoTablaPesos - costoGraficoPesos) / fx).toFixed(4)),
-      };
-    });
-    const totalDiferencia = filas.reduce((s, f) => s + f.diferenciaUsd, 0);
-    console.log("%c[DEBUG] Diferencia total tabla vs gráfico: US$" + totalDiferencia.toFixed(2), "color:orange;font-weight:bold;font-size:14px");
-    console.log("[DEBUG] JSON completo (copiar y pegar todo):");
-    console.log(JSON.stringify(filas, null, 2));
-  }, [byBroker, fx]);
-
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
   const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
@@ -1834,9 +1808,18 @@ function InvestmentDashboard({ user }) {
   const investedAtStart = investedSeries[0]?.invertido || 0;
   const investedAtEnd = investedSeries[investedSeries.length - 1]?.invertido || 0;
   const netContribInRange = investedAtEnd - investedAtStart;
-  const pnlAbs = (rangeEndPoint.total - investedAtEnd) - (rangeStartPoint.total - investedAtStart);
+  const esRangoTodo = !useCustom && RANGE_PRESETS[rangeIdx]?.all;
+  // Caso especial "Todo": el primer punto del rango es el mismo día de tu
+  // primera compra, así que ese día "invertido" y "valor" YA NO son cero (la
+  // compra ya se hizo) -- y como el precio de cierre histórico de ese día
+  // rara vez coincide centavo a centavo con el precio real al que compraste,
+  // queda un resto de "ganancia/pérdida del día 1" que la resta de abajo
+  // termina filtrando. Para "Todo" evitamos ese ruido usando directamente la
+  // foto de HOY (mismos números que la tabla de Tenencias), en vez de restar
+  // contra un día 1 que en la práctica nunca es un cero perfecto.
+  const pnlAbs = esRangoTodo ? totalValueTenencias - totalCostTenencias : (rangeEndPoint.total - investedAtEnd) - (rangeStartPoint.total - investedAtStart);
   const pnlBase = rangeStartPoint.total + Math.max(netContribInRange, 0);
-  const pnlPct = pnlBase !== 0 ? (pnlAbs / pnlBase) * 100 : 0;
+  const pnlPct = esRangoTodo ? totalPTenencias : (pnlBase !== 0 ? (pnlAbs / pnlBase) * 100 : 0);
   const chartTrades = MOVIMIENTOS.filter(
     (m) =>
       (m.tipo === "Compra" || m.tipo === "Venta") &&
