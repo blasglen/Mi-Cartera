@@ -1735,6 +1735,36 @@ function InvestmentDashboard({ user }) {
   const gananciaAbsTenencias = totalValueTenencias - totalCostTenencias;
   const totalPTenencias = pct(totalValueTenencias, totalCostTenencias);
 
+  // --- DEBUG TEMPORAL: comparar costo de Tenencias (avgCostUsd guardado) vs.
+  // costo recalculado por buildCostBasisTimeline (el que usa el gráfico de
+  // Inicio), activo por activo, para encontrar dónde sale la diferencia de
+  // ~US$20 entre ambos números. Sacar este bloque una vez resuelto. ---
+  React.useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const filas = byBroker.map((h) => {
+      const costAt = buildCostBasisTimeline(h.name, h.broker, fx);
+      const costoTablaPesos = h.avgCostUsd != null ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
+      const costoGraficoPesos = costAt(today);
+      return {
+        ticker: h.name,
+        broker: h.broker,
+        qty: h.qty,
+        "avgCostUsd guardado": h.avgCostUsd ?? null,
+        "costo tabla (US$)": costoTablaPesos / fx,
+        "costo gráfico (US$)": costoGraficoPesos / fx,
+        "diferencia (US$)": (costoTablaPesos - costoGraficoPesos) / fx,
+      };
+    });
+    const conDiferencia = filas.filter((f) => Math.abs(f["diferencia (US$)"]) > 0.5);
+    if (conDiferencia.length > 0) {
+      console.log("%c[DEBUG] Activos con diferencia entre tabla y gráfico:", "color:orange;font-weight:bold");
+      console.table(conDiferencia);
+    } else {
+      console.log("[DEBUG] Sin diferencias > US$0.50 por activo (revisar redondeo acumulado).");
+      console.table(filas);
+    }
+  }, [byBroker, fx]);
+
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
   const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
