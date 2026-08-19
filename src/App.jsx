@@ -1203,13 +1203,21 @@ function buildQtyTimeline(ticker, broker) {
 // multiplicado por tu costo promedio real. A diferencia del valor de mercado,
 // esto no es una estimación -- sale directo de tus movimientos reales.
 // Costo invertido real, día por día -- reproduce el método de costo promedio
-// ponderado: cada compra suma cantidad y costo; cada venta descuenta la
+// ponderado, pero en DÓLARES reales (precioUsd: el dólar MEP histórico de la
+// fecha de cada operación, no el de hoy) y recién al final se vuelve a pesos
+// al dólar de HOY. Esto es clave: si sumáramos pesos nominales de fechas
+// distintas y dividiéramos todo por el dólar de hoy al mostrar (como hacía
+// antes), una compra vieja en pesos "chicos" quedaría en dólares artificial-
+// mente baja por la devaluación, e inflaría la ganancia mostrada -- eso era
+// lo que hacía que el gráfico de arriba (p.ej. +US$2.719) no coincidiera con
+// la ganancia real de la tabla de tenencias (p.ej. +US$1.463), que sí usa
+// avgCostUsd. Cada compra suma cantidad y costoUsd; cada venta descuenta la
 // proporción correspondiente del costo acumulado (no el costo total). Así el
 // "invertido" de una fecha vieja refleja lo que realmente habías puesto en
 // ese momento, no el promedio final aplicado hacia atrás. Los splits suman
-// cantidad igual que una compra pero a precio 0 -- no mueven el costo
+// cantidad igual que una compra pero a costo 0 -- no mueven el costo
 // invertido, solo diluyen el costo promedio por unidad (como corresponde).
-function buildCostBasisTimeline(ticker, broker) {
+function buildCostBasisTimeline(ticker, broker, fxHoy) {
   const trades = MOVIMIENTOS.filter(
     (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
   )
@@ -1217,27 +1225,31 @@ function buildCostBasisTimeline(ticker, broker) {
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
   const flatHoldings = flatQtyFallback(ticker, broker);
   const flatQty = flatHoldings.reduce((s, h) => s + h.qty, 0);
-  const flatCost = flatHoldings.reduce((s, h) => s + h.qty * h.avgCost, 0);
+  // Si el holding ya trae avgCostUsd (calculado al importar) lo usamos; si no
+  // (movimientos viejos sin ese dato), pesos ÷ dólar de HOY como respaldo --
+  // mejor aproximación disponible, mismo criterio que el resto de la app.
+  const flatCostUsd = flatHoldings.reduce((s, h) => s + h.qty * (h.avgCostUsd ?? (h.avgCost / fxHoy)), 0);
   return (date) => {
-    let qty = flatQty, cost = flatCost;
+    let qty = flatQty, costUsd = flatCostUsd;
     for (const t of trades) {
       if (t.fecha > date) break;
       if (t.tipo === "Compra" || t.tipo === "Split") {
         qty += t.cantidad;
-        cost += t.cantidad * t.precio; // precio es 0 en los splits
+        const precioUsd = t.precioUsd ?? (t.precio / fxHoy); // precio/precioUsd son 0 en los splits
+        costUsd += t.cantidad * precioUsd;
       } else if (qty > 0) {
-        const avgCostPerUnit = cost / qty;
+        const avgCostUsdPerUnit = costUsd / qty;
         const soldQty = Math.min(t.cantidad, qty);
-        cost -= soldQty * avgCostPerUnit;
+        costUsd -= soldQty * avgCostUsdPerUnit;
         qty -= soldQty;
       }
     }
-    return cost;
+    return costUsd * fxHoy; // se reexpresa en pesos al dólar de hoy, mismo criterio que "total"
   };
 }
 
-function buildInvestedSeries(holdings, dates) {
-  const perHolding = holdings.map((h) => buildCostBasisTimeline(h.name, h.broker));
+function buildInvestedSeries(holdings, dates, fxHoy) {
+  const perHolding = holdings.map((h) => buildCostBasisTimeline(h.name, h.broker, fxHoy));
   return dates.map((date) => ({
     date,
     invertido: perHolding.reduce((s, costAt) => s + costAt(date), 0),
@@ -1783,8 +1795,8 @@ function InvestmentDashboard({ user }) {
   const rangeEndPoint = [...scaledSeries].reverse().find((p) => p.date <= to) || scaledSeries[scaledSeries.length - 1];
   const chartDataRaw = scaledSeries.filter((p) => p.date >= rangeStartPoint.date && p.date <= rangeEndPoint.date);
   const investedSeries = useMemo(
-    () => buildInvestedSeries(byBroker, chartDataRaw.map((p) => p.date)),
-    [byBroker, chartDataRaw.length ? chartDataRaw[0].date : null, chartDataRaw.length ? chartDataRaw[chartDataRaw.length - 1].date : null]
+    () => buildInvestedSeries(byBroker, chartDataRaw.map((p) => p.date), fx),
+    [byBroker, fx, chartDataRaw.length ? chartDataRaw[0].date : null, chartDataRaw.length ? chartDataRaw[chartDataRaw.length - 1].date : null]
   );
   const chartData = chartDataRaw.map((p, i) => ({ ...p, invertido: investedSeries[i]?.invertido ?? null }));
   // Ganancia neta real del PERÍODO elegido: se compara la "ganancia no
