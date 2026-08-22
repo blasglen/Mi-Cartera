@@ -48,6 +48,7 @@ import {
   Lock,
   LogOut,
   Trash2,
+  Sparkles,
 } from "lucide-react";
 
 // ---------- Datos simulados (después se reemplazan por el import real) ----------
@@ -1398,6 +1399,7 @@ function closestPoint(dateStr) {
 
 const NAV = [
   { key: "inicio", label: "Inicio", icon: Home },
+  { key: "analisis", label: "Análisis de cartera", icon: Sparkles },
   { key: "buscar", label: "Buscar activo", icon: Search },
   { key: "novedades", label: "Novedades de mi cartera", icon: Bell },
   { key: "calculadora", label: "Calculadora", icon: Calculator },
@@ -1734,6 +1736,19 @@ function InvestmentDashboard({ user }) {
   const totalCostTenencias = tenenciasEnriquecidas.reduce((s, h) => s + h.cost, 0);
   const gananciaAbsTenencias = totalValueTenencias - totalCostTenencias;
   const totalPTenencias = pct(totalValueTenencias, totalCostTenencias);
+
+  // Para "Análisis de cartera" siempre miramos TODO (sin importar qué
+  // broker/categoría tengas seleccionado arriba) -- un análisis de riesgo
+  // parcial, sin avisar que es parcial, sería más confuso que útil.
+  const tenenciasCompletas = useMemo(() => {
+    return consolidateByName(holdingsLive).map((h) => {
+      const value = h.qty * h.price;
+      const usaCostoUsdReal = currency === "USD" && h.avgCostUsd != null;
+      const cost = usaCostoUsdReal ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
+      const p = usaCostoUsdReal ? pct(value / fx, h.avgCostUsd * h.qty) : pct(value, cost);
+      return { ...h, value, cost, p, usaCostoUsdReal };
+    });
+  }, [holdingsLive, currency, fx]);
 
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
@@ -2326,6 +2341,7 @@ function InvestmentDashboard({ user }) {
           )}
 
           {view === "novedades" && <NovedadesView C={C} f={f} fx={fx} />}
+          {view === "analisis" && <AnalisisView tenencias={tenenciasCompletas} f={f} C={C} />}
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} user={user} fx={fx} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
@@ -3315,6 +3331,175 @@ function HomeChartTooltip({ active, payload, label, C, f }) {
 // de bonos) de CORPORATE_EVENTS y COUPON_SCHEDULE, pero solo de los activos
 // que REALMENTE tenés en HOLDINGS (no cualquier ticker del universo de
 // búsqueda), y solo los que todavía no pasaron, ordenados por fecha.
+// Motor de reglas simple: mira la composición actual de la cartera (sin
+// IA, sin ninguna llamada a ningún servicio externo) y arma observaciones
+// en texto -- concentración, diversificación, ganadores/perdedores. Es
+// descriptivo, no es asesoramiento financiero ni una recomendación de
+// compra/venta.
+function generarAnalisis(tenencias, totalValue) {
+  const obs = []; // { tipo: 'alerta'|'info'|'ok', texto }
+  if (tenencias.length === 0 || totalValue <= 0) return obs;
+
+  const conValor = tenencias.filter((h) => h.value > 0);
+
+  // --- Concentración por activo individual ---
+  const ordenados = [...conValor].sort((a, b) => b.value - a.value);
+  const top = ordenados[0];
+  const topPct = (top.value / totalValue) * 100;
+  if (topPct >= 40) {
+    obs.push({ tipo: "alerta", texto: `${top.name} solo representa el ${topPct.toFixed(0)}% de toda tu cartera. Es una concentración alta: si algo le pasa a ese activo puntual, te afecta mucho más que si estuviera repartido.` });
+  } else if (topPct >= 25) {
+    obs.push({ tipo: "info", texto: `${top.name} es tu posición más grande, con el ${topPct.toFixed(0)}% de la cartera. No es alarmante, pero es la que más mueve el total.` });
+  }
+
+  const top3 = ordenados.slice(0, 3);
+  const top3Pct = (top3.reduce((s, h) => s + h.value, 0) / totalValue) * 100;
+  if (top3.length >= 3 && top3Pct >= 60) {
+    obs.push({ tipo: "info", texto: `Entre tus 3 posiciones más grandes (${top3.map((h) => h.name).join(", ")}) suman el ${top3Pct.toFixed(0)}% de la cartera.` });
+  }
+
+  // --- Concentración por categoría ---
+  const porCat = {};
+  for (const h of conValor) porCat[h.cat] = (porCat[h.cat] || 0) + h.value;
+  const catOrdenadas = Object.entries(porCat).sort((a, b) => b[1] - a[1]);
+  if (catOrdenadas.length > 0) {
+    const [catTop, catTopValue] = catOrdenadas[0];
+    const catTopPct = (catTopValue / totalValue) * 100;
+    if (catTopPct >= 50) {
+      obs.push({ tipo: "alerta", texto: `${catTopPct.toFixed(0)}% de tu cartera está en ${catTop}. Es una sola categoría de activo llevándose más de la mitad -- si esa categoría en particular tiene un mal momento, pega fuerte en el total.` });
+    } else if (catTopPct >= 35) {
+      obs.push({ tipo: "info", texto: `${catTop} es tu categoría más grande, con el ${catTopPct.toFixed(0)}% de la cartera.` });
+    }
+  }
+  if (catOrdenadas.length <= 2) {
+    obs.push({ tipo: "info", texto: `Tenés activos en solo ${catOrdenadas.length} categoría${catOrdenadas.length === 1 ? "" : "s"} (${catOrdenadas.map((c) => c[0]).join(", ")}). Repartir entre más tipos de activo suele bajar el riesgo general de la cartera.` });
+  }
+
+  // --- Concentración por broker ---
+  const porBroker = {};
+  for (const h of conValor) porBroker[h.broker] = (porBroker[h.broker] || 0) + h.value;
+  const brokers = Object.keys(porBroker);
+  if (brokers.length === 1) {
+    obs.push({ tipo: "info", texto: `Toda tu cartera está en un solo broker (${brokers[0]}). No afecta la diversificación de los activos en sí, pero es un solo lugar del que depende el acceso a todo.` });
+  }
+
+  // --- Diversificación general ---
+  if (conValor.length <= 3) {
+    obs.push({ tipo: "alerta", texto: `Tenés ${conValor.length} activo${conValor.length === 1 ? "" : "s"} en total. Con tan pocos, cada uno pesa mucho en el resultado final -- vale la pena pensar si es algo buscado o si conviene repartir más.` });
+  }
+
+  // --- Ganadores y perdedores destacados ---
+  const conCosto = conValor.filter((h) => h.cost > 0);
+  if (conCosto.length > 0) {
+    const porGanancia = [...conCosto].sort((a, b) => b.p - a.p);
+    const mejor = porGanancia[0];
+    const peor = porGanancia[porGanancia.length - 1];
+    if (mejor.p > 0) {
+      obs.push({ tipo: "ok", texto: `Tu mejor posición hasta ahora es ${mejor.name}, con +${mejor.p.toFixed(1)}% desde que la comprás.` });
+    }
+    if (peor.p < -20) {
+      obs.push({ tipo: "alerta", texto: `${peor.name} está ${peor.p.toFixed(1)}% por debajo de tu costo -- es tu peor posición ahora mismo, vale la pena revisar si sigue teniendo sentido para vos.` });
+    } else if (peor.p < -10) {
+      obs.push({ tipo: "info", texto: `${peor.name} está ${peor.p.toFixed(1)}% por debajo de tu costo.` });
+    }
+
+    const enPerdida = conCosto.filter((h) => h.p < 0);
+    if (enPerdida.length >= conCosto.length * 0.5 && conCosto.length >= 4) {
+      obs.push({ tipo: "info", texto: `${enPerdida.length} de tus ${conCosto.length} activos con costo cargado están en pérdida hoy. Puede ser una cartera formada recientemente, o un mal momento generalizado de mercado -- no necesariamente algo puntual de tus elecciones.` });
+    }
+  }
+
+  return obs;
+}
+
+function AnalisisView({ tenencias, f, C }) {
+  const totalValue = tenencias.reduce((s, h) => s + h.value, 0);
+  const totalCost = tenencias.reduce((s, h) => s + h.cost, 0);
+  const gananciaAbs = totalValue - totalCost;
+  const gananciaPct = pct(totalValue, totalCost);
+  const observaciones = useMemo(() => generarAnalisis(tenencias, totalValue), [tenencias, totalValue]);
+
+  const porCat = {};
+  for (const h of tenencias) if (h.value > 0) porCat[h.cat] = (porCat[h.cat] || 0) + h.value;
+  const catOrdenadas = Object.entries(porCat).sort((a, b) => b[1] - a[1]);
+
+  const colorDe = (tipo) => (tipo === "alerta" ? C.loss : tipo === "ok" ? C.gain : C.gold);
+  const iconoDe = (tipo) => (tipo === "alerta" ? "!" : tipo === "ok" ? "✓" : "i");
+
+  return (
+    <div>
+      <SectionTitle C={C} sub="Un vistazo automático a la composición de tu cartera completa -- concentración, diversificación y las posiciones que más se destacan. Es descriptivo, no una recomendación de compra/venta; para decisiones puntuales conviene un asesor.">
+        Análisis de cartera
+      </SectionTitle>
+
+      {tenencias.length === 0 ? (
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 24, fontSize: 13, color: C.faint, textAlign: "center" }}>
+          Todavía no tenés activos cargados -- importá alguna cartera para ver el análisis.
+        </div>
+      ) : (
+        <>
+          <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 20 }}>
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 16 }}>
+              <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Valor total</div>
+              <div style={{ fontSize: 20, fontWeight: 700 }}>{f(totalValue)}</div>
+            </div>
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 16 }}>
+              <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Ganancia / Pérdida</div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: gananciaAbs >= 0 ? C.gain : C.loss }}>
+                {gananciaAbs >= 0 ? "+" : ""}{f(gananciaAbs)} ({gananciaPct >= 0 ? "+" : ""}{gananciaPct.toFixed(1)}%)
+              </div>
+            </div>
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 16 }}>
+              <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Activos distintos</div>
+              <div style={{ fontSize: 20, fontWeight: 700 }}>{tenencias.filter((h) => h.value > 0).length}</div>
+            </div>
+          </div>
+
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10 }}>Observaciones</div>
+          {observaciones.length === 0 ? (
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, fontSize: 13, color: C.faint, marginBottom: 24 }}>
+              No encontramos nada llamativo para señalar -- tu cartera se ve razonablemente repartida.
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+              {observaciones.map((o, i) => (
+                <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, padding: "12px 14px" }}>
+                  <div style={{ minWidth: 20, height: 20, borderRadius: 999, background: colorDe(o.tipo), color: "#10161C", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+                    {iconoDe(o.tipo)}
+                  </div>
+                  <div style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{o.texto}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10 }}>Composición por categoría</div>
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
+            {catOrdenadas.map(([cat, valor], i) => {
+              const p = (valor / totalValue) * 100;
+              return (
+                <div key={cat} style={{ padding: "12px 16px", borderTop: i > 0 ? `1px solid ${C.rowLine}` : "none" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 6 }}>
+                    <span>{cat}</span>
+                    <span className="tabular" style={{ color: C.faint }}>{f(valor)} · {p.toFixed(1)}%</span>
+                  </div>
+                  <div style={{ height: 6, borderRadius: 999, background: C.rowLine, overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${p}%`, background: C.gold, borderRadius: 999 }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div style={{ fontSize: 11, color: C.faint, marginTop: 18, lineHeight: 1.5 }}>
+            Este análisis se calcula con reglas fijas a partir de tus tenencias actuales -- no usa ningún servicio de inteligencia artificial externo, no manda tus datos a ningún lado, y no es una recomendación de inversión.
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function NovedadesView({ C, f, fx }) {
   const todayStr = new Date().toISOString().slice(0, 10);
 
@@ -3916,19 +4101,37 @@ async function parseIOLPortfolioPdf(file) {
   const buf = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
 
-  const items = []; // { text, x0 }, todas las páginas concatenadas en orden
+  const rawItems = []; // { text, x0 }, todas las páginas concatenadas en orden
   for (let p = 1; p <= pdf.numPages; p++) {
     const page = await pdf.getPage(p);
     const content = await page.getTextContent();
     for (const it of content.items) {
       const text = (it.str || "").trim();
-      if (text) items.push({ text, x0: it.transform[4] });
+      if (text) rawItems.push({ text, x0: it.transform[4] });
+    }
+  }
+
+  // pdf.js a veces separa el símbolo de moneda del número en dos ítems
+  // distintos ("$" y "24.930,00" sueltos, en vez de "$24.930,00" junto) --
+  // sin este pegado, esos valores no matchean el patrón de moneda y se
+  // pierden. Los volvemos a unir cuando un ítem es literalmente "$" o "US$"
+  // y el siguiente ítem es un número.
+  const soloNumeroRe = /^-?\d[\d.]*,\d+$/;
+  const items = [];
+  for (let i = 0; i < rawItems.length; i++) {
+    const cur = rawItems[i];
+    if ((cur.text === "$" || cur.text === "US$") && rawItems[i + 1] && soloNumeroRe.test(rawItems[i + 1].text)) {
+      items.push({ text: cur.text + rawItems[i + 1].text, x0: cur.x0 });
+      i++; // saltea el número, ya se pegó
+    } else {
+      items.push(cur);
     }
   }
 
   const bareRe = /^-?\d+(\.\d{3})*(,\d+)?$/;
   const curRe = /^(\$|US\$)-?\d[\d.]*,\d+$/;
   const tickerRe = /^[A-Z][A-Z0-9]{0,9}$/;
+  const linkRe = /^\(\/Titulo\/Index\/\d+\)$/;
 
   const x0Of = (text) => items.find((it) => it.text === text)?.x0;
   const activoX = x0Of("Activo");
@@ -3940,16 +4143,28 @@ async function parseIOLPortfolioPdf(file) {
   const tickerHi = activoX + 20;
   const cantLo = cantidadX - 20, cantHi = diariaX - 2;
 
-  const linkIdxs = [];
-  items.forEach((it, i) => { if (/^\(\/Titulo\/Index\/\d+\)$/.test(it.text)) linkIdxs.push(i); });
+  // Los datos numéricos de cada fila (Cantidad, PPC, etc.) aparecen en el
+  // texto DESPUÉS del link (/Titulo/Index/...) de esa fila, pero ANTES del
+  // ticker de la fila siguiente -- así que el bloque de "esta fila" no va
+  // de link a link, va de ESTE ticker hasta el PRÓXIMO ticker. Un ticker
+  // "real" además tiene el link de su propia fila a 1-3 ítems de distancia
+  // (esto descarta basura de menú/header que por casualidad matchea el
+  // patrón de ticker pero no es realmente un activo de la tabla).
+  const tickerIdxs = [];
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    if (tickerRe.test(it.text) && it.x0 <= tickerHi) {
+      const tieneLinkCerca = items.slice(i + 1, i + 4).some((x) => linkRe.test(x.text));
+      if (tieneLinkCerca) tickerIdxs.push(i);
+    }
+  }
 
   const filas = [];
-  let start = 0;
-  for (const li of linkIdxs) {
-    const block = items.slice(start, li);
-    start = li + 1;
-    if (block.length === 0) continue;
-    const ticker = block.find((it) => tickerRe.test(it.text) && it.x0 <= tickerHi)?.text ?? null;
+  for (let k = 0; k < tickerIdxs.length; k++) {
+    const from = tickerIdxs[k];
+    const to = k + 1 < tickerIdxs.length ? tickerIdxs[k + 1] : items.length;
+    const block = items.slice(from, to);
+    const ticker = block[0].text;
     const cantidad = block.find((it) => bareRe.test(it.text) && it.x0 >= cantLo && it.x0 <= cantHi)?.text ?? null;
     const monedas = block.filter((it) => curRe.test(it.text)).map((it) => it.text);
     const ppcRaw = monedas.length >= 2 ? monedas[1] : null; // 1ro = Último precio, 2do = Precio promedio de compra
