@@ -11,6 +11,14 @@ jobs:
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
+        with:
+          # Usamos un Personal Access Token en vez del GITHUB_TOKEN por
+          # defecto: los pushes hechos con el token automático NO disparan
+          # otros workflows (es una protección de GitHub contra loops
+          # infinitos). Sin esto, este job actualiza los datos en el repo
+          # pero deploy.yml nunca se entera y el sitio publicado se queda
+          # viejo -- que es justo el bug que veníamos arrastrando.
+          token: ${{ secrets.GH_PAT }}
       - name: Instalar Node
         uses: actions/setup-node@v4
         with:
