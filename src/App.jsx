@@ -3597,11 +3597,11 @@ function mapBalanzCategoria(tipoInstrumento) {
   return "Acciones"; // fallback razonable, no debería pasar con el export real
 }
 
-// IOL: "OperacionesFinalizadas.xls" (Operaciones -> Operaciones Finalizadas
-// -> Exportar) NO es un .xls real -- es una tabla HTML con esa extensión
-// (confirmado con un archivo real). ExcelJS no la puede leer, así que se
-// parsea como HTML directo con DOMParser, buscando la primera fila con
-// varias celdas como encabezado.
+// IOL: "MovimientosHistoricos.xls" (Mi Cuenta -> Operaciones -> Detalle de
+// Operaciones -> "Todas" -> desde la primera operación) NO es un .xls real
+// -- es una tabla HTML con esa extensión (confirmado con un archivo real).
+// ExcelJS no la puede leer, así que se parsea como HTML directo con
+// DOMParser, buscando la primera fila con varias celdas como encabezado.
 function parseIOLHtmlTable(text) {
   const doc = new DOMParser().parseFromString(text, "text/html");
   const trs = Array.from(doc.querySelectorAll("table tr"));
@@ -3635,69 +3635,181 @@ function parseArgNumber(str) {
   return Number(s.replace(/\./g, "").replace(",", ".")) || 0;
 }
 
-// IOL no manda una columna de categoría como Balanz -- se infiere de la
-// Descripción (siempre dice "Cedear ..." para CEDEARs, "Bono(s) ..." para
-// bonos en ley extranjera) y del Tipo de Transacción (las suscripciones de
-// fondos y las suscripciones primarias de ONs tienen su propio tipo).
-function mapIOLCategoria(descripcion, tipoTransaccion) {
-  const d = (descripcion || "").toLowerCase();
-  if (d.startsWith("cedear")) return "CEDEARs";
-  if (d.includes("bono")) return "Bonos";
-  if (tipoTransaccion === "Suscripción FCI") return "Fondos";
-  if (tipoTransaccion === "Suscripcion Primaria") return "Obligaciones Negociables";
-  return "Acciones";
+// IOL no manda una columna de categoría -- se infiere del propio ticker,
+// comparando contra listas conocidas (igual criterio que otras partes de la
+// app, ej. PLATAFORMAS_CEDEAR_AR / KNOWN_SPLITS). Con MovimientosHistoricos
+// ya no tenemos ni "Descripción" ni "Tipo de Instrumento" para inferir --
+// solo el ticker -- así que esto reemplaza a mapIOLCategoria.
+const IOL_BONOS = new Set(["AL29", "AL30", "AL30D", "AE38", "GD29", "GD35", "GD38", "GD41", "GD46"]);
+const IOL_ACCIONES_AR = new Set(["BBAR", "BMA", "CEPU", "GGAL", "GGALX", "YPFD", "PAMP", "TGSU2", "LOMA", "SUPV", "TXAR", "ALUA", "CRES", "COME", "TECO2", "EDN", "TRAN", "CVH", "MIRG", "VALO", "BYMA"]);
+const IOL_FONDOS = new Set(["ADCGLOA", "CONIOLA", "IOLDOLD", "PRPEDOB"]);
+const IOL_ONS = new Set(["PLC2O"]); // se van a ir agregando ONs a mano a medida que aparezcan
+
+function mapIOLCategoriaPorTicker(ticker) {
+  if (IOL_BONOS.has(ticker)) return "Bonos";
+  if (IOL_ONS.has(ticker)) return "Obligaciones Negociables";
+  if (IOL_FONDOS.has(ticker)) return "Fondos";
+  if (IOL_ACCIONES_AR.has(ticker)) return "Acciones";
+  return "CEDEARs"; // todo lo que no reconocemos es casi siempre una acción de EEUU
 }
 
+// A veces IOL usa el nombre largo de un instrumento en vez de su ticker
+// corto en un mismo evento puntual (confirmado con datos reales: la
+// Transferencia de Titulos de la ON Pluspetrol aparece como "PLUSPETROL
+// CL02" mientras que su suscripción original usa "PLC2O") -- normalizamos
+// los casos conocidos acá.
+const IOL_ALIAS_TICKER = { "PLUSPETROL CL02": "PLC2O" };
+
 async function parseIOLMovimientos(rows, broker = "IOL", fxHoy = 1) {
-  const cargables = [];
   const ignoradas = {};
-  const crudo = [];
+  const crudo = []; // { fecha, fechaLiquidacion, activo, tipo: 'Compra'|'Venta', cantidad, precioOriginal, esDolares, esTransferencia }
   const fechasNecesarias = new Set();
 
+  // "Compra(AAPL)", "Venta(SPY)", "Suscripción FCI(CONIOLA)",
+  // "Suscripcion Primaria(PLC2O)", "Transferencia de Titulos IN - (MELI)",
+  // "Transferencia de Titulos OUT - (PLUSPETROL CL02)" -- el resto
+  // (dividendos, renta, amortización, depósitos/extracciones, créditos)
+  // no mueve tenencias y se ignora acá.
+  const TIPO_PATTERNS = [
+    { re: /^Compra\((.+)\)$/, tipo: "Compra", esTransferencia: false },
+    { re: /^Venta\((.+)\)$/, tipo: "Venta", esTransferencia: false },
+    { re: /^Suscripci[oó]n FCI\((.+)\)$/, tipo: "Compra", esTransferencia: false },
+    { re: /^Suscripci[oó]n Primaria\((.+)\)$/, tipo: "Compra", esTransferencia: false },
+    { re: /^Transferencia de Titulos IN - \((.+)\)$/, tipo: "Compra", esTransferencia: true },
+    { re: /^Transferencia de Titulos OUT - \((.+)\)$/, tipo: "Venta", esTransferencia: true },
+  ];
+
+  // Agrupamos por Nro. de Boleto: algunas ventas de bonos en dólares vienen
+  // partidas en dos filas con el MISMO boleto (una pata con un impuesto
+  // suelto en pesos, otra con el producido real en dólares) -- si las
+  // procesáramos las dos, duplicaríamos la cantidad vendida. Nos quedamos
+  // con la pata de mayor monto (la real) y de ahí sacamos precio y fecha;
+  // la otra pata es un costo menor (centavos) que no vale la pena perseguir.
+  const porBoleto = new Map(); // key: boleto|ticker|tipo -> [filas]
+  const sinBoleto = [];
+
   for (const row of rows) {
-    const tipoTx = String(row["Tipo Transacción"] ?? "").trim();
-    const esCompra = tipoTx === "Compra" || tipoTx === "Suscripción FCI" || tipoTx === "Suscripcion Primaria";
-    const esVenta = tipoTx === "Venta";
-    if (!esCompra && !esVenta) {
-      ignoradas[tipoTx || "(sin tipo)"] = (ignoradas[tipoTx || "(sin tipo)"] || 0) + 1;
+    const tipoMovTexto = String(row["Tipo Mov."] ?? "").trim();
+    let match = null;
+    for (const p of TIPO_PATTERNS) {
+      const m = tipoMovTexto.match(p.re);
+      if (m) { match = { ...p, tickerCrudo: m[1].trim() }; break; }
+    }
+    if (!match) {
+      ignoradas[tipoMovTexto || "(sin tipo)"] = (ignoradas[tipoMovTexto || "(sin tipo)"] || 0) + 1;
       continue;
     }
+    // El ticker puede venir con sufijo " US$" (ej. "AAPL US$") -- la moneda
+    // real la sacamos de "Tipo Cuenta", más confiable, así que el sufijo
+    // solo estorba y lo sacamos.
+    let ticker = match.tickerCrudo.replace(/\s+US\$$/, "").trim();
+    ticker = IOL_ALIAS_TICKER[ticker] || ticker;
 
-    const ticker = String(row["Simbolo"] ?? "").trim();
-    const fecha = normalizeFechaArg(row["Fecha Transacción"]);
-    const fechaLiquidacion = normalizeFechaArg(row["Fecha Liquidación"]) || fecha;
+    const boleto = String(row["Nro. de Boleto"] ?? "0").trim();
+    const fila = { ...row, _tipo: match.tipo, _esTransferencia: match.esTransferencia, _ticker: ticker };
+    if (boleto && boleto !== "0") {
+      const key = `${boleto}|${ticker}|${match.tipo}`;
+      if (!porBoleto.has(key)) porBoleto.set(key, []);
+      porBoleto.get(key).push(fila);
+    } else {
+      sinBoleto.push(fila);
+    }
+  }
+
+  const filasAProcesar = [...sinBoleto];
+  for (const filas of porBoleto.values()) {
+    if (filas.length === 1) { filasAProcesar.push(filas[0]); continue; }
+    // Nos quedamos con la pata de mayor |Monto| (la real); sumamos los
+    // gastos de las otras patas para no perderlos del todo.
+    const conMonto = filas.map((f) => ({ f, monto: Math.abs(parseArgNumber(f["Monto"])) }));
+    conMonto.sort((a, b) => b.monto - a.monto);
+    const principal = conMonto[0].f;
+    const gastosExtra = conMonto.slice(1).reduce((s, x) => s + Math.abs(parseArgNumber(x.f["Comis."])) + Math.abs(parseArgNumber(x.f["Iva Com."])) + Math.abs(parseArgNumber(x.f["Otros Imp."])), 0);
+    filasAProcesar.push({ ...principal, _gastosExtra: gastosExtra });
+  }
+
+  for (const row of filasAProcesar) {
+    const tipo = row._tipo;
+    const ticker = row._ticker;
+    const fecha = normalizeFechaArg(row["Concert."]);
+    const fechaLiquidacion = normalizeFechaArg(row["Liquid."]) || fecha;
     if (!ticker || !fecha) continue;
 
-    const cantidad = parseArgNumber(row["Cantidad"]);
-    const precioCrudo = parseArgNumber(row["Precio Ponderado"]);
+    const cantidad = parseArgNumber(row["Cant. titulos"]);
+    const precioRaw = parseArgNumber(row["Precio"]);
     const monto = parseArgNumber(row["Monto"]);
-    if (cantidad <= 0 || precioCrudo <= 0) continue;
+    const gastos = Math.abs(parseArgNumber(row["Comis."])) + Math.abs(parseArgNumber(row["Iva Com."])) + Math.abs(parseArgNumber(row["Otros Imp."])) + (row._gastosExtra || 0);
 
-    // Bonos y ONs cotizan "cada 100 de nominal" -- en vez de adivinar por
-    // categoría, lo verificamos con el propio Monto de la fila: si
-    // Cantidad×Precio no da el Monto real, es porque hay que dividir el
-    // precio por 100. Más confiable que una lista de tickers a mano.
-    const directo = cantidad * precioCrudo;
-    const dividido = directo / 100;
-    const usaDividido = monto > 0 && Math.abs(dividido - monto) < Math.abs(directo - monto);
-    const precioPorUnidad = usaDividido ? precioCrudo / 100 : precioCrudo;
+    const tipoCuenta = String(row["Tipo Cuenta"] ?? "");
+    const esDolares = tipoCuenta.includes("Dolares") || tipoCuenta.includes("Dólares");
 
-    const moneda = String(row["Moneda"] ?? "").trim();
-    const esDolares = moneda === "US$";
-    fechasNecesarias.add(fechaLiquidacion);
+    // El Monto de este archivo ya viene NETO de gastos (a diferencia del
+    // otro export de IOL) -- en vez de adivinar si hay que dividir el
+    // Precio por 100 (bonos/ONs cotizan cada 100 nominal), reconstruimos el
+    // precio real por unidad directamente desde el Monto: así funciona
+    // igual para bonos, ONs y todo lo demás, sin ninguna tabla de casos.
+    let cantidadFinal = cantidad;
+    let precioPorUnidad;
+    if (tipo === "Compra" && /^Suscripci[oó]n FCI/.test(String(row["Tipo Mov."]))) {
+      // Los fondos operan con cantidades fraccionarias, pero esta columna
+      // las trunca a entero -- reconstruimos la cantidad real desde el
+      // Monto (que sí tiene toda la precisión) dividido el precio (que
+      // también viene completo, sin necesidad de /100 en fondos).
+      if (precioRaw <= 0) continue;
+      cantidadFinal = (Math.abs(monto) - gastos) / precioRaw;
+      precioPorUnidad = precioRaw;
+    } else {
+      if (cantidad <= 0) continue;
+      const brutoNeto = Math.abs(monto) - gastos; // gastos siempre restan valor, compra o venta
+      if (brutoNeto <= 0 && monto !== 0) continue; // dato inconsistente, mejor no cargarlo mal
+      precioPorUnidad = monto === 0 ? 0 : brutoNeto / cantidad; // 0 en transferencias sin precio informado
+    }
+    if (cantidadFinal <= 0) continue;
 
+    if (esDolares) fechasNecesarias.add(fechaLiquidacion);
     crudo.push({
       fecha,
       activo: ticker,
-      tipo: esCompra ? "Compra" : "Venta",
-      cantidad,
+      tipo,
+      cantidad: cantidadFinal,
       precioOriginal: precioPorUnidad,
       esDolares,
+      esTransferencia: row._esTransferencia,
       fechaLiquidacion,
       broker,
-      cat: mapIOLCategoria(row["Descripción"], tipoTx),
+      cat: mapIOLCategoriaPorTicker(ticker),
     });
   }
+
+  // Salvaguarda: si dos filas son IDÉNTICAS (misma fecha, ticker, cantidad
+  // y tipo -- confirmado con datos reales, caso GGALX con dos
+  // "Transferencia de Titulos IN" iguales el mismo día), las tratamos como
+  // una sola. Es más probable que sea una fila duplicada en el export de
+  // IOL que haber recibido la misma cantidad exacta dos veces separadas;
+  // además, el resultado neto (0 después de la venta posterior) coincide
+  // con lo que la cartera real muestra hoy. Si esto está mal para algún
+  // caso puntual, avisar para ajustarlo.
+  const vistos = new Set();
+  const crudoSinDuplicados = crudo.filter((m) => {
+    const k = `${m.fecha}|${m.activo}|${m.cantidad.toFixed(4)}|${m.tipo}|${m.esTransferencia}`;
+    if (vistos.has(k)) return false;
+    vistos.add(k);
+    return true;
+  });
+
+  // Algunas suscripciones primarias de ONs quedan duplicadas por un
+  // movimiento interno de IOL: una "Transferencia OUT" del mismo día y la
+  // misma cantidad que la suscripción real (confirmado con datos reales,
+  // caso PLC2O) -- no es una venta real, es el mismo evento contado dos
+  // veces. Si una Transferencia (IN o OUT) tiene, ese mismo día y para el
+  // mismo ticker y cantidad, otro movimiento real de signo contrario, la
+  // descartamos y nos quedamos con el movimiento real.
+  const clave = (m) => `${m.fecha}|${m.activo}|${m.cantidad.toFixed(4)}`;
+  const noTransferenciaPorClave = new Set(crudoSinDuplicados.filter((m) => !m.esTransferencia).map(clave));
+  const crudoFiltrado = crudoSinDuplicados.filter((m) => {
+    if (!m.esTransferencia) return true;
+    return !noTransferenciaPorClave.has(clave(m));
+  });
 
   // Mismo mecanismo que Balanz: dólar MEP histórico real por fecha de
   // liquidación, una sola vez por fecha.
@@ -3707,7 +3819,8 @@ async function parseIOLMovimientos(rows, broker = "IOL", fxHoy = 1) {
     await new Promise((r) => setTimeout(r, 150));
   }
 
-  for (const m of crudo) {
+  const cargables = [];
+  for (const m of crudoFiltrado) {
     const fxDeEseDia = fxPorFecha[m.fechaLiquidacion] || fxHoy;
     const precioFinal = m.esDolares ? m.precioOriginal * fxDeEseDia : m.precioOriginal;
     const precioUsd = m.esDolares ? m.precioOriginal : m.precioOriginal / fxDeEseDia;
@@ -3727,13 +3840,17 @@ async function parseIOLMovimientos(rows, broker = "IOL", fxHoy = 1) {
   return { cargables: [...cargables, ...splitsFaltantes], ignoradas };
 }
 
-// "2/1/2024 11:15:20" o "4/1/2024" (día/mes/año, con o sin hora) -> YYYY-MM-DD.
+// "2/1/2024 11:15:20" o "4/1/2024" (Fecha Transacción/Liquidación, año de 4
+// dígitos) -- "13/07/26" (Concert./Liquid. de MovimientosHistoricos.xls,
+// año de 2 dígitos) -> YYYY-MM-DD. Ambos formatos aparecen según el archivo
+// de IOL que se esté leyendo.
 function normalizeFechaArg(value) {
   if (!value) return null;
   const soloFecha = String(value).trim().split(" ")[0];
-  const m = soloFecha.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const m = soloFecha.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
   if (!m) return null;
-  const [, d, mo, y] = m;
+  const [, d, mo, yRaw] = m;
+  const y = yRaw.length === 2 ? `20${yRaw}` : yRaw;
   return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`;
 }
 
@@ -4046,10 +4163,10 @@ const BALANZ_INSTRUCTIONS = [
 
 const IOL_INSTRUCTIONS = [
   { title: "Iniciá sesión en IOL (InvertirOnline)", desc: "Entrá a tu cuenta con tu usuario habitual." },
-  { title: "Andá a Mi Cuenta → Operaciones → Detalle de Operaciones", desc: "Ahí vas a encontrar el historial completo de todo lo que compraste y vendiste." },
-  { title: 'Elegí "Todas" en el tipo de operación', desc: "Así se incluyen compras, ventas y suscripciones (fondos y ONs) en un solo archivo." },
+  { title: "Andá a Mi Cuenta → Movimientos → Detalle de Movimientos", desc: "Ahí vas a encontrar el historial completo de todo lo que pasó en tu cuenta: compras, ventas, dividendos, transferencias, etc." },
+  { title: 'Elegí "Todas" en el tipo de operación', desc: "Así se incluye todo en un solo archivo -- compras, ventas, suscripciones (fondos y ONs), transferencias de títulos, dividendos y pagos de renta." },
   { title: "Elegí el rango de fechas", desc: "Poné como \"desde\" la fecha de tu primera inversión, y como \"hasta\" hoy -- así se incluye todo tu historial." },
-  { title: "Descargá / exportá el archivo", desc: "Va a bajar un archivo llamado OperacionesFinalizadas.xls (aunque diga .xls, es el único que necesitás -- no hace falta ningún otro para dar de alta la cuenta)." },
+  { title: "Descargá / exportá el archivo", desc: "Va a bajar un archivo llamado MovimientosHistoricos.xls (aunque diga .xls, es el único que necesitás -- no hace falta ningún otro para dar de alta la cuenta)." },
   { title: "Subilo acá abajo", desc: "Arrastralo al recuadro, o hacé click para elegirlo. Por ahora, un archivo a la vez." },
 ];
 // El PPC que muestra IOL en pantalla (Portafolio) no se puede exportar a
@@ -4461,11 +4578,14 @@ function ImportarView({ C, user, fx }) {
       for (const m of result.cargables) catByTicker[m.activo] = m.cat;
       const holdingsBalanz = recomputeHoldingsForBroker(movimientosFinal, nombreCartera, prevHoldings, catByTicker);
 
-      // Los bonos se usan seguido para comprar dólar MEP (comprar hoy,
-      // vender al día siguiente) -- si el archivo tiene el ciclo completo,
-      // esto ya da 0 solo. Pero si queda un resto, mejor confirmarlo con
-      // la persona en vez de asumir que es una tenencia real.
-      const bondsToConfirm = holdingsBalanz.filter((h) => h.cat === "Bonos" && h.qty > 0);
+      // Los bonos (y las ONs, mismo caso) se usan seguido para comprar dólar
+      // MEP (comprar hoy, vender al día siguiente, a veces "canjeando" entre
+      // la especie en pesos y su par en dólares) -- si el archivo tiene el
+      // ciclo completo, esto ya da 0 solo. Pero si queda un resto (incluso
+      // negativo, señal de que falta algún movimiento de conversión que el
+      // archivo no registra como tal), mejor confirmarlo con la persona en
+      // vez de asumir que el número calculado es una tenencia real.
+      const bondsToConfirm = holdingsBalanz.filter((h) => (h.cat === "Bonos" || h.cat === "Obligaciones Negociables") && Math.abs(h.qty) > 0.01);
       const initialAnswers = {};
       for (const b of bondsToConfirm) initialAnswers[b.name] = null;
 
@@ -4687,7 +4807,7 @@ function ImportarView({ C, user, fx }) {
             <div style={{ fontSize: 14, marginBottom: 4 }}>
               {broker === "Balanz"
                 ? 'Arrastrá movimientos.xlsx (y, si querés, también "Mis Instrumentos") acá, o hacé click para elegirlos'
-                : "Arrastrá OperacionesFinalizadas.xls acá, o hacé click para elegirlo"}
+                : "Arrastrá MovimientosHistoricos.xls acá, o hacé click para elegirlo"}
             </div>
             <div style={{ fontSize: 12, color: C.faint }}>.xlsx — máx. 10MB por archivo — los reconocemos automáticamente</div>
           </div>
