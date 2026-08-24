@@ -1155,7 +1155,16 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
     const hist = historyCache?.[holding.name];
     if (hist && hist.length > 0) {
       const ultimo = hist[hist.length - 1];
-      if (ultimo?.price > 0) return ultimo.price;
+      if (ultimo?.price > 0) {
+        // Los bonos y ONs cotizan "cada 100 de nominal" -- el precio en
+        // vivo de data912 ya viene dividido más arriba, pero este
+        // histórico cacheado (para lo que solo se consigue "vía IOL":
+        // PLC2O, GD38, GD41 cuando data912 no responde, etc.) guarda el
+        // mismo precio crudo "por cada 100" -- sin este ajuste, salía
+        // ~100 veces más chico de lo real.
+        if (holding.cat === "Bonos" || holding.cat === "Obligaciones Negociables") return ultimo.price / 100;
+        return ultimo.price;
+      }
     }
   }
   return holding.price; // ni en vivo ni histórico usable -- se mantiene el estimado
@@ -1715,6 +1724,22 @@ function InvestmentDashboard({ user }) {
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
+
+  // --- DEBUG TEMPORAL: ver por qué PRPEDOB/ADCGLOA/IOLDOLD dan precio en
+  // vivo US$0. Sacar este bloque una vez resuelto. ---
+  React.useEffect(() => {
+    for (const ticker of ["PRPEDOB", "ADCGLOA", "IOLDOLD"]) {
+      const h = HOLDINGS.find((x) => x.name === ticker);
+      const hist = historyCache?.[ticker];
+      console.log(`%c[DEBUG] ${ticker}`, "color:orange;font-weight:bold", {
+        holdingPrice: h?.price,
+        holdingCat: h?.cat,
+        livePricesTiene: livePrices?.[ticker],
+        historyCacheLength: hist?.length,
+        historyCacheUltimos3: hist?.slice(-3),
+      });
+    }
+  }, [livePrices, historyCache]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
