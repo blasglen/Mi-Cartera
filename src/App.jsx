@@ -1728,18 +1728,24 @@ function InvestmentDashboard({ user }) {
   // --- DEBUG TEMPORAL: ver por qué PRPEDOB/ADCGLOA/IOLDOLD dan precio en
   // vivo US$0. Sacar este bloque una vez resuelto. ---
   React.useEffect(() => {
+    if (!historyCache || Object.keys(historyCache).length === 0) return; // esperar a que cargue
     for (const ticker of ["PRPEDOB", "ADCGLOA", "IOLDOLD"]) {
       const h = HOLDINGS.find((x) => x.name === ticker);
+      if (!h) continue;
+      const resultado = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
       const hist = historyCache?.[ticker];
-      console.log(`%c[DEBUG] ${ticker}`, "color:orange;font-weight:bold", {
-        holdingPrice: h?.price,
-        holdingCat: h?.cat,
-        livePricesTiene: livePrices?.[ticker],
-        historyCacheLength: hist?.length,
-        historyCacheUltimos3: hist?.slice(-3),
-      });
+      console.log(`%c[DEBUG] ${ticker}`, "color:orange;font-weight:bold");
+      console.log(JSON.stringify({
+        holdingPriceOriginal: h.price,
+        holdingCat: h.cat,
+        fx,
+        resultadoLiveAdjustedPrice: resultado,
+        livePricesTiene: livePrices?.[ticker] ?? null,
+        historyCacheLength: hist?.length ?? null,
+        historyCacheUltimos3: hist?.slice(-3) ?? null,
+      }, null, 2));
     }
-  }, [livePrices, historyCache]);
+  }, [livePrices, historyCache, fx]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
