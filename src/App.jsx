@@ -1035,9 +1035,9 @@ async function fetchLivePrices() {
 // generado una vez al día por .github/workflows/update-prices.yml.
 async function fetchHistoryCache() {
   const res = await fetchWithTimeout(dataUrl("history.json"));
-  if (!res.ok) return { history: {}, coverage: null };
+  if (!res.ok) return { history: {}, coverage: null, cedearsViaIol: [] };
   const data = await res.json();
-  return { history: data.history || {}, coverage: data.coverage || null };
+  return { history: data.history || {}, coverage: data.coverage || null, cedearsViaIol: data.cedearsViaIol || [] };
 }
 
 const COINGECKO_IDS = {
@@ -1131,7 +1131,7 @@ async function fetchAssetHistory(type, ticker, cat) {
 // está guardado en pesos por unidad. Confirmado con datos reales del usuario
 // (Balanz: GD38 a u$s0,8466/unidad; data912: "GD38" sin sufijo = ARS 1293,60,
 // cada 100 nominal) -- ya está en pesos, solo falta dividir por 100.
-function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
+function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol) {
   if (holding.cat === "Cripto") {
     const usd = cryptoUsd?.[holding.name];
     return usd != null ? usd * fx : holding.price; // sin dato en vivo, se mantiene el estimado
@@ -1142,16 +1142,20 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
     return raw;
   }
   // Sin dato en vivo de data912 (pasa con todo lo que viene solo por IOL:
-  // CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O, las ONs) -- antes de rendirse
-  // al precio fijo viejo, usamos el último punto real del histórico
-  // cacheado (se actualiza todos los días vía el cron), que es mucho más
-  // reciente que lo que haya quedado hardcodeado al cargar la tenencia.
-  // OJO: esto NO vale para CEDEARs -- su histórico se guarda en dólares
-  // crudos de la acción real en EEUU, no en el precio del CEDEAR en pesos
-  // (necesita un reescalado que depende de tener un precio en vivo de
-  // referencia, que es justo lo que no tenemos acá). Sin ese reescalado,
-  // usar el crudo directo da un precio ~1500 veces más chico.
-  if (holding.cat !== "CEDEARs") {
+  // CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O, las ONs, y ahora también la
+  // mayoría de los CEDEARs -- ver más abajo) -- antes de rendirse al precio
+  // fijo viejo, usamos el último punto real del histórico cacheado (se
+  // actualiza todos los días vía el cron), que es mucho más reciente que lo
+  // que haya quedado hardcodeado al cargar la tenencia.
+  // Un CEDEAR puntual solo entra acá si esta corrida no lo consiguió vía
+  // IOL (cedearsViaIol no lo incluye) -- ahí seguimos excluyéndolo, porque
+  // su histórico de respaldo (data912) viene en dólares crudos de la
+  // acción real en EE.UU., no en el precio del CEDEAR en pesos (necesita
+  // un reescalado que depende de tener un precio en vivo de referencia,
+  // que es justo lo que no tenemos acá). Sin ese reescalado, usar el crudo
+  // directo da un precio ~1500 veces más chico.
+  const esCedearViaIol = holding.cat === "CEDEARs" && cedearsViaIol?.includes(holding.name);
+  if (holding.cat !== "CEDEARs" || esCedearViaIol) {
     const hist = historyCache?.[holding.name];
     if (hist && hist.length > 0) {
       const ultimo = hist[hist.length - 1];
@@ -1163,6 +1167,9 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
         //   unidad -- sin ningún ajuste (confirmado con PLC2O: el crudo
         //   cacheado ronda el mismo orden que qty*precio-real, dividir por
         //   100 acá lo dejaba 100 veces más chico).
+        // - CEDEARs vía IOL (esCedearViaIol): cotización real del CEDEAR
+        //   en BCBA, YA en pesos por unidad -- mismo caso que las ONs, sin
+        //   ningún ajuste.
         // - Fondos DOLARIZADOS (PRPEDOB, ADCGLOA, IOLDOLD -- "Premier
         //   Performance Dólares", "Adcap Renta Dólar", "IOL Dólar Ahorro
         //   Plus"): vienen en dólares crudos por unidad -- hay que
@@ -1308,7 +1315,7 @@ function computeEarliestTradeDate() {
 }
 let EARLIEST_TRADE_DATE = computeEarliestTradeDate();
 
-function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd, fx) {
+function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd, fx, cedearsViaIol) {
   const uniqueTickers = [...new Map(holdings.map((h) => [`${h.name}__${h.broker}`, h])).values()];
   const today = new Date();
   const start = new Date(EARLIEST_TRADE_DATE);
@@ -1329,28 +1336,42 @@ function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd
       const historyMap = {};
       for (const p of hist) historyMap[p.date] = p.price;
       const sortedDates = Object.keys(historyMap).sort();
-      // Las CEDEARs se cachean en dólares reales del activo subyacente, no
-      // en pesos -- y como cotizan con un ratio propio (no son 1:1 con la
-      // acción real), hace falta reescalar al ratio ARS/USD real de HOY
-      // (mismo truco que "Buscar activo"), o el valor sale ~1000x más chico.
+      const ultimaFechaCacheada = sortedDates[sortedDates.length - 1];
+      // Las CEDEARs sourced from data912 se cachean en dólares reales del
+      // activo subyacente, no en pesos -- y como cotizan con un ratio propio
+      // (no son 1:1 con la acción real), hace falta reescalar al ratio
+      // ARS/USD real de HOY (mismo truco que "Buscar activo"), o el valor
+      // sale ~1000x más chico. Los CEDEARs conseguidos vía la API de IOL
+      // (cedearsViaIol) son la cotización real del CEDEAR día por día, YA en
+      // pesos -- no tienen ese problema de ratio, mismo caso que la cripto.
       // La cripto, confirmado con datos reales del caché, YA viene en pesos
       // reales de cada fecha (no en dólares como se asumía antes) -- así que
       // no necesita ningún reescalado, se usa el precio cacheado tal cual,
       // igual que Acciones/Bonos/ONs.
       let scaleFix = 1;
-      if (h.cat === "CEDEARs") {
+      if (h.cat === "CEDEARs" && !cedearsViaIol?.includes(h.name)) {
         const livePriceArs = livePrices?.[h.name];
-        const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
+        const lastHistUsd = historyMap[ultimaFechaCacheada];
         if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
       }
       return {
+        ticker: h.name,
+        broker: h.broker,
+        qtyAt,
         valueAt: (date) => {
+          // Más allá del último dato real cacheado no hay forma de saber
+          // el precio de ESE día -- usar el cociente de siempre ahí igual
+          // da, por cancelación matemática, el mismo precio en vivo de
+          // hoy (no cambia el número), pero dejarlo explícito documenta
+          // la limitación en vez de esconderla detrás de una fórmula que
+          // "por casualidad" da lo mismo.
+          if (date > ultimaFechaCacheada) return qtyAt(date) * h.price;
           const raw = priceAt(historyMap, sortedDates, date);
           return qtyAt(date) * (raw != null ? raw * scaleFix : h.price);
         },
       };
     }
-    return { valueAt: (date) => qtyAt(date) * h.price };
+    return { ticker: h.name, broker: h.broker, qtyAt, valueAt: (date) => qtyAt(date) * h.price };
   });
 
   const points = dates.map((date) => ({ date, total: perTicker.reduce((s, t) => s + t.valueAt(date), 0) }));
@@ -1697,6 +1718,11 @@ function InvestmentDashboard({ user }) {
   const [cryptoUsd, setCryptoUsd] = useState({});
   const [historyCache, setHistoryCache] = useState({});
   const [historyCoverage, setHistoryCoverage] = useState(null);
+  // Qué CEDEARs vinieron de la API de IOL en la última corrida de
+  // update-prices.mjs -- esos ya están en pesos reales del CEDEAR (cotizado
+  // tal cual en BCBA), a diferencia del resto (data912, dólares crudos de la
+  // acción subyacente en EE.UU.) que sí necesita el reescalado por ratio.
+  const [cedearsViaIol, setCedearsViaIol] = useState([]);
   const [liveStatus, setLiveStatus] = useState("cargando"); // cargando | ok | error
 
   // Dólar, precios y cripto: en vivo (livianos). Histórico de la cartera
@@ -1717,6 +1743,7 @@ function InvestmentDashboard({ user }) {
         }
         if (histRes.status === "fulfilled") {
           setHistoryCache(histRes.value.history || {});
+          setCedearsViaIol(histRes.value.cedearsViaIol || []);
         }
         if (cryptoRes.status === "fulfilled" && Object.keys(cryptoRes.value).length > 0) {
           setCryptoUsd(cryptoRes.value);
@@ -1737,34 +1764,7 @@ function InvestmentDashboard({ user }) {
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
-  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
-
-  // --- DEBUG TEMPORAL: encontrar qué activo pega un salto raro entre el
-  // último punto cacheado y el precio en vivo de hoy. Sacar una vez
-  // resuelto. ---
-  React.useEffect(() => {
-    if (!historyCache || Object.keys(historyCache).length === 0) return;
-    const filas = HOLDINGS.map((h) => {
-      const hist = historyCache?.[h.name];
-      const ultimoCacheado = hist && hist.length > 0 ? hist[hist.length - 1] : null;
-      const liveHoy = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
-      const saltoPct = ultimoCacheado?.price > 0 ? ((liveHoy - ultimoCacheado.price) / ultimoCacheado.price) * 100 : null;
-      return {
-        ticker: h.name,
-        broker: h.broker,
-        cat: h.cat,
-        qty: h.qty,
-        ultimoCacheadoFecha: ultimoCacheado?.date ?? null,
-        ultimoCacheadoPrecio: ultimoCacheado?.price ?? null,
-        liveHoy,
-        saltoPct: saltoPct != null ? Number(saltoPct.toFixed(1)) : null,
-        impactoUsd: saltoPct != null ? Number((((liveHoy - ultimoCacheado.price) * h.qty) / fx).toFixed(2)) : null,
-      };
-    });
-    const sospechosos = filas.filter((f) => f.saltoPct != null && Math.abs(f.saltoPct) > 15).sort((a, b) => Math.abs(b.impactoUsd) - Math.abs(a.impactoUsd));
-    console.log("%c[DEBUG] Activos con salto > 15% vs último precio cacheado:", "color:orange;font-weight:bold");
-    console.log(JSON.stringify(sospechosos, null, 2));
-  }, [livePrices, historyCache, fx]);
+  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol) })), [livePrices, fx, cryptoUsd, historyCache, cedearsViaIol]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
@@ -1803,8 +1803,8 @@ function InvestmentDashboard({ user }) {
   // Cruzar movimientos reales + histórico cacheado es sincrónico e instantáneo
   // (no hay red de por medio acá), así que se recalcula solo con useMemo.
   const { points: realHistoryPoints, coverage: realHistoryCoverage } = useMemo(
-    () => buildRealPortfolioHistory(byBroker, historyCache, livePrices, cryptoUsd, fx),
-    [historyCache, byBroker, livePrices, cryptoUsd, fx]
+    () => buildRealPortfolioHistory(byBroker, historyCache, livePrices, cryptoUsd, fx, cedearsViaIol),
+    [historyCache, byBroker, livePrices, cryptoUsd, fx, cedearsViaIol]
   );
   React.useEffect(() => { setHistoryCoverage(realHistoryCoverage); }, [realHistoryCoverage]);
   const realPortfolioHistory = Object.keys(historyCache).length > 0 ? realHistoryPoints : null;
@@ -2394,8 +2394,8 @@ function InvestmentDashboard({ user }) {
           {view === "analisis" && <AnalisisView tenencias={tenenciasCompletas} f={f} C={C} />}
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} user={user} fx={fx} />}
-          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} initialSymbol={jumpSymbol} />}
-          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} cedearsViaIol={cedearsViaIol} initialSymbol={jumpSymbol} />}
+          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} cedearsViaIol={cedearsViaIol} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
           {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} user={user} />}
@@ -2405,7 +2405,7 @@ function InvestmentDashboard({ user }) {
   );
 }
 
-function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoUsd, historyCache, initialSymbol }) {
+function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoUsd, historyCache, cedearsViaIol, initialSymbol }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
@@ -2528,6 +2528,15 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
     // de Inicio para la serie real de la cartera.
     const last = rawSliced[rawSliced.length - 1];
     sliced = isLive && last ? [...rawSliced.slice(0, -1), { ...last, price: realLivePrice }] : rawSliced;
+  } else if (selected.cat === "CEDEARs" && cedearsViaIol?.includes(selected.symbol) && historyStatus === "ok") {
+    // Mismo caso que la cripto: si este CEDEAR vino de la API de IOL, ya es
+    // la cotización real del CEDEAR en pesos, día por día -- no tiene el
+    // problema de "ratio" que motivó el reescalado de acá abajo (eso era
+    // para cuando el histórico venía en dólares crudos de la acción real
+    // en EE.UU., vía data912). Estirar todo el histórico acá metería el
+    // mismo bug que ya arreglamos para cripto.
+    const last = rawSliced[rawSliced.length - 1];
+    sliced = isLive && last ? [...rawSliced.slice(0, -1), { ...last, price: realLivePrice }] : rawSliced;
   } else {
     const rawLast = rawSliced[rawSliced.length - 1]?.price || 1;
     const scaleFix = isLive && historyStatus === "ok" && rawLast > 0 ? realLivePrice / rawLast : 1;
@@ -2543,7 +2552,7 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
   const coupons = COUPON_SCHEDULE[selected.symbol] || [];
   const events = CORPORATE_EVENTS[selected.symbol] || [];
   const held = consolidateByName(HOLDINGS.filter((h) => h.name === selected.symbol))[0];
-  if (held) held.price = liveAdjustedPrice(held, livePrices, fx, cryptoUsd, historyCache);
+  if (held) held.price = liveAdjustedPrice(held, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol);
   const heldQty = held?.qty || 0;
   const symbolTrades = MOVIMIENTOS.filter((m) => m.activo === selected.symbol && (m.tipo === "Compra" || m.tipo === "Venta")).sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
   const today = SERIES[SERIES.length - 1].date;
@@ -5156,7 +5165,7 @@ function tickerCatMap() {
   return { ...m, ...TICKER_CAT_OVERRIDES };
 }
 
-function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
+function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd, cedearsViaIol }) {
   const todayStr = new Date().toISOString().slice(0, 10);
   const [dateA, setDateA] = useState(() => {
     const d = new Date();
@@ -5202,7 +5211,7 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
           // pesos reales de cada fecha (no en dólares) -- no necesita
           // ningún reescalado, se usa tal cual, igual que Acciones/Bonos.
           let scaleFix = 1;
-          if (cat === "CEDEARs") {
+          if (cat === "CEDEARs" && !cedearsViaIol?.includes(ticker)) {
             const livePriceArs = livePrices[ticker];
             const lastHistUsd = historyMap[sortedDates[sortedDates.length - 1]];
             if (livePriceArs != null && lastHistUsd > 0) scaleFix = livePriceArs / lastHistUsd;
@@ -5222,7 +5231,7 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd }) {
       const h = HOLDINGS.find((x) => x.name === ticker);
       return h ? liveAdjustedPrice(h, livePrices, fx, cryptoUsd) : 0;
     };
-  }, [historyCache, livePrices, cryptoUsd, fx]);
+  }, [historyCache, livePrices, cryptoUsd, fx, cedearsViaIol]);
 
   const CATEGORIES = ["Acciones", "CEDEARs", "Bonos", "Obligaciones Negociables", "Fondos", "Cripto"];
 
