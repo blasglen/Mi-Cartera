@@ -1731,6 +1731,33 @@ function InvestmentDashboard({ user }) {
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
 
+  // --- DEBUG TEMPORAL: CONIOLA quedó con precio inflado ~1537x después del
+  // fix de Fondos -- ver si su caché ya viene en pesos (como las ONs) en
+  // vez de dólares crudos (como PRPEDOB/ADCGLOA/IOLDOLD). Sacar una vez
+  // resuelto. ---
+  React.useEffect(() => {
+    if (!historyCache || Object.keys(historyCache).length === 0) return;
+    const h = HOLDINGS.find((x) => x.name === "CONIOLA");
+    if (!h) return;
+    const resultado = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
+    const hist = historyCache?.["CONIOLA"];
+    console.log("%c[DEBUG] CONIOLA", "color:orange;font-weight:bold");
+    console.log(JSON.stringify({
+      holdingQty: h.qty,
+      holdingBroker: h.broker,
+      holdingCat: h.cat,
+      fx,
+      resultadoLiveAdjustedPrice: resultado,
+      resultadoDivFx: resultado / fx,
+      livePricesTiene: livePrices?.["CONIOLA"] ?? null,
+      historyCacheLength: hist?.length ?? null,
+      historyCacheUltimos3: hist?.slice(-3) ?? null,
+    }, null, 2));
+    // También chequeo qué da consolidateByName para CONIOLA puntualmente
+    const consolidado = consolidateByName(holdingsLive.filter((x) => x.name === "CONIOLA"));
+    console.log("[DEBUG] CONIOLA consolidado:", JSON.stringify(consolidado, null, 2));
+  }, [livePrices, historyCache, fx]);
+
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
     [holdingsLive, brokerFilter]
