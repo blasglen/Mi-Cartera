@@ -1726,10 +1726,13 @@ function InvestmentDashboard({ user }) {
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
 
   // --- DEBUG TEMPORAL: ver por qué PRPEDOB/ADCGLOA/IOLDOLD dan precio en
-  // vivo US$0. Sacar este bloque una vez resuelto. ---
+  // vivo US$0, y confirmar si PLC2O (vía IOL, como los fondos) necesita el
+  // mismo tratamiento que GD41 (data912, con la convención "cada 100") o
+  // el de los fondos (dólar crudo, necesita ×fx). Sacar este bloque una
+  // vez resuelto. ---
   React.useEffect(() => {
     if (!historyCache || Object.keys(historyCache).length === 0) return; // esperar a que cargue
-    for (const ticker of ["PRPEDOB", "ADCGLOA", "IOLDOLD"]) {
+    for (const ticker of ["PRPEDOB", "ADCGLOA", "IOLDOLD", "GD41", "PLC2O"]) {
       const h = HOLDINGS.find((x) => x.name === ticker);
       if (!h) continue;
       const resultado = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
