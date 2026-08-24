@@ -1739,6 +1739,33 @@ function InvestmentDashboard({ user }) {
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
 
+  // --- DEBUG TEMPORAL: encontrar qué activo pega un salto raro entre el
+  // último punto cacheado y el precio en vivo de hoy. Sacar una vez
+  // resuelto. ---
+  React.useEffect(() => {
+    if (!historyCache || Object.keys(historyCache).length === 0) return;
+    const filas = HOLDINGS.map((h) => {
+      const hist = historyCache?.[h.name];
+      const ultimoCacheado = hist && hist.length > 0 ? hist[hist.length - 1] : null;
+      const liveHoy = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
+      const saltoPct = ultimoCacheado?.price > 0 ? ((liveHoy - ultimoCacheado.price) / ultimoCacheado.price) * 100 : null;
+      return {
+        ticker: h.name,
+        broker: h.broker,
+        cat: h.cat,
+        qty: h.qty,
+        ultimoCacheadoFecha: ultimoCacheado?.date ?? null,
+        ultimoCacheadoPrecio: ultimoCacheado?.price ?? null,
+        liveHoy,
+        saltoPct: saltoPct != null ? Number(saltoPct.toFixed(1)) : null,
+        impactoUsd: saltoPct != null ? Number((((liveHoy - ultimoCacheado.price) * h.qty) / fx).toFixed(2)) : null,
+      };
+    });
+    const sospechosos = filas.filter((f) => f.saltoPct != null && Math.abs(f.saltoPct) > 15).sort((a, b) => Math.abs(b.impactoUsd) - Math.abs(a.impactoUsd));
+    console.log("%c[DEBUG] Activos con salto > 15% vs último precio cacheado:", "color:orange;font-weight:bold");
+    console.log(JSON.stringify(sospechosos, null, 2));
+  }, [livePrices, historyCache, fx]);
+
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
     [holdingsLive, brokerFilter]
