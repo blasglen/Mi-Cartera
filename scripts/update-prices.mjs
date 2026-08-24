@@ -503,11 +503,40 @@ async function main() {
     if (cryptoData?.[id]?.usd) cryptoLive[symbol] = cryptoData[id].usd;
   }
 
+  // Bearer de IOL -- lo pedimos ACÁ (antes de los históricos, no después)
+  // porque ahora también lo usamos como fuente primaria de los CEDEARs, no
+  // solo para CONIOLA/ONs al final. Dura 15-20 minutos, alcanza para toda la
+  // corrida.
+  const iolToken = await fetchIolToken();
+
   console.log("Actualizando históricos (uno por vez, con pausa)...");
   const history = {};
+  const cedearsViaIol = []; // qué CEDEARs se consiguieron por IOL esta corrida
   let ok = 0;
   for (const [ticker, cat] of TICKERS) {
     process.stdout.write(`  ${ticker}... `);
+
+    // Para CEDEARs probamos primero IOL: cotiza el CEDEAR posta en pesos,
+    // tal cual se opera en BCBA -- no el precio en dólares de la acción
+    // subyacente en EE.UU. (que es lo que da data912, y necesita el
+    // reescalado por ratio que venimos arrastrando en la app). Además, en
+    // la práctica viene más al día que el histórico de data912 para
+    // usa_stocks, que se quedó pegado varios días.
+    if (cat === "CEDEARs") {
+      const iolSeries = await fetchFromIol(iolToken, ticker);
+      if (iolSeries && iolSeries.length > 1) {
+        history[ticker] = iolSeries.map((p) => ({ date: p.date, price: p.price }));
+        cedearsViaIol.push(ticker);
+        ok++;
+        const dates = iolSeries.map((p) => p.date).sort();
+        console.log(`ok vía IOL (${iolSeries.length} puntos, desde ${dates[0]} hasta ${dates[dates.length - 1]})`);
+        await sleep(500);
+        continue;
+      }
+      // Sin dato de IOL para este CEDEAR puntual -- seguimos con data912
+      // como siempre, más abajo.
+    }
+
     const h = await fetchHistoryFor(ticker, cat, fxMep);
     if (h && h.length > 1) {
       history[ticker] = h;
@@ -518,10 +547,9 @@ async function main() {
     else console.log("sin datos");
     await sleep(1000);
   }
-  console.log(`Histórico conseguido para ${ok} de ${TICKERS.length} tickers (más las ONs, que se cuentan aparte más abajo).`);
+  console.log(`Histórico conseguido para ${ok} de ${TICKERS.length} tickers (más las ONs, que se cuentan aparte más abajo). CEDEARs vía IOL: ${cedearsViaIol.length}.`);
 
   console.log("Buscando activos de IOL sin otra fuente (CONIOLA, ADCGLOA, IOLDOLD, PRPEDOB, PLC2O, ONs)...");
-  const iolToken = await fetchIolToken();
   const coniolaReal = await fetchFromIol(iolToken, "CONIOLA");
   if (coniolaReal) {
     history.CONIOLA = coniolaReal.map((p) => ({ date: p.date, price: p.price }));
@@ -567,7 +595,20 @@ async function main() {
     catalog: [...catalog, ...Object.keys(CRYPTO_IDS).map((symbol) => ({ symbol, cat: "Cripto" }))],
     updatedAt: new Date().toISOString(),
   }, null, 2));
-  await fs.writeFile(path.join(outDir, "history.json"), JSON.stringify({ history, updatedAt: new Date().toISOString(), coverage: { ok, total: TICKERS.length } }, null, 2));
+  // "cedearsViaIol": qué CEDEARs vinieron de IOL esta corrida (ya en pesos
+  // reales del CEDEAR, sin necesitar el reescalado por ratio) vs. el resto,
+  // que sigue viniendo de data912 en dólares crudos de la acción subyacente
+  // y SÍ necesita ese reescalado. La app usa esta lista para saber cuál
+  // fórmula aplicarle a cada uno -- swap silencioso a data912 para un ticker
+  // puntual no debería romper nada, pero si esta lista queda vacía de
+  // repente, es señal de que el login a IOL dejó de funcionar (ver el log
+  // de "[IOL] login falló" más arriba en esta misma corrida).
+  await fs.writeFile(path.join(outDir, "history.json"), JSON.stringify({
+    history,
+    cedearsViaIol,
+    updatedAt: new Date().toISOString(),
+    coverage: { ok, total: TICKERS.length },
+  }, null, 2));
   console.log("Listo, archivos guardados en public/data/");
 }
 
