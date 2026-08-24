@@ -1156,13 +1156,19 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
     if (hist && hist.length > 0) {
       const ultimo = hist[hist.length - 1];
       if (ultimo?.price > 0) {
-        // Los bonos y ONs cotizan "cada 100 de nominal" -- el precio en
-        // vivo de data912 ya viene dividido más arriba, pero este
-        // histórico cacheado (para lo que solo se consigue "vía IOL":
-        // PLC2O, GD38, GD41 cuando data912 no responde, etc.) guarda el
-        // mismo precio crudo "por cada 100" -- sin este ajuste, salía
-        // ~100 veces más chico de lo real.
-        if (holding.cat === "Bonos" || holding.cat === "Obligaciones Negociables") return ultimo.price / 100;
+        // Cada fuente guarda el precio en una unidad distinta (confirmado
+        // con datos reales de la app):
+        // - Bonos (data912): pesos "cada 100 de nominal" -- hay que /100.
+        // - Obligaciones Negociables (vía IOL): YA vienen en pesos por
+        //   unidad -- sin ningún ajuste (confirmado con PLC2O: el crudo
+        //   cacheado ronda el mismo orden que qty*precio-real, dividir por
+        //   100 acá lo dejaba 100 veces más chico).
+        // - Fondos (vía IOL): vienen en dólares crudos por unidad -- hay
+        //   que multiplicar por el dólar de hoy para tener el equivalente
+        //   en pesos (confirmado con PRPEDOB/ADCGLOA/IOLDOLD: sin esto,
+        //   quedaban en prácticamente US$0 al mostrarse).
+        if (holding.cat === "Bonos") return ultimo.price / 100;
+        if (holding.cat === "Fondos") return ultimo.price * fx;
         return ultimo.price;
       }
     }
@@ -1724,31 +1730,6 @@ function InvestmentDashboard({ user }) {
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
-
-  // --- DEBUG TEMPORAL: ver por qué PRPEDOB/ADCGLOA/IOLDOLD dan precio en
-  // vivo US$0, y confirmar si PLC2O (vía IOL, como los fondos) necesita el
-  // mismo tratamiento que GD41 (data912, con la convención "cada 100") o
-  // el de los fondos (dólar crudo, necesita ×fx). Sacar este bloque una
-  // vez resuelto. ---
-  React.useEffect(() => {
-    if (!historyCache || Object.keys(historyCache).length === 0) return; // esperar a que cargue
-    for (const ticker of ["PRPEDOB", "ADCGLOA", "IOLDOLD", "GD41", "PLC2O"]) {
-      const h = HOLDINGS.find((x) => x.name === ticker);
-      if (!h) continue;
-      const resultado = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
-      const hist = historyCache?.[ticker];
-      console.log(`%c[DEBUG] ${ticker}`, "color:orange;font-weight:bold");
-      console.log(JSON.stringify({
-        holdingPriceOriginal: h.price,
-        holdingCat: h.cat,
-        fx,
-        resultadoLiveAdjustedPrice: resultado,
-        livePricesTiene: livePrices?.[ticker] ?? null,
-        historyCacheLength: hist?.length ?? null,
-        historyCacheUltimos3: hist?.slice(-3) ?? null,
-      }, null, 2));
-    }
-  }, [livePrices, historyCache, fx]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
@@ -4338,7 +4319,24 @@ async function parseIOLPortfolioPdf(file) {
 // activos de esta cartera comparten la misma cantidad (varios "1", por
 // ejemplo), así que emparejar solo por cantidad sería ambiguo; emparejar
 // por posición y usar la cantidad como verificación es lo que sí funciona.
-function cruzarPortafolioIOL(filasTradicional, filasMep) {
+// Cruza las dos vistas del portafolio (Tradicional: tickers reales; MEP:
+// PPC real en dólares) por POSICIÓN -- ambas vistas listan los mismos
+// activos en el mismo orden (confirmado con datos reales), así que el
+// enésimo activo de una es el enésimo de la otra. Usamos la Cantidad como
+// chequeo de seguridad cuando está disponible en las dos: si no coincide,
+// no confiamos en ese par y lo dejamos para completar a mano -- muchos
+// activos de esta cartera comparten la misma cantidad (varios "1", por
+// ejemplo), así que emparejar solo por cantidad sería ambiguo; emparejar
+// por posición y usar la cantidad como verificación es lo que sí funciona.
+//
+// `catByTicker` (opcional) permite saber si un activo es Bono/ON: IOL
+// muestra el PPC de esos instrumentos con la convención del mercado de
+// bonos ("cotiza a 100.38", o sea 100.38% del valor nominal) -- no es el
+// precio real en dólares por unidad (que sería $1,0038). El resto de la
+// app (costo, valor, P&L) usa precio-por-unidad consistentemente, así que
+// acá hay que dividir por 100 para los Bonos/ONs, o el costo queda
+// inflado ~100 veces y el P&L sale con una pérdida absurda.
+function cruzarPortafolioIOL(filasTradicional, filasMep, catByTicker = {}) {
   const n = Math.min(filasTradicional.length, filasMep.length);
   const encontrados = {}; // { ticker: "6.15" }
   const revisar = [];
@@ -4354,7 +4352,9 @@ function cruzarPortafolioIOL(filasTradicional, filasMep) {
       revisar.push(ticker); // las cantidades no coinciden -- mejor no confiar
       continue;
     }
-    encontrados[ticker] = m.ppc.toFixed(4);
+    const cat = catByTicker[ticker];
+    const ppcReal = cat === "Bonos" || cat === "Obligaciones Negociables" ? m.ppc / 100 : m.ppc;
+    encontrados[ticker] = ppcReal.toFixed(4);
   }
   return { encontrados, revisar };
 }
@@ -4435,7 +4435,9 @@ function ImportarView({ C, user, fx }) {
       if (usdCount(filasMep) < filasMep.length * 0.5) {
         throw new Error('No pudimos distinguir cuál PDF es "Dólar MEP" -- ¿subiste las dos vistas correctas del Portafolio?');
       }
-      const { encontrados, revisar } = cruzarPortafolioIOL(filasTradicional, filasMep);
+      const catByTicker = {};
+      for (const h of preview?.holdingsBalanz || []) catByTicker[h.name] = h.cat;
+      const { encontrados, revisar } = cruzarPortafolioIOL(filasTradicional, filasMep, catByTicker);
       const tickers = Object.keys(encontrados);
       if (tickers.length === 0) {
         setInstrumentosMsg("No pudimos cruzar ningún activo entre los dos PDFs -- revisá que sean del Portafolio de IOL, impreso a PDF.");
