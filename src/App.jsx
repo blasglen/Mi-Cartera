@@ -1163,12 +1163,20 @@ function liveAdjustedPrice(holding, livePrices, fx, cryptoUsd, historyCache) {
         //   unidad -- sin ningún ajuste (confirmado con PLC2O: el crudo
         //   cacheado ronda el mismo orden que qty*precio-real, dividir por
         //   100 acá lo dejaba 100 veces más chico).
-        // - Fondos (vía IOL): vienen en dólares crudos por unidad -- hay
-        //   que multiplicar por el dólar de hoy para tener el equivalente
-        //   en pesos (confirmado con PRPEDOB/ADCGLOA/IOLDOLD: sin esto,
-        //   quedaban en prácticamente US$0 al mostrarse).
+        // - Fondos DOLARIZADOS (PRPEDOB, ADCGLOA, IOLDOLD -- "Premier
+        //   Performance Dólares", "Adcap Renta Dólar", "IOL Dólar Ahorro
+        //   Plus"): vienen en dólares crudos por unidad -- hay que
+        //   multiplicar por el dólar de hoy (confirmado: sin esto, daban
+        //   prácticamente US$0 al mostrarse).
+        // - CONIOLA ("Adcap Acciones") es un Fondo, pero a diferencia de
+        //   los tres anteriores cotiza en PESOS, no en dólares -- mismo
+        //   caso que las ONs, sin ningún ajuste (confirmado: multiplicarlo
+        //   por el dólar como a los otros fondos lo dejaba ~1537 veces más
+        //   grande). Por eso esto se decide por ticker puntual, no por
+        //   categoría -- "Fondos" no alcanza para saber la moneda real.
+        const FONDOS_DOLARIZADOS = new Set(["PRPEDOB", "ADCGLOA", "IOLDOLD"]);
         if (holding.cat === "Bonos") return ultimo.price / 100;
-        if (holding.cat === "Fondos") return ultimo.price * fx;
+        if (FONDOS_DOLARIZADOS.has(holding.name)) return ultimo.price * fx;
         return ultimo.price;
       }
     }
@@ -1730,33 +1738,6 @@ function InvestmentDashboard({ user }) {
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
   const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache) })), [livePrices, fx, cryptoUsd, historyCache]);
-
-  // --- DEBUG TEMPORAL: CONIOLA quedó con precio inflado ~1537x después del
-  // fix de Fondos -- ver si su caché ya viene en pesos (como las ONs) en
-  // vez de dólares crudos (como PRPEDOB/ADCGLOA/IOLDOLD). Sacar una vez
-  // resuelto. ---
-  React.useEffect(() => {
-    if (!historyCache || Object.keys(historyCache).length === 0) return;
-    const h = HOLDINGS.find((x) => x.name === "CONIOLA");
-    if (!h) return;
-    const resultado = liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache);
-    const hist = historyCache?.["CONIOLA"];
-    console.log("%c[DEBUG] CONIOLA", "color:orange;font-weight:bold");
-    console.log(JSON.stringify({
-      holdingQty: h.qty,
-      holdingBroker: h.broker,
-      holdingCat: h.cat,
-      fx,
-      resultadoLiveAdjustedPrice: resultado,
-      resultadoDivFx: resultado / fx,
-      livePricesTiene: livePrices?.["CONIOLA"] ?? null,
-      historyCacheLength: hist?.length ?? null,
-      historyCacheUltimos3: hist?.slice(-3) ?? null,
-    }, null, 2));
-    // También chequeo qué da consolidateByName para CONIOLA puntualmente
-    const consolidado = consolidateByName(holdingsLive.filter((x) => x.name === "CONIOLA"));
-    console.log("[DEBUG] CONIOLA consolidado:", JSON.stringify(consolidado, null, 2));
-  }, [livePrices, historyCache, fx]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
