@@ -1210,9 +1210,25 @@ function flatQtyFallback(ticker, broker) {
   return HOLDINGS.filter((h) => h.name === ticker && (broker == null || h.broker === broker) && !brokersWithTrades.has(h.broker));
 }
 
+// AL30/AL30D son el mismo instrumento -- se compra como AL30 (liquida en
+// pesos) y se vende como AL30D (liquida en dólares) al pasarse a dólar MEP.
+// Para reconstruir cuánto tenías de AL30 en una fecha pasada, la venta
+// registrada como "AL30D" tiene que cerrar esa posición -- si no, la
+// cantidad histórica de AL30 queda inflada con compras que en la práctica
+// ya se habían liquidado (confirmado con datos reales: la reconstrucción
+// mostraba 1683 unidades en un momento dado en vez de las 101 reales).
+// Solo aplica en esta dirección (pedir "AL30" también trae AL30D) -- pedir
+// "AL30D" directamente sigue devolviendo solo sus propios movimientos, para
+// no duplicar la posición en pantallas que iteran todos los tickers vistos
+// en MOVIMIENTOS (ej. P&L de fecha específica).
+function tickersParaHistorial(ticker) {
+  return ticker === "AL30" ? ["AL30", "AL30D"] : [ticker];
+}
+
 function buildQtyTimeline(ticker, broker) {
+  const tickersAContar = tickersParaHistorial(ticker);
   const trades = MOVIMIENTOS.filter(
-    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
+    (m) => tickersAContar.includes(m.activo) && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
   )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
@@ -1249,8 +1265,9 @@ function buildQtyTimeline(ticker, broker) {
 // cantidad igual que una compra pero a costo 0 -- no mueven el costo
 // invertido, solo diluyen el costo promedio por unidad (como corresponde).
 function buildCostBasisTimeline(ticker, broker, fxHoy) {
+  const tickersAContar = tickersParaHistorial(ticker);
   const trades = MOVIMIENTOS.filter(
-    (m) => m.activo === ticker && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
+    (m) => tickersAContar.includes(m.activo) && (broker == null || m.broker === broker) && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split")
   )
     .slice()
     .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
@@ -1375,20 +1392,6 @@ function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd
   });
 
   const points = dates.map((date) => ({ date, total: perTicker.reduce((s, t) => s + t.valueAt(date), 0) }));
-
-  // --- LOG TEMPORAL DE DIAGNÓSTICO -- borrar una vez encontrado el activo ---
-  if (typeof window !== "undefined" && !window.__loggedCartera) {
-    window.__loggedCartera = true;
-    console.table(perTicker.map((t) => ({
-      ticker: t.ticker,
-      broker: t.broker,
-      qty_08_22: t.qtyAt("2026-08-22"),
-      valor_08_22: Math.round(t.valueAt("2026-08-22")),
-      qty_hoy: t.qtyAt(dates[dates.length - 1]),
-      valor_hoy: Math.round(t.valueAt(dates[dates.length - 1])),
-    })));
-  }
-  // --- FIN LOG TEMPORAL ---
 
   return { points, coverage: { tickersWithRealData, tickersTotal: uniqueTickers.length } };
 }
