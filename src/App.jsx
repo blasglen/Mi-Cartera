@@ -1375,6 +1375,21 @@ function buildRealPortfolioHistory(holdings, historyCache, livePrices, cryptoUsd
   });
 
   const points = dates.map((date) => ({ date, total: perTicker.reduce((s, t) => s + t.valueAt(date), 0) }));
+
+  // --- LOG TEMPORAL DE DIAGNÓSTICO -- borrar una vez encontrado el activo ---
+  if (typeof window !== "undefined" && !window.__loggedCartera) {
+    window.__loggedCartera = true;
+    console.table(perTicker.map((t) => ({
+      ticker: t.ticker,
+      broker: t.broker,
+      qty_08_22: t.qtyAt("2026-08-22"),
+      valor_08_22: Math.round(t.valueAt("2026-08-22")),
+      qty_hoy: t.qtyAt(dates[dates.length - 1]),
+      valor_hoy: Math.round(t.valueAt(dates[dates.length - 1])),
+    })));
+  }
+  // --- FIN LOG TEMPORAL ---
+
   return { points, coverage: { tickersWithRealData, tickersTotal: uniqueTickers.length } };
 }
 
