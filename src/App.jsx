@@ -760,6 +760,13 @@ let MOVIMIENTOS = [
   { fecha: "2023-08-29", activo: "COIN", tipo: "Compra", cantidad: 4.0, precio: 2480.0, broker: "IOL" },
 ];
 
+// Foto de los "Split" tal como estaban en este archivo ANTES de que AuthGate
+// reasigne MOVIMIENTOS con los datos reales de Firestore -- se usa como
+// lista de referencia para el parche de "splits faltantes" en Configuración
+// (confirmado con datos reales: al menos YPFD/IOL y NVDA/IOL tienen un
+// Split acá en el código que nunca llegó a guardarse en Firestore).
+const SPLITS_DE_REFERENCIA = MOVIMIENTOS.filter((m) => m.tipo === "Split");
+
 const CATS = [
   { key: "Acciones", color: "#4FA184", icon: Landmark },
   { key: "CEDEARs", color: "#6C8FC7", icon: Globe },
@@ -5685,38 +5692,54 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
   // que faltaba en Firestore (nunca se guardó, aunque el holding actual ya
   // refleja la cantidad correcta) -- no toca ningún otro dato, no pisa nada.
   // Se puede borrar este bloque entero una vez usado.
-  const [patchStatus, setPatchStatus] = useState("idle"); // idle | cargando | ok | ya-existe | error
+  const [patchStatus, setPatchStatus] = useState("idle"); // idle | cargando | ok | nada-que-hacer | error
   const [patchError, setPatchError] = useState("");
-  const parcheYpfdSplit = async () => {
+  const [patchDetalle, setPatchDetalle] = useState("");
+  const aplicarSplitsFaltantes = async () => {
     setPatchStatus("cargando");
     setPatchError("");
+    setPatchDetalle("");
     try {
-      const nuevoMov = { fecha: "2026-08-04", activo: "YPFD", tipo: "Split", cantidad: 18.0, precio: 0, broker: "IOL" };
       const snap = await getDoc(doc(db, "users", user.uid));
       const data = snap.exists() ? snap.data() : {};
       const movimientosActuales = Array.isArray(data.movimientos) ? data.movimientos : [];
       const holdingsActuales = Array.isArray(data.holdings) ? data.holdings : [];
 
-      const yaExisteMov = movimientosActuales.some(
-        (m) => m.activo === nuevoMov.activo && m.tipo === nuevoMov.tipo && m.fecha === nuevoMov.fecha && m.broker === nuevoMov.broker && m.cantidad === nuevoMov.cantidad
+      // De cada split de referencia (los que están en el código pero podrían
+      // faltar en Firestore), nos quedamos solo con los que de verdad no
+      // están guardados todavía.
+      const faltantes = SPLITS_DE_REFERENCIA.filter(
+        (ref) =>
+          !movimientosActuales.some(
+            (m) => m.activo === ref.activo && m.tipo === "Split" && m.fecha === ref.fecha && m.broker === ref.broker && m.cantidad === ref.cantidad
+          )
       );
-      const movimientosFinal = yaExisteMov ? movimientosActuales : [...movimientosActuales, nuevoMov];
 
-      // El movimiento por sí solo no alcanza -- la tabla de Tenencias lee la
-      // "foto actual" de holdings, un campo aparte que no se recalcula solo.
-      // Recomputamos SOLO el holding de YPFD/IOL a partir del historial ya
+      if (faltantes.length === 0) {
+        setPatchStatus("nada-que-hacer");
+        return;
+      }
+
+      const movimientosFinal = [...movimientosActuales, ...faltantes];
+
+      // La tabla de Tenencias lee la "foto actual" de holdings, un campo
+      // aparte que no se recalcula solo con agregar el movimiento -- hay que
+      // recomputar cada (ticker, broker) afectado a partir del historial ya
       // corregido, con la misma función que usa el resto de la app al
-      // importar -- así el PPC y la cantidad quedan consistentes con el
-      // criterio de costo promedio ponderado de siempre, sin tocar ningún
-      // otro activo ni broker.
-      const catByTicker = { YPFD: holdingsActuales.find((h) => h.name === "YPFD")?.cat || "Acciones" };
-      const ypfdIolRecalculado = recomputeHoldingsForBroker(movimientosFinal, "IOL", holdingsActuales, catByTicker)
-        .filter((h) => h.name === "YPFD");
-      const holdingsFinal = [...holdingsActuales.filter((h) => !(h.name === "YPFD" && h.broker === "IOL")), ...ypfdIolRecalculado];
+      // importar, para que el PPC y la cantidad queden consistentes con el
+      // criterio de costo promedio ponderado de siempre.
+      const paresAfectados = [...new Map(faltantes.map((m) => [`${m.activo}__${m.broker}`, { ticker: m.activo, broker: m.broker }])).values()];
+      let holdingsFinal = holdingsActuales;
+      for (const { ticker, broker } of paresAfectados) {
+        const catByTicker = { [ticker]: holdingsActuales.find((h) => h.name === ticker)?.cat || "CEDEARs" };
+        const recalculado = recomputeHoldingsForBroker(movimientosFinal, broker, holdingsFinal, catByTicker).filter((h) => h.name === ticker);
+        holdingsFinal = [...holdingsFinal.filter((h) => !(h.name === ticker && h.broker === broker)), ...recalculado];
+      }
 
       await setDoc(doc(db, "users", user.uid), { ...data, movimientos: movimientosFinal, holdings: holdingsFinal }, { merge: true });
       MOVIMIENTOS = movimientosFinal;
       HOLDINGS = holdingsFinal;
+      setPatchDetalle(faltantes.map((m) => `${m.activo} (${m.broker}, +${m.cantidad})`).join(", "));
       setPatchStatus("ok");
     } catch (err) {
       setPatchStatus("error");
@@ -5730,18 +5753,19 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
 
       {isOwner && (
         <div style={{ background: C.surface, border: `1px solid ${C.gold}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
-          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Parche puntual: Split de YPFD faltante en IOL (temporal)</div>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Parche: splits que nunca se guardaron en Firestore (temporal)</div>
           <div style={{ fontSize: 12, color: C.faint, marginBottom: 12 }}>
-            Agrega solo el movimiento de Split de YPFD/IOL (18 unidades, 04/08/2026) que nunca se guardó en Firestore -- no toca ningún otro dato ni importación.
+            Revisa los {SPLITS_DE_REFERENCIA.length} splits de referencia (YPFD, NVDA, etc.) contra lo que realmente tenés guardado, y agrega solo los que falten -- recalculando cantidad y PPC de esos activos puntuales. No toca nada más.
           </div>
           <button
-            onClick={parcheYpfdSplit}
+            onClick={aplicarSplitsFaltantes}
             disabled={patchStatus === "cargando"}
             style={{ padding: "8px 16px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 12, cursor: patchStatus === "cargando" ? "default" : "pointer", opacity: patchStatus === "cargando" ? 0.6 : 1 }}
           >
-            {patchStatus === "cargando" ? "Agregando..." : "Agregar movimiento faltante"}
+            {patchStatus === "cargando" ? "Revisando..." : "Buscar y arreglar splits faltantes"}
           </button>
-          {patchStatus === "ok" && <div style={{ fontSize: 12, color: C.gain, marginTop: 10 }}>Listo -- se agregó el Split. Recargá la página para ver el cambio reflejado en los gráficos.</div>}
+          {patchStatus === "ok" && <div style={{ fontSize: 12, color: C.gain, marginTop: 10 }}>Listo -- se agregaron y recalcularon: {patchDetalle}. Recargá la página para ver el cambio reflejado.</div>}
+          {patchStatus === "nada-que-hacer" && <div style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>Ningún split de referencia falta -- ya estaban todos guardados.</div>}
           {patchStatus === "error" && <div style={{ fontSize: 12, color: C.loss, marginTop: 10 }}>Error: {patchError}</div>}
         </div>
       )}
