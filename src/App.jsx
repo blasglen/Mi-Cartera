@@ -5484,12 +5484,14 @@ function PnlFechaView({ f, C, fx, historyCache, livePrices, cryptoUsd, cedearsVi
 function MovimientosView({ f, C }) {
   const [brokerFilter, setBrokerFilter] = useState("Todas");
   const [tipoFilter, setTipoFilter] = useState("Ambos");
+  const [activoFilter, setActivoFilter] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
 
   const filtered = MOVIMIENTOS.filter((m) => {
     if (brokerFilter !== "Todas" && m.broker !== brokerFilter) return false;
     if (tipoFilter !== "Ambos" && m.tipo !== tipoFilter) return false;
+    if (activoFilter.trim() !== "" && !m.activo.toLowerCase().includes(activoFilter.trim().toLowerCase())) return false;
     if (dateFrom && m.fecha < dateFrom) return false;
     if (dateTo && m.fecha > dateTo) return false;
     return true;
@@ -5530,6 +5532,16 @@ function MovimientosView({ f, C }) {
           </select>
         </label>
         <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
+          Activo
+          <input
+            type="text"
+            value={activoFilter}
+            onChange={(e) => setActivoFilter(e.target.value)}
+            placeholder="Ej: AL30"
+            style={{ width: 110, background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px", fontSize: 13 }}
+          />
+        </label>
+        <label style={{ fontSize: 12, color: C.muted, display: "flex", flexDirection: "column", gap: 4 }}>
           Desde
           <input
             type="date"
@@ -5547,9 +5559,9 @@ function MovimientosView({ f, C }) {
             style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: 6, padding: "6px 10px" }}
           />
         </label>
-        {(dateFrom || dateTo || brokerFilter !== "Todas" || tipoFilter !== "Ambos") && (
+        {(dateFrom || dateTo || brokerFilter !== "Todas" || tipoFilter !== "Ambos" || activoFilter !== "") && (
           <button
-            onClick={() => { setBrokerFilter("Todas"); setTipoFilter("Ambos"); setDateFrom(""); setDateTo(""); }}
+            onClick={() => { setBrokerFilter("Todas"); setTipoFilter("Ambos"); setActivoFilter(""); setDateFrom(""); setDateTo(""); }}
             style={{ padding: "6px 12px", borderRadius: 6, fontSize: 12, border: `1px solid ${C.border}`, background: "transparent", color: C.faint, cursor: "pointer" }}
           >
             Limpiar filtros
