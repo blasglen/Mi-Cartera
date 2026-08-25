@@ -5695,16 +5695,28 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
       const snap = await getDoc(doc(db, "users", user.uid));
       const data = snap.exists() ? snap.data() : {};
       const movimientosActuales = Array.isArray(data.movimientos) ? data.movimientos : [];
-      const yaExiste = movimientosActuales.some(
+      const holdingsActuales = Array.isArray(data.holdings) ? data.holdings : [];
+
+      const yaExisteMov = movimientosActuales.some(
         (m) => m.activo === nuevoMov.activo && m.tipo === nuevoMov.tipo && m.fecha === nuevoMov.fecha && m.broker === nuevoMov.broker && m.cantidad === nuevoMov.cantidad
       );
-      if (yaExiste) {
-        setPatchStatus("ya-existe");
-        return;
-      }
-      const movimientosFinal = [...movimientosActuales, nuevoMov];
-      await setDoc(doc(db, "users", user.uid), { ...data, movimientos: movimientosFinal }, { merge: true });
+      const movimientosFinal = yaExisteMov ? movimientosActuales : [...movimientosActuales, nuevoMov];
+
+      // El movimiento por sí solo no alcanza -- la tabla de Tenencias lee la
+      // "foto actual" de holdings, un campo aparte que no se recalcula solo.
+      // Recomputamos SOLO el holding de YPFD/IOL a partir del historial ya
+      // corregido, con la misma función que usa el resto de la app al
+      // importar -- así el PPC y la cantidad quedan consistentes con el
+      // criterio de costo promedio ponderado de siempre, sin tocar ningún
+      // otro activo ni broker.
+      const catByTicker = { YPFD: holdingsActuales.find((h) => h.name === "YPFD")?.cat || "Acciones" };
+      const ypfdIolRecalculado = recomputeHoldingsForBroker(movimientosFinal, "IOL", holdingsActuales, catByTicker)
+        .filter((h) => h.name === "YPFD");
+      const holdingsFinal = [...holdingsActuales.filter((h) => !(h.name === "YPFD" && h.broker === "IOL")), ...ypfdIolRecalculado];
+
+      await setDoc(doc(db, "users", user.uid), { ...data, movimientos: movimientosFinal, holdings: holdingsFinal }, { merge: true });
       MOVIMIENTOS = movimientosFinal;
+      HOLDINGS = holdingsFinal;
       setPatchStatus("ok");
     } catch (err) {
       setPatchStatus("error");
@@ -5730,7 +5742,6 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
             {patchStatus === "cargando" ? "Agregando..." : "Agregar movimiento faltante"}
           </button>
           {patchStatus === "ok" && <div style={{ fontSize: 12, color: C.gain, marginTop: 10 }}>Listo -- se agregó el Split. Recargá la página para ver el cambio reflejado en los gráficos.</div>}
-          {patchStatus === "ya-existe" && <div style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>Ese movimiento ya estaba guardado -- no hacía falta agregarlo.</div>}
           {patchStatus === "error" && <div style={{ fontSize: 12, color: C.loss, marginTop: 10 }}>Error: {patchError}</div>}
         </div>
       )}
