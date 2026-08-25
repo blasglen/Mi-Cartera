@@ -5681,9 +5681,59 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
     }
   };
 
+  // Botón puntual y temporal: agrega SOLO el movimiento de Split de YPFD/IOL
+  // que faltaba en Firestore (nunca se guardó, aunque el holding actual ya
+  // refleja la cantidad correcta) -- no toca ningún otro dato, no pisa nada.
+  // Se puede borrar este bloque entero una vez usado.
+  const [patchStatus, setPatchStatus] = useState("idle"); // idle | cargando | ok | ya-existe | error
+  const [patchError, setPatchError] = useState("");
+  const parcheYpfdSplit = async () => {
+    setPatchStatus("cargando");
+    setPatchError("");
+    try {
+      const nuevoMov = { fecha: "2026-08-04", activo: "YPFD", tipo: "Split", cantidad: 18.0, precio: 0, broker: "IOL" };
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const movimientosActuales = Array.isArray(data.movimientos) ? data.movimientos : [];
+      const yaExiste = movimientosActuales.some(
+        (m) => m.activo === nuevoMov.activo && m.tipo === nuevoMov.tipo && m.fecha === nuevoMov.fecha && m.broker === nuevoMov.broker && m.cantidad === nuevoMov.cantidad
+      );
+      if (yaExiste) {
+        setPatchStatus("ya-existe");
+        return;
+      }
+      const movimientosFinal = [...movimientosActuales, nuevoMov];
+      await setDoc(doc(db, "users", user.uid), { ...data, movimientos: movimientosFinal }, { merge: true });
+      MOVIMIENTOS = movimientosFinal;
+      setPatchStatus("ok");
+    } catch (err) {
+      setPatchStatus("error");
+      setPatchError(err.message || "Error desconocido");
+    }
+  };
+
   return (
     <div>
       <SectionTitle C={C} sub="Moneda por defecto, fuente del tipo de cambio y qué cuentas están conectadas.">Configuración</SectionTitle>
+
+      {isOwner && (
+        <div style={{ background: C.surface, border: `1px solid ${C.gold}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Parche puntual: Split de YPFD faltante en IOL (temporal)</div>
+          <div style={{ fontSize: 12, color: C.faint, marginBottom: 12 }}>
+            Agrega solo el movimiento de Split de YPFD/IOL (18 unidades, 04/08/2026) que nunca se guardó en Firestore -- no toca ningún otro dato ni importación.
+          </div>
+          <button
+            onClick={parcheYpfdSplit}
+            disabled={patchStatus === "cargando"}
+            style={{ padding: "8px 16px", borderRadius: 8, border: "none", background: C.gold, color: C.bg, fontWeight: 600, fontSize: 12, cursor: patchStatus === "cargando" ? "default" : "pointer", opacity: patchStatus === "cargando" ? 0.6 : 1 }}
+          >
+            {patchStatus === "cargando" ? "Agregando..." : "Agregar movimiento faltante"}
+          </button>
+          {patchStatus === "ok" && <div style={{ fontSize: 12, color: C.gain, marginTop: 10 }}>Listo -- se agregó el Split. Recargá la página para ver el cambio reflejado en los gráficos.</div>}
+          {patchStatus === "ya-existe" && <div style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>Ese movimiento ya estaba guardado -- no hacía falta agregarlo.</div>}
+          {patchStatus === "error" && <div style={{ fontSize: 12, color: C.loss, marginTop: 10 }}>Error: {patchError}</div>}
+        </div>
+      )}
 
       {isOwner && (
         <div style={{ background: C.surface, border: `1px solid ${C.gold}`, borderRadius: 12, padding: 18, marginBottom: 16 }}>
