@@ -1,1026 +1,239 @@
 {
   "prices": {
-    "A3": 2960,
-    "ALUAD": 0.553,
-    "AUSO": 3170,
-    "BBAR": 8090,
-    "BHIP": 327.5,
-    "BMA": 12580,
-    "BOLT": 62,
-    "BYMAD": 0.174,
-    "CADO": 545,
-    "CAPX": 3550,
-    "CECO2": 550,
-    "CELU": 208.5,
-    "CGPA2": 1765,
-    "COME": 41.78,
-    "COMED": 0.027,
-    "CRES": 1935,
-    "CRESD": 1.26,
-    "CTIO": 1750,
-    "CVH": 9480,
-    "ECOG": 2900,
-    "ECOGD": 1.91,
-    "EDN": 1974,
-    "EDND": 1.275,
-    "FERR": 19.5,
-    "FIPL": 148.5,
-    "GAMI": 364,
-    "GARO": 460,
-    "GBAN": 1810,
-    "GCDI": 12.7,
-    "GCLA": 3805,
-    "GGALD": 4.68,
-    "GRIM": 2375,
-    "HARG": 1470,
-    "HAVA": 4340,
-    "HSAT": 123,
-    "IEB": 1680,
-    "INTR": 277,
-    "INVJ": 422,
-    "IRSA": 2430,
-    "IRSAD": 1.59,
-    "LEDE": 890,
-    "LOMAD": 2.16,
-    "LONG": 15.7,
-    "METR": 2385,
-    "MIRG": 1815,
-    "MOLA": 22000,
-    "MOLI": 2590,
-    "MORI": 22.65,
-    "PAMP": 5500,
-    "PAMPD": 3.6,
-    "PATA": 1225,
-    "REIT": 1034,
-    "REITD": 0.663,
-    "RICH": 1585,
-    "RIGO": 500,
-    "ROSE": 158,
-    "SEMI": 15.7,
-    "SUPV": 2817.5,
-    "SUPVD": 1.84,
-    "TECO2": 4225,
-    "TGNO4": 3255,
-    "TGSUD": 6.19,
-    "TRAN": 3687.5,
-    "TXAR": 672,
-    "TXARD": 0.435,
-    "VALO": 562,
-    "YPFDD": 5.61,
-    "AE38": 120550,
-    "AE38D": 78.6,
-    "AL29": 82900,
-    "AL29C": 52.05,
-    "AL30": 85430,
-    "AL30C": 53.58,
-    "AL30D": 55.68,
-    "AL35": 116700,
-    "AL35D": 76.03,
-    "AL41": 108940,
-    "AL41D": 71,
-    "AN29": 141690,
-    "AO27C": 98.5,
-    "AO27D": 102.45,
-    "AO28": 144700,
-    "AO28C": 90.77,
-    "AO28D": 94.28,
-    "AO29": 138590,
-    "AO29C": 86.5,
-    "AO29D": 90.18,
-    "BA37D": 109690,
-    "BA7DD": 71.59,
-    "BAM27": 106,
-    "BB37D": 117000,
-    "BB7DD": 76,
-    "BC37D": 115000,
-    "BC7DD": 75.66,
-    "BDC28": 100,
-    "BDC33": 168950,
-    "BPA7C": 99.4,
-    "BPA7D": 103.3,
-    "BPA8D": 93,
-    "BPB7D": 103.65,
-    "BPB8D": 92.49,
-    "BPC7D": 103.65,
-    "BPD7D": 103.55,
-    "BPOA7": 159000,
-    "BPOA8": 143410,
+    "BYMA": 268,
+    "AE38": 120560,
+    "AE38C": 75.8,
+    "AE38D": 78.81,
+    "AL29": 82930,
+    "AL29C": 52.16,
+    "AL29D": 54.31,
+    "AL30": 85300,
+    "AL30C": 53.8,
+    "AL30D": 55.82,
+    "AL35": 116050,
+    "AL35C": 73.31,
+    "AL35D": 76.48,
+    "AL41": 108560,
+    "AL41C": 68.5,
+    "AL41D": 71.26,
+    "AN29": 141180,
+    "AN29C": 88.95,
+    "AN29D": 92.65,
+    "AO27": 157100,
+    "AO27C": 98.67,
+    "AO27D": 102.75,
+    "AO28": 144370,
+    "AO28C": 90.85,
+    "AO28D": 94.1,
+    "AO29": 138290,
+    "AO29C": 87,
+    "AO29D": 90.69,
+    "BA37D": 109300,
+    "BA7DC": 68.96,
+    "BA7DD": 71.7,
+    "BAF27": 102.8,
+    "BAM27": 105.5,
+    "BAO27": 98,
+    "BB37D": 115600,
+    "BB7DC": 70,
+    "BB7DD": 76.2,
+    "BC33C": 104.25,
+    "BC33D": 109.2,
+    "BC37D": 116000,
+    "BC7DC": 73.77,
+    "BC7DD": 76.19,
+    "BCIUO": 211610,
+    "BDC28": 99.99,
+    "BDC33": 168000,
+    "BDC36": 159100,
+    "BPA7C": 100.1,
+    "BPA7D": 104,
+    "BPA8C": 89.7,
+    "BPA8D": 93.2,
+    "BPB7C": 100.1,
+    "BPB7D": 103.75,
+    "BPB8C": 89.5,
+    "BPB8D": 93.23,
+    "BPC7C": 99.85,
+    "BPC7D": 103.95,
+    "BPD7C": 99.87,
+    "BPD7D": 104.05,
+    "BPOA7": 158990,
+    "BPOA8": 142500,
     "BPOB7": 159200,
-    "BPOC7": 158990,
-    "BPOD7": 159000,
-    "CARP": 64860,
-    "CO26": 5740,
-    "CO35": 158300,
-    "CO35D": 102.75,
-    "CUAP": 42485,
-    "DIP0": 48720,
-    "EF25D": 38,
-    "GD29": 86800,
-    "GD29D": 55.65,
-    "GD30": 88780,
-    "GD30C": 55.51,
-    "GD35": 122260,
-    "GD35D": 79.76,
-    "GD38": 128650,
-    "GD38D": 83.68,
-    "GD41": 113780,
-    "GD41D": 74.18,
-    "GD46": 105800,
-    "GD46D": 68.1,
-    "LK01Q": 140510,
-    "NDT25": 99340,
-    "NDT5D": 65.05,
-    "PARP": 34950,
-    "PBA27": 103.4,
-    "PBA28": 111,
-    "PM29D": 48.3,
-    "PMM29": 73900,
-    "PR17": 633,
+    "BPOB8": 142250,
+    "BPOC7": 159450,
+    "BPOD7": 159900,
+    "CARP": 63100,
+    "CO26": 5700,
+    "CO26D": 3.7,
+    "CO2D7": 109,
+    "CO32": 168500,
+    "CO32C": 105.5,
+    "CO32D": 110,
+    "CO35": 157100,
+    "CO35C": 99.18,
+    "CO35D": 103.15,
+    "CO3D7": 122,
+    "COD7": 173.4,
+    "CUAP": 42620,
+    "DICP": 48850,
+    "DICPC": 30.34,
+    "DICPD": 31.757,
+    "DIP0": 48670,
+    "EF25D": 36.25,
+    "EM33C": 97.9,
+    "EM33D": 101.8,
+    "ERE27": 103.2,
+    "ERF25": 57520,
+    "ERM33": 162500,
+    "GD29": 85430,
+    "GD29C": 53.95,
+    "GD29D": 56.09,
+    "GD30": 88500,
+    "GD30C": 55.68,
+    "GD30D": 57.75,
+    "GD35": 122180,
+    "GD35C": 76.81,
+    "GD35D": 79.97,
+    "GD38": 128020,
+    "GD38C": 80.71,
+    "GD38D": 83.88,
+    "GD41": 113990,
+    "GD41C": 71.78,
+    "GD41D": 74.48,
+    "GD46": 104100,
+    "GD46C": 65.8,
+    "GD46D": 68.49,
+    "ISG29": 100,
+    "LK01Q": 141010,
+    "LK1QD": 94,
+    "NDG34": 157000,
+    "NDT25": 99000,
+    "NDT5C": 63.2,
+    "NDT5D": 64.95,
+    "PAP0": 34650,
+    "PARP": 35000,
+    "PAY0": 111500,
+    "PAY0D": 71.5,
+    "PBA27": 103.65,
+    "PBA28": 110.9,
+    "PBM27": 101.75,
+    "PM29C": 46.2,
+    "PM29D": 48.15,
+    "PMA28": 111.55,
+    "PMD26": 105.8,
+    "PMM29": 74000,
+    "PR17": 639.5,
     "PUA36": 170800,
-    "S24DD": 39.3,
-    "SA24D": 60500,
-    "SFD4D": 104.7,
-    "T15E7": 147.199,
-    "T30A7": 133.25,
-    "T30J7": 126.55,
-    "TA7D": 0.087,
-    "TMF28": 108.15,
-    "TMG27": 115.55,
-    "TMG28": 105.85,
-    "TML27": 106.9,
-    "TMVE8": 138720,
-    "TO26": 104.6,
-    "TO26D": 0.068,
-    "TTD26": 168.85,
-    "TTD6D": 0.109,
-    "TTS26": 168.95,
-    "TVPA": 3520,
+    "PUA6C": 103.95,
+    "PUA6D": 111.1,
+    "PUL26": 67840,
+    "S24DC": 38.4,
+    "S24DD": 39.599,
+    "SA24D": 59100,
+    "SFD34": 163390,
+    "SFD4C": 101.5,
+    "SFD4D": 106.4,
+    "SFN27": 89.19,
+    "T15E7": 147.38,
+    "T30A7": 133.35,
+    "T30J7": 126.75,
+    "T31Y7": 125.53,
+    "TA7C": 0.084,
+    "TA7D": 0.086,
+    "TFU27": 61800,
+    "TJ7D": 0.081,
+    "TMF27": 121.55,
+    "TMF28": 108.2,
+    "TMF7C": 0.07,
+    "TMF7D": 0.072,
+    "TMG27": 117.85,
+    "TMG28": 106.2,
+    "TML27": 107,
+    "TMVE8": 138860,
+    "TO26": 104.8,
+    "TO26C": 0.065,
+    "TO26D": 0.069,
+    "TTD26": 169,
+    "TTD6C": 0.1,
+    "TTD6D": 0.111,
+    "TTS26": 169.1,
+    "TVPA": 3800,
     "TVPE": 20000,
-    "TVPP": 8.78,
-    "TX26": 734.6,
-    "TX28": 1714,
-    "TX28D": 1.118,
-    "TX31": 1447,
-    "TXD6D": 0.195,
+    "TVPP": 8.6,
+    "TVPY": 10000,
+    "TVPYD": 6.75,
+    "TX26": 735.8,
+    "TX26D": 0.48,
+    "TX28": 1719,
+    "TX28D": 1.125,
+    "TX31": 1459,
+    "TXA7D": 0.085,
+    "TXD6D": 0.198,
+    "TXD7D": 0.181,
+    "TXD9D": 0.059,
+    "TXJ0D": 0.055,
+    "TXM7D": 0.146,
+    "TXM8D": 0.067,
+    "TXM9D": 0.06,
     "TXMD8": 93,
-    "TXMD9": 85.7,
+    "TXMD9": 85.65,
     "TXMJ0": 82.55,
-    "TXMJ9": 92,
+    "TXMJ8": 99,
+    "TXMJ9": 92.03,
+    "TXS7D": 0.069,
+    "TXS8C": 0.06,
+    "TXS8D": 0.062,
+    "TY27P": 119.45,
+    "TY30C": 0.073,
     "TY30D": 0.074,
-    "TY30P": 111.45,
+    "TY30P": 111,
+    "TZV27": 147700,
     "TZV28": 125100,
-    "TZVD8": 119190,
-    "TZX27": 393.55,
-    "TZX28": 348.3,
-    "TZXA7": 121.95,
-    "TZXD6": 300.5,
-    "TZXD7": 274.5,
-    "TZXD8": 85,
-    "TZXM8": 99.2,
-    "TZXM9": 89.95,
-    "TZXO7": 96.35,
-    "TZXS8": 94.48,
-    "AAL": 10430,
-    "AALD": 6.82,
-    "AAP": 4887.5,
-    "AAPL": 25840,
-    "AAPLC": 16.28,
-    "AAPLD": 16.96,
-    "ABBV": 41560,
-    "ABEV": 14300,
-    "ABEV3": 4845,
-    "ABEVD": 9.33,
-    "ABNB": 19490,
-    "ABT": 43960,
-    "ACN": 3967.5,
-    "ACND": 2.585,
-    "ACWI": 9830,
-    "ACWID": 6.43,
-    "ADBEC": 6.56,
-    "ADBED": 6.62,
-    "ADGOD": 12.22,
-    "ADI": 37580,
-    "ADID": 24.67,
-    "ADP": 74525,
-    "AEM": 52075,
-    "AEMD": 33.64,
-    "AI": 3350,
-    "AID": 2.22,
-    "AIGD": 16.11,
-    "AMAT": 139900,
-    "AMD": 72925,
-    "AMDC": 45.75,
-    "AMDD": 47.8,
-    "AMGN": 23510,
-    "AMGND": 15.28,
-    "AMX": 36480,
-    "AMZN": 2827.5,
-    "AMZND": 1.86,
-    "ANETD": 6.64,
-    "ANF": 218550,
-    "ARCOD": 17.12,
-    "ARKK": 13270,
-    "ARKKC": 8.31,
-    "ARKKD": 8.58,
-    "ARM": 13860,
-    "ARMD": 9.04,
-    "ASML": 18390,
-    "ASMLC": 11.56,
-    "ASMLD": 12.04,
-    "ASR": 20330,
-    "ASTS": 6645,
-    "ASTSD": 4.36,
-    "AVGO": 15100,
-    "AVGOD": 9.9,
-    "AVY": 15450,
-    "AXP": 35000,
-    "AXPD": 22.92,
-    "AZND": 42.19,
-    "B": 34840,
-    "B.D": 22.81,
-    "BA": 13880,
-    "BA.CD": 16.31,
-    "BAD": 9.07,
-    "BAK": 1556,
-    "BAKD": 1.055,
-    "BB": 4050,
-    "BB.D": 2.815,
-    "BBD": 5495,
-    "BBDC3": 4787.5,
-    "BBDD": 3.465,
-    "BBV": 46460,
-    "BCS": 41640,
-    "BHP": 74600,
-    "BIDU": 13690,
-    "BIDUD": 8.9,
-    "BIIB": 27200,
-    "BIIBD": 17.87,
-    "BIOX": 719,
-    "BIOXD": 0.471,
-    "BKNGD": 0.287,
-    "BKR": 14510,
-    "BKRD": 9.5,
-    "BMNRD": 2.98,
-    "BPD": 9.1,
-    "BRKB": 36660,
-    "BSBR": 9400,
-    "BX": 7240,
-    "C": 71350,
-    "C.D": 46.99,
-    "CAH": 130275,
-    "CAR": 8400,
-    "CAR.D": 5.52,
-    "CAT": 63200,
-    "CATD": 41.69,
-    "CCJ": 6695,
-    "CCJD": 4.365,
-    "CCL": 12530,
-    "CCLD": 8.2,
-    "CDE": 34120,
-    "CDED": 21.24,
-    "CEG": 10290,
-    "CEGD": 6.69,
-    "CIBR": 14910,
-    "CLS": 22130,
-    "CLSD": 14.53,
-    "COIN": 10350,
-    "COIND": 6.81,
-    "COP": 8705,
-    "COPX": 10250,
-    "COPXD": 6.71,
-    "COSTD": 20.09,
-    "CRWD": 4080,
-    "CRWV": 4780,
-    "CRWVD": 3.145,
-    "CSCO": 34920,
-    "CSCOD": 22.63,
-    "CSNA3": 1770,
-    "CVS": 10310,
-    "CVSD": 6.75,
-    "CVX": 21080,
-    "CVXD": 13.77,
-    "CX": 16850,
-    "DAL": 15540,
-    "DD": 42260,
-    "DE": 27740,
-    "DECK": 5350,
-    "DECKD": 3.5,
-    "DED": 18.18,
-    "DEO": 24150,
-    "DEOD": 15.92,
-    "DHR": 6180,
-    "DHRD": 4.03,
-    "DIA": 42340,
-    "DIAD": 27.65,
-    "DISN": 14320,
-    "DISND": 9.41,
-    "DOCU": 4720,
-    "DOW": 8295,
-    "DOWD": 5.45,
-    "E": 21930,
-    "EBAY": 84875,
-    "EBAYD": 55.1,
-    "ECL": 7945,
-    "EEM": 21440,
-    "EEMD": 13.96,
-    "EFA": 9450,
-    "EFAD": 6.21,
-    "EFX": 18400,
-    "EFXD": 12.76,
-    "ELPC": 58625,
-    "EMBJ": 114750,
-    "ERIC": 7955,
-    "ETHAD": 3.85,
-    "ETSY": 8125,
-    "ETSYD": 5.33,
-    "EWJ": 10900,
-    "EWJD": 7.18,
-    "EWY": 5680,
-    "EWYD": 3.73,
-    "EWZ": 30360,
-    "EWZC": 19.07,
-    "EWZD": 19.8,
-    "F": 22520,
-    "FCX": 39240,
-    "FCXD": 25.96,
-    "FD": 14.49,
-    "FDX": 50325,
-    "FDXD": 32.82,
-    "FISVD": 5.03,
-    "FSLRD": 11.75,
-    "FXI": 11330,
-    "FXID": 7.4,
-    "GDX": 15500,
-    "GDXD": 10.08,
-    "GE": 65775,
-    "GEV": 8160,
-    "GGB": 31800,
-    "GGBD": 20.57,
-    "GILD": 55500,
-    "GILDD": 39.19,
-    "GLD": 12850,
-    "GLDC": 8.06,
-    "GLNG": 8425,
-    "GLNGD": 5.3,
-    "GLOB": 3445,
-    "GLOBD": 2.25,
-    "GLW": 57325,
-    "GLWD": 37.34,
-    "GM": 22480,
-    "GMD": 14.77,
-    "GOGLC": 5.85,
-    "GOGLD": 6.11,
-    "GOOGL": 9310,
-    "GPRKD": 12.1,
-    "GRMN": 146225,
-    "GSD": 80.1,
-    "GSK": 20060,
-    "GT": 4915,
-    "HAL": 30060,
-    "HALD": 19.56,
-    "HAPV3": 2239,
-    "HD": 15890,
-    "HDB": 18430,
-    "HIMS": 11380,
-    "HL": 33020,
-    "HMC": 51475,
-    "HMYC": 19.53,
-    "HMYD": 20.1,
-    "HOG": 14730,
-    "HON": 40960,
-    "HOND": 26.71,
-    "HOOD": 5800,
-    "HOODD": 3.83,
-    "HPQ": 51050,
-    "HSBC": 83450,
-    "HSY": 13320,
-    "HSYD": 8.8,
-    "HUTD": 16.88,
-    "HWM": 402650,
-    "HWMD": 257,
-    "IBB": 12580,
-    "IBIT": 6955,
-    "IBITD": 4.58,
-    "IBKRD": 5.47,
-    "IBN": 48740,
-    "ICLN": 5520,
-    "IEMG": 10830,
-    "IEMGD": 7.06,
-    "IEUR": 11130,
-    "IEURD": 7.3,
-    "IFF": 11520,
-    "IJHD": 6.56,
-    "ILF": 9600,
-    "ILFD": 6.3,
-    "INFY": 19100,
-    "ING": 19270,
-    "INGD": 10.16,
-    "INTC": 28860,
-    "IP": 14500,
-    "IREN": 5240,
-    "IREND": 3.43,
-    "ISRG": 6300,
-    "ITA": 6950,
-    "ITUB": 12820,
-    "ITUBD": 8.44,
-    "IVE": 9400,
-    "IVV": 1852,
-    "IVVC": 1.12,
-    "IVW": 11080,
-    "IVWD": 7.24,
-    "IWM": 46700,
-    "JD": 11060,
-    "JDD": 7.22,
-    "JMIA": 11460,
-    "JMIAD": 7.53,
-    "JOYY": 23690,
-    "KB": 100800,
-    "KEEL": 24980,
-    "KEELD": 16.3,
-    "KEP": 18430,
-    "KGC": 48060,
-    "KLACD": 5.28,
-    "KMB": 28980,
-    "KMBD": 19.09,
-    "KO": 28240,
-    "KOD": 18.52,
-    "KOFM": 89650,
-    "LAC": 4827.5,
-    "LACD": 3.12,
-    "LAR": 10940,
-    "LIN": 7610,
-    "LLY": 33280,
-    "LMT": 42280,
-    "LMTD": 27.86,
-    "LRCX": 8220,
-    "LRCXD": 5.35,
-    "LYG": 4750,
-    "MA": 28140,
-    "MAD": 18.6,
-    "MCDD": 11.27,
-    "MDLZ": 6635,
-    "MDLZD": 4.38,
-    "MDT": 36620,
-    "MELI": 26580,
-    "MELIC": 16.64,
-    "MELID": 17.4,
-    "META": 39360,
-    "METAC": 24.78,
-    "METAD": 25.65,
-    "MFG": 17580,
-    "MGLU3": 1673,
-    "MMM": 26800,
-    "MMMD": 17.45,
-    "MO": 27780,
-    "MOD": 18.15,
-    "MOS": 8240,
-    "MOSD": 5.17,
-    "MP": 8735,
-    "MPD": 5.71,
-    "MRK": 48420,
-    "MRNA": 12620,
-    "MRNAD": 8.34,
-    "MRSH": 18650,
-    "MRVL": 23470,
-    "MRVLD": 15.39,
-    "MSFT": 26320,
-    "MSFTD": 17.23,
-    "MSTR": 9815,
-    "MSTRC": 6.16,
-    "MSTRD": 6.34,
-    "MUD": 198,
-    "MUFG": 37340,
-    "MUX": 16070,
-    "NBIS": 12070,
-    "NBISD": 8,
-    "NEE": 6950,
-    "NEED": 4.575,
-    "NEM": 66325,
-    "NFLX": 2750,
-    "NFLXD": 1.795,
-    "NG": 51975,
-    "NGD": 33.68,
-    "NIO": 1525,
-    "NIOD": 1,
-    "NKE": 5090,
-    "NKED": 3.32,
-    "NOKA": 15670,
-    "NOW": 1267,
-    "NOWD": 0.829,
-    "NTES": 13560,
-    "NTESD": 8.8,
-    "NTRAD": 6.84,
-    "NUD": 7.96,
-    "NVDA": 14880,
-    "NVDAC": 9.35,
-    "NVDAD": 9.69,
-    "NVO": 10620,
-    "NVS": 64700,
-    "NVSD": 42.49,
-    "NXE": 16200,
-    "NXED": 10.4,
-    "O": 7560,
-    "OD": 4.935,
-    "OKLOD": 1.475,
-    "ONDS": 6035,
-    "ONDSD": 3.97,
-    "ORCL": 77300,
-    "ORCLD": 50.7,
-    "ORLY": 629,
-    "ORLYD": 0.416,
-    "OXY": 19400,
-    "OXYD": 12.69,
-    "PAAS": 27400,
-    "PAASD": 17.76,
-    "PAC": 20660,
-    "PAGS": 5210,
-    "PAGSD": 3.4,
-    "PANW": 10490,
-    "PANWD": 6.88,
-    "PATH": 14310,
-    "PBRD": 21.75,
-    "PCAR": 64875,
-    "PCARD": 44.29,
-    "PDD": 5250,
-    "PDDD": 3.48,
-    "PEP": 12460,
-    "PEPD": 8.2,
-    "PETR3": 16650,
-    "PETRD": 10.82,
-    "PFE": 11570,
-    "PFED": 7.47,
-    "PG": 15710,
-    "PGD": 10.27,
-    "PHG": 8375,
-    "PINS": 4820,
-    "PINSD": 3.185,
-    "PKS": 32600,
-    "PLTRC": 56.3,
-    "PLTRD": 58.7,
-    "PSQ": 5175,
-    "PSQD": 3.39,
-    "PYPL": 10920,
-    "PYPLD": 7.11,
-    "QCOMD": 16.1,
-    "QQQ": 56550,
-    "QQQC": 35.47,
-    "QQQD": 37.14,
-    "RBLX": 32760,
-    "RBLXD": 20.5,
-    "RENT3": 5645,
-    "RGTI": 11880,
-    "RGTID": 7.67,
-    "RIO": 20420,
-    "RIOT": 9900,
-    "RIOTD": 6.13,
-    "RKLBD": 5.5,
-    "ROST": 91775,
-    "ROSTD": 57.7,
-    "RSP": 11630,
-    "RSPD": 7.63,
-    "SAN": 93725,
-    "SAP": 55775,
-    "SAPD": 37.11,
-    "SATLC": 4.835,
-    "SATLD": 4.92,
-    "SBS": 16250,
-    "SBUX": 14130,
-    "SCCO": 162550,
-    "SDA": 565,
-    "SE": 5580,
-    "SED": 3.65,
-    "SH": 6460,
-    "SHD": 4.235,
-    "SHELD": 49.12,
-    "SHOP": 2122,
-    "SHOPD": 1.385,
-    "SID": 14920,
-    "SIDD": 9.71,
-    "SKHY": 10540,
-    "SLB": 30780,
-    "SLV": 15680,
-    "SLVD": 10.18,
-    "SMH": 17580,
-    "SMHD": 11.45,
-    "SNA": 101275,
-    "SNAP": 8935,
-    "SNAPD": 5.65,
-    "SNDK": 14590,
-    "SNDKC": 9.1,
-    "SNDKD": 9.54,
-    "SNOW": 16290,
-    "SNOWD": 10.69,
-    "SONY": 4885,
-    "SONYD": 3.23,
-    "SPCED": 6.16,
-    "SPCX": 4492.5,
-    "SPCXD": 2.93,
-    "SPGI": 15280,
-    "SPHQ": 9665,
-    "SPOT": 31820,
-    "SPXLC": 11.7,
-    "SPXLD": 11.86,
-    "SPY": 20350,
-    "SPYC": 13.03,
-    "SPYD": 13.31,
-    "STLAD": 1.09,
-    "STNE": 5510,
-    "STNED": 3.575,
-    "SUZ": 14520,
-    "SWKS": 5415,
-    "SYY": 16270,
-    "T": 13820,
-    "TCOM": 34760,
-    "TCOMD": 22.8,
-    "TEAMD": 4.145,
-    "TEM": 8190,
-    "TEN": 89150,
-    "TEND": 58.6,
-    "TGT": 10820,
-    "TGTD": 7.1,
-    "TIMB": 29380,
-    "TIMBD": 18.58,
-    "TJX": 9810,
-    "TJXD": 6.32,
-    "TLN": 7660,
-    "TM": 21030,
-    "TMD": 13.74,
-    "TMUSD": 5.97,
-    "TQQQC": 2.8,
-    "TRIP": 7625,
-    "TRIPD": 5,
-    "TRVV": 97075,
-    "TSLA": 37940,
-    "TSLAD": 24.58,
-    "TSM": 73775,
-    "TTE": 47960,
-    "TV": 1398,
-    "TVD": 0.95,
-    "TWLO": 9980,
-    "TXND": 52.7,
-    "TXR": 22600,
-    "UAL": 34580,
-    "UALD": 22.96,
-    "UBER": 61000,
-    "UBERC": 38.67,
-    "UBERD": 39.97,
-    "UGP": 11390,
-    "UNH": 19280,
-    "UNHD": 12.61,
-    "UNP": 23060,
-    "UNPD": 15.05,
-    "UPST": 8990,
-    "UPSTD": 5.71,
-    "URA": 14120,
-    "URAC": 8.84,
-    "URAD": 9.25,
-    "URBN": 62725,
-    "URBND": 36.31,
-    "USB": 19960,
-    "USO": 14850,
-    "USOD": 9.76,
-    "V": 33500,
-    "VALED": 8.16,
-    "VD": 21.95,
-    "VEAC": 7.27,
-    "VIGD": 6.5,
-    "VIST": 40900,
-    "VISTC": 25.86,
-    "VISTD": 26.84,
-    "VIV": 18780,
-    "VIVD": 11.94,
-    "VIVT3": 9400,
-    "VOD": 25560,
-    "VODD": 16.6,
-    "VRSN": 76875,
-    "VRTX": 8100,
-    "VRTXD": 5.67,
-    "VST": 8805,
-    "VSTD": 5.75,
-    "VXX": 5760,
-    "VXXD": 3.81,
-    "VZ": 20010,
-    "VZD": 13.09,
-    "WBO": 1802,
-    "WDC": 7720,
-    "WFC": 28420,
-    "WFCD": 18.67,
-    "WMT": 9410,
-    "WMTC": 5.89,
-    "WMTD": 6.16,
-    "XLBD": 3.065,
-    "XLC": 9390,
-    "XLCD": 6.22,
-    "XLE": 51900,
-    "XLEC": 32.31,
-    "XLED": 33.96,
-    "XLF": 45900,
-    "XLI": 9850,
-    "XLID": 6.44,
-    "XLKD": 4.16,
-    "XLP": 8525,
-    "XLPD": 5.62,
-    "XLRED": 5.07,
-    "XLU": 4527.5,
-    "XLV": 9515,
-    "XLVC": 5.99,
-    "XLVD": 6.23,
-    "XLY": 4240,
-    "XLYD": 2.82,
-    "XME": 6330,
-    "XMED": 4.15,
-    "XOMD": 17.25,
-    "XP": 7945,
-    "XPEVD": 2.87,
-    "XROX": 5040,
-    "XYZ": 6535,
-    "YELP": 17870,
-    "ZM": 3232.5,
-    "ZMD": 2.1,
-    "BTC": 120508594.4,
-    "ETH": 3714339.6399999997,
-    "SOL": 155761.392,
-    "USDT": 1534.9344104000002,
-    "NEXO": 1295.6903776,
-    "POL": 142.5187568,
-    "DOT": 1342.5047664,
-    "DOGE": 128.04335600000002,
-    "RENDER": 2226.04,
-    "AVAX": 11191.608,
-    "LINK": 17470.576,
-    "BNB": 1092049.168
+    "TZV7D": 96.13,
+    "TZV8C": 77,
+    "TZVD8": 119000,
+    "TZX27": 395.6,
+    "TZX28": 350.25,
+    "TZX7D": 0.251,
+    "TZXA7": 122.35,
+    "TZXD6": 301.4,
+    "TZXD7": 276.25,
+    "TZXD8": 84.7,
+    "TZXM7": 222.4,
+    "TZXM8": 99.8,
+    "TZXM9": 90.19,
+    "TZXO6": 171.45,
+    "TZXO7": 96.4,
+    "TZXS7": 106.6,
+    "TZXS8": 95.25,
+    "TZXY7": 120.1,
+    "YELP": 17730,
+    "BTC": 121660434.2,
+    "ETH": 3757459.639,
+    "SOL": 155564.445,
+    "USDT": 1531.8050222000002,
+    "NEXO": 1286.0208586,
+    "POL": 141.4571779,
+    "DOT": 1312.7555774,
+    "DOGE": 130.46426350000002,
+    "RENDER": 2175.2980000000002,
+    "AVAX": 11305.422,
+    "LINK": 17815.997000000003,
+    "BNB": 1097024.2280000001
   },
   "catalog": [
     {
-      "symbol": "A3",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "ALUAD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "AUSO",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "BBAR",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "BHIP",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "BMA",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "BOLT",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "BYMAD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CADO",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CAPX",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CECO2",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CELU",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CGPA2",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "COME",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "COMED",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CRES",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CRESD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CTIO",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "CVH",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "ECOG",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "ECOGD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "EDN",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "EDND",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "FERR",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "FIPL",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GAMI",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GARO",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GBAN",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GCDI",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GCLA",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GGALD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "GRIM",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "HARG",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "HAVA",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "HSAT",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "IEB",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "INTR",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "INVJ",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "IRSA",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "IRSAD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "LEDE",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "LOMAD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "LONG",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "METR",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "MIRG",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "MOLA",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "MOLI",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "MORI",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "PAMP",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "PAMPD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "PATA",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "REIT",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "REITD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "RICH",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "RIGO",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "ROSE",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "SEMI",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "SUPV",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "SUPVD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "TECO2",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "TGNO4",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "TGSUD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "TRAN",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "TXAR",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "TXARD",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "VALO",
-      "cat": "Acciones AR"
-    },
-    {
-      "symbol": "YPFDD",
+      "symbol": "BYMA",
       "cat": "Acciones AR"
     },
     {
       "symbol": "AE38",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AE38C",
       "cat": "Bonos"
     },
     {
@@ -1033,6 +246,10 @@
     },
     {
       "symbol": "AL29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AL29D",
       "cat": "Bonos"
     },
     {
@@ -1052,6 +269,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "AL35C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "AL35D",
       "cat": "Bonos"
     },
@@ -1060,11 +281,27 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "AL41C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "AL41D",
       "cat": "Bonos"
     },
     {
       "symbol": "AN29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AN29C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AN29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "AO27",
       "cat": "Bonos"
     },
     {
@@ -1104,7 +341,15 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BA7DC",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BA7DD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BAF27",
       "cat": "Bonos"
     },
     {
@@ -1112,7 +357,15 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BAO27",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BB37D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BB7DC",
       "cat": "Bonos"
     },
     {
@@ -1120,11 +373,27 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BC33C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BC33D",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BC37D",
       "cat": "Bonos"
     },
     {
+      "symbol": "BC7DC",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BC7DD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BCIUO",
       "cat": "Bonos"
     },
     {
@@ -1136,6 +405,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BDC36",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BPA7C",
       "cat": "Bonos"
     },
@@ -1144,7 +417,15 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BPA8C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BPA8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPB7C",
       "cat": "Bonos"
     },
     {
@@ -1152,11 +433,23 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BPB8C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BPB8D",
       "cat": "Bonos"
     },
     {
+      "symbol": "BPC7C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BPC7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "BPD7C",
       "cat": "Bonos"
     },
     {
@@ -1176,6 +469,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BPOB8",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BPOC7",
       "cat": "Bonos"
     },
@@ -1192,7 +489,31 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "CO26D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO2D7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO32",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO32C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO32D",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "CO35",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO35C",
       "cat": "Bonos"
     },
     {
@@ -1200,7 +521,27 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "CO3D7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "COD7",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "CUAP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DICP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DICPC",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "DICPD",
       "cat": "Bonos"
     },
     {
@@ -1212,7 +553,31 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "EM33C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "EM33D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "ERE27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "ERF25",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "ERM33",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "GD29",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD29C",
       "cat": "Bonos"
     },
     {
@@ -1228,7 +593,15 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "GD30D",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "GD35",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD35C",
       "cat": "Bonos"
     },
     {
@@ -1240,11 +613,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "GD38C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "GD38D",
       "cat": "Bonos"
     },
     {
       "symbol": "GD41",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "GD41C",
       "cat": "Bonos"
     },
     {
@@ -1256,7 +637,15 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "GD46C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "GD46D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "ISG29",
       "cat": "Bonos"
     },
     {
@@ -1264,7 +653,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "LK1QD",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "NDG34",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "NDT25",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "NDT5C",
       "cat": "Bonos"
     },
     {
@@ -1272,7 +673,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "PAP0",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "PARP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PAY0",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PAY0D",
       "cat": "Bonos"
     },
     {
@@ -1284,7 +697,23 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "PBM27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PM29C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "PM29D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PMA28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PMD26",
       "cat": "Bonos"
     },
     {
@@ -1300,6 +729,22 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "PUA6C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PUA6D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PUL26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "S24DC",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "S24DD",
       "cat": "Bonos"
     },
@@ -1308,7 +753,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "SFD34",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SFD4C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "SFD4D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "SFN27",
       "cat": "Bonos"
     },
     {
@@ -1324,11 +781,39 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "T31Y7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TA7C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TA7D",
       "cat": "Bonos"
     },
     {
+      "symbol": "TFU27",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TJ7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMF27",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TMF28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMF7C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TMF7D",
       "cat": "Bonos"
     },
     {
@@ -1352,11 +837,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TO26C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TO26D",
       "cat": "Bonos"
     },
     {
       "symbol": "TTD26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TTD6C",
       "cat": "Bonos"
     },
     {
@@ -1380,7 +873,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TVPY",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPYD",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TX26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TX26D",
       "cat": "Bonos"
     },
     {
@@ -1396,7 +901,35 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TXA7D",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TXD6D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXD7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXD9D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXJ0D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXM7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXM8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXM9D",
       "cat": "Bonos"
     },
     {
@@ -1412,7 +945,31 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TXMJ8",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TXMJ9",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXS7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXS8C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TXS8D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TY27P",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TY30C",
       "cat": "Bonos"
     },
     {
@@ -1424,7 +981,19 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TZV27",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TZV28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZV7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZV8C",
       "cat": "Bonos"
     },
     {
@@ -1437,6 +1006,10 @@
     },
     {
       "symbol": "TZX28",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZX7D",
       "cat": "Bonos"
     },
     {
@@ -1456,6 +1029,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TZXM7",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TZXM8",
       "cat": "Bonos"
     },
@@ -1464,7 +1041,15 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "TZXO6",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "TZXO7",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TZXS7",
       "cat": "Bonos"
     },
     {
@@ -1472,2235 +1057,11 @@
       "cat": "Bonos"
     },
     {
-      "symbol": "AAL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AALD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AAP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AAPL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AAPLC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AAPLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ABBV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ABEV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ABEV3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ABEVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ABNB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ABT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ACN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ACND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ACWI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ACWID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ADBEC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ADBED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ADGOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ADI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ADID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ADP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AEM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AEMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AIGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMAT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMDC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMGN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMGND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMZN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMZND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ANETD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ANF",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ARCOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ARKK",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ARKKC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ARKKD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ARM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ARMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ASML",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ASMLC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ASMLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ASR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ASTS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ASTSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AVGO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AVGOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AVY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AXP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AXPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AZND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "B",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "B.D",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BA.CD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BAK",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BAKD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BB.D",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BBDC3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BBDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BBV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BCS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BHP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BIDU",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BIDUD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BIIB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BIIBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BIOX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BIOXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BKNGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BKR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BKRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BMNRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BRKB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BSBR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "C",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "C.D",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CAH",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CAR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CAR.D",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CAT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CATD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CCJ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CCJD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CCL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CCLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CDE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CDED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CEG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CEGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CIBR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CLS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CLSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "COIN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "COIND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "COP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "COPX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "COPXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "COSTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CRWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CRWV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CRWVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CSCO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CSCOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CSNA3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CVS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CVSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CVX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CVXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DAL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DECK",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DECKD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DEO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DEOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DHR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DHRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DIA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DIAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DISN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DISND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DOCU",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DOW",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DOWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "E",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EBAY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EBAYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ECL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EEM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EEMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EFA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EFAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EFX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EFXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ELPC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EMBJ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ERIC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ETHAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ETSY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ETSYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWJ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWJD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWZ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWZC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "EWZD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "F",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FCX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FCXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FDX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FDXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FISVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FSLRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FXI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "FXID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GDX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GDXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GEV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GGB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GGBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GILD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GILDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLDC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLNG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLNGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLOB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLOBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLW",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GLWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GOGLC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GOGLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GOOGL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GPRKD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GRMN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GSK",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HAL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HALD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HAPV3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HDB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HIMS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HMC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HMYC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HMYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HOG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HON",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HOND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HOOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HOODD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HPQ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HSBC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HSY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HSYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HUTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HWM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HWMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IBB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IBIT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IBITD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IBKRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IBN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ICLN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IEMG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IEMGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IEUR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IEURD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IFF",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IJHD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ILF",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ILFD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "INFY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ING",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "INGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "INTC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IREN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IREND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ISRG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ITA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ITUB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ITUBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IVE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IVV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IVVC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IVW",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IVWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "IWM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "JD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "JDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "JMIA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "JMIAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "JOYY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KEEL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KEELD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KEP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KGC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KLACD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KMB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KMBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KOFM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LACD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LAR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LIN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LLY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LMT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LMTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LRCX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LRCXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LYG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MCDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MDLZ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MDLZD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MDT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MELI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MELIC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MELID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "META",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "METAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "METAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MFG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MGLU3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MMM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MMMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MOS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MOSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MRK",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MRNA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MRNAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MRSH",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MRVL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MRVLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MSFT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MSFTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MSTR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MSTRC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MSTRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MUD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MUFG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "MUX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NBIS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NBISD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NEE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NEED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NEM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NFLX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NFLXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NIO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NIOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NKE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NKED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NOKA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NOW",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NOWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NTES",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NTESD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NTRAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NUD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVDA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVDAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVDAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NXE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NXED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "O",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "OD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "OKLOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ONDS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ONDSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ORCL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ORCLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ORLY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ORLYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "OXY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "OXYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PAAS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PAASD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PAGS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PAGSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PANW",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PANWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PATH",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PBRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PCAR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PCARD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PDDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PEP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PEPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PETR3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PETRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PFE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PFED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PHG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PINS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PINSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PKS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PLTRC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PLTRD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PSQ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PSQD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PYPL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PYPLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "QCOMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "QQQ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "QQQC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "QQQD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RBLX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RBLXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RENT3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RGTI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RGTID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RIO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RIOT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RIOTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RKLBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ROST",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ROSTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RSP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RSPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SAN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SAP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SAPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SATLC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SATLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SBS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SBUX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SCCO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SDA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SH",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SHD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SHELD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SHOP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SHOPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SIDD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SKHY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SLB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SLV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SLVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SMH",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SMHD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SMSN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNAP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNAPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNDK",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNDKC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNDKD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNOW",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SNOWD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SONY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SONYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPCED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPCX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPCXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPGI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPHQ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPOT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPXLC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPXLD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPYC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SPYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "STLAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "STNE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "STNED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SUZ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SWKS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "SYY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "T",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TCOM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TCOMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TEAMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TEM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TEN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TEND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TGT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TGTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TIMB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TIMBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TJX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TJXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TLN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TMUSD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TQQQC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TRIP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TRIPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TRVV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TSLA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TSLAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TSM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TTE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TWLO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TXND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TXR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UAL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UALD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UBER",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UBERC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UBERD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UGP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UNH",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UNHD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UNP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UNPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UPST",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UPSTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "URA",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "URAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "URAD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "URBN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "URBND",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "USB",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "USO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "USOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "V",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VALED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VEAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VIGD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VIST",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VISTC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VISTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VIV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VIVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VIVT3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VOD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VODD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VRSN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VRTX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VRTXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VST",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VSTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VXX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VXXD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VZ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VZD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WBO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WDC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WFC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WFCD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WMT",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WMTC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "WMTD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLCD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLE",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLEC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLF",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLI",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLID",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLKD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLPD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLRED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLU",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLVC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLY",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XLYD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XME",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XMED",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XOMD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XPEVD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XROX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XYZ",
-      "cat": "CEDEARs"
+      "symbol": "TZXY7",
+      "cat": "Bonos"
     },
     {
       "symbol": "YELP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ZM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ZMD",
       "cat": "CEDEARs"
     },
     {
@@ -3752,5 +1113,5 @@
       "cat": "Cripto"
     }
   ],
-  "updatedAt": "2026-09-03T13:33:02.455Z"
+  "updatedAt": "2026-09-04T13:26:51.711Z"
 }
