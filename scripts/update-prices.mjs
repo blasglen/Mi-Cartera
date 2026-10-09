@@ -35,7 +35,7 @@ const EXTRA_TICKERS = [
   ["BA", "CEDEARs"], ["CAT", "CEDEARs"], ["MMM", "CEDEARs"], ["GS", "CEDEARs"],
   ["C", "CEDEARs"], ["WFC", "CEDEARs"], ["DE", "CEDEARs"], ["UPS", "CEDEARs"],
   ["NIO", "CEDEARs"], ["RIOT", "CEDEARs"], ["COIN", "CEDEARs"], ["XYZ", "CEDEARs"],
-  ["PANW", "CEDEARs"], ["SNOW", "CEDEARs"], ["ABNB", "CEDEARs"], ["DIS", "CEDEARs"],
+  ["PANW", "CEDEARs"], ["AVGO", "CEDEARs"], ["SNOW", "CEDEARs"], ["ABNB", "CEDEARs"], ["DIS", "CEDEARs"],
   // Acciones argentinas populares que no tenés
   ["TXAR", "Acciones"], ["ALUA", "Acciones"], ["CRES", "Acciones"], ["COME", "Acciones"],
   ["TECO2", "Acciones"], ["EDN", "Acciones"], ["TRAN", "Acciones"], ["CVH", "Acciones"],

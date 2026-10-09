@@ -120,8 +120,24 @@ function rsiLabel(v) {
   return "neutral";
 }
 
-function analyze(series, livePx) {
-  const clean = series.filter((p) => p && p.price > 0);
+// Ajusta splits / cambios de ratio de CEDEAR: data912 no los ajusta, así que
+// un salto de un día mayor a x2,5 (o menor a /2,5) se toma como cambio de
+// escala y se reescala todo lo anterior. Solo afecta este cálculo, no
+// history.json.
+function adjustSplits(series) {
+  const out = series.map((p) => ({ ...p }));
+  let factor = 1;
+  const adj = [];
+  for (let i = out.length - 1; i > 0; i--) {
+    const r = series[i].price / series[i - 1].price; // sobre precios crudos
+    if (r > 2.5 || r < 0.4) { factor *= r; adj.push({ fecha: out[i].date, factor: r2(1 / r) }); }
+    out[i - 1].price *= factor;
+  }
+  return { series: out, ajustes: adj.reverse() };
+}
+
+function analyze(rawSeries, livePx) {
+  const { series: clean, ajustes } = adjustSplits(rawSeries.filter((p) => p && p.price > 0));
   if (clean.length < 30) return null;
   let closes = clean.map((p) => p.price);
   const lastHist = closes.at(-1);
@@ -152,6 +168,7 @@ function analyze(series, livePx) {
     dist_max_6m_pct: r2(pct(px, max6)),
     soporte_1m: r2(Math.min(...w1)), resistencia_1m: r2(Math.max(...w1)),
     soporte_3m: r2(Math.min(...w3)), resistencia_3m: r2(Math.max(...w3)),
+    ...(ajustes.length ? { ajustes_split: ajustes } : {}),
   };
 }
 
