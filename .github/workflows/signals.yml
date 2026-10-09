@@ -1,0 +1,32 @@
+name: Señales en vivo (cada hora)
+on:
+  schedule:
+    # Lunes a viernes, cada hora de 14 a 21 UTC = 11 a 18 hs Argentina
+    - cron: "5 14-21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: data-writes
+  cancel-in-progress: false
+jobs:
+  signals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Calcular señales con precios en vivo
+        run: node scripts/signals.mjs --live
+      - name: Guardar signals.json
+        # Push con el GITHUB_TOKEN por defecto: a propósito NO dispara el
+        # deploy de la web cada hora (solo actualiza el archivo de datos).
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/signals.json
+          git diff --staged --quiet && exit 0
+          git commit -m "Señales $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase origin main
+          git push
