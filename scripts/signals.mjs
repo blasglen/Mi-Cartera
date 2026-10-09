@@ -60,14 +60,34 @@ async function fetchFx() {
   return { oficial: by.oficial ?? null, mep: by.bolsa ?? null, ccl: by.contadoconliqui ?? null, blue: by.blue ?? null };
 }
 
-async function fetchCryptoArs(mep) {
-  if (!mep) return {};
+// Historial diario del dólar MEP (bolsa), para pasar todo a dólares igual que
+// Balanz (precio en pesos / MEP del día).
+async function fetchMepHistory() {
+  const data = await fetchJson("https://api.argentinadatos.com/v1/cotizaciones/dolares/bolsa");
+  if (!Array.isArray(data)) return [];
+  return data
+    .map((d) => ({ date: String(d.fecha).slice(0, 10), mep: d.venta ?? d.compra }))
+    .filter((d) => d.mep > 0)
+    .sort((a, b) => (a.date < b.date ? -1 : 1));
+}
+
+function mepAt(mepHist, date) {
+  // último MEP con fecha <= date (búsqueda binaria)
+  let lo = 0, hi = mepHist.length - 1, ans = null;
+  while (lo <= hi) {
+    const m = (lo + hi) >> 1;
+    if (mepHist[m].date <= date) { ans = mepHist[m].mep; lo = m + 1; } else hi = m - 1;
+  }
+  return ans;
+}
+
+async function fetchCryptoUsd() {
   const ids = Object.values(CRYPTO_IDS).join(",");
   const data = await fetchJson(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
   const out = {};
   if (data) for (const [sym, id] of Object.entries(CRYPTO_IDS)) {
     const usd = data[id]?.usd;
-    if (usd) out[sym] = usd * mep;
+    if (usd) out[sym] = usd;
   }
   return out;
 }
@@ -137,7 +157,7 @@ function adjustSplits(series) {
 }
 
 function analyze(rawSeries, livePx) {
-  const { series: clean, ajustes } = adjustSplits(rawSeries.filter((p) => p && p.price > 0));
+  const { series: clean, ajustes } = adjustSplits(rawSeries);
   if (clean.length < 30) return null;
   let closes = clean.map((p) => p.price);
   const lastHist = closes.at(-1);
@@ -176,26 +196,54 @@ async function main() {
   const live = process.argv.includes("--live");
   const hist = JSON.parse(await fs.readFile(path.join(DATA_DIR, "history.json"), "utf8")).history;
 
-  let fx = null, livePrices = {};
+  // fx.json (de la corrida diaria) tiene el MEP con el que se pasó a pesos el
+  // histórico de cripto -- se usa para volver a dólares exactos.
+  let fxFile = null;
+  try { fxFile = JSON.parse(await fs.readFile(path.join(DATA_DIR, "fx.json"), "utf8")).fx; } catch {}
+  const cryptoMep = fxFile?.mep?.value ?? null;
+
+  let fx = fxFile ? Object.fromEntries(Object.entries(fxFile).map(([k, v]) => [k, v?.value ?? v])) : null;
+  let liveArs = {}, cryptoUsd = {};
   if (live) {
-    fx = await fetchFx();
-    livePrices = await fetchLive();
-    Object.assign(livePrices, await fetchCryptoArs(fx?.mep));
-    console.log(`Precios en vivo: ${Object.keys(livePrices).length}`);
-  } else {
-    try { fx = JSON.parse(await fs.readFile(path.join(DATA_DIR, "fx.json"), "utf8")).fx; } catch {}
+    fx = (await fetchFx()) || fx;
+    liveArs = await fetchLive();
+    cryptoUsd = await fetchCryptoUsd();
+    console.log(`Precios en vivo: ${Object.keys(liveArs).length} + ${Object.keys(cryptoUsd).length} cripto`);
   }
+  const mepHist = await fetchMepHistory();
+  const usd = mepHist.length > 0;
+  console.log(usd ? `MEP histórico: ${mepHist.length} días (hasta ${mepHist.at(-1).date})` : "SIN MEP histórico -- queda en pesos");
+  const liveMep = fx?.mep ?? (usd ? mepHist.at(-1).mep : null);
 
   const tickers = {};
-  for (const [sym, series] of Object.entries(hist)) {
-    const a = analyze(series || [], livePrices[sym]);
+  for (const [sym, raw] of Object.entries(hist)) {
+    // con ~600 ruedas alcanza para SMA200, RSI y variación de 12 meses
+    let series = (raw || []).filter((p) => p && p.price > 0).slice(-600);
+    const isCrypto = CRYPTO_IDS[sym] != null;
+    let livePx = null;
+    if (usd) {
+      if (isCrypto) {
+        if (!cryptoMep) continue;
+        series = series.map((p) => ({ date: p.date, price: p.price / cryptoMep }));
+        livePx = cryptoUsd[sym] ?? null;
+      } else {
+        series = series.map((p) => { const m = mepAt(mepHist, p.date); return m ? { date: p.date, price: p.price / m } : null; }).filter(Boolean);
+        livePx = liveArs[sym] && liveMep ? liveArs[sym] / liveMep : null;
+      }
+    } else {
+      livePx = isCrypto ? (cryptoUsd[sym] && liveMep ? cryptoUsd[sym] * liveMep : null) : liveArs[sym] ?? null;
+    }
+    const a = analyze(series, livePx);
     if (a) tickers[sym] = a;
   }
 
   const out = {
     updatedAt: new Date().toISOString(),
     modo: live ? "en vivo (horario de mercado)" : "cierre diario",
-    nota: "Precios en pesos (BYMA). Bonos por 1 VN. Cripto en pesos al MEP. RSI de Wilder 14 ruedas. Rango 6m = últimas 126 ruedas.",
+    moneda: usd ? "USD" : "ARS",
+    nota: usd
+      ? "Precios en DÓLARES MEP: precio BYMA en pesos / dólar MEP de cada día (mismo criterio que Balanz). Bonos por 1 VN. Cripto en USD. RSI de Wilder 14 ruedas. Rango 6m = últimas 126 ruedas."
+      : "ATENCIÓN: no se pudo bajar el MEP histórico; precios en PESOS (BYMA). Bonos por 1 VN.",
     fx,
     tickers,
   };
