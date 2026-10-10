@@ -181,6 +181,7 @@ function analyze(rawSeries, livePx) {
     sma20: r2(s20), sma50: r2(s50), sma200: r2(s200),
     rsi14: r2(r), rsi_lectura: rsiLabel(r),
     var_1d_pct: r2(pct(px, closes.at(-2))),
+    var_1s_pct: r2(pct(px, ago(clean, 7))),
     var_1m_pct: r2(pct(px, ago(clean, 30))),
     var_3m_pct: r2(pct(px, ago(clean, 91))),
     var_12m_pct: r2(pct(px, ago(clean, 365))),
