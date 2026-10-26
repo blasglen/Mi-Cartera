@@ -2,16 +2,16 @@
   "fx": {
     "oficial": {
       "label": "Oficial",
-      "value": 1550
+      "value": 1560
     },
     "mep": {
       "label": "MEP",
-      "value": 1563.9
+      "value": 1565.5
     },
     "blue": {
       "label": "Blue",
-      "value": 1565
+      "value": 1575
     }
   },
-  "updatedAt": "2026-10-25T13:42:25.101Z"
+  "updatedAt": "2026-10-26T16:06:15.487Z"
 }
