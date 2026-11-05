@@ -1,0 +1,28 @@
+name: Mesa - prueba con un ticker (correr a mano)
+# Arma la conversación completa (VIGÍA → RADAR → ANALISTA → CONTROL) para el
+# ticker que elijas, con los últimos datos de signals.json. No guarda nada.
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: "Ticker (ej: AMD, MELI, GGAL)"
+        required: true
+        default: "AMD"
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Conversación de prueba
+        env:
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TG_VIGIA: ${{ secrets.TG_VIGIA }}
+          TG_RADAR: ${{ secrets.TG_RADAR }}
+          TG_ANALISTA: ${{ secrets.TG_ANALISTA }}
+          TG_CONTROL: ${{ secrets.TG_CONTROL }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          GROQ_KEY: ${{ secrets.GROQ_KEY }}
+        run: node scripts/mesa.mjs --demo "${{ inputs.ticker }}"

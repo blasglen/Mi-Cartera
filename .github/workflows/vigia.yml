@@ -1,4 +1,4 @@
-name: VIGÍA (Telegram, cada 15 min)
+name: VIGÍA + Mesa (Telegram, cada 15 min)
 on:
   schedule:
     # Lunes a viernes cada 15 min de 14 a 21:45 UTC = 11 a 18:45 hs Argentina
@@ -26,6 +26,18 @@ jobs:
           TG_VIGIA: ${{ secrets.TG_VIGIA }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: node scripts/vigia.mjs
+      - name: La Mesa debate los avisos (RADAR, ANALISTA, CONTROL)
+        env:
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TG_VIGIA: ${{ secrets.TG_VIGIA }}
+          TG_RADAR: ${{ secrets.TG_RADAR }}
+          TG_ANALISTA: ${{ secrets.TG_ANALISTA }}
+          TG_CONTROL: ${{ secrets.TG_CONTROL }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          GROQ_KEY: ${{ secrets.GROQ_KEY }}
+        # Si la IA falla, no frena el guardado de lo que hizo VIGÍA
+        continue-on-error: true
+        run: node scripts/mesa.mjs
       - name: Guardar señales y memoria de VIGÍA
         # Push con el GITHUB_TOKEN: a propósito NO dispara el deploy de la web.
         run: |
