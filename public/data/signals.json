@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-05T21:00:34.363Z",
+ "updatedAt": "2026-11-05T22:09:39.883Z",
  "modo": "en vivo (horario de mercado)",
  "moneda": "USD",
  "nota": "Precios en DÓLARES MEP: precio BYMA en pesos / dólar MEP de cada día (mismo criterio que Balanz). Bonos por 1 VN. Cripto en USD. RSI de Wilder 14 ruedas. Rango 6m = últimas 126 ruedas.",
@@ -33,6 +33,15 @@
    "resistencia_1m": 5.5,
    "soporte_3m": 4.08,
    "resistencia_3m": 5.97,
+   "previo": {
+    "cierre": 4.43,
+    "sma50": 5.36,
+    "sma200": 4.71,
+    "soporte_1m": 4.43,
+    "resistencia_1m": 5.5,
+    "soporte_3m": 4.43,
+    "resistencia_3m": 5.97
+   },
    "ajustes_split": [
     {
      "fecha": "2026-08-03",
@@ -62,7 +71,16 @@
    "soporte_1m": 42.7,
    "resistencia_1m": 67.44,
    "soporte_3m": 42.7,
-   "resistencia_3m": 67.88
+   "resistencia_3m": 67.88,
+   "previo": {
+    "cierre": 51.8,
+    "sma50": 57.19,
+    "sma200": 42.72,
+    "soporte_1m": 48.89,
+    "resistencia_1m": 67.88,
+    "soporte_3m": 47.23,
+    "resistencia_3m": 67.88
+   }
   },
   "CEPU": {
    "precio": 1.04,
@@ -86,7 +104,16 @@
    "soporte_1m": 1.04,
    "resistencia_1m": 1.37,
    "soporte_3m": 1.04,
-   "resistencia_3m": 1.5
+   "resistencia_3m": 1.5,
+   "previo": {
+    "cierre": 1.07,
+    "sma50": 1.33,
+    "sma200": 1.5,
+    "soporte_1m": 1.07,
+    "resistencia_1m": 1.37,
+    "soporte_3m": 1.07,
+    "resistencia_3m": 1.5
+   }
   },
   "TSM": {
    "precio": 41.67,
@@ -110,7 +137,16 @@
    "soporte_1m": 41.67,
    "resistencia_1m": 54.89,
    "soporte_3m": 41.67,
-   "resistencia_3m": 56.13
+   "resistencia_3m": 56.13,
+   "previo": {
+    "cierre": 46.44,
+    "sma50": 50.42,
+    "sma200": 46.12,
+    "soporte_1m": 46.44,
+    "resistencia_1m": 56.13,
+    "soporte_3m": 46.44,
+    "resistencia_3m": 56.13
+   }
   },
   "BABA": {
    "precio": 12.62,
@@ -134,7 +170,16 @@
    "soporte_1m": 11.45,
    "resistencia_1m": 13.01,
    "soporte_3m": 11.45,
-   "resistencia_3m": 15.22
+   "resistencia_3m": 15.22,
+   "previo": {
+    "cierre": 11.45,
+    "sma50": 12.61,
+    "sma200": 14.5,
+    "soporte_1m": 11.45,
+    "resistencia_1m": 13.01,
+    "soporte_3m": 11.45,
+    "resistencia_3m": 15.22
+   }
   },
   "GOOGL": {
    "precio": 5.16,
@@ -158,7 +203,16 @@
    "soporte_1m": 5.07,
    "resistencia_1m": 6.4,
    "soporte_3m": 5.07,
-   "resistencia_3m": 6.4
+   "resistencia_3m": 6.4,
+   "previo": {
+    "cierre": 5.31,
+    "sma50": 6.05,
+    "sma200": 6.08,
+    "soporte_1m": 5.07,
+    "resistencia_1m": 6.4,
+    "soporte_3m": 5.07,
+    "resistencia_3m": 6.4
+   }
   },
   "MSFT": {
    "precio": 18.75,
@@ -182,7 +236,16 @@
    "soporte_1m": 17.71,
    "resistencia_1m": 19.66,
    "soporte_3m": 16.59,
-   "resistencia_3m": 19.66
+   "resistencia_3m": 19.66,
+   "previo": {
+    "cierre": 19.66,
+    "sma50": 17.92,
+    "sma200": 15.21,
+    "soporte_1m": 17.71,
+    "resistencia_1m": 19.66,
+    "soporte_3m": 16.59,
+    "resistencia_3m": 19.66
+   }
   },
   "PFE": {
    "precio": 7.71,
@@ -206,7 +269,16 @@
    "soporte_1m": 7.28,
    "resistencia_1m": 8.14,
    "soporte_3m": 6.83,
-   "resistencia_3m": 8.14
+   "resistencia_3m": 8.14,
+   "previo": {
+    "cierre": 8.14,
+    "sma50": 7.49,
+    "sma200": 6.95,
+    "soporte_1m": 7.19,
+    "resistencia_1m": 8.14,
+    "soporte_3m": 6.79,
+    "resistencia_3m": 8.14
+   }
   },
   "MELI": {
    "precio": 13.44,
@@ -230,7 +302,16 @@
    "soporte_1m": 13.44,
    "resistencia_1m": 16.49,
    "soporte_3m": 13.44,
-   "resistencia_3m": 17.33
+   "resistencia_3m": 17.33,
+   "previo": {
+    "cierre": 15.45,
+    "sma50": 15.91,
+    "sma200": 15.67,
+    "soporte_1m": 14.29,
+    "resistencia_1m": 16.49,
+    "soporte_3m": 14.29,
+    "resistencia_3m": 17.33
+   }
   },
   "META": {
    "precio": 26.51,
@@ -254,7 +335,16 @@
    "soporte_1m": 26.51,
    "resistencia_1m": 33.22,
    "soporte_3m": 23.55,
-   "resistencia_3m": 33.95
+   "resistencia_3m": 33.95,
+   "previo": {
+    "cierre": 27.9,
+    "sma50": 29.25,
+    "sma200": 27.28,
+    "soporte_1m": 26.62,
+    "resistencia_1m": 33.22,
+    "soporte_3m": 23.55,
+    "resistencia_3m": 33.95
+   }
   },
   "SPY": {
    "precio": 12.93,
@@ -279,6 +369,15 @@
    "resistencia_1m": 13.72,
    "soporte_3m": 12.93,
    "resistencia_3m": 13.72,
+   "previo": {
+    "cierre": 13.6,
+    "sma50": 13.38,
+    "sma200": 12.63,
+    "soporte_1m": 13.19,
+    "resistencia_1m": 13.72,
+    "soporte_3m": 13.09,
+    "resistencia_3m": 13.72
+   },
    "ajustes_split": [
     {
      "fecha": "2026-05-29",
@@ -308,7 +407,16 @@
    "soporte_1m": 20.09,
    "resistencia_1m": 26.47,
    "soporte_3m": 20.09,
-   "resistencia_3m": 27.38
+   "resistencia_3m": 27.38,
+   "previo": {
+    "cierre": 22.01,
+    "sma50": 24.66,
+    "sma200": 23.09,
+    "soporte_1m": 22.01,
+    "resistencia_1m": 26.47,
+    "soporte_3m": 22.01,
+    "resistencia_3m": 27.38
+   }
   },
   "GGAL": {
    "precio": 3.14,
@@ -332,7 +440,16 @@
    "soporte_1m": 3.14,
    "resistencia_1m": 4.03,
    "soporte_3m": 3.14,
-   "resistencia_3m": 4.82
+   "resistencia_3m": 4.82,
+   "previo": {
+    "cierre": 3.28,
+    "sma50": 4.07,
+    "sma200": 4.71,
+    "soporte_1m": 3.28,
+    "resistencia_1m": 4.03,
+    "soporte_3m": 3.28,
+    "resistencia_3m": 4.85
+   }
   },
   "MU": {
    "precio": 138.85,
@@ -356,7 +473,16 @@
    "soporte_1m": 138.85,
    "resistencia_1m": 226.79,
    "soporte_3m": 138.85,
-   "resistencia_3m": 229.82
+   "resistencia_3m": 229.82,
+   "previo": {
+    "cierre": 169.52,
+    "sma50": 203.45,
+    "sma200": 155.48,
+    "soporte_1m": 169.52,
+    "resistencia_1m": 226.79,
+    "soporte_3m": 169.52,
+    "resistencia_3m": 229.82
+   }
   },
   "AMZN": {
    "precio": 1.9,
@@ -380,7 +506,16 @@
    "soporte_1m": 1.77,
    "resistencia_1m": 1.95,
    "soporte_3m": 1.77,
-   "resistencia_3m": 2
+   "resistencia_3m": 2,
+   "previo": {
+    "cierre": 1.95,
+    "sma50": 1.85,
+    "sma200": 1.76,
+    "soporte_1m": 1.77,
+    "resistencia_1m": 1.95,
+    "soporte_3m": 1.77,
+    "resistencia_3m": 2
+   }
   },
   "BBAR": {
    "precio": 3.76,
@@ -404,7 +539,16 @@
    "soporte_1m": 3.76,
    "resistencia_1m": 4.66,
    "soporte_3m": 3.76,
-   "resistencia_3m": 5.99
+   "resistencia_3m": 5.99,
+   "previo": {
+    "cierre": 3.91,
+    "sma50": 4.69,
+    "sma200": 5.58,
+    "soporte_1m": 3.91,
+    "resistencia_1m": 4.76,
+    "soporte_3m": 3.91,
+    "resistencia_3m": 6.04
+   }
   },
   "BMA": {
    "precio": 6.19,
@@ -428,7 +572,16 @@
    "soporte_1m": 6.19,
    "resistencia_1m": 7,
    "soporte_3m": 6.19,
-   "resistencia_3m": 8.76
+   "resistencia_3m": 8.76,
+   "previo": {
+    "cierre": 6.39,
+    "sma50": 7.28,
+    "sma200": 8.34,
+    "soporte_1m": 6.24,
+    "resistencia_1m": 7.19,
+    "soporte_3m": 6.24,
+    "resistencia_3m": 8.96
+   }
   },
   "GD35": {
    "precio": 0.68,
@@ -452,7 +605,16 @@
    "soporte_1m": 0.68,
    "resistencia_1m": 0.76,
    "soporte_3m": 0.68,
-   "resistencia_3m": 0.81
+   "resistencia_3m": 0.81,
+   "previo": {
+    "cierre": 0.7,
+    "sma50": 0.76,
+    "sma200": 0.79,
+    "soporte_1m": 0.7,
+    "resistencia_1m": 0.76,
+    "soporte_3m": 0.7,
+    "resistencia_3m": 0.82
+   }
   },
   "GD38": {
    "precio": 0.72,
@@ -476,7 +638,16 @@
    "soporte_1m": 0.72,
    "resistencia_1m": 0.8,
    "soporte_3m": 0.72,
-   "resistencia_3m": 0.85
+   "resistencia_3m": 0.85,
+   "previo": {
+    "cierre": 0.75,
+    "sma50": 0.8,
+    "sma200": 0.83,
+    "soporte_1m": 0.74,
+    "resistencia_1m": 0.81,
+    "soporte_3m": 0.74,
+    "resistencia_3m": 0.86
+   }
   },
   "GD41": {
    "precio": 0.64,
@@ -500,7 +671,16 @@
    "soporte_1m": 0.64,
    "resistencia_1m": 0.7,
    "soporte_3m": 0.64,
-   "resistencia_3m": 0.76
+   "resistencia_3m": 0.76,
+   "previo": {
+    "cierre": 0.65,
+    "sma50": 0.71,
+    "sma200": 0.74,
+    "soporte_1m": 0.65,
+    "resistencia_1m": 0.71,
+    "soporte_3m": 0.65,
+    "resistencia_3m": 0.76
+   }
   },
   "AAPL": {
    "precio": 18.01,
@@ -524,7 +704,16 @@
    "soporte_1m": 17.43,
    "resistencia_1m": 18.58,
    "soporte_3m": 15.69,
-   "resistencia_3m": 18.58
+   "resistencia_3m": 18.58,
+   "previo": {
+    "cierre": 18.58,
+    "sma50": 17.48,
+    "sma200": 15.41,
+    "soporte_1m": 17.43,
+    "resistencia_1m": 18.58,
+    "soporte_3m": 15.69,
+    "resistencia_3m": 18.58
+   }
   },
   "QQQ": {
    "precio": 34.3,
@@ -548,7 +737,16 @@
    "soporte_1m": 34.3,
    "resistencia_1m": 39.56,
    "soporte_3m": 34.3,
-   "resistencia_3m": 39.81
+   "resistencia_3m": 39.81,
+   "previo": {
+    "cierre": 36.71,
+    "sma50": 37.84,
+    "sma200": 35.25,
+    "soporte_1m": 35.75,
+    "resistencia_1m": 39.81,
+    "soporte_3m": 35.75,
+    "resistencia_3m": 39.81
+   }
   },
   "NVDA": {
    "precio": 8.02,
@@ -573,6 +771,15 @@
    "resistencia_1m": 10.33,
    "soporte_3m": 8.02,
    "resistencia_3m": 10.47,
+   "previo": {
+    "cierre": 8.88,
+    "sma50": 9.66,
+    "sma200": 8.84,
+    "soporte_1m": 8.87,
+    "resistencia_1m": 10.47,
+    "soporte_3m": 8.87,
+    "resistencia_3m": 10.47
+   },
    "ajustes_split": [
     {
      "fecha": "2024-06-10",
@@ -602,7 +809,16 @@
    "soporte_1m": 17.92,
    "resistencia_1m": 20.42,
    "soporte_3m": 17.87,
-   "resistencia_3m": 20.42
+   "resistencia_3m": 20.42,
+   "previo": {
+    "cierre": 20.42,
+    "sma50": 18.78,
+    "sma200": 17.06,
+    "soporte_1m": 17.92,
+    "resistencia_1m": 20.42,
+    "soporte_3m": 17.87,
+    "resistencia_3m": 20.42
+   }
   },
   "CSCO": {
    "precio": 20.09,
@@ -626,7 +842,16 @@
    "soporte_1m": 20.09,
    "resistencia_1m": 24.75,
    "soporte_3m": 20.09,
-   "resistencia_3m": 25.77
+   "resistencia_3m": 25.77,
+   "previo": {
+    "cierre": 21.86,
+    "sma50": 22.86,
+    "sma200": 20.97,
+    "soporte_1m": 21.27,
+    "resistencia_1m": 24.75,
+    "soporte_3m": 21.27,
+    "resistencia_3m": 25.77
+   }
   },
   "DISN": {
    "precio": 10.14,
@@ -650,7 +875,16 @@
    "soporte_1m": 9.06,
    "resistencia_1m": 10.25,
    "soporte_3m": 8.85,
-   "resistencia_3m": 10.25
+   "resistencia_3m": 10.25,
+   "previo": {
+    "cierre": 10.25,
+    "sma50": 9.36,
+    "sma200": 8.95,
+    "soporte_1m": 9.05,
+    "resistencia_1m": 10.25,
+    "soporte_3m": 8.85,
+    "resistencia_3m": 10.25
+   }
   },
   "KEEL": {
    "precio": 8.8,
@@ -674,7 +908,16 @@
    "soporte_1m": 8.8,
    "resistencia_1m": 17.35,
    "soporte_3m": 8.8,
-   "resistencia_3m": 21.54
+   "resistencia_3m": 21.54,
+   "previo": {
+    "cierre": 11.25,
+    "sma50": 16.23,
+    "sma200": 17.85,
+    "soporte_1m": 9.96,
+    "resistencia_1m": 18.14,
+    "soporte_3m": 9.96,
+    "resistencia_3m": 21.54
+   }
   },
   "MCD": {
    "precio": 11.13,
@@ -698,7 +941,16 @@
    "soporte_1m": 10.06,
    "resistencia_1m": 12.34,
    "soporte_3m": 10,
-   "resistencia_3m": 12.34
+   "resistencia_3m": 12.34,
+   "previo": {
+    "cierre": 12.34,
+    "sma50": 10.84,
+    "sma200": 12.21,
+    "soporte_1m": 10.06,
+    "resistencia_1m": 12.34,
+    "soporte_3m": 10,
+    "resistencia_3m": 12.34
+   }
   },
   "LLY": {
    "precio": 25.82,
@@ -722,7 +974,16 @@
    "soporte_1m": 21.75,
    "resistencia_1m": 26.87,
    "soporte_3m": 20.74,
-   "resistencia_3m": 26.87
+   "resistencia_3m": 26.87,
+   "previo": {
+    "cierre": 26.87,
+    "sma50": 22.56,
+    "sma200": 20.32,
+    "soporte_1m": 21.68,
+    "resistencia_1m": 26.87,
+    "soporte_3m": 20.74,
+    "resistencia_3m": 26.87
+   }
   },
   "PBR": {
    "precio": 19.99,
@@ -746,7 +1007,16 @@
    "soporte_1m": 19.99,
    "resistencia_1m": 27.85,
    "soporte_3m": 18.38,
-   "resistencia_3m": 27.85
+   "resistencia_3m": 27.85,
+   "previo": {
+    "cierre": 20.83,
+    "sma50": 23.01,
+    "sma200": 19.75,
+    "soporte_1m": 20.83,
+    "resistencia_1m": 27.85,
+    "soporte_3m": 18.38,
+    "resistencia_3m": 27.85
+   }
   },
   "TGSU2": {
    "precio": 4.63,
@@ -770,7 +1040,16 @@
    "soporte_1m": 4.63,
    "resistencia_1m": 5.78,
    "soporte_3m": 4.63,
-   "resistencia_3m": 6.39
+   "resistencia_3m": 6.39,
+   "previo": {
+    "cierre": 4.95,
+    "sma50": 5.65,
+    "sma200": 6.14,
+    "soporte_1m": 4.84,
+    "resistencia_1m": 5.78,
+    "soporte_3m": 4.84,
+    "resistencia_3m": 6.39
+   }
   },
   "PAMP": {
    "precio": 2.7,
@@ -794,7 +1073,16 @@
    "soporte_1m": 2.7,
    "resistencia_1m": 3.41,
    "soporte_3m": 2.7,
-   "resistencia_3m": 3.68
+   "resistencia_3m": 3.68,
+   "previo": {
+    "cierre": 2.76,
+    "sma50": 3.34,
+    "sma200": 3.41,
+    "soporte_1m": 2.76,
+    "resistencia_1m": 3.42,
+    "soporte_3m": 2.76,
+    "resistencia_3m": 3.68
+   }
   },
   "PYPL": {
    "precio": 7.76,
@@ -818,7 +1106,16 @@
    "soporte_1m": 7.17,
    "resistencia_1m": 7.96,
    "soporte_3m": 6.75,
-   "resistencia_3m": 8.05
+   "resistencia_3m": 8.05,
+   "previo": {
+    "cierre": 7.96,
+    "sma50": 7.2,
+    "sma200": 6.5,
+    "soporte_1m": 7.12,
+    "resistencia_1m": 7.96,
+    "soporte_3m": 6.75,
+    "resistencia_3m": 8.05
+   }
   },
   "SUPV": {
    "precio": 1.19,
@@ -842,7 +1139,16 @@
    "soporte_1m": 1.19,
    "resistencia_1m": 1.63,
    "soporte_3m": 1.19,
-   "resistencia_3m": 1.84
+   "resistencia_3m": 1.84,
+   "previo": {
+    "cierre": 1.25,
+    "sma50": 1.6,
+    "sma200": 1.87,
+    "soporte_1m": 1.25,
+    "resistencia_1m": 1.63,
+    "soporte_3m": 1.25,
+    "resistencia_3m": 1.84
+   }
   },
   "AL30": {
    "precio": 0.51,
@@ -866,7 +1172,16 @@
    "soporte_1m": 0.51,
    "resistencia_1m": 0.56,
    "soporte_3m": 0.51,
-   "resistencia_3m": 0.56
+   "resistencia_3m": 0.56,
+   "previo": {
+    "cierre": 0.53,
+    "sma50": 0.55,
+    "sma200": 0.59,
+    "soporte_1m": 0.53,
+    "resistencia_1m": 0.56,
+    "soporte_3m": 0.53,
+    "resistencia_3m": 0.56
+   }
   },
   "HMY": {
    "precio": 17.73,
@@ -890,7 +1205,16 @@
    "soporte_1m": 15.31,
    "resistencia_1m": 18.02,
    "soporte_3m": 15.31,
-   "resistencia_3m": 24.23
+   "resistencia_3m": 24.23,
+   "previo": {
+    "cierre": 17.37,
+    "sma50": 18.96,
+    "sma200": 18.57,
+    "soporte_1m": 15.31,
+    "resistencia_1m": 18.15,
+    "soporte_3m": 15.31,
+    "resistencia_3m": 24.23
+   }
   },
   "IBM": {
    "precio": 17.17,
@@ -914,7 +1238,16 @@
    "soporte_1m": 15.35,
    "resistencia_1m": 18.17,
    "soporte_3m": 15.2,
-   "resistencia_3m": 18.17
+   "resistencia_3m": 18.17,
+   "previo": {
+    "cierre": 17.94,
+    "sma50": 16.48,
+    "sma200": 17.25,
+    "soporte_1m": 15.35,
+    "resistencia_1m": 18.17,
+    "soporte_3m": 15.2,
+    "resistencia_3m": 18.17
+   }
   },
   "T": {
    "precio": 7.64,
@@ -938,7 +1271,16 @@
    "soporte_1m": 7.3,
    "resistencia_1m": 8.67,
    "soporte_3m": 7.3,
-   "resistencia_3m": 9.29
+   "resistencia_3m": 9.29,
+   "previo": {
+    "cierre": 7.75,
+    "sma50": 8.42,
+    "sma200": 8.58,
+    "soporte_1m": 7.3,
+    "resistencia_1m": 8.67,
+    "soporte_3m": 7.3,
+    "resistencia_3m": 9.29
+   }
   },
   "TSLA": {
    "precio": 24.26,
@@ -962,7 +1304,16 @@
    "soporte_1m": 24.26,
    "resistencia_1m": 28.6,
    "soporte_3m": 22.67,
-   "resistencia_3m": 28.6
+   "resistencia_3m": 28.6,
+   "previo": {
+    "cierre": 27.32,
+    "sma50": 25.9,
+    "sma200": 26.64,
+    "soporte_1m": 24.9,
+    "resistencia_1m": 28.6,
+    "soporte_3m": 22.04,
+    "resistencia_3m": 28.6
+   }
   },
   "DIA": {
    "precio": 27.15,
@@ -986,7 +1337,16 @@
    "soporte_1m": 26.68,
    "resistencia_1m": 28.25,
    "soporte_3m": 26.42,
-   "resistencia_3m": 28.25
+   "resistencia_3m": 28.25,
+   "previo": {
+    "cierre": 28.25,
+    "sma50": 27.28,
+    "sma200": 26.25,
+    "soporte_1m": 26.68,
+    "resistencia_1m": 28.25,
+    "soporte_3m": 26.42,
+    "resistencia_3m": 28.25
+   }
   },
   "LOMA": {
    "precio": 1.86,
@@ -1010,7 +1370,16 @@
    "soporte_1m": 1.86,
    "resistencia_1m": 2.12,
    "soporte_3m": 1.86,
-   "resistencia_3m": 2.15
+   "resistencia_3m": 2.15,
+   "previo": {
+    "cierre": 1.87,
+    "sma50": 2.02,
+    "sma200": 2.23,
+    "soporte_1m": 1.87,
+    "resistencia_1m": 2.12,
+    "soporte_3m": 1.87,
+    "resistencia_3m": 2.23
+   }
   },
   "NKE": {
    "precio": 3.44,
@@ -1034,7 +1403,16 @@
    "soporte_1m": 2.98,
    "resistencia_1m": 3.55,
    "soporte_3m": 2.91,
-   "resistencia_3m": 3.64
+   "resistencia_3m": 3.64,
+   "previo": {
+    "cierre": 3.55,
+    "sma50": 3.21,
+    "sma200": 3.97,
+    "soporte_1m": 2.98,
+    "resistencia_1m": 3.55,
+    "soporte_3m": 2.91,
+    "resistencia_3m": 3.64
+   }
   },
   "V": {
    "precio": 24.63,
@@ -1058,7 +1436,16 @@
    "soporte_1m": 21.59,
    "resistencia_1m": 25.65,
    "soporte_3m": 20.73,
-   "resistencia_3m": 25.65
+   "resistencia_3m": 25.65,
+   "previo": {
+    "cierre": 25.65,
+    "sma50": 22.3,
+    "sma200": 19.8,
+    "soporte_1m": 21.56,
+    "resistencia_1m": 25.65,
+    "soporte_3m": 20.73,
+    "resistencia_3m": 25.65
+   }
   },
   "MA": {
    "precio": 21.03,
@@ -1082,7 +1469,16 @@
    "soporte_1m": 18.05,
    "resistencia_1m": 21.03,
    "soporte_3m": 17.37,
-   "resistencia_3m": 21.03
+   "resistencia_3m": 21.03,
+   "previo": {
+    "cierre": 20.85,
+    "sma50": 18.67,
+    "sma200": 16.9,
+    "soporte_1m": 18.01,
+    "resistencia_1m": 20.9,
+    "soporte_3m": 17.37,
+    "resistencia_3m": 20.9
+   }
   },
   "JNJ": {
    "precio": 19.06,
@@ -1106,7 +1502,16 @@
    "soporte_1m": 17.36,
    "resistencia_1m": 19.3,
    "soporte_3m": 17.36,
-   "resistencia_3m": 19.34
+   "resistencia_3m": 19.34,
+   "previo": {
+    "cierre": 19.13,
+    "sma50": 18.53,
+    "sma200": 17.08,
+    "soporte_1m": 17.36,
+    "resistencia_1m": 19.3,
+    "soporte_3m": 17.36,
+    "resistencia_3m": 19.34
+   }
   },
   "WMT": {
    "precio": 7.41,
@@ -1130,7 +1535,16 @@
    "soporte_1m": 6.25,
    "resistencia_1m": 7.56,
    "soporte_3m": 5.92,
-   "resistencia_3m": 7.56
+   "resistencia_3m": 7.56,
+   "previo": {
+    "cierre": 7.56,
+    "sma50": 6.47,
+    "sma200": 6.81,
+    "soporte_1m": 6.25,
+    "resistencia_1m": 7.56,
+    "soporte_3m": 5.92,
+    "resistencia_3m": 7.56
+   }
   },
   "XOM": {
    "precio": 17.54,
@@ -1154,7 +1568,16 @@
    "soporte_1m": 17.16,
    "resistencia_1m": 19.75,
    "soporte_3m": 15.76,
-   "resistencia_3m": 19.75
+   "resistencia_3m": 19.75,
+   "previo": {
+    "cierre": 18,
+    "sma50": 17.56,
+    "sma200": 16,
+    "soporte_1m": 17.16,
+    "resistencia_1m": 19.75,
+    "soporte_3m": 15.76,
+    "resistencia_3m": 19.75
+   }
   },
   "JPM": {
    "precio": 23.82,
@@ -1178,7 +1601,16 @@
    "soporte_1m": 22.95,
    "resistencia_1m": 24.96,
    "soporte_3m": 22.89,
-   "resistencia_3m": 25.29
+   "resistencia_3m": 25.29,
+   "previo": {
+    "cierre": 24.96,
+    "sma50": 23.94,
+    "sma200": 22.36,
+    "soporte_1m": 22.95,
+    "resistencia_1m": 24.96,
+    "soporte_3m": 22.89,
+    "resistencia_3m": 25.29
+   }
   },
   "BAC": {
    "precio": 0,
@@ -1202,7 +1634,16 @@
    "soporte_1m": 0,
    "resistencia_1m": 0.01,
    "soporte_3m": 0,
-   "resistencia_3m": 0.01
+   "resistencia_3m": 0.01,
+   "previo": {
+    "cierre": 0,
+    "sma50": 0.01,
+    "sma200": null,
+    "soporte_1m": 0,
+    "resistencia_1m": 0.01,
+    "soporte_3m": 0,
+    "resistencia_3m": 0.01
+   }
   },
   "GE": {
    "precio": 41.17,
@@ -1226,7 +1667,16 @@
    "soporte_1m": 37.91,
    "resistencia_1m": 43.85,
    "soporte_3m": 37.91,
-   "resistencia_3m": 48.69
+   "resistencia_3m": 48.69,
+   "previo": {
+    "cierre": 43.85,
+    "sma50": 41.37,
+    "sma200": 41.86,
+    "soporte_1m": 37.91,
+    "resistencia_1m": 43.85,
+    "soporte_3m": 37.91,
+    "resistencia_3m": 48.69
+   }
   },
   "F": {
    "precio": 13.11,
@@ -1250,7 +1700,16 @@
    "soporte_1m": 12.29,
    "resistencia_1m": 13.45,
    "soporte_3m": 12.29,
-   "resistencia_3m": 15.23
+   "resistencia_3m": 15.23,
+   "previo": {
+    "cierre": 13.45,
+    "sma50": 13.45,
+    "sma200": 13.83,
+    "soporte_1m": 12.29,
+    "resistencia_1m": 13.45,
+    "soporte_3m": 12.29,
+    "resistencia_3m": 15.23
+   }
   },
   "GM": {
    "precio": 15.6,
@@ -1274,7 +1733,16 @@
    "soporte_1m": 13.41,
    "resistencia_1m": 16.37,
    "soporte_3m": 13.36,
-   "resistencia_3m": 16.37
+   "resistencia_3m": 16.37,
+   "previo": {
+    "cierre": 16.37,
+    "sma50": 14.51,
+    "sma200": 13.93,
+    "soporte_1m": 13.41,
+    "resistencia_1m": 16.37,
+    "soporte_3m": 13.36,
+    "resistencia_3m": 16.37
+   }
   },
   "NFLX": {
    "precio": 1.44,
@@ -1299,6 +1767,15 @@
    "resistencia_1m": 1.59,
    "soporte_3m": 1.35,
    "resistencia_3m": 1.79,
+   "previo": {
+    "cierre": 1.47,
+    "sma50": 1.57,
+    "sma200": 1.76,
+    "soporte_1m": 1.35,
+    "resistencia_1m": 1.59,
+    "soporte_3m": 1.35,
+    "resistencia_3m": 1.79
+   },
    "ajustes_split": [
     {
      "fecha": "2025-11-17",
@@ -1328,7 +1805,16 @@
    "soporte_1m": 34.41,
    "resistencia_1m": 37.47,
    "soporte_3m": 34.41,
-   "resistencia_3m": 41.74
+   "resistencia_3m": 41.74,
+   "previo": {
+    "cierre": 37.17,
+    "sma50": 36.95,
+    "sma200": 38.03,
+    "soporte_1m": 34.41,
+    "resistencia_1m": 37.47,
+    "soporte_3m": 34.41,
+    "resistencia_3m": 41.74
+   }
   },
   "SBUX": {
    "precio": 9.23,
@@ -1352,7 +1838,16 @@
    "soporte_1m": 7.9,
    "resistencia_1m": 9.68,
    "soporte_3m": 7.9,
-   "resistencia_3m": 9.68
+   "resistencia_3m": 9.68,
+   "previo": {
+    "cierre": 9.68,
+    "sma50": 8.64,
+    "sma200": 8.61,
+    "soporte_1m": 7.9,
+    "resistencia_1m": 9.68,
+    "soporte_3m": 7.9,
+    "resistencia_3m": 9.68
+   }
   },
   "ORCL": {
    "precio": 40.3,
@@ -1376,7 +1871,16 @@
    "soporte_1m": 40.3,
    "resistencia_1m": 51.33,
    "soporte_3m": 40.3,
-   "resistencia_3m": 56.25
+   "resistencia_3m": 56.25,
+   "previo": {
+    "cierre": 43.53,
+    "sma50": 49.12,
+    "sma200": 54.21,
+    "soporte_1m": 41.73,
+    "resistencia_1m": 51.33,
+    "soporte_3m": 41.73,
+    "resistencia_3m": 56.25
+   }
   },
   "CRM": {
    "precio": 12.28,
@@ -1400,7 +1904,16 @@
    "soporte_1m": 12.28,
    "resistencia_1m": 14.75,
    "soporte_3m": 11.06,
-   "resistencia_3m": 15.11
+   "resistencia_3m": 15.11,
+   "previo": {
+    "cierre": 12.93,
+    "sma50": 13.91,
+    "sma200": 11.47,
+    "soporte_1m": 12.93,
+    "resistencia_1m": 14.75,
+    "soporte_3m": 10.76,
+    "resistencia_3m": 15.11
+   }
   },
   "ADBE": {
    "precio": 5.83,
@@ -1424,7 +1937,16 @@
    "soporte_1m": 5.52,
    "resistencia_1m": 6.47,
    "soporte_3m": 5.46,
-   "resistencia_3m": 6.91
+   "resistencia_3m": 6.91,
+   "previo": {
+    "cierre": 5.76,
+    "sma50": 6,
+    "sma200": 5.91,
+    "soporte_1m": 5.52,
+    "resistencia_1m": 6.47,
+    "soporte_3m": 5.46,
+    "resistencia_3m": 6.91
+   }
   },
   "INTC": {
    "precio": 10.96,
@@ -1448,7 +1970,16 @@
    "soporte_1m": 10.96,
    "resistencia_1m": 23.59,
    "soporte_3m": 10.96,
-   "resistencia_3m": 26.63
+   "resistencia_3m": 26.63,
+   "previo": {
+    "cierre": 12.41,
+    "sma50": 20.75,
+    "sma200": 17.94,
+    "soporte_1m": 12.41,
+    "resistencia_1m": 23.68,
+    "soporte_3m": 12.41,
+    "resistencia_3m": 26.63
+   }
   },
   "QCOM": {
    "precio": 15.11,
@@ -1472,7 +2003,16 @@
    "soporte_1m": 15.11,
    "resistencia_1m": 17.71,
    "soporte_3m": 14.96,
-   "resistencia_3m": 19.28
+   "resistencia_3m": 19.28,
+   "previo": {
+    "cierre": 16.32,
+    "sma50": 16.93,
+    "sma200": 16,
+    "soporte_1m": 15.38,
+    "resistencia_1m": 17.71,
+    "soporte_3m": 14.96,
+    "resistencia_3m": 19.28
+   }
   },
   "CVX": {
    "precio": 13.92,
@@ -1496,7 +2036,16 @@
    "soporte_1m": 13.39,
    "resistencia_1m": 15.51,
    "soporte_3m": 12.07,
-   "resistencia_3m": 15.51
+   "resistencia_3m": 15.51,
+   "previo": {
+    "cierre": 14.3,
+    "sma50": 13.99,
+    "sma200": 12.52,
+    "soporte_1m": 13.39,
+    "resistencia_1m": 15.51,
+    "soporte_3m": 12.07,
+    "resistencia_3m": 15.51
+   }
   },
   "UNH": {
    "precio": 12.66,
@@ -1520,7 +2069,16 @@
    "soporte_1m": 11.73,
    "resistencia_1m": 13.55,
    "soporte_3m": 11.55,
-   "resistencia_3m": 13.55
+   "resistencia_3m": 13.55,
+   "previo": {
+    "cierre": 13.06,
+    "sma50": 12.37,
+    "sma200": 11.41,
+    "soporte_1m": 11.73,
+    "resistencia_1m": 13.55,
+    "soporte_3m": 11.55,
+    "resistencia_3m": 13.55
+   }
   },
   "PG": {
    "precio": 11.69,
@@ -1544,7 +2102,16 @@
    "soporte_1m": 10.29,
    "resistencia_1m": 11.69,
    "soporte_3m": 9.88,
-   "resistencia_3m": 11.69
+   "resistencia_3m": 11.69,
+   "previo": {
+    "cierre": 11.45,
+    "sma50": 10.51,
+    "sma200": 10.3,
+    "soporte_1m": 10.29,
+    "resistencia_1m": 11.66,
+    "soporte_3m": 9.88,
+    "resistencia_3m": 11.66
+   }
   },
   "HD": {
    "precio": 11.47,
@@ -1568,7 +2135,16 @@
    "soporte_1m": 9.33,
    "resistencia_1m": 11.58,
    "soporte_3m": 9.1,
-   "resistencia_3m": 11.58
+   "resistencia_3m": 11.58,
+   "previo": {
+    "cierre": 11.58,
+    "sma50": 10.08,
+    "sma200": 10.83,
+    "soporte_1m": 9.33,
+    "resistencia_1m": 11.58,
+    "soporte_3m": 9.1,
+    "resistencia_3m": 11.58
+   }
   },
   "COST": {
    "precio": 23.11,
@@ -1592,7 +2168,16 @@
    "soporte_1m": 20.48,
    "resistencia_1m": 23.17,
    "soporte_3m": 19.22,
-   "resistencia_3m": 23.17
+   "resistencia_3m": 23.17,
+   "previo": {
+    "cierre": 23.17,
+    "sma50": 20.62,
+    "sma200": 20.95,
+    "soporte_1m": 20.4,
+    "resistencia_1m": 23.17,
+    "soporte_3m": 19.22,
+    "resistencia_3m": 23.17
+   }
   },
   "BA": {
    "precio": 7.24,
@@ -1616,7 +2201,16 @@
    "soporte_1m": 7.24,
    "resistencia_1m": 8.44,
    "soporte_3m": 7.24,
-   "resistencia_3m": 10.09
+   "resistencia_3m": 10.09,
+   "previo": {
+    "cierre": 7.65,
+    "sma50": 8.46,
+    "sma200": 9.34,
+    "soporte_1m": 7.32,
+    "resistencia_1m": 8.44,
+    "soporte_3m": 7.32,
+    "resistencia_3m": 10.09
+   }
   },
   "CAT": {
    "precio": 28.65,
@@ -1640,7 +2234,16 @@
    "soporte_1m": 28.65,
    "resistencia_1m": 42.36,
    "soporte_3m": 28.65,
-   "resistencia_3m": 45.24
+   "resistencia_3m": 45.24,
+   "previo": {
+    "cierre": 31.43,
+    "sma50": 40.34,
+    "sma200": 41.76,
+    "soporte_1m": 31.43,
+    "resistencia_1m": 45.24,
+    "soporte_3m": 31.43,
+    "resistencia_3m": 45.24
+   }
   },
   "MMM": {
    "precio": 19.7,
@@ -1664,7 +2267,16 @@
    "soporte_1m": 16.74,
    "resistencia_1m": 20.67,
    "soporte_3m": 16.74,
-   "resistencia_3m": 20.67
+   "resistencia_3m": 20.67,
+   "previo": {
+    "cierre": 20.67,
+    "sma50": 17.64,
+    "sma200": 16.74,
+    "soporte_1m": 16.74,
+    "resistencia_1m": 20.67,
+    "soporte_3m": 16.74,
+    "resistencia_3m": 20.67
+   }
   },
   "GS": {
    "precio": 70.72,
@@ -1688,7 +2300,16 @@
    "soporte_1m": 69.93,
    "resistencia_1m": 75.68,
    "soporte_3m": 69.93,
-   "resistencia_3m": 84.54
+   "resistencia_3m": 84.54,
+   "previo": {
+    "cierre": 75.52,
+    "sma50": 75.61,
+    "sma200": 76.4,
+    "soporte_1m": 69.93,
+    "resistencia_1m": 75.68,
+    "soporte_3m": 69.93,
+    "resistencia_3m": 84.54
+   }
   },
   "C": {
    "precio": 41.62,
@@ -1712,7 +2333,16 @@
    "soporte_1m": 41.62,
    "resistencia_1m": 45.2,
    "soporte_3m": 41.62,
-   "resistencia_3m": 48.17
+   "resistencia_3m": 48.17,
+   "previo": {
+    "cierre": 44.24,
+    "sma50": 45.13,
+    "sma200": 43.69,
+    "soporte_1m": 41.71,
+    "resistencia_1m": 45.2,
+    "soporte_3m": 41.71,
+    "resistencia_3m": 48.17
+   }
   },
   "WFC": {
    "precio": 17.71,
@@ -1736,7 +2366,16 @@
    "soporte_1m": 16.73,
    "resistencia_1m": 18.56,
    "soporte_3m": 16.65,
-   "resistencia_3m": 18.76
+   "resistencia_3m": 18.76,
+   "previo": {
+    "cierre": 18.56,
+    "sma50": 17.65,
+    "sma200": 17.33,
+    "soporte_1m": 16.73,
+    "resistencia_1m": 18.56,
+    "soporte_3m": 16.65,
+    "resistencia_3m": 18.76
+   }
   },
   "DE": {
    "precio": 17.42,
@@ -1760,7 +2399,16 @@
    "soporte_1m": 16.26,
    "resistencia_1m": 17.9,
    "soporte_3m": 15.07,
-   "resistencia_3m": 18.51
+   "resistencia_3m": 18.51,
+   "previo": {
+    "cierre": 17.9,
+    "sma50": 17.39,
+    "sma200": 15.68,
+    "soporte_1m": 16.26,
+    "resistencia_1m": 17.9,
+    "soporte_3m": 15.07,
+    "resistencia_3m": 18.51
+   }
   },
   "UPS": {
    "precio": 0.07,
@@ -1784,7 +2432,16 @@
    "soporte_1m": 0.06,
    "resistencia_1m": 0.07,
    "soporte_3m": 0.06,
-   "resistencia_3m": 0.07
+   "resistencia_3m": 0.07,
+   "previo": {
+    "cierre": 0.07,
+    "sma50": 0.06,
+    "sma200": 0.07,
+    "soporte_1m": 0.06,
+    "resistencia_1m": 0.07,
+    "soporte_3m": 0.06,
+    "resistencia_3m": 0.07
+   }
   },
   "NIO": {
    "precio": 0.83,
@@ -1808,7 +2465,16 @@
    "soporte_1m": 0.83,
    "resistencia_1m": 0.95,
    "soporte_3m": 0.83,
-   "resistencia_3m": 1.25
+   "resistencia_3m": 1.25,
+   "previo": {
+    "cierre": 0.86,
+    "sma50": 0.94,
+    "sma200": 1.26,
+    "soporte_1m": 0.83,
+    "resistencia_1m": 0.95,
+    "soporte_3m": 0.83,
+    "resistencia_3m": 1.25
+   }
   },
   "RIOT": {
    "precio": 5.04,
@@ -1832,7 +2498,16 @@
    "soporte_1m": 4.1,
    "resistencia_1m": 6.45,
    "soporte_3m": 4.1,
-   "resistencia_3m": 8.59
+   "resistencia_3m": 8.59,
+   "previo": {
+    "cierre": 5.39,
+    "sma50": 6.43,
+    "sma200": 6.7,
+    "soporte_1m": 4.1,
+    "resistencia_1m": 6.65,
+    "soporte_3m": 4.1,
+    "resistencia_3m": 8.59
+   }
   },
   "COIN": {
    "precio": 5.32,
@@ -1856,7 +2531,16 @@
    "soporte_1m": 5.32,
    "resistencia_1m": 7.19,
    "soporte_3m": 5.32,
-   "resistencia_3m": 7.76
+   "resistencia_3m": 7.76,
+   "previo": {
+    "cierre": 5.95,
+    "sma50": 6.88,
+    "sma200": 6.85,
+    "soporte_1m": 5.33,
+    "resistencia_1m": 7.2,
+    "soporte_3m": 5.33,
+    "resistencia_3m": 7.76
+   }
   },
   "XYZ": {
    "precio": 4.41,
@@ -1880,7 +2564,16 @@
    "soporte_1m": 3.9,
    "resistencia_1m": 4.63,
    "soporte_3m": 3.8,
-   "resistencia_3m": 4.63
+   "resistencia_3m": 4.63,
+   "previo": {
+    "cierre": 4.63,
+    "sma50": 4.06,
+    "sma200": 3.69,
+    "soporte_1m": 3.9,
+    "resistencia_1m": 4.63,
+    "soporte_3m": 3.8,
+    "resistencia_3m": 4.63
+   }
   },
   "PANW": {
    "precio": 6.58,
@@ -1904,7 +2597,16 @@
    "soporte_1m": 6.58,
    "resistencia_1m": 8.75,
    "soporte_3m": 6.58,
-   "resistencia_3m": 8.79
+   "resistencia_3m": 8.79,
+   "previo": {
+    "cierre": 7.37,
+    "sma50": 7.75,
+    "sma200": 5.63,
+    "soporte_1m": 7.21,
+    "resistencia_1m": 8.79,
+    "soporte_3m": 6.84,
+    "resistencia_3m": 8.79
+   }
   },
   "AVGO": {
    "precio": 7.91,
@@ -1929,6 +2631,15 @@
    "resistencia_1m": 10.08,
    "soporte_3m": 7.91,
    "resistencia_3m": 11.33,
+   "previo": {
+    "cierre": 8.83,
+    "sma50": 9.41,
+    "sma200": 9.75,
+    "soporte_1m": 8.6,
+    "resistencia_1m": 10.11,
+    "soporte_3m": 8.6,
+    "resistencia_3m": 11.33
+   },
    "ajustes_split": [
     {
      "fecha": "2024-07-15",
@@ -1958,7 +2669,16 @@
    "soporte_1m": 9.4,
    "resistencia_1m": 12.83,
    "soporte_3m": 9.4,
-   "resistencia_3m": 12.83
+   "resistencia_3m": 12.83,
+   "previo": {
+    "cierre": 10.15,
+    "sma50": 11.41,
+    "sma200": 8.29,
+    "soporte_1m": 10.08,
+    "resistencia_1m": 12.83,
+    "soporte_3m": 10.08,
+    "resistencia_3m": 12.83
+   }
   },
   "ABNB": {
    "precio": 11.86,
@@ -1982,7 +2702,16 @@
    "soporte_1m": 11.15,
    "resistencia_1m": 12.53,
    "soporte_3m": 10.44,
-   "resistencia_3m": 13.16
+   "resistencia_3m": 13.16,
+   "previo": {
+    "cierre": 12.53,
+    "sma50": 11.83,
+    "sma200": 10.17,
+    "soporte_1m": 11.15,
+    "resistencia_1m": 12.53,
+    "soporte_3m": 10.44,
+    "resistencia_3m": 13.16
+   }
   },
   "DIS": {
    "precio": 0.07,
@@ -2006,7 +2735,16 @@
    "soporte_1m": 0.07,
    "resistencia_1m": 0.07,
    "soporte_3m": 0.07,
-   "resistencia_3m": 0.07
+   "resistencia_3m": 0.07,
+   "previo": {
+    "cierre": 0.07,
+    "sma50": 0.07,
+    "sma200": 0.07,
+    "soporte_1m": 0.07,
+    "resistencia_1m": 0.07,
+    "soporte_3m": 0.07,
+    "resistencia_3m": 0.07
+   }
   },
   "TXAR": {
    "precio": 0.44,
@@ -2030,7 +2768,16 @@
    "soporte_1m": 0.43,
    "resistencia_1m": 0.5,
    "soporte_3m": 0.41,
-   "resistencia_3m": 0.5
+   "resistencia_3m": 0.5,
+   "previo": {
+    "cierre": 0.47,
+    "sma50": 0.45,
+    "sma200": 0.46,
+    "soporte_1m": 0.43,
+    "resistencia_1m": 0.5,
+    "soporte_3m": 0.41,
+    "resistencia_3m": 0.5
+   }
   },
   "ALUA": {
    "precio": 0.48,
@@ -2054,7 +2801,16 @@
    "soporte_1m": 0.48,
    "resistencia_1m": 0.57,
    "soporte_3m": 0.48,
-   "resistencia_3m": 0.62
+   "resistencia_3m": 0.62,
+   "previo": {
+    "cierre": 0.51,
+    "sma50": 0.54,
+    "sma200": 0.62,
+    "soporte_1m": 0.51,
+    "resistencia_1m": 0.57,
+    "soporte_3m": 0.51,
+    "resistencia_3m": 0.62
+   }
   },
   "CRES": {
    "precio": 0.96,
@@ -2078,7 +2834,16 @@
    "soporte_1m": 0.96,
    "resistencia_1m": 1.22,
    "soporte_3m": 0.96,
-   "resistencia_3m": 1.33
+   "resistencia_3m": 1.33,
+   "previo": {
+    "cierre": 0.99,
+    "sma50": 1.2,
+    "sma200": 1.2,
+    "soporte_1m": 0.99,
+    "resistencia_1m": 1.27,
+    "soporte_3m": 0.99,
+    "resistencia_3m": 1.33
+   }
   },
   "COME": {
    "precio": 0.02,
@@ -2102,7 +2867,16 @@
    "soporte_1m": 0.02,
    "resistencia_1m": 0.03,
    "soporte_3m": 0.02,
-   "resistencia_3m": 0.03
+   "resistencia_3m": 0.03,
+   "previo": {
+    "cierre": 0.02,
+    "sma50": 0.03,
+    "sma200": 0.03,
+    "soporte_1m": 0.02,
+    "resistencia_1m": 0.03,
+    "soporte_3m": 0.02,
+    "resistencia_3m": 0.03
+   }
   },
   "TECO2": {
    "precio": 2.1,
@@ -2126,7 +2900,16 @@
    "soporte_1m": 2.1,
    "resistencia_1m": 2.76,
    "soporte_3m": 2.1,
-   "resistencia_3m": 2.96
+   "resistencia_3m": 2.96,
+   "previo": {
+    "cierre": 2.21,
+    "sma50": 2.65,
+    "sma200": 2.6,
+    "soporte_1m": 2.21,
+    "resistencia_1m": 2.76,
+    "soporte_3m": 2.21,
+    "resistencia_3m": 2.96
+   }
   },
   "EDN": {
    "precio": 0.74,
@@ -2150,7 +2933,16 @@
    "soporte_1m": 0.74,
    "resistencia_1m": 1.09,
    "soporte_3m": 0.74,
-   "resistencia_3m": 1.29
+   "resistencia_3m": 1.29,
+   "previo": {
+    "cierre": 0.8,
+    "sma50": 1.11,
+    "sma200": 1.3,
+    "soporte_1m": 0.8,
+    "resistencia_1m": 1.09,
+    "soporte_3m": 0.8,
+    "resistencia_3m": 1.29
+   }
   },
   "TRAN": {
    "precio": 1.26,
@@ -2174,7 +2966,16 @@
    "soporte_1m": 1.26,
    "resistencia_1m": 1.8,
    "soporte_3m": 1.26,
-   "resistencia_3m": 2.44
+   "resistencia_3m": 2.44,
+   "previo": {
+    "cierre": 1.31,
+    "sma50": 1.87,
+    "sma200": 2.42,
+    "soporte_1m": 1.31,
+    "resistencia_1m": 1.85,
+    "soporte_3m": 1.31,
+    "resistencia_3m": 2.44
+   }
   },
   "CVH": {
    "precio": 5.35,
@@ -2198,7 +2999,16 @@
    "soporte_1m": 5.35,
    "resistencia_1m": 6.07,
    "soporte_3m": 5.35,
-   "resistencia_3m": 6.25
+   "resistencia_3m": 6.25,
+   "previo": {
+    "cierre": 5.4,
+    "sma50": 6.01,
+    "sma200": 5.67,
+    "soporte_1m": 5.4,
+    "resistencia_1m": 6.07,
+    "soporte_3m": 5.4,
+    "resistencia_3m": 6.25
+   }
   },
   "MIRG": {
    "precio": 1.11,
@@ -2223,6 +3033,15 @@
    "resistencia_1m": 1.19,
    "soporte_3m": 1.06,
    "resistencia_3m": 1.27,
+   "previo": {
+    "cierre": 1.12,
+    "sma50": 1.16,
+    "sma200": 1.25,
+    "soporte_1m": 1.11,
+    "resistencia_1m": 1.19,
+    "soporte_3m": 1.06,
+    "resistencia_3m": 1.27
+   },
    "ajustes_split": [
     {
      "fecha": "2026-08-03",
@@ -2252,7 +3071,16 @@
    "soporte_1m": 0.32,
    "resistencia_1m": 0.35,
    "soporte_3m": 0.32,
-   "resistencia_3m": 0.39
+   "resistencia_3m": 0.39,
+   "previo": {
+    "cierre": 0.34,
+    "sma50": 0.35,
+    "sma200": 0.41,
+    "soporte_1m": 0.32,
+    "resistencia_1m": 0.35,
+    "soporte_3m": 0.32,
+    "resistencia_3m": 0.4
+   }
   },
   "BYMA": {
    "precio": 0.13,
@@ -2276,7 +3104,16 @@
    "soporte_1m": 0.13,
    "resistencia_1m": 0.17,
    "soporte_3m": 0.13,
-   "resistencia_3m": 0.19
+   "resistencia_3m": 0.19,
+   "previo": {
+    "cierre": 0.13,
+    "sma50": 0.16,
+    "sma200": 0.2,
+    "soporte_1m": 0.13,
+    "resistencia_1m": 0.17,
+    "soporte_3m": 0.13,
+    "resistencia_3m": 0.19
+   }
   },
   "AL29": {
    "precio": 0.51,
@@ -2300,7 +3137,16 @@
    "soporte_1m": 0.51,
    "resistencia_1m": 0.55,
    "soporte_3m": 0.51,
-   "resistencia_3m": 0.55
+   "resistencia_3m": 0.55,
+   "previo": {
+    "cierre": 0.53,
+    "sma50": 0.54,
+    "sma200": 0.59,
+    "soporte_1m": 0.53,
+    "resistencia_1m": 0.55,
+    "soporte_3m": 0.53,
+    "resistencia_3m": 0.55
+   }
   },
   "AE38": {
    "precio": 0.66,
@@ -2324,7 +3170,16 @@
    "soporte_1m": 0.66,
    "resistencia_1m": 0.75,
    "soporte_3m": 0.66,
-   "resistencia_3m": 0.81
+   "resistencia_3m": 0.81,
+   "previo": {
+    "cierre": 0.68,
+    "sma50": 0.75,
+    "sma200": 0.79,
+    "soporte_1m": 0.68,
+    "resistencia_1m": 0.75,
+    "soporte_3m": 0.68,
+    "resistencia_3m": 0.81
+   }
   },
   "GD29": {
    "precio": 0.52,
@@ -2348,7 +3203,16 @@
    "soporte_1m": 0.52,
    "resistencia_1m": 0.57,
    "soporte_3m": 0.52,
-   "resistencia_3m": 0.57
+   "resistencia_3m": 0.57,
+   "previo": {
+    "cierre": 0.54,
+    "sma50": 0.56,
+    "sma200": 0.61,
+    "soporte_1m": 0.54,
+    "resistencia_1m": 0.57,
+    "soporte_3m": 0.54,
+    "resistencia_3m": 0.57
+   }
   },
   "GD46": {
    "precio": 0.58,
@@ -2372,79 +3236,115 @@
    "soporte_1m": 0.58,
    "resistencia_1m": 0.66,
    "soporte_3m": 0.58,
-   "resistencia_3m": 0.7
+   "resistencia_3m": 0.7,
+   "previo": {
+    "cierre": 0.6,
+    "sma50": 0.65,
+    "sma200": 0.69,
+    "soporte_1m": 0.59,
+    "resistencia_1m": 0.66,
+    "soporte_3m": 0.59,
+    "resistencia_3m": 0.7
+   }
   },
   "BTC": {
-   "precio": 76054,
+   "precio": 75885,
    "fuente": "en vivo",
    "tendencia": "corrección dentro de tendencia alcista",
-   "sma20": 79660.51,
-   "sma50": 81981.45,
-   "sma200": 73191.07,
-   "rsi14": 38.84,
+   "sma20": 79652.06,
+   "sma50": 81978.07,
+   "sma200": 73190.23,
+   "rsi14": 38.43,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 0.03,
-   "var_1s_pct": -2.22,
-   "var_1m_pct": -11.09,
-   "var_3m_pct": 18.34,
-   "var_12m_pct": -26.78,
+   "var_1d_pct": -0.19,
+   "var_1s_pct": -2.44,
+   "var_1m_pct": -11.29,
+   "var_3m_pct": 18.08,
+   "var_12m_pct": -26.94,
    "rango_6m": {
     "min": 62237.7,
     "max": 86594.94
    },
-   "dist_max_6m_pct": -12.17,
-   "soporte_1m": 76028.63,
+   "dist_max_6m_pct": -12.37,
+   "soporte_1m": 75885,
    "resistencia_1m": 84024.67,
    "soporte_3m": 75584.17,
-   "resistencia_3m": 86594.94
+   "resistencia_3m": 86594.94,
+   "previo": {
+    "cierre": 76028.63,
+    "sma50": 81987.35,
+    "sma200": 73190.13,
+    "soporte_1m": 76028.63,
+    "resistencia_1m": 84024.67,
+    "soporte_3m": 75584.17,
+    "resistencia_3m": 86594.94
+   }
   },
   "ETH": {
-   "precio": 2244.3,
+   "precio": 2234.62,
    "fuente": "en vivo",
    "tendencia": "corrección dentro de tendencia alcista",
-   "sma20": 2333.22,
-   "sma50": 2499.12,
-   "sma200": 2156.36,
-   "rsi14": 40,
+   "sma20": 2332.73,
+   "sma50": 2498.93,
+   "sma200": 2156.32,
+   "rsi14": 39.4,
    "rsi_lectura": "neutral",
-   "var_1d_pct": -0.46,
-   "var_1s_pct": -0.18,
-   "var_1m_pct": -16.79,
-   "var_3m_pct": 17.97,
-   "var_12m_pct": -34.45,
+   "var_1d_pct": -0.89,
+   "var_1s_pct": -0.61,
+   "var_1m_pct": -17.15,
+   "var_3m_pct": 17.46,
+   "var_12m_pct": -34.73,
    "rango_6m": {
     "min": 1741.8,
     "max": 2775.58
    },
-   "dist_max_6m_pct": -19.14,
-   "soporte_1m": 2241.07,
+   "dist_max_6m_pct": -19.49,
+   "soporte_1m": 2234.62,
    "resistencia_1m": 2471.78,
-   "soporte_3m": 2241.07,
-   "resistencia_3m": 2775.58
+   "soporte_3m": 2234.62,
+   "resistencia_3m": 2775.58,
+   "previo": {
+    "cierre": 2254.62,
+    "sma50": 2503.15,
+    "sma200": 2156.72,
+    "soporte_1m": 2241.07,
+    "resistencia_1m": 2471.78,
+    "soporte_3m": 2241.07,
+    "resistencia_3m": 2775.58
+   }
   },
   "SOL": {
-   "precio": 89.85,
+   "precio": 89.84,
    "fuente": "en vivo",
    "tendencia": "corrección dentro de tendencia alcista",
    "sma20": 98.86,
    "sma50": 108.16,
    "sma200": 88.98,
-   "rsi14": 29.71,
+   "rsi14": 29.68,
    "rsi_lectura": "sobrevendido",
-   "var_1d_pct": 0.06,
-   "var_1s_pct": -5.79,
-   "var_1m_pct": -25.55,
-   "var_3m_pct": 23.71,
+   "var_1d_pct": 0.04,
+   "var_1s_pct": -5.8,
+   "var_1m_pct": -25.56,
+   "var_3m_pct": 23.7,
    "var_12m_pct": -44.66,
    "rango_6m": {
     "min": 71.88,
     "max": 122.12
    },
-   "dist_max_6m_pct": -26.42,
+   "dist_max_6m_pct": -26.43,
    "soporte_1m": 89.8,
    "resistencia_1m": 106.87,
    "soporte_3m": 89.8,
-   "resistencia_3m": 122.12
+   "resistencia_3m": 122.12,
+   "previo": {
+    "cierre": 89.8,
+    "sma50": 108.4,
+    "sma200": 88.95,
+    "soporte_1m": 89.8,
+    "resistencia_1m": 106.87,
+    "soporte_3m": 89.8,
+    "resistencia_3m": 122.12
+   }
   },
   "USDT": {
    "precio": 1,
@@ -2468,31 +3368,49 @@
    "soporte_1m": 1,
    "resistencia_1m": 1,
    "soporte_3m": 1,
-   "resistencia_3m": 1
+   "resistencia_3m": 1,
+   "previo": {
+    "cierre": 1,
+    "sma50": 1,
+    "sma200": 1,
+    "soporte_1m": 1,
+    "resistencia_1m": 1,
+    "soporte_3m": 1,
+    "resistencia_3m": 1
+   }
   },
   "NEXO": {
-   "precio": 0.74,
+   "precio": 0.76,
    "fuente": "en vivo",
    "tendencia": "bajista (abajo de todas las medias)",
    "sma20": 0.79,
    "sma50": 0.82,
    "sma200": 0.81,
-   "rsi14": 33.23,
+   "rsi14": 39.42,
    "rsi_lectura": "neutral",
-   "var_1d_pct": -0.67,
-   "var_1s_pct": -5.83,
-   "var_1m_pct": -13.41,
-   "var_3m_pct": 2.37,
-   "var_12m_pct": -31.71,
+   "var_1d_pct": 1.75,
+   "var_1s_pct": -3.54,
+   "var_1m_pct": -11.3,
+   "var_3m_pct": 4.86,
+   "var_12m_pct": -30.05,
    "rango_6m": {
     "min": 0.7,
     "max": 0.89
    },
-   "dist_max_6m_pct": -16.46,
+   "dist_max_6m_pct": -14.42,
    "soporte_1m": 0.74,
    "resistencia_1m": 0.82,
    "soporte_3m": 0.74,
-   "resistencia_3m": 0.89
+   "resistencia_3m": 0.89,
+   "previo": {
+    "cierre": 0.75,
+    "sma50": 0.82,
+    "sma200": 0.81,
+    "soporte_1m": 0.74,
+    "resistencia_1m": 0.82,
+    "soporte_3m": 0.74,
+    "resistencia_3m": 0.89
+   }
   },
   "POL": {
    "precio": 0.09,
@@ -2501,46 +3419,64 @@
    "sma20": 0.09,
    "sma50": 0.1,
    "sma200": 0.09,
-   "rsi14": 49.77,
+   "rsi14": 48.28,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 2.5,
-   "var_1s_pct": 7.48,
-   "var_1m_pct": -12.45,
-   "var_3m_pct": 25.15,
-   "var_12m_pct": -44.38,
+   "var_1d_pct": 1.26,
+   "var_1s_pct": 6.18,
+   "var_1m_pct": -13.51,
+   "var_3m_pct": 23.64,
+   "var_12m_pct": -45.06,
    "rango_6m": {
     "min": 0.07,
     "max": 0.12
    },
-   "dist_max_6m_pct": -23.34,
+   "dist_max_6m_pct": -24.27,
    "soporte_1m": 0.09,
    "resistencia_1m": 0.1,
    "soporte_3m": 0.09,
-   "resistencia_3m": 0.12
+   "resistencia_3m": 0.12,
+   "previo": {
+    "cierre": 0.09,
+    "sma50": 0.1,
+    "sma200": 0.09,
+    "soporte_1m": 0.09,
+    "resistencia_1m": 0.1,
+    "soporte_3m": 0.09,
+    "resistencia_3m": 0.12
+   }
   },
   "DOT": {
-   "precio": 0.93,
+   "precio": 0.92,
    "fuente": "en vivo",
    "tendencia": "bajista (abajo de todas las medias)",
    "sma20": 1.01,
    "sma50": 1.11,
    "sma200": 1.02,
-   "rsi14": 37.96,
+   "rsi14": 35.86,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 2.78,
-   "var_1s_pct": 2.62,
-   "var_1m_pct": -22.58,
-   "var_3m_pct": 13.34,
-   "var_12m_pct": -65.18,
+   "var_1d_pct": 1.28,
+   "var_1s_pct": 1.13,
+   "var_1m_pct": -23.71,
+   "var_3m_pct": 11.69,
+   "var_12m_pct": -65.68,
    "rango_6m": {
     "min": 0.75,
     "max": 1.27
    },
-   "dist_max_6m_pct": -26.69,
+   "dist_max_6m_pct": -27.76,
    "soporte_1m": 0.9,
    "resistencia_1m": 1.15,
    "soporte_3m": 0.9,
-   "resistencia_3m": 1.27
+   "resistencia_3m": 1.27,
+   "previo": {
+    "cierre": 0.9,
+    "sma50": 1.12,
+    "sma200": 1.02,
+    "soporte_1m": 0.9,
+    "resistencia_1m": 1.18,
+    "soporte_3m": 0.9,
+    "resistencia_3m": 1.27
+   }
   },
   "DOGE": {
    "precio": 0.07,
@@ -2549,118 +3485,163 @@
    "sma20": 0.08,
    "sma50": 0.09,
    "sma200": 0.09,
-   "rsi14": 35,
+   "rsi14": 33.35,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 0.83,
-   "var_1s_pct": -3.63,
-   "var_1m_pct": -22.81,
-   "var_3m_pct": 4.78,
-   "var_12m_pct": -56.75,
+   "var_1d_pct": 0.05,
+   "var_1s_pct": -4.37,
+   "var_1m_pct": -23.4,
+   "var_3m_pct": 3.97,
+   "var_12m_pct": -57.08,
    "rango_6m": {
     "min": 0.07,
     "max": 0.1
    },
-   "dist_max_6m_pct": -27.99,
+   "dist_max_6m_pct": -28.54,
    "soporte_1m": 0.07,
    "resistencia_1m": 0.08,
    "soporte_3m": 0.07,
-   "resistencia_3m": 0.1
+   "resistencia_3m": 0.1,
+   "previo": {
+    "cierre": 0.07,
+    "sma50": 0.09,
+    "sma200": 0.09,
+    "soporte_1m": 0.07,
+    "resistencia_1m": 0.08,
+    "soporte_3m": 0.07,
+    "resistencia_3m": 0.1
+   }
   },
   "RENDER": {
-   "precio": 1.55,
+   "precio": 1.52,
    "fuente": "en vivo",
    "tendencia": "bajista (abajo de todas las medias)",
    "sma20": 1.67,
    "sma50": 1.81,
    "sma200": 1.66,
-   "rsi14": 41.34,
+   "rsi14": 39.11,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 3.28,
-   "var_1s_pct": 1.28,
-   "var_1m_pct": -27.64,
-   "var_3m_pct": 15.76,
-   "var_12m_pct": -23.42,
+   "var_1d_pct": 1.28,
+   "var_1s_pct": -0.68,
+   "var_1m_pct": -29.04,
+   "var_3m_pct": 13.52,
+   "var_12m_pct": -24.9,
    "rango_6m": {
     "min": 1.25,
     "max": 2.14
    },
-   "dist_max_6m_pct": -27.64,
+   "dist_max_6m_pct": -29.04,
    "soporte_1m": 1.49,
    "resistencia_1m": 1.91,
    "soporte_3m": 1.31,
-   "resistencia_3m": 2.14
+   "resistencia_3m": 2.14,
+   "previo": {
+    "cierre": 1.5,
+    "sma50": 1.81,
+    "sma200": 1.67,
+    "soporte_1m": 1.49,
+    "resistencia_1m": 1.93,
+    "soporte_3m": 1.31,
+    "resistencia_3m": 2.14
+   }
   },
   "AVAX": {
-   "precio": 8.35,
+   "precio": 8.24,
    "fuente": "en vivo",
    "tendencia": "corrección dentro de tendencia alcista",
-   "sma20": 8.9,
+   "sma20": 8.89,
    "sma50": 9.91,
    "sma200": 8.13,
-   "rsi14": 38.09,
+   "rsi14": 35.89,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 1.3,
-   "var_1s_pct": 1.09,
-   "var_1m_pct": -28.08,
-   "var_3m_pct": 29.84,
-   "var_12m_pct": -49.76,
+   "var_1d_pct": -0.04,
+   "var_1s_pct": -0.24,
+   "var_1m_pct": -29.03,
+   "var_3m_pct": 28.13,
+   "var_12m_pct": -50.42,
    "rango_6m": {
     "min": 6.19,
     "max": 11.61
    },
-   "dist_max_6m_pct": -28.08,
+   "dist_max_6m_pct": -29.03,
    "soporte_1m": 8.24,
    "resistencia_1m": 9.77,
    "soporte_3m": 7.26,
-   "resistencia_3m": 11.61
+   "resistencia_3m": 11.61,
+   "previo": {
+    "cierre": 8.24,
+    "sma50": 9.9,
+    "sma200": 8.14,
+    "soporte_1m": 8.24,
+    "resistencia_1m": 9.94,
+    "soporte_3m": 7.26,
+    "resistencia_3m": 11.61
+   }
   },
   "LINK": {
-   "precio": 10.77,
+   "precio": 10.69,
    "fuente": "en vivo",
    "tendencia": "corrección dentro de tendencia alcista",
    "sma20": 11.52,
    "sma50": 12.6,
    "sma200": 10.07,
-   "rsi14": 39.55,
+   "rsi14": 38.53,
    "rsi_lectura": "neutral",
-   "var_1d_pct": 0.94,
-   "var_1s_pct": 1.68,
-   "var_1m_pct": -22.83,
-   "var_3m_pct": 31.53,
-   "var_12m_pct": -28.63,
+   "var_1d_pct": 0.19,
+   "var_1s_pct": 0.93,
+   "var_1m_pct": -23.4,
+   "var_3m_pct": 30.56,
+   "var_12m_pct": -29.16,
    "rango_6m": {
     "min": 7.63,
     "max": 15.44
    },
-   "dist_max_6m_pct": -30.25,
+   "dist_max_6m_pct": -30.76,
    "soporte_1m": 10.59,
    "resistencia_1m": 12.49,
    "soporte_3m": 10.59,
-   "resistencia_3m": 15.44
+   "resistencia_3m": 15.44,
+   "previo": {
+    "cierre": 10.67,
+    "sma50": 12.61,
+    "sma200": 10.06,
+    "soporte_1m": 10.59,
+    "resistencia_1m": 12.49,
+    "soporte_3m": 10.59,
+    "resistencia_3m": 15.44
+   }
   },
   "BNB": {
-   "precio": 690.76,
+   "precio": 688.11,
    "fuente": "en vivo",
    "tendencia": "corrección dentro de tendencia alcista",
-   "sma20": 722.29,
-   "sma50": 746.07,
-   "sma200": 657.02,
-   "rsi14": 39.4,
+   "sma20": 722.15,
+   "sma50": 746.02,
+   "sma200": 657.01,
+   "rsi14": 38.77,
    "rsi_lectura": "neutral",
-   "var_1d_pct": -0.08,
-   "var_1s_pct": -1.05,
-   "var_1m_pct": -11.47,
-   "var_3m_pct": 16.75,
-   "var_12m_pct": -28.12,
+   "var_1d_pct": -0.46,
+   "var_1s_pct": -1.43,
+   "var_1m_pct": -11.81,
+   "var_3m_pct": 16.31,
+   "var_12m_pct": -28.4,
    "rango_6m": {
     "min": 563.97,
     "max": 798.82
    },
-   "dist_max_6m_pct": -13.53,
-   "soporte_1m": 690.76,
+   "dist_max_6m_pct": -13.86,
+   "soporte_1m": 688.11,
    "resistencia_1m": 758.42,
-   "soporte_3m": 690.76,
-   "resistencia_3m": 798.82
+   "soporte_3m": 688.11,
+   "resistencia_3m": 798.82,
+   "previo": {
+    "cierre": 691.31,
+    "sma50": 747.01,
+    "sma200": 656.71,
+    "soporte_1m": 691.31,
+    "resistencia_1m": 758.42,
+    "soporte_3m": 691.31,
+    "resistencia_3m": 798.82
+   }
   },
   "CONIOLA": {
    "precio": 0.1,
@@ -2684,7 +3665,16 @@
    "soporte_1m": 0.1,
    "resistencia_1m": 0.12,
    "soporte_3m": 0.1,
-   "resistencia_3m": 0.13
+   "resistencia_3m": 0.13,
+   "previo": {
+    "cierre": 0.1,
+    "sma50": 0.12,
+    "sma200": 0.12,
+    "soporte_1m": 0.1,
+    "resistencia_1m": 0.12,
+    "soporte_3m": 0.1,
+    "resistencia_3m": 0.13
+   }
   },
   "ADCGLOA": {
    "precio": 0,
@@ -2708,7 +3698,16 @@
    "soporte_1m": 0,
    "resistencia_1m": 0,
    "soporte_3m": 0,
-   "resistencia_3m": 0
+   "resistencia_3m": 0,
+   "previo": {
+    "cierre": 0,
+    "sma50": 0,
+    "sma200": 0,
+    "soporte_1m": 0,
+    "resistencia_1m": 0,
+    "soporte_3m": 0,
+    "resistencia_3m": 0
+   }
   },
   "IOLDOLD": {
    "precio": 0,
@@ -2732,7 +3731,16 @@
    "soporte_1m": 0,
    "resistencia_1m": 0,
    "soporte_3m": 0,
-   "resistencia_3m": 0
+   "resistencia_3m": 0,
+   "previo": {
+    "cierre": 0,
+    "sma50": 0,
+    "sma200": 0,
+    "soporte_1m": 0,
+    "resistencia_1m": 0,
+    "soporte_3m": 0,
+    "resistencia_3m": 0
+   }
   },
   "PRPEDOB": {
    "precio": 0,
@@ -2756,7 +3764,16 @@
    "soporte_1m": 0,
    "resistencia_1m": 0,
    "soporte_3m": 0,
-   "resistencia_3m": 0
+   "resistencia_3m": 0,
+   "previo": {
+    "cierre": 0,
+    "sma50": 0,
+    "sma200": 0,
+    "soporte_1m": 0,
+    "resistencia_1m": 0,
+    "soporte_3m": 0,
+    "resistencia_3m": 0
+   }
   },
   "PLC2O": {
    "precio": 1.04,
@@ -2780,7 +3797,16 @@
    "soporte_1m": 1.02,
    "resistencia_1m": 1.09,
    "soporte_3m": 1.02,
-   "resistencia_3m": 1.09
+   "resistencia_3m": 1.09,
+   "previo": {
+    "cierre": 1.04,
+    "sma50": 1.07,
+    "sma200": 1.07,
+    "soporte_1m": 1.02,
+    "resistencia_1m": 1.09,
+    "soporte_3m": 1.02,
+    "resistencia_3m": 1.09
+   }
   },
   "DEC2O": {
    "precio": 1.02,
@@ -2804,7 +3830,16 @@
    "soporte_1m": 1.01,
    "resistencia_1m": 1.03,
    "soporte_3m": 1,
-   "resistencia_3m": 1.06
+   "resistencia_3m": 1.06,
+   "previo": {
+    "cierre": 1.02,
+    "sma50": 1.01,
+    "sma200": 1,
+    "soporte_1m": 1.01,
+    "resistencia_1m": 1.03,
+    "soporte_3m": 1,
+    "resistencia_3m": 1.06
+   }
   },
   "IRCPO": {
    "precio": 1.04,
@@ -2828,7 +3863,16 @@
    "soporte_1m": 1.03,
    "resistencia_1m": 1.07,
    "soporte_3m": 1.02,
-   "resistencia_3m": 1.11
+   "resistencia_3m": 1.11,
+   "previo": {
+    "cierre": 1.05,
+    "sma50": 1.07,
+    "sma200": 1.09,
+    "soporte_1m": 1.02,
+    "resistencia_1m": 1.07,
+    "soporte_3m": 1.02,
+    "resistencia_3m": 1.11
+   }
   },
   "LOC6O": {
    "precio": 1.03,
@@ -2852,7 +3896,16 @@
    "soporte_1m": 1.02,
    "resistencia_1m": 1.04,
    "soporte_3m": 1,
-   "resistencia_3m": 1.04
+   "resistencia_3m": 1.04,
+   "previo": {
+    "cierre": 1.03,
+    "sma50": 1.02,
+    "sma200": null,
+    "soporte_1m": 1,
+    "resistencia_1m": 1.04,
+    "soporte_3m": 1,
+    "resistencia_3m": 1.04
+   }
   },
   "MIC6O": {
    "precio": 1.01,
@@ -2876,7 +3929,16 @@
    "soporte_1m": 0.99,
    "resistencia_1m": 1.01,
    "soporte_3m": 0.99,
-   "resistencia_3m": 1.04
+   "resistencia_3m": 1.04,
+   "previo": {
+    "cierre": 1,
+    "sma50": 1,
+    "sma200": null,
+    "soporte_1m": 0.99,
+    "resistencia_1m": 1.01,
+    "soporte_3m": 0.99,
+    "resistencia_3m": 1.04
+   }
   },
   "PLC3O": {
    "precio": 1.04,
@@ -2900,7 +3962,16 @@
    "soporte_1m": 1.04,
    "resistencia_1m": 1.05,
    "soporte_3m": 1.03,
-   "resistencia_3m": 1.08
+   "resistencia_3m": 1.08,
+   "previo": {
+    "cierre": 1.04,
+    "sma50": 1.04,
+    "sma200": 1.05,
+    "soporte_1m": 1.03,
+    "resistencia_1m": 1.05,
+    "soporte_3m": 1.03,
+    "resistencia_3m": 1.08
+   }
   },
   "PQCSO": {
    "precio": 1,
@@ -2924,7 +3995,16 @@
    "soporte_1m": 1,
    "resistencia_1m": 1.03,
    "soporte_3m": 1,
-   "resistencia_3m": 1.1
+   "resistencia_3m": 1.1,
+   "previo": {
+    "cierre": 1,
+    "sma50": 1.01,
+    "sma200": 1.03,
+    "soporte_1m": 1,
+    "resistencia_1m": 1.03,
+    "soporte_3m": 1,
+    "resistencia_3m": 1.1
+   }
   },
   "YM34O": {
    "precio": 1.09,
@@ -2948,7 +4028,16 @@
    "soporte_1m": 1.06,
    "resistencia_1m": 1.1,
    "soporte_3m": 1.05,
-   "resistencia_3m": 1.11
+   "resistencia_3m": 1.11,
+   "previo": {
+    "cierre": 1.08,
+    "sma50": 1.08,
+    "sma200": 1.09,
+    "soporte_1m": 1.06,
+    "resistencia_1m": 1.1,
+    "soporte_3m": 1.05,
+    "resistencia_3m": 1.11
+   }
   },
   "YM42O": {
    "precio": 1.06,
@@ -2972,7 +4061,16 @@
    "soporte_1m": 1.04,
    "resistencia_1m": 1.06,
    "soporte_3m": 1.04,
-   "resistencia_3m": 1.07
+   "resistencia_3m": 1.07,
+   "previo": {
+    "cierre": 1.05,
+    "sma50": 1.05,
+    "sma200": 1.05,
+    "soporte_1m": 1.04,
+    "resistencia_1m": 1.06,
+    "soporte_3m": 1.04,
+    "resistencia_3m": 1.07
+   }
   },
   "ZZC1O": {
    "precio": 1.03,
@@ -2996,7 +4094,16 @@
    "soporte_1m": 1,
    "resistencia_1m": 1.03,
    "soporte_3m": 1,
-   "resistencia_3m": 1.05
+   "resistencia_3m": 1.05,
+   "previo": {
+    "cierre": 1.02,
+    "sma50": 1.02,
+    "sma200": 1.03,
+    "soporte_1m": 1,
+    "resistencia_1m": 1.03,
+    "soporte_3m": 1,
+    "resistencia_3m": 1.05
+   }
   }
  }
 }
