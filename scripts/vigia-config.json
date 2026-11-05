@@ -146,8 +146,9 @@
   },
   "ia": {
     "modelos_gemini": [
+      "gemini-3.8-flash",
       "gemini-flash-latest",
-      "gemini-2.5-flash"
+      "gemini-flash-lite-latest"
     ],
     "max_debates_por_corrida": 4
   }

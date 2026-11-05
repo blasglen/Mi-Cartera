@@ -54,7 +54,11 @@ async function send(bot, text, replyTo) {
 // ---------- IA gratis ----------
 async function gemini(prompt) {
   if (!env.GEMINI_KEY) return null;
-  for (const model of CONFIG.ia.modelos_gemini) {
+  // Recorre los modelos; si uno está saturado (503/429) reintenta una vez
+  const intentos = CONFIG.ia.modelos_gemini.flatMap((m) => [m, m]);
+  for (const [i, model] of intentos.entries()) {
+    if (!model) continue;
+    if (i % 2 === 1) await sleep(4000);
     try {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_KEY}`, {
         method: "POST", headers: { "Content-Type": "application/json" },
@@ -64,6 +68,7 @@ async function gemini(prompt) {
       const text = j.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("").trim();
       if (text) return text;
       console.log(`Gemini ${model}: ${res.status} ${j.error?.message?.slice(0, 160) || "sin texto"}`);
+      if (i % 2 === 0 && ![429, 500, 503].includes(res.status)) intentos[i + 1] = null; // error no transitorio: no reintentar
     } catch (e) { console.log(`Gemini ${model}: ${e.message}`); }
   }
   return null;
