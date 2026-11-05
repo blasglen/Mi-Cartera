@@ -14,12 +14,19 @@ jobs:
           TG_VIGIA: ${{ secrets.TG_VIGIA }}
         run: |
           if [ -z "$TG_VIGIA" ]; then echo "Falta el secret TG_VIGIA"; exit 1; fi
-          curl -s "https://api.telegram.org/bot${TG_VIGIA}/getUpdates" | python3 -c '
+          echo "== Bot (getMe):"
+          curl -s "https://api.telegram.org/bot${TG_VIGIA}/getMe" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(("OK: @"+d["result"]["username"]) if d.get("ok") else ("ERROR token: "+str(d)))'
+          echo "== Webhook:"
+          curl -s "https://api.telegram.org/bot${TG_VIGIA}/getWebhookInfo" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("result",{}).get("url") or "sin webhook")'
+          echo "== Chats:"
+          curl -s "https://api.telegram.org/bot${TG_VIGIA}/getUpdates?allowed_updates=%5B%22message%22,%22my_chat_member%22,%22chat_member%22,%22channel_post%22%5D" | python3 -c '
           import json, sys
           d = json.load(sys.stdin)
+          if not d.get("ok"): print("ERROR getUpdates:", d)
+          print("Updates recibidos:", len(d.get("result", [])))
           chats = {}
           for u in d.get("result", []):
-              for k in ("message", "my_chat_member", "channel_post"):
+              for k in ("message", "my_chat_member", "chat_member", "channel_post", "edited_message"):
                   c = u.get(k, {}).get("chat")
                   if c: chats[c["id"]] = c.get("title") or c.get("username") or c.get("first_name")
           if not chats: print("No encontré mensajes. Mandá un mensaje en el grupo (después de sumar el bot) y volvé a correr esto.")
