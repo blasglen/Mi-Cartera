@@ -1,0 +1,58 @@
+{
+  "_nota": "Lista que vigila VIGÍA. 'cartera' = lo que tenés en Balanz (alertas de compra Y de venta). 'candidatos' = ideas para el aporte mensual. Sin cripto. Para sumar un ticker tiene que existir en signals.json.",
+  "cartera": [
+    "MSFT",
+    "MELI",
+    "SPY",
+    "TSM",
+    "META",
+    "YPFD",
+    "GOOGL",
+    "MU",
+    "CEPU",
+    "AMZN",
+    "NVDA",
+    "AVGO",
+    "LLY",
+    "PFE",
+    "VIST",
+    "AMD",
+    "BABA",
+    "GGAL",
+    "BBAR",
+    "BMA"
+  ],
+  "candidatos": [
+    "QQQ",
+    "AAPL",
+    "TSLA",
+    "NFLX",
+    "UBER",
+    "ORCL",
+    "CRM",
+    "ADBE",
+    "PANW",
+    "SNOW",
+    "ABNB",
+    "V",
+    "MA",
+    "COST"
+  ],
+  "umbrales": {
+    "cerca_nivel_pct": 2,
+    "ruptura_pct": 1,
+    "movimiento_fuerte_pct": 4,
+    "rsi_sobrevendido": 30,
+    "rsi_sobrecomprado": 70
+  },
+  "argentina": [
+    "YPFD",
+    "CEPU",
+    "VIST",
+    "GGAL",
+    "BBAR",
+    "BMA"
+  ],
+  "_nota_argentina": "Se vigilan para avisos de venta, pero no entran al ranking de 'mejor punto para el aporte' (regla: cero aportes nuevos a Argentina).",
+  "resumen_apertura_ar": "11:45"
+}
