@@ -1,0 +1,27 @@
+name: Telegram - ver ID del grupo (correr a mano)
+# Paso único de configuración: después de sumar el bot VIGÍA al grupo y mandar
+# un mensaje cualquiera ahí, correr este workflow (Actions > este > Run
+# workflow). En el log aparece el ID del grupo (número negativo, tipo
+# -1001234567890). Guardarlo como secret TG_CHAT_ID.
+on:
+  workflow_dispatch:
+jobs:
+  id:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Buscar chats donde está el bot
+        env:
+          TG_VIGIA: ${{ secrets.TG_VIGIA }}
+        run: |
+          if [ -z "$TG_VIGIA" ]; then echo "Falta el secret TG_VIGIA"; exit 1; fi
+          curl -s "https://api.telegram.org/bot${TG_VIGIA}/getUpdates" | python3 -c '
+          import json, sys
+          d = json.load(sys.stdin)
+          chats = {}
+          for u in d.get("result", []):
+              for k in ("message", "my_chat_member", "channel_post"):
+                  c = u.get(k, {}).get("chat")
+                  if c: chats[c["id"]] = c.get("title") or c.get("username") or c.get("first_name")
+          if not chats: print("No encontré mensajes. Mandá un mensaje en el grupo (después de sumar el bot) y volvé a correr esto.")
+          for i, t in chats.items(): print(f"Chat: {t}  ->  ID: {i}")
+          '

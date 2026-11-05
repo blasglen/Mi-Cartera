@@ -189,6 +189,15 @@ function analyze(rawSeries, livePx) {
     dist_max_6m_pct: r2(pct(px, max6)),
     soporte_1m: r2(Math.min(...w1)), resistencia_1m: r2(Math.max(...w1)),
     soporte_3m: r2(Math.min(...w3)), resistencia_3m: r2(Math.max(...w3)),
+    // Niveles SIN la última vela, para que VIGÍA detecte cruces y rupturas
+    // (el soporte_3m de arriba incluye el precio de hoy, así que nunca se
+    // "rompe": si el precio cae, el soporte baja con él).
+    previo: {
+      cierre: r2(closes.at(-2)),
+      sma50: r2(sma(closes.slice(0, -1), 50)), sma200: r2(sma(closes.slice(0, -1), 200)),
+      soporte_1m: r2(Math.min(...closes.slice(-22, -1))), resistencia_1m: r2(Math.max(...closes.slice(-22, -1))),
+      soporte_3m: r2(Math.min(...closes.slice(-64, -1))), resistencia_3m: r2(Math.max(...closes.slice(-64, -1))),
+    },
     ...(ajustes.length ? { ajustes_split: ajustes } : {}),
   };
 }
