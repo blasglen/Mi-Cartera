@@ -7,7 +7,6 @@
   "TSM:rompe_soporte_3m": "2026-11-05",
   "TSM:cruza_abajo_sma200": "2026-11-05",
   "TSM:cae_fuerte": "2026-11-05",
-  "META:cruza_abajo_sma200": "2026-11-05",
   "YPFD:rompe_soporte_3m": "2026-11-05",
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:cae_fuerte": "2026-11-05",
@@ -30,7 +29,13 @@
   "BBAR:en_soporte_3m": "2026-11-06",
   "ORCL:en_soporte_3m": "2026-11-06",
   "PANW:en_soporte_3m": "2026-11-06",
-  "PANW:cae_fuerte": "2026-11-06"
+  "PANW:cae_fuerte": "2026-11-06",
+  "MU:rsi_sobrevendido": "2026-11-06",
+  "NVDA:rsi_sobrevendido": "2026-11-06",
+  "NVDA:cae_fuerte": "2026-11-06",
+  "AMD:en_soporte_3m": "2026-11-06",
+  "BBAR:rompe_soporte_3m": "2026-11-06",
+  "BMA:en_soporte_3m": "2026-11-06"
  },
  "log": [
   {
@@ -81,6 +86,67 @@
    "rsi14": 36.18,
    "message_id": 16,
    "debatido": true
+  },
+  {
+   "ts": "2026-11-06T15:33:51.610Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 145.45,
+   "rsi14": 29.64,
+   "message_id": 17,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T15:33:52.156Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "eventos": [
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 8.38,
+   "rsi14": 29.83,
+   "message_id": 18,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T15:33:52.406Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 46.79,
+   "rsi14": 34.69,
+   "message_id": 19,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T15:33:52.703Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.84,
+   "rsi14": 31.3,
+   "message_id": 20,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T15:33:52.980Z",
+   "ticker": "BMA",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 6.25,
+   "rsi14": 35.03,
+   "message_id": 21,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
