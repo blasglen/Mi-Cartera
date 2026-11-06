@@ -20,7 +20,6 @@
   "AVGO:rompe_soporte_3m": "2026-11-05",
   "AVGO:cae_fuerte": "2026-11-05",
   "VIST:rompe_soporte_3m": "2026-11-05",
-  "VIST:rsi_sobrevendido": "2026-11-05",
   "VIST:cae_fuerte": "2026-11-05",
   "AMD:cae_fuerte": "2026-11-05",
   "GGAL:rompe_soporte_3m": "2026-11-05",
@@ -38,7 +37,10 @@
   "BMA:en_soporte_3m": "2026-11-06",
   "AMD:rompe_soporte_3m": "2026-11-06",
   "COST:rompe_resistencia_3m": "2026-11-06",
-  "COST:rsi_sobrecomprado": "2026-11-06"
+  "COST:rsi_sobrecomprado": "2026-11-06",
+  "ORCL:cae_fuerte": "2026-11-06",
+  "MA:rompe_resistencia_3m": "2026-11-06",
+  "MA:rsi_sobrecomprado": "2026-11-06"
  },
  "log": [
   {
@@ -174,6 +176,31 @@
    "precio": 23.44,
    "rsi14": 72.6,
    "message_id": 23,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:00:24.387Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "eventos": [
+    "cae_fuerte"
+   ],
+   "precio": 41.6,
+   "rsi14": 39.89,
+   "message_id": 24,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:00:24.966Z",
+   "ticker": "MA",
+   "enCartera": false,
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 21.12,
+   "rsi14": 72.66,
+   "message_id": 25,
    "debatido": true
   }
  ]
