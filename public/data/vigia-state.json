@@ -35,7 +35,10 @@
   "NVDA:cae_fuerte": "2026-11-06",
   "AMD:en_soporte_3m": "2026-11-06",
   "BBAR:rompe_soporte_3m": "2026-11-06",
-  "BMA:en_soporte_3m": "2026-11-06"
+  "BMA:en_soporte_3m": "2026-11-06",
+  "AMD:rompe_soporte_3m": "2026-11-06",
+  "COST:rompe_resistencia_3m": "2026-11-06",
+  "COST:rsi_sobrecomprado": "2026-11-06"
  },
  "log": [
   {
@@ -147,6 +150,31 @@
    "rsi14": 35.03,
    "message_id": 21,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-06T15:45:18.228Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 46.66,
+   "rsi14": 34.56,
+   "message_id": 22,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T15:45:18.766Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 23.44,
+   "rsi14": 72.6,
+   "message_id": 23,
+   "debatido": true
   }
  ]
 }
