@@ -40,7 +40,10 @@
   "COST:rsi_sobrecomprado": "2026-11-06",
   "ORCL:cae_fuerte": "2026-11-06",
   "MA:rompe_resistencia_3m": "2026-11-06",
-  "MA:rsi_sobrecomprado": "2026-11-06"
+  "MA:rsi_sobrecomprado": "2026-11-06",
+  "ABNB:rompe_resistencia_3m": "2026-11-06",
+  "ABNB:rsi_sobrecomprado": "2026-11-06",
+  "ABNB:sube_fuerte": "2026-11-06"
  },
  "log": [
   {
@@ -201,6 +204,20 @@
    "precio": 21.12,
    "rsi14": 72.66,
    "message_id": 25,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:30:20.321Z",
+   "ticker": "ABNB",
+   "enCartera": false,
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado",
+    "sube_fuerte"
+   ],
+   "precio": 13.35,
+   "rsi14": 70.34,
+   "message_id": 26,
    "debatido": true
   }
  ]
