@@ -30,7 +30,9 @@
   "CEPU:en_soporte_3m": "2026-11-06",
   "VIST:en_soporte_3m": "2026-11-06",
   "AMD:cruza_arriba_sma200": "2026-11-06",
-  "AMD:sube_fuerte": "2026-11-06"
+  "AMD:sube_fuerte": "2026-11-06",
+  "GGAL:en_soporte_3m": "2026-11-06",
+  "GGAL:rsi_sobrevendido": "2026-11-06"
  },
  "log": [
   {
@@ -279,6 +281,19 @@
    "rsi14": 38.55,
    "message_id": 32,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-06T17:15:18.774Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.19,
+   "rsi14": 29.63,
+   "message_id": 33,
+   "debatido": true
   }
  ]
 }
