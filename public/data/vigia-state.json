@@ -2,28 +2,8 @@
  "fecha": "2026-11-06",
  "apertura": true,
  "activos": {
-  "MELI:rompe_soporte_3m": "2026-11-05",
-  "MELI:cae_fuerte": "2026-11-05",
-  "TSM:rompe_soporte_3m": "2026-11-05",
-  "TSM:cruza_abajo_sma200": "2026-11-05",
-  "TSM:cae_fuerte": "2026-11-05",
-  "YPFD:rompe_soporte_3m": "2026-11-05",
   "YPFD:rsi_sobrevendido": "2026-11-05",
-  "YPFD:cae_fuerte": "2026-11-05",
-  "MU:rompe_soporte_3m": "2026-11-05",
-  "MU:cruza_abajo_sma200": "2026-11-05",
-  "MU:cae_fuerte": "2026-11-05",
-  "CEPU:rompe_soporte_3m": "2026-11-05",
   "CEPU:rsi_sobrevendido": "2026-11-05",
-  "NVDA:rompe_soporte_3m": "2026-11-05",
-  "NVDA:cruza_abajo_sma200": "2026-11-05",
-  "AVGO:rompe_soporte_3m": "2026-11-05",
-  "AVGO:cae_fuerte": "2026-11-05",
-  "VIST:rompe_soporte_3m": "2026-11-05",
-  "VIST:cae_fuerte": "2026-11-05",
-  "AMD:cae_fuerte": "2026-11-05",
-  "GGAL:rompe_soporte_3m": "2026-11-05",
-  "GGAL:rsi_sobrevendido": "2026-11-05",
   "SPY:en_soporte_3m": "2026-11-06",
   "BBAR:en_soporte_3m": "2026-11-06",
   "ORCL:en_soporte_3m": "2026-11-06",
@@ -43,7 +23,14 @@
   "MA:rsi_sobrecomprado": "2026-11-06",
   "ABNB:rompe_resistencia_3m": "2026-11-06",
   "ABNB:rsi_sobrecomprado": "2026-11-06",
-  "ABNB:sube_fuerte": "2026-11-06"
+  "ABNB:sube_fuerte": "2026-11-06",
+  "MELI:en_soporte_3m": "2026-11-06",
+  "META:cruza_arriba_sma200": "2026-11-06",
+  "YPFD:en_soporte_3m": "2026-11-06",
+  "CEPU:en_soporte_3m": "2026-11-06",
+  "VIST:en_soporte_3m": "2026-11-06",
+  "AMD:cruza_arriba_sma200": "2026-11-06",
+  "AMD:sube_fuerte": "2026-11-06"
  },
  "log": [
   {
@@ -219,6 +206,79 @@
    "rsi14": 70.34,
    "message_id": 26,
    "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:45:16.693Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.38,
+   "rsi14": 31.91,
+   "message_id": 27,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:45:17.087Z",
+   "ticker": "META",
+   "enCartera": true,
+   "eventos": [
+    "cruza_arriba_sma200"
+   ],
+   "precio": 27.5,
+   "rsi14": 42.26,
+   "message_id": 28,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:45:17.319Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 4.13,
+   "rsi14": 27.36,
+   "message_id": 29,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:45:17.539Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.05,
+   "rsi14": 25.87,
+   "message_id": 30,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T16:45:17.766Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 20.2,
+   "rsi14": 30.43,
+   "message_id": 31,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-06T16:45:22.133Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 47.04,
+   "rsi14": 38.55,
+   "message_id": 32,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
