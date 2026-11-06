@@ -32,7 +32,8 @@
   "AMD:cruza_arriba_sma200": "2026-11-06",
   "AMD:sube_fuerte": "2026-11-06",
   "GGAL:en_soporte_3m": "2026-11-06",
-  "GGAL:rsi_sobrevendido": "2026-11-06"
+  "GGAL:rsi_sobrevendido": "2026-11-06",
+  "AVGO:en_soporte_3m": "2026-11-06"
  },
  "log": [
   {
@@ -293,6 +294,18 @@
    "precio": 3.19,
    "rsi14": 29.63,
    "message_id": 33,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T17:30:19.880Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 8.03,
+   "rsi14": 34.98,
+   "message_id": 34,
    "debatido": true
   }
  ]
