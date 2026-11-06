@@ -36,7 +36,8 @@
   "AVGO:en_soporte_3m": "2026-11-06",
   "BBAR:rsi_sobrevendido": "2026-11-06",
   "BMA:rompe_soporte_3m": "2026-11-06",
-  "QQQ:en_soporte_3m": "2026-11-06"
+  "QQQ:en_soporte_3m": "2026-11-06",
+  "GGAL:rompe_soporte_3m": "2026-11-06"
  },
  "log": [
   {
@@ -345,6 +346,18 @@
    "precio": 34.88,
    "rsi14": 36.29,
    "message_id": 37,
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-06T20:45:18.360Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.09,
+   "rsi14": 25.48,
+   "message_id": 38,
    "debatido": true
   }
  ]
