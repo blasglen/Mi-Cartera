@@ -18,6 +18,8 @@ jobs:
           curl -s "https://api.telegram.org/bot${TG_VIGIA}/getMe" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(("OK: @"+d["result"]["username"]) if d.get("ok") else ("ERROR token: "+str(d)))'
           echo "== Webhook:"
           curl -s "https://api.telegram.org/bot${TG_VIGIA}/getWebhookInfo" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("result",{}).get("url") or "sin webhook")'
+          # VIGÍA NO debe tener webhook (lee botones y /start con getUpdates). Si tiene, se lo saco.
+          curl -s "https://api.telegram.org/bot${TG_VIGIA}/deleteWebhook" | python3 -c 'import json,sys; print("deleteWebhook:", json.load(sys.stdin).get("description"))'
           echo "== Chats:"
           curl -s "https://api.telegram.org/bot${TG_VIGIA}/getUpdates?allowed_updates=%5B%22message%22,%22my_chat_member%22,%22chat_member%22,%22channel_post%22%5D" | python3 -c '
           import json, sys
