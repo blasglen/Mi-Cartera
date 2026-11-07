@@ -7,9 +7,9 @@
  },
  "libre": {
   "fecha": "2026-11",
-  "ticker": null,
-  "precio": null,
-  "nota": "ya usados (Blas, 7/11), marcado a mano"
+  "ticker": "AMZN",
+  "precio": 1.9,
+  "nota": "US$150 a AMZN (Blas, 7/11); nominales aprox."
  },
  "avisos": {
   "2026-11-06": {
