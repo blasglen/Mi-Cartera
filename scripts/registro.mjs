@@ -32,7 +32,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 function veredictoDe(e) {
   if (e.veredicto) return e.veredicto;
   const ev = e.eventos || [];
-  if (ev.some((x) => ["rompe_soporte_3m", "cruza_abajo_sma200", "cruce_muerte"].includes(x))) return e.enCartera ? "SEÑAL DE VENTA" : "NO COMPRAR";
+  if (ev.some((x) => ["rompe_soporte_3m", "cruza_abajo_sma200", "cruce_muerte", "minimo_6m"].includes(x) || x.startsWith("stop_ppc_"))) return e.enCartera ? "SEÑAL DE VENTA" : "NO COMPRAR";
   if (ev.some((x) => ["en_soporte_3m", "rsi_sobrevendido", "cruza_arriba_sma200", "cruce_dorado"].includes(x))) return "SEÑAL DE COMPRA";
   return "MANTENER";
 }
@@ -138,7 +138,7 @@ function estadisticas(reg) {
 const NOMBRES = {
   en_soporte_3m: "soporte", rompe_soporte_3m: "rompe soporte", en_resistencia_3m: "resistencia", rompe_resistencia_3m: "rompe máximos",
   rsi_sobrevendido: "RSI bajo", rsi_sobrecomprado: "RSI alto", cruza_arriba_sma200: "cruza 200↑", cruza_abajo_sma200: "pierde 200",
-  cruce_dorado: "cruce dorado", cruce_muerte: "cruce muerte", sube_fuerte: "suba fuerte", cae_fuerte: "caída fuerte",
+  cruce_dorado: "cruce dorado", cruce_muerte: "cruce muerte", sube_fuerte: "suba fuerte", cae_fuerte: "caída fuerte", stop_ppc_20: "stop −20%", stop_ppc_30: "stop −30%", minimo_6m: "mínimo 6m",
 };
 
 function resumen(reg) {

@@ -66,7 +66,7 @@ async function send(text) {
 
 // ---------- detección de eventos ----------
 // Cada evento: { id, emoji, texto, tipo: "compra" | "alerta" | "caro" | "info" }
-function eventos(t) {
+function eventos(t, sym) {
   const out = [];
   const p = t.previo || {};
   const px = t.precio;
@@ -108,6 +108,17 @@ function eventos(t) {
     else if (p.sma50 >= p.sma200 && t.sma50 < t.sma200)
       out.push({ id: "cruce_muerte", emoji: "⚫", tipo: "alerta", texto: "Cruce de la muerte: la media de 50 pasó abajo de la de 200" });
   }
+  // Stop contra tu precio promedio de compra (solo lo que tenés)
+  const ppc = CONFIG.ppc?.[sym];
+  if (ppc && (CONFIG.tenencias || {})[sym]) {
+    const caida = (px / ppc - 1) * 100;
+    const niveles = [...(U.stop_ppc_pct || [20, 30])].sort((a, b) => b - a); // el más profundo primero
+    const nivel = niveles.find((n) => caida <= -n);
+    if (nivel) out.push({ id: `stop_ppc_${nivel}`, emoji: "🛑", tipo: "alerta", texto: `Está ${num(-caida, 0)}% abajo de tu precio promedio de compra (US$ ${num(ppc)}): pasó tu stop de −${nivel}%` });
+  }
+  // Nuevo mínimo de 6 meses
+  if (t.rango_6m?.min && px <= t.rango_6m.min * 1.001 && (t.var_1d_pct ?? 0) < 0 && (CONFIG.tenencias || {})[sym])
+    out.push({ id: "minimo_6m", emoji: "📉", tipo: "alerta", texto: `Nuevo mínimo de 6 meses (${usd(px)})` });
   // Movimiento fuerte del día
   if (t.var_1d_pct != null && Math.abs(t.var_1d_pct) >= U.movimiento_fuerte_pct)
     out.push({ id: t.var_1d_pct > 0 ? "sube_fuerte" : "cae_fuerte", emoji: "⚡", tipo: "info", texto: `Movimiento fuerte hoy: ${pctTxt(t.var_1d_pct)}` });
@@ -134,7 +145,9 @@ function veredicto(sym, t, evs, enCartera, sig) {
   const esArg = (CONFIG.argentina || []).includes(sym);
 
   if (has("alerta")) {
-    const nivel = sop ? `Perdió ${usd(sop)}. Recomprar recién si recupera ese nivel.` : "Perdió un nivel clave.";
+    const stop = evs.find((e) => e.id.startsWith("stop_ppc_"));
+    let nivel = sop && t.precio < sop ? `Perdió ${usd(sop)}. Recomprar recién si recupera ese nivel.` : stop ? "Cortá la pérdida o definí ya hasta dónde la bancás." : "Perdió un nivel clave.";
+    if (enCartera && esArg) nivel += " Además va en línea con tu objetivo de bajar Argentina.";
     return enCartera
       ? { emoji: "🔴", titulo: "SEÑAL DE VENTA", fuerza: evs.filter((e) => e.tipo === "alerta").length >= 2 ? "fuerte" : "moderada", plan: nivel }
       : { emoji: "⛔", titulo: "NO COMPRAR", fuerza: null, plan: `Viene cayendo. ${nivel}` };
@@ -191,7 +204,7 @@ function mensajeApertura(sig, cartera, candidatos) {
   for (const sym of cartera) {
     const t = sig.tickers[sym];
     if (!t) continue;
-    const evs = eventos(t);
+    const evs = eventos(t, sym);
     const v = evs.length ? veredicto(sym, t, evs, true, sig) : { emoji: "⚪", titulo: "MANTENER" };
     const corto = v.titulo.replace("SEÑAL DE ", "");
     lines.push(`${v.emoji} <b>${corto}</b> · ${esc(sym)} ${usd(t.precio)} · ${pctTxt(t.var_1d_pct)}`);
@@ -236,14 +249,14 @@ async function main() {
     if (!t) continue;
     if (t.fuente !== "en vivo" && !TEST) continue; // fuera de horario o sin precio de hoy
     const enCartera = cartera.includes(sym);
-    let evs = eventos(t);
+    let evs = eventos(t, sym);
     // Menos ruido: de los candidatos solo interesan las señales de compra y las
     // rupturas. "Caro" y "alerta" importan solo para lo que ya tenés.
     if (!enCartera && !evs.some((e) => e.tipo === "compra" || e.tipo === "ruptura")) evs = [];
     // Un movimiento fuerte solo, sin otra señal, no alcanza para avisar
     if (evs.length && evs.every((e) => e.tipo === "info")) evs = [];
     // Re-armar condiciones que dejaron de cumplirse
-    const ahora = new Set(eventos(t).map((e) => `${sym}:${e.id}`));
+    const ahora = new Set(eventos(t, sym).map((e) => `${sym}:${e.id}`));
     for (const k of Object.keys(state.activos))
       if (k.startsWith(`${sym}:`) && !ahora.has(k) && state.activos[k] !== hoy) delete state.activos[k];
     const nuevos = evs.filter((e) => !state.activos[`${sym}:${e.id}`]);
@@ -256,10 +269,10 @@ async function main() {
     const P = CONFIG.privado || { cartera: "fuertes", candidatos: "compra_fuerte" };
     const accion = /COMPRA|VENTA/.test(v.titulo) && v.titulo !== "NO COMPRAR";
     const alPrivado = enCartera
-      ? accion && (P.cartera === "todas" || (P.cartera === "fuertes" && v.fuerza === "fuerte"))
+      ? accion && (P.cartera === "todas" || (P.cartera === "fuertes" && v.fuerza === "fuerte") || (P.cartera === "ventas_todas_compras_fuertes" && (/VENTA/.test(v.titulo) || v.fuerza === "fuerte")))
       : /SEÑAL DE COMPRA/.test(v.titulo) && (P.candidatos === "compra" || (P.candidatos === "compra_fuerte" && v.fuerza === "fuerte"));
     if (id && PRIVADO && alPrivado && !(/COMPRA/.test(v.titulo) && compradoEsteMes(sym)))
-      await sendTo(PRIVADO, `🚨 <b>ALERTA · ${v.titulo} FUERTE · ${esc(sym)}</b>\n${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy\n<b>${esc(v.plan)}</b>\n<i>El análisis completo (RADAR, ANALISTA, CONTROL) está en el grupo.</i>`);
+      await sendTo(PRIVADO, `${v.emoji} <b>${v.titulo}${v.fuerza === "fuerte" ? " FUERTE" : ""} · ${esc(sym)}</b>\n${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy\n<b>${esc(v.plan)}</b>\n${nuevos.map((e) => `${e.emoji} ${esc(e.texto)}`).join("\n")}\n<i>Debate completo en el grupo grande. Respondé acá para hablar con ANALISTA.</i>`);
     if (id === false) continue;
     enviados++;
     for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy;
