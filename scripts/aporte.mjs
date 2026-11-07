@@ -55,7 +55,7 @@ async function tg(method, body) {
 const send = (text, botones, chat = CHAT) => tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true, ...(botones ? { reply_markup: { inline_keyboard: [botones] } } : {}) });
 // Alerta al privado de Blas (si alguna vez le dio /start a @BlasVigiaBot)
 let PRIVADO = null;
-const alertaPrivada = (text, botones) => (PRIVADO ? send(`🚨 <b>ALERTA</b>\n${text}`, botones, PRIVADO) : null);
+const alertaPrivada = (text, botones) => (PRIVADO && CONFIG.privado?.aporte !== false ? send(`🚨 <b>ALERTA</b>\n${text}`, botones, PRIVADO) : null);
 
 // ---------- calendario ----------
 // Ruedas hábiles que quedan en el mes contando hoy (lun-vie; no descuenta feriados)

@@ -261,7 +261,14 @@ async function main() {
     if (primeraVez && !TEST) { for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy; continue; }
     const id = await send(mensajeAlerta(sym, t, nuevos, enCartera, sig));
     const v = veredicto(sym, t, nuevos, enCartera, sig);
-    if (id && PRIVADO && v.fuerza === "fuerte" && /COMPRA|VENTA/.test(v.titulo) && (enCartera || /COMPRA/.test(v.titulo)))
+    // Qué va al privado (vigia-config.json > privado):
+    //   cartera: "fuertes" | "todas" | "nada" · candidatos: "compra_fuerte" | "compra" | "nada"
+    const P = CONFIG.privado || { cartera: "fuertes", candidatos: "compra_fuerte" };
+    const accion = /COMPRA|VENTA/.test(v.titulo) && v.titulo !== "NO COMPRAR";
+    const alPrivado = enCartera
+      ? accion && (P.cartera === "todas" || (P.cartera === "fuertes" && v.fuerza === "fuerte"))
+      : /SEÑAL DE COMPRA/.test(v.titulo) && (P.candidatos === "compra" || (P.candidatos === "compra_fuerte" && v.fuerza === "fuerte"));
+    if (id && PRIVADO && alPrivado)
       await sendTo(PRIVADO, `🚨 <b>ALERTA · ${v.titulo} FUERTE · ${esc(sym)}</b>\n${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy\n<b>${esc(v.plan)}</b>\n<i>El análisis completo (RADAR, ANALISTA, CONTROL) está en el grupo.</i>`);
     if (id === false) continue;
     enviados++;

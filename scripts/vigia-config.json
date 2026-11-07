@@ -151,5 +151,11 @@
       "gemini-flash-latest"
     ],
     "max_debates_por_corrida": 4
+  },
+  "_nota_privado": "Qué llega al chat privado con @BlasVigiaBot. Lo demás queda solo en el grupo.",
+  "privado": {
+    "aporte": true,
+    "cartera": "fuertes",
+    "candidatos": "compra_fuerte"
   }
 }
