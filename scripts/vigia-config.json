@@ -159,7 +159,7 @@
   "_nota_privado": "Qué llega al grupo de alertas. cartera: 'ventas_todas_compras_fuertes' (toda venta + compras fuertes) | 'fuertes' | 'todas' | 'nada'. candidatos: 'compra_fuerte' | 'compra' | 'nada'. aporte: true/false.",
   "privado": {
     "aporte": true,
-    "cartera": "ventas_todas_compras_fuertes",
+    "cartera": "fuertes",
     "candidatos": "compra_fuerte"
   },
   "_nota_aporte": "US$150: no se elige de antemano. Se avisa solo cuando un candidato llega a umbral_excelente (85: en soporte + RSI bajo, sin tendencia rota); ese nombre queda fijo hasta que compres o se rompa su tesis. Con 3-5 ruedas restantes alcanza umbral_fin_de_mes; en las 2 últimas, el mejor disponible. Prioriza lo que ya tenés y pesa poco. 75/75 solo si dos llegan a umbral_fuerte a la vez.",
