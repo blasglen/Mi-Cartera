@@ -196,20 +196,6 @@ function mensajeApertura(sig, cartera, candidatos) {
     const corto = v.titulo.replace("SEÑAL DE ", "");
     lines.push(`${v.emoji} <b>${corto}</b> · ${esc(sym)} ${usd(t.precio)} · ${pctTxt(t.var_1d_pct)}`);
   }
-  const ranking = candidatos
-    .concat(cartera.filter((s) => !CONFIG.argentina?.includes(s)))
-    .filter((s, i, a) => a.indexOf(s) === i && sig.tickers[s])
-    .map((s) => ({ s, p: puntajeAporte(sig.tickers[s]) }))
-    .filter((x) => x.p != null)
-    .sort((a, b) => b.p - a.p)
-    .slice(0, 3);
-  if (ranking.length) {
-    lines.push("", "<b>Mejores puntos técnicos para comprar</b>");
-    for (const { s } of ranking) {
-      const t = sig.tickers[s];
-      lines.push(`• <b>${esc(s)}</b> ${usd(t.precio)} · soporte ${usd(t.previo.soporte_3m)} · RSI ${num(t.rsi14, 0)}${cartera.includes(s) ? " (ya lo tenés)" : ""}`);
-    }
-  }
   lines.push("", "<i>Señales técnicas por reglas fijas. Vos decidís.</i>");
   return lines.join("\n");
 }

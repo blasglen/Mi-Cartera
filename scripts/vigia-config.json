@@ -158,12 +158,14 @@
     "cartera": "fuertes",
     "candidatos": "compra_fuerte"
   },
-  "_nota_aporte": "Reparto de los US$150: una posición por mes; 75/75 solo si hay dos candidatos con puntaje técnico >= umbral_fuerte. Prioriza lo que ya tenés y pesa poco (bono hasta bono_max); un nombre nuevo gana solo si su señal supera ese bono.",
+  "_nota_aporte": "US$150: no se elige de antemano. Se avisa solo cuando un candidato llega a umbral_excelente (85: en soporte + RSI bajo, sin tendencia rota); ese nombre queda fijo hasta que compres o se rompa su tesis. Con 3-5 ruedas restantes alcanza umbral_fin_de_mes; en las 2 últimas, el mejor disponible. Prioriza lo que ya tenés y pesa poco. 75/75 solo si dos llegan a umbral_fuerte a la vez.",
   "aporte": {
     "libre_modo": "una_o_dos_si_fuertes",
     "prioridad": "lo_que_tengo",
     "umbral_fuerte": 85,
     "bono_base": 10,
-    "bono_max": 25
+    "bono_max": 25,
+    "umbral_excelente": 85,
+    "umbral_fin_de_mes": 65
   }
 }
