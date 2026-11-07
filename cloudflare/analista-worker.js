@@ -144,11 +144,8 @@ async function responder(msg, env) {
   const texto = (msg.text || msg.caption || "").trim();
   if (!texto || texto.startsWith("/")) return; // comandos (/start, /compre) son para VIGÍA
   // Solo tu grupo grande o tu grupo de alertas (lo registra VIGÍA en aporte-state.json)
-  let permitido = String(msg.chat?.id) === String(env.TG_CHAT_ID);
-  if (!permitido) {
-    const ap = await json("public/data/aporte-state.json");
-    permitido = ap?.privado != null && String(msg.chat?.id) === String(ap.privado);
-  }
+  const ap = await json("public/data/aporte-state.json");
+  const permitido = String(msg.chat?.id) === String(env.TG_CHAT_ID) || (ap?.privado != null && String(msg.chat?.id) === String(ap.privado));
   if (!permitido) return;
 
   await tg(env, "sendChatAction", { chat_id: msg.chat.id, action: "typing" });
@@ -175,7 +172,10 @@ async function responder(msg, env) {
 
 PERFIL Y REGLAS DE BLAS
 - Largo plazo (+5 años), estilo crecimiento (tecnología, acepta volatilidad). Compraría más si la cartera cae 25%.
-- Aporte de este mes: US$ ${R.aporte_mensual_usd} (crece 1,5% por mes): US$ ${R.aporte_spy_usd} a SPY y el resto a elección; el resto se compra solo ante oportunidades excelentes.
+- Aporte de este mes: US$ ${R.aporte_mensual_usd}: US$ ${R.aporte_spy_usd} a SPY y el resto solo ante oportunidades excelentes.
+- Regla del aporte: ${ap?.regla || "crece 1,5% por mes"}
+- Plan de aportes (mes: total / SPY / libre): ${(ap?.plan || []).map((p) => `${p.mes}: ${p.total} / ${p.spy} / ${p.libre}`).join(" · ") || "s/d"}
+- Estado del aporte de este mes: SPY ${ap?.spy ? `comprado (${ap.spy.fecha})` : "pendiente"}; libre ${ap?.libre ? `comprado${ap.libre.ticker ? " en " + ap.libre.ticker : ""}` : ap?.elegido ? `señal activa en ${ap.elegido.nombre}` : "pendiente, esperando oportunidad excelente"}.
 - Cero aportes nuevos a Argentina (quiere bajar exposición). Tope ${R.tope_posicion_pct}% por posición. Todo en dólares MEP como Balanz.
 - Quiere también señales de venta cuando correspondan. Él decide y ejecuta: vos das lectura, escenarios, niveles y riesgos, sin disclaimers largos.
 - Sin cripto.

@@ -218,6 +218,14 @@ async function main() {
     await send(`🎯 <b>Aporte de ${nombreMes} completo.</b> No te aviso más hasta el mes que viene.`);
   }
 
+  // Plan de aportes (este mes + 12) para que ANALISTA lo lea sin tocar su código
+  st.plan = Array.from({ length: 13 }, (_, i) => {
+    const dt = new Date(Date.UTC(Number(mesKey.slice(0, 4)), Number(mesKey.slice(5, 7)) - 1 + i, 1));
+    const mk = dt.toISOString().slice(0, 7);
+    const m = montoDelMes(CONFIG, mk);
+    return { mes: mk, total: m.total, spy: m.spy, libre: m.libre };
+  });
+  st.regla = `Aporte base US$ ${R.aporte_base_usd} en ${R.aporte_base_mes}, +${R.crecimiento_mensual_pct}% por mes compuesto; ${R.spy_pct}% a SPY, el resto solo ante una oportunidad excelente.`;
   if (dow === 0 || dow === 6) return guardar(st, cambioConfig);
   const restan = ruedasRestantes(d);
   const minVara = vara(restan);
