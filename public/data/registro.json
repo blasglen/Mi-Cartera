@@ -547,6 +547,87 @@
      "acierto": false
     }
    }
+  },
+  {
+   "ts": "2026-11-07T03:40:26.556Z",
+   "fecha": "2026-11-07",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 13.28,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-07T03:40:27.234Z",
+   "fecha": "2026-11-07",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20",
+    "minimo_6m"
+   ],
+   "precio": 4.07,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-07T03:40:27.549Z",
+   "fecha": "2026-11-07",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 1.05,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-07T03:40:28.182Z",
+   "fecha": "2026-11-07",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30",
+    "minimo_6m"
+   ],
+   "precio": 3.1,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-07T03:40:28.792Z",
+   "fecha": "2026-11-07",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": null,
+   "eventos": [
+    "stop_ppc_30",
+    "minimo_6m"
+   ],
+   "precio": 3.7,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-07T03:40:32.299Z",
+   "fecha": "2026-11-07",
+   "ticker": "BMA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": null,
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 6.1,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -595,8 +676,8 @@
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-07T03:20:25.262Z",
-  "senales": 27,
+  "actualizado": "2026-11-07T03:41:12.245Z",
+  "senales": 33,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

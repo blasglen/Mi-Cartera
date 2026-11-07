@@ -20,7 +20,16 @@
   "BMA:rompe_soporte_3m": "2026-11-06",
   "QQQ:en_soporte_3m": "2026-11-06",
   "GGAL:rompe_soporte_3m": "2026-11-06",
-  "MELI:rompe_soporte_3m": "2026-11-06"
+  "MELI:rompe_soporte_3m": "2026-11-06",
+  "MELI:minimo_6m": "2026-11-07",
+  "YPFD:stop_ppc_20": "2026-11-07",
+  "YPFD:minimo_6m": "2026-11-07",
+  "CEPU:stop_ppc_20": "2026-11-07",
+  "GGAL:stop_ppc_30": "2026-11-07",
+  "GGAL:minimo_6m": "2026-11-07",
+  "BBAR:stop_ppc_30": "2026-11-07",
+  "BBAR:minimo_6m": "2026-11-07",
+  "BMA:minimo_6m": "2026-11-07"
  },
  "log": [
   {
@@ -354,6 +363,91 @@
    "rsi14": 31.31,
    "message_id": 39,
    "debatido": true
+  },
+  {
+   "ts": "2026-11-07T03:40:26.556Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 13.28,
+   "rsi14": 31.31,
+   "message_id": 61,
+   "analista": "SEÑAL DE VENTA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-07T03:40:27.234Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20",
+    "minimo_6m"
+   ],
+   "precio": 4.07,
+   "rsi14": 25.55,
+   "message_id": 62,
+   "analista": "SEÑAL DE VENTA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-07T03:40:27.549Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 1.05,
+   "rsi14": 27.36,
+   "message_id": 64,
+   "analista": "SEÑAL DE VENTA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-07T03:40:28.182Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30",
+    "minimo_6m"
+   ],
+   "precio": 3.1,
+   "rsi14": 25.61,
+   "message_id": 65,
+   "analista": "SEÑAL DE VENTA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-07T03:40:28.792Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30",
+    "minimo_6m"
+   ],
+   "precio": 3.7,
+   "rsi14": 28.58,
+   "message_id": 67,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-07T03:40:32.299Z",
+   "ticker": "BMA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 6.1,
+   "rsi14": 32.08,
+   "message_id": 69,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }

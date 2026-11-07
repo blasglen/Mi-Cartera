@@ -11,6 +11,8 @@
   "precio": 1.9,
   "nota": "US$150 a AMZN (Blas, 7/11); nominales aprox."
  },
+ "resumenDia": "2026-11-06",
+ "offset": 108194030,
  "avisos": {
   "2026-11-06": {
    "marcado": true,
@@ -18,9 +20,88 @@
    "libre": true
   }
  },
- "resumenDia": "2026-11-06",
- "offset": 108194027,
  "cerrado": true,
  "sugeridoLibre": "PANW",
- "privado": -5575931272
+ "privado": -5575931272,
+ "plan": [
+  {
+   "mes": "2026-11",
+   "total": 250,
+   "spy": 100,
+   "libre": 150
+  },
+  {
+   "mes": "2026-12",
+   "total": 253.75,
+   "spy": 101.5,
+   "libre": 152.25
+  },
+  {
+   "mes": "2027-01",
+   "total": 257.56,
+   "spy": 103.02,
+   "libre": 154.54
+  },
+  {
+   "mes": "2027-02",
+   "total": 261.42,
+   "spy": 104.57,
+   "libre": 156.85
+  },
+  {
+   "mes": "2027-03",
+   "total": 265.34,
+   "spy": 106.14,
+   "libre": 159.2
+  },
+  {
+   "mes": "2027-04",
+   "total": 269.32,
+   "spy": 107.73,
+   "libre": 161.59
+  },
+  {
+   "mes": "2027-05",
+   "total": 273.36,
+   "spy": 109.34,
+   "libre": 164.02
+  },
+  {
+   "mes": "2027-06",
+   "total": 277.46,
+   "spy": 110.98,
+   "libre": 166.48
+  },
+  {
+   "mes": "2027-07",
+   "total": 281.62,
+   "spy": 112.65,
+   "libre": 168.97
+  },
+  {
+   "mes": "2027-08",
+   "total": 285.85,
+   "spy": 114.34,
+   "libre": 171.51
+  },
+  {
+   "mes": "2027-09",
+   "total": 290.14,
+   "spy": 116.06,
+   "libre": 174.08
+  },
+  {
+   "mes": "2027-10",
+   "total": 294.49,
+   "spy": 117.8,
+   "libre": 176.69
+  },
+  {
+   "mes": "2027-11",
+   "total": 298.9,
+   "spy": 119.56,
+   "libre": 179.34
+  }
+ ],
+ "regla": "Aporte base US$ 250 en 2026-11, +1.5% por mes compuesto; 40% a SPY, el resto solo ante una oportunidad excelente."
 }
