@@ -139,7 +139,8 @@ function control(sym, tipoAviso, sig) {
   } else {
     if (ARG.has(sym)) no.push("Es Argentina: tu regla es cero aportes nuevos al país.");
     if (sym === "SPY") ok.push(`SPY es tu regla fija: US$ ${R.aporte_spy_usd} de cada aporte van acá.`);
-    if (peso != null && peso >= R.tope_posicion_pct) no.push(`Ya pesa ${num(peso, 1)}%, arriba de tu tope de ${R.tope_posicion_pct}%.`);
+    if (sym === "SPY") { if (peso != null) ok.push(`Pesa ${num(peso, 1)}%: el tope del ${R.tope_posicion_pct}% no aplica al índice.`); }
+    else if (peso != null && peso >= R.tope_posicion_pct) no.push(`Ya pesa ${num(peso, 1)}%, arriba de tu tope de ${R.tope_posicion_pct}%.`);
     else if (peso != null && peso >= R.tope_posicion_pct - 2) no.push(`Ya pesa ${num(peso, 1)}%: con un aporte grande pasás el tope de ${R.tope_posicion_pct}%.`);
     else if (peso != null) ok.push(`Pesa ${num(peso, 1)}%: hay lugar hasta el tope de ${R.tope_posicion_pct}%.`);
     else ok.push("No lo tenés: sumaría diversificación.");
