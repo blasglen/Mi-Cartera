@@ -140,10 +140,16 @@ async function ia(prompt, env, cfg) {
 
 // ---------- la respuesta ----------
 async function responder(msg, env) {
-  if (String(msg.chat?.id) !== String(env.TG_CHAT_ID)) return; // solo tu grupo
   if (msg.from?.is_bot) return;
   const texto = (msg.text || msg.caption || "").trim();
-  if (!texto || texto.startsWith("/start")) return;
+  if (!texto || texto.startsWith("/")) return; // comandos (/start, /compre) son para VIGÍA
+  // Solo tu grupo grande o tu grupo de alertas (lo registra VIGÍA en aporte-state.json)
+  let permitido = String(msg.chat?.id) === String(env.TG_CHAT_ID);
+  if (!permitido) {
+    const ap = await json("public/data/aporte-state.json");
+    permitido = ap?.privado != null && String(msg.chat?.id) === String(ap.privado);
+  }
+  if (!permitido) return;
 
   await tg(env, "sendChatAction", { chat_id: msg.chat.id, action: "typing" });
 

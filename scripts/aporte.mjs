@@ -159,10 +159,18 @@ async function main() {
     st.offset = u.update_id + 1;
     let que = null, ticker = null;
     const chatOk = (id) => String(id) === String(CHAT) || (PRIVADO && String(id) === String(PRIVADO));
-    // /start en privado: desde ahora le llegan las alertas importantes por privado
-    if (u.message?.chat?.type === "private" && /^\/start/.test(u.message.text || "")) {
-      st.privado = PRIVADO = u.message.chat.id;
-      await send("👋 Listo. Te voy a escribir por acá <b>solo cuando haya algo importante</b>:\n• buen día para comprar SPY o los US$ 150 del mes\n• último aviso del mes para no saltearte el aporte\n• señales FUERTES de compra o venta en tu cartera\n\nEl detalle completo sigue en el grupo; podés silenciarlo tranquilo.", null, PRIVADO);
+    // Si el grupo de alertas se convierte en supergrupo, Telegram le cambia el ID
+    if (u.message?.migrate_to_chat_id && PRIVADO && String(u.message.chat.id) === String(PRIVADO)) {
+      st.privado = PRIVADO = u.message.migrate_to_chat_id;
+      continue;
+    }
+    // /start en privado o en otro grupo (el "grupo de alertas" con VIGÍA y ANALISTA):
+    // desde ahora las alertas importantes van ahí
+    const chat = u.message?.chat;
+    if (chat && /^\/start/.test(u.message.text || "") && String(chat.id) !== String(CHAT)) {
+      st.privado = PRIVADO = chat.id;
+      const enGrupo = chat.type !== "private";
+      await send(`👋 Listo. ${enGrupo ? "Este es tu grupo de alertas" : "Te voy a escribir por acá"}: <b>solo lo importante</b>:\n• buen día para comprar SPY o los US$ 150 del mes\n• último aviso del mes para no saltearte el aporte\n• señales FUERTES de compra o venta${enGrupo ? "\n\nRespondé cualquier alerta y ANALISTA te contesta acá." : ""}\n\nEl detalle completo sigue en el grupo grande; podés silenciarlo.`, null, PRIVADO);
       continue;
     }
     if (u.callback_query && chatOk(u.callback_query.message?.chat?.id)) {
