@@ -1,0 +1,16 @@
+name: REGISTRO - mandar resumen ahora (correr a mano)
+on:
+  workflow_dispatch:
+jobs:
+  resumen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Resumen de aciertos al grupo
+        env:
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TG_CONTROL: ${{ secrets.TG_CONTROL }}
+        run: node scripts/registro.mjs --resumen

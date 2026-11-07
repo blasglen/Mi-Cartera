@@ -38,6 +38,12 @@ jobs:
         # Si la IA falla, no frena el guardado de lo que hizo VIGÍA
         continue-on-error: true
         run: node scripts/mesa.mjs
+      - name: REGISTRO anota señales y resultados (resumen los viernes)
+        env:
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TG_CONTROL: ${{ secrets.TG_CONTROL }}
+        continue-on-error: true
+        run: node scripts/registro.mjs
       - name: Guardar señales y memoria de VIGÍA
         # Push con el GITHUB_TOKEN: a propósito NO dispara el deploy de la web.
         run: |
@@ -45,6 +51,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/signals.json
           [ -f public/data/vigia-state.json ] && git add public/data/vigia-state.json
+          [ -f public/data/registro.json ] && git add public/data/registro.json
           git diff --staged --quiet && exit 0
           git commit -m "VIGÍA $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase origin main

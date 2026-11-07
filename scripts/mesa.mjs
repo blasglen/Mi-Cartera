@@ -202,6 +202,9 @@ No uses frases de asesor financiero ni disclaimers largos; él decide.`);
   const idAnalista = await send("ANALISTA", `🧠 <b>ANALISTA · ${esc(sym)}</b>\n${cuerpo}`, idRadar || replyTo);
 
   // CONTROL
+  // Para REGISTRO: qué veredicto dio ANALISTA (para medir si contradecir a VIGÍA le sirve)
+  const m = analista.match(/VEREDICTO:\s*(SEÑAL DE COMPRA|SEÑAL DE VENTA|VENTA PARCIAL|MANTENER|ESPERAR)/i);
+  if (m) entrada.analista = m[1].toUpperCase();
   await send("CONTROL", control(sym, tipo, sig), idAnalista || idRadar || replyTo);
 }
 
