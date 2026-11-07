@@ -83,10 +83,12 @@
     "BMA": 3
   },
   "reglas": {
-    "aporte_mensual_usd": 250,
-    "aporte_spy_usd": 100,
     "tope_posicion_pct": 12,
-    "tope_tecnologia_pct": 60
+    "tope_tecnologia_pct": 60,
+    "aporte_base_usd": 250,
+    "aporte_base_mes": "2026-11",
+    "crecimiento_mensual_pct": 1.5,
+    "spy_pct": 40
   },
   "tecnologia": [
     "MSFT",
@@ -194,5 +196,6 @@
     "GGAL": 5.37,
     "BBAR": 5.64,
     "BMA": 7.01
-  }
+  },
+  "_nota_reglas": "Aporte mensual: arranca en US$250 (nov-2026) y crece 1,5% por mes compuesto (regla del 07/11/2026). 40% a SPY, el resto a elección. El monto de cada mes lo calcula scripts/aporte-monto.mjs."
 }

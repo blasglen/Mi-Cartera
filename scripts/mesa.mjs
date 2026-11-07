@@ -18,6 +18,7 @@
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import { montoDelMes } from "./aporte-monto.mjs";
 
 const ROOT = process.cwd();
 const DATA = path.join(ROOT, "public", "data");
@@ -120,7 +121,8 @@ function pesos(sig) {
 }
 
 function control(sym, tipoAviso, sig) {
-  const R = CONFIG.reglas;
+  const M = montoDelMes(CONFIG, new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7));
+  const R = { ...CONFIG.reglas, aporte_mensual_usd: M.total, aporte_spy_usd: M.spy };
   const { total, pct, tec, arg } = pesos(sig);
   const libre = R.aporte_mensual_usd - R.aporte_spy_usd;
   const peso = pct[sym];
@@ -184,7 +186,8 @@ En máximo 3 líneas: qué explica el movimiento según estos titulares. Disting
   const idRadar = await send("RADAR", `📰 <b>RADAR · ${esc(sym)}</b>\n${esc(radar)}${fuentes ? `\n<i>Fuentes: ${esc(fuentes)}</i>` : ""}`, replyTo);
 
   // ANALISTA
-  const perfil = `Perfil del inversor: largo plazo (+5 años), estilo crecimiento (tecnología, acepta volatilidad), aporta US$ ${CONFIG.reglas.aporte_mensual_usd} por mes en una sola compra (US$ ${CONFIG.reglas.aporte_spy_usd} fijos a SPY, el resto a elección), quiere bajar exposición a Argentina, compraría más si la cartera cae 25%. ${enCartera ? `YA TIENE ${sym} en cartera.` : `NO tiene ${sym}; es candidato.`}`;
+  const M = montoDelMes(CONFIG, new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7));
+  const perfil = `Perfil del inversor: largo plazo (+5 años), estilo crecimiento (tecnología, acepta volatilidad), aporta US$ ${M.total} este mes (crece 1,5% por mes; US$ ${M.spy} a SPY, el resto a elección), quiere bajar exposición a Argentina, compraría más si la cartera cae 25%. ${enCartera ? `YA TIENE ${sym} en cartera.` : `NO tiene ${sym}; es candidato.`}`;
   let analista = await ia(`Sos ANALISTA, el bot que arma la tesis en una mesa de inversiones. Castellano rioplatense, directo, sin markdown ni asteriscos.
 ${perfil}
 Datos técnicos: ${datos}

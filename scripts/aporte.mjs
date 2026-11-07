@@ -27,8 +27,10 @@ const CFG_FILE = path.join(ROOT, "scripts", "vigia-config.json");
 const STATE_FILE = path.join(DATA, "aporte-state.json");
 const CONFIG = JSON.parse(await fs.readFile(CFG_FILE, "utf8"));
 const R = CONFIG.reglas || {};
-const MONTO_SPY = R.aporte_spy_usd ?? 100;
-const MONTO_LIBRE = (R.aporte_mensual_usd ?? 250) - MONTO_SPY;
+import { montoDelMes } from "./aporte-monto.mjs";
+const MONTOS = montoDelMes(CONFIG, new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7));
+const MONTO_SPY = MONTOS.spy;
+const MONTO_LIBRE = MONTOS.libre;
 
 const env = process.env;
 const TOKEN = env.TG_VIGIA, CHAT = env.TG_CHAT_ID;
@@ -137,7 +139,7 @@ function elegirDelMes(todos, minimo = 0) {
   const fuerte = A.umbral_fuerte ?? 85;
   const dos = uno.t.precio <= MONTO_LIBRE / 2 ? lista.slice(1).find((x) => x.t.precio <= MONTO_LIBRE / 2) : null;
   const partes = A.libre_modo !== "una" && dos && uno.puntaje >= fuerte && dos.puntaje >= fuerte ? [uno.ticker, dos.ticker] : [uno.ticker];
-  return { ticker: partes.join("+"), partes, nombre: partes.length > 1 ? `${partes.join(" + ")} (US$ ${MONTO_LIBRE / 2} c/u)` : partes[0] };
+  return { ticker: partes.join("+"), partes, nombre: partes.length > 1 ? `${partes.join(" + ")} (US$ ${num(MONTO_LIBRE / 2)} c/u)` : partes[0] };
 }
 
 // Estado del elegido hoy (puntaje = el más bajo de sus partes)
@@ -208,7 +210,7 @@ async function main() {
       const px = partes.length === 1 ? sig.tickers[tk]?.precio : null;
       st.libre = { fecha: d, ticker: tk, precio: px };
       for (const pt of partes) { const p1 = sig.tickers[pt]?.precio; if (p1) cambioConfig = sumarTenencia(pt, MONTO_LIBRE / partes.length, p1) || cambioConfig; }
-      await send(`✅ <b>Anotado: US$ ${MONTO_LIBRE} de ${nombreMes}${tk ? ` en ${esc(tk)}` : ""}</b>${px ? ` (≈ ${usd(px)})` : ""}.${tk ? "\n<i>Si compraste otra cosa, mandá /compre libre TICKER.</i>" : ""}`);
+      await send(`✅ <b>Anotado: US$ ${num(MONTO_LIBRE)} de ${nombreMes}${tk ? ` en ${esc(tk)}` : ""}</b>${px ? ` (≈ ${usd(px)})` : ""}.${tk ? "\n<i>Si compraste otra cosa, mandá /compre libre TICKER.</i>" : ""}`);
     }
   }
   if (st.spy && st.libre && !st.cerrado) {
@@ -242,7 +244,7 @@ async function main() {
     if (st.elegido) {
       ev = evaluarElegido(st.elegido, todos);
       if (!ev.valido) {
-        const txt = `❌ <b>Anulo la señal de ${esc(st.elegido.nombre)}</b> para los US$ ${MONTO_LIBRE}: ${esc(ev.motivo)}.\nSi no compraste, no compres. Sigo buscando otra oportunidad excelente.`;
+        const txt = `❌ <b>Anulo la señal de ${esc(st.elegido.nombre)}</b> para los US$ ${num(MONTO_LIBRE)}: ${esc(ev.motivo)}.\nSi no compraste, no compres. Sigo buscando otra oportunidad excelente.`;
         await send(txt); await alertaPrivada(txt);
         st.elegido = null; st.verde.libre = false; ev = null;
       }
@@ -257,9 +259,9 @@ async function main() {
         ? Object.values(todos).filter((x) => x.ticker !== primero.ticker && !x.rompio && x.puntaje >= excelente && x.t.precio <= MONTO_LIBRE / 2).sort((a, b) => b.orden - a.orden)[0]
         : null;
       if (segundo) {
-        st.elegido = { ticker: `${primero.ticker}+${segundo.ticker}`, partes: [primero.ticker, segundo.ticker], nombre: `${primero.ticker} + ${segundo.ticker} (US$ ${MONTO_LIBRE / 2} c/u)`, desde: st.elegido.desde, sumado: d };
+        st.elegido = { ticker: `${primero.ticker}+${segundo.ticker}`, partes: [primero.ticker, segundo.ticker], nombre: `${primero.ticker} + ${segundo.ticker} (US$ ${num(MONTO_LIBRE / 2)} c/u)`, desde: st.elegido.desde, sumado: d };
         ev = evaluarElegido(st.elegido, todos);
-        const txt = `🟢🟢 <b>SEGUNDA OPORTUNIDAD EXCELENTE · ${esc(segundo.ticker)}</b>\nSi todavía no compraste ${esc(primero.ticker)}, repartí los US$ ${MONTO_LIBRE}:\n• US$ ${MONTO_LIBRE / 2} → ${esc(primero.ticker)} hasta ${usd(primero.t.precio * 1.01)}\n• US$ ${MONTO_LIBRE / 2} → ${esc(segundo.ticker)} hasta ${usd(segundo.t.precio * 1.01)}\n<i>${esc(segundo.ticker)}: ${esc(segundo.motivos.join(" · "))}</i>`;
+        const txt = `🟢🟢 <b>SEGUNDA OPORTUNIDAD EXCELENTE · ${esc(segundo.ticker)}</b>\nSi todavía no compraste ${esc(primero.ticker)}, repartí los US$ ${num(MONTO_LIBRE)}:\n• US$ ${num(MONTO_LIBRE / 2)} → ${esc(primero.ticker)} hasta ${usd(primero.t.precio * 1.01)}\n• US$ ${num(MONTO_LIBRE / 2)} → ${esc(segundo.ticker)} hasta ${usd(segundo.t.precio * 1.01)}\n<i>${esc(segundo.ticker)}: ${esc(segundo.motivos.join(" · "))}</i>`;
         const botones = [
           { text: `✅ Compré ${primero.ticker}+${segundo.ticker}`, callback_data: `libre:${primero.ticker}+${segundo.ticker}` },
           { text: `✅ Ya había comprado ${primero.ticker}`, callback_data: `libre:${primero.ticker}` },
@@ -284,13 +286,13 @@ async function main() {
 
   // 2) arranque de mes (grupo grande)
   if (mesNuevo && !st.spy) {
-    await send(`📅 <b>${restan >= 18 ? `Arranca ${nombreMes}` : `${nombreMes[0].toUpperCase()}${nombreMes.slice(1)}`}: plan del aporte de US$ ${MONTO_SPY + MONTO_LIBRE}</b>\n• US$ ${MONTO_SPY} a SPY\n• US$ ${MONTO_LIBRE}: te aviso solo cuando aparezca una oportunidad EXCELENTE (un solo nombre)\nHay ${restan} ruedas. Te aviso <b>solo el día</b> de comprar cada parte; a fin de mes te apuro para que no se pase.`);
+    await send(`📅 <b>${restan >= 18 ? `Arranca ${nombreMes}` : `${nombreMes[0].toUpperCase()}${nombreMes.slice(1)}`}: plan del aporte de US$ ${num(MONTOS.total)}${MONTOS.meses ? ` (+1,5% por mes desde nov-2026)` : ""}</b>\n• US$ ${num(MONTO_SPY)} a SPY\n• US$ ${num(MONTO_LIBRE)}: te aviso solo cuando aparezca una oportunidad EXCELENTE (un solo nombre)\nHay ${restan} ruedas. Te aviso <b>solo el día</b> de comprar cada parte; a fin de mes te apuro para que no se pase.`);
   }
 
   // 3) estado diario 11:45 (solo grupo grande: un renglón por parte, sin alternativas)
   if (!st.cerrado && st.resumenDia !== d && yaEsHora) {
     const lSpy = st.spy ? "✅ SPY: comprado." : minVara === 0 ? `🔔 <b>SPY: COMPRÁ HOY O MAÑANA</b> · ${usd(spyT.precio)}` : diaSpy ? `🟢 <b>SPY: HOY ES EL DÍA</b> (${spy.puntaje}/100) · ${usd(spyT.precio)}` : `⏳ SPY: esperar (${spy.puntaje}/100, necesito ${minVara})`;
-    const lLib = st.libre ? `✅ US$ ${MONTO_LIBRE}: comprado.` : diaLibre ? `🟢 <b>US$ ${MONTO_LIBRE} → ${esc(st.elegido.nombre)}: ${umbralLibre === 0 ? "COMPRÁ HOY O MAÑANA" : "HOY ES EL DÍA"}</b> (${ev.puntaje}/100)` : st.elegido ? `⏳ US$ ${MONTO_LIBRE} → ${esc(st.elegido.nombre)}: señal dada, esperando que vuelva a zona (${ev?.puntaje ?? "s/d"}/100)` : `⏳ US$ ${MONTO_LIBRE}: buscando una oportunidad ${umbralLibre >= excelente ? "excelente" : "buena"} (necesito ${umbralLibre}/100)`;
+    const lLib = st.libre ? `✅ US$ ${num(MONTO_LIBRE)}: comprado.` : diaLibre ? `🟢 <b>US$ ${num(MONTO_LIBRE)} → ${esc(st.elegido.nombre)}: ${umbralLibre === 0 ? "COMPRÁ HOY O MAÑANA" : "HOY ES EL DÍA"}</b> (${ev.puntaje}/100)` : st.elegido ? `⏳ US$ ${num(MONTO_LIBRE)} → ${esc(st.elegido.nombre)}: señal dada, esperando que vuelva a zona (${ev?.puntaje ?? "s/d"}/100)` : `⏳ US$ ${num(MONTO_LIBRE)}: buscando una oportunidad ${umbralLibre >= excelente ? "excelente" : "buena"} (necesito ${umbralLibre}/100)`;
     const r = await send(`💵 <b>Aporte de ${nombreMes} · quedan ${restan} ruedas</b>\n${lSpy}\n${lLib}`);
     if (r.ok) st.resumenDia = d;
   }
@@ -301,7 +303,7 @@ async function main() {
     if (!st.spy && spy) {
       const ultimo = minVara === 0;
       if (diaSpy && (ultimo ? st.ultimoAviso.spy !== d : !st.verde.spy)) {
-        const txt = `${ultimo ? "🔔" : "🟢"} <b>${ultimo ? "ÚLTIMO AVISO" : "HOY ES EL DÍA"} · US$ ${MONTO_SPY} → SPY</b>\nComprá hasta ${usd(spyT.precio * 1.01)} (ahora ${usd(spyT.precio)})\n<i>${esc(spy.motivos.join(" · "))}</i>`;
+        const txt = `${ultimo ? "🔔" : "🟢"} <b>${ultimo ? "ÚLTIMO AVISO" : "HOY ES EL DÍA"} · US$ ${num(MONTO_SPY)} → SPY</b>\nComprá hasta ${usd(spyT.precio * 1.01)} (ahora ${usd(spyT.precio)})\n<i>${esc(spy.motivos.join(" · "))}</i>`;
         const r = await send(txt, btnSpy);
         if (r.ok) { await alertaPrivada(txt, btnSpy); if (ultimo) st.ultimoAviso.spy = d; }
       }
@@ -311,7 +313,7 @@ async function main() {
       const ultimo = umbralLibre === 0;
       if (diaLibre && (ultimo ? st.ultimoAviso.libre !== d : !st.verde.libre)) {
         const titulo = ultimo ? "ÚLTIMO AVISO DEL MES" : ev.puntaje >= excelente ? "OPORTUNIDAD EXCELENTE" : "BUENA OPORTUNIDAD (se termina el mes)";
-        const txt = `${ultimo ? "🔔" : "🟢"} <b>${titulo} · US$ ${MONTO_LIBRE} → ${esc(st.elegido.nombre)}</b>\nComprá ${ev.hasta}\n<i>${ev.xs.map((x) => `${esc(x.ticker)}: ${esc(x.motivos.join(" · "))}`).join("\n")}</i>`;
+        const txt = `${ultimo ? "🔔" : "🟢"} <b>${titulo} · US$ ${num(MONTO_LIBRE)} → ${esc(st.elegido.nombre)}</b>\nComprá ${ev.hasta}\n<i>${ev.xs.map((x) => `${esc(x.ticker)}: ${esc(x.motivos.join(" · "))}`).join("\n")}</i>`;
         const r = await send(txt, btnLibre);
         if (r.ok) { await alertaPrivada(txt, btnLibre); if (ultimo) st.ultimoAviso.libre = d; }
       }
