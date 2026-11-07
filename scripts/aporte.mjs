@@ -250,6 +250,22 @@ async function main() {
     if (!st.elegido) {
       const nuevo = elegirDelMes(todos, umbralLibre);
       if (nuevo) { st.elegido = { ...nuevo, desde: d }; ev = evaluarElegido(st.elegido, todos); }
+    } else if (st.elegido.partes.length === 1 && ev?.valido && A.libre_modo !== "una") {
+      // ¿Apareció una SEGUNDA oportunidad excelente mientras esperás? → repartir 75/75
+      const primero = todos[st.elegido.partes[0]];
+      const segundo = primero && primero.t.precio <= MONTO_LIBRE / 2
+        ? Object.values(todos).filter((x) => x.ticker !== primero.ticker && !x.rompio && x.puntaje >= excelente && x.t.precio <= MONTO_LIBRE / 2).sort((a, b) => b.orden - a.orden)[0]
+        : null;
+      if (segundo) {
+        st.elegido = { ticker: `${primero.ticker}+${segundo.ticker}`, partes: [primero.ticker, segundo.ticker], nombre: `${primero.ticker} + ${segundo.ticker} (US$ ${MONTO_LIBRE / 2} c/u)`, desde: st.elegido.desde, sumado: d };
+        ev = evaluarElegido(st.elegido, todos);
+        const txt = `🟢🟢 <b>SEGUNDA OPORTUNIDAD EXCELENTE · ${esc(segundo.ticker)}</b>\nSi todavía no compraste ${esc(primero.ticker)}, repartí los US$ ${MONTO_LIBRE}:\n• US$ ${MONTO_LIBRE / 2} → ${esc(primero.ticker)} hasta ${usd(primero.t.precio * 1.01)}\n• US$ ${MONTO_LIBRE / 2} → ${esc(segundo.ticker)} hasta ${usd(segundo.t.precio * 1.01)}\n<i>${esc(segundo.ticker)}: ${esc(segundo.motivos.join(" · "))}</i>`;
+        const botones = [
+          { text: `✅ Compré ${primero.ticker}+${segundo.ticker}`, callback_data: `libre:${primero.ticker}+${segundo.ticker}` },
+          { text: `✅ Ya había comprado ${primero.ticker}`, callback_data: `libre:${primero.ticker}` },
+        ];
+        await send(txt, botones); await alertaPrivada(txt, botones);
+      }
     }
   }
   const btnSpy = [{ text: `✅ Ya compré SPY`, callback_data: "spy" }];
