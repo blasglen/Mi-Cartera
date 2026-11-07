@@ -41,7 +41,11 @@ const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "
 
 // Chat privado de Blas (lo guarda aporte.mjs cuando le da /start a @BlasVigiaBot)
 let PRIVADO = null;
-try { PRIVADO = JSON.parse(await fs.readFile(path.join(DATA, "aporte-state.json"), "utf8")).privado || null; } catch {}
+let APORTE = {};
+try { APORTE = JSON.parse(await fs.readFile(path.join(DATA, "aporte-state.json"), "utf8")); PRIVADO = APORTE.privado || null; } catch {}
+// Lo ya comprado en el aporte de este mes no vuelve a avisar compra por privado
+const mesActual = new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7);
+const compradoEsteMes = (sym) => APORTE.mes === mesActual && ((sym === "SPY" && APORTE.spy) || (APORTE.libre?.ticker && APORTE.libre.ticker === sym));
 async function sendTo(chat, text) {
   if (DRY) { console.log("\n----- (privado, no enviado) -----\n" + text.replace(/<[^>]+>/g, "")); return 1; }
   const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true }) });
@@ -268,7 +272,7 @@ async function main() {
     const alPrivado = enCartera
       ? accion && (P.cartera === "todas" || (P.cartera === "fuertes" && v.fuerza === "fuerte"))
       : /SEÑAL DE COMPRA/.test(v.titulo) && (P.candidatos === "compra" || (P.candidatos === "compra_fuerte" && v.fuerza === "fuerte"));
-    if (id && PRIVADO && alPrivado)
+    if (id && PRIVADO && alPrivado && !(/COMPRA/.test(v.titulo) && compradoEsteMes(sym)))
       await sendTo(PRIVADO, `🚨 <b>ALERTA · ${v.titulo} FUERTE · ${esc(sym)}</b>\n${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy\n<b>${esc(v.plan)}</b>\n<i>El análisis completo (RADAR, ANALISTA, CONTROL) está en el grupo.</i>`);
     if (id === false) continue;
     enviados++;
