@@ -191,9 +191,6 @@ function mensajeApertura(sig, cartera, candidatos) {
     .sort((a, b) => b.p - a.p)
     .slice(0, 3);
   if (ranking.length) {
-    const R = CONFIG.reglas || {};
-    const top = ranking[0].s;
-    lines.push("", `👉 <b>Si aportás hoy: US$ ${R.aporte_spy_usd ?? 100} a SPY + US$ ${(R.aporte_mensual_usd ?? 250) - (R.aporte_spy_usd ?? 100)} a ${esc(top === "SPY" ? ranking[1]?.s || "SPY" : top)}</b>`);
     lines.push("", "<b>Mejores puntos técnicos para comprar</b>");
     for (const { s } of ranking) {
       const t = sig.tickers[s];

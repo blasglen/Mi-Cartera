@@ -26,6 +26,12 @@ jobs:
           TG_VIGIA: ${{ secrets.TG_VIGIA }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: node scripts/vigia.mjs
+      - name: APORTE mensual (cuándo comprar SPY y los US$150)
+        env:
+          TG_VIGIA: ${{ secrets.TG_VIGIA }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        continue-on-error: true
+        run: node scripts/aporte.mjs
       - name: La Mesa debate los avisos (RADAR, ANALISTA, CONTROL)
         env:
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
@@ -52,6 +58,8 @@ jobs:
           git add public/data/signals.json
           [ -f public/data/vigia-state.json ] && git add public/data/vigia-state.json
           [ -f public/data/registro.json ] && git add public/data/registro.json
+          [ -f public/data/aporte-state.json ] && git add public/data/aporte-state.json
+          git add scripts/vigia-config.json
           git diff --staged --quiet && exit 0
           git commit -m "VIGÍA $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase origin main
