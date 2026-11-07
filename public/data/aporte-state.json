@@ -1,0 +1,16 @@
+{
+ "mes": "2026-11",
+ "spy": null,
+ "libre": null,
+ "avisos": {
+  "2026-11-06": {
+   "marcado": true,
+   "spy": true,
+   "libre": true
+  }
+ },
+ "resumenDia": "2026-11-06",
+ "offset": 0,
+ "cerrado": false,
+ "sugeridoLibre": "PANW"
+}
