@@ -1,6 +1,10 @@
 {
  "mes": "2026-11",
- "spy": null,
+ "spy": {
+  "fecha": "2026-11-04",
+  "precio": 13.53,
+  "nota": "compra del 4/11 (14 SPY), marcada a mano"
+ },
  "libre": null,
  "avisos": {
   "2026-11-06": {
