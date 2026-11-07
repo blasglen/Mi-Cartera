@@ -96,14 +96,19 @@ function pesos(sig) {
   return Object.fromEntries(Object.entries(val).map(([s, v]) => [s, (v / total) * 100]));
 }
 
-// Mejor candidato para los US$ 150 (misma lógica que el ranking de VIGÍA)
+// Candidato(s) para los US$ 150. Una posición por mes; dos de US$ 75 solo si
+// hay dos oportunidades fuertes a la vez. Prioriza lo que ya tenés y pesa
+// poco: un nombre nuevo tiene que tener una señal claramente mejor.
 function mejorLibre(sig) {
+  const A = CONFIG.aporte || {};
   const arg = new Set(CONFIG.argentina || []);
   const peso = pesos(sig);
+  const ten = CONFIG.tenencias || {};
   const tope = R.tope_posicion_pct ?? 12;
-  const lista = [...new Set([...(CONFIG.candidatos || []), ...(CONFIG.cartera || [])])]
-    .filter((s) => s !== "SPY" && !arg.has(s) && sig.tickers[s] && !((peso[s] || 0) >= tope - 1));
-  let best = null;
+  const lista = [...new Set([...(CONFIG.cartera || []), ...(CONFIG.candidatos || [])])]
+    // que al menos 1 CEDEAR entre en los US$ 150
+    .filter((s) => s !== "SPY" && !arg.has(s) && sig.tickers[s] && sig.tickers[s].precio <= MONTO_LIBRE && !((peso[s] || 0) >= tope - 1));
+  const puntuados = [];
   for (const s of lista) {
     const t = sig.tickers[s], p = t.previo || {};
     if (!p.soporte_3m || !p.resistencia_3m || t.rsi14 == null || p.resistencia_3m <= p.soporte_3m) continue;
@@ -111,9 +116,25 @@ function mejorLibre(sig) {
     let sc = (1 - pos) * 50 + (70 - clamp(t.rsi14, 20, 70));
     if (t.sma200 && t.precio < t.sma200 * 0.9) sc -= 25;
     if (t.precio < p.soporte_3m * 0.99) sc -= 20;
-    if (!best || sc > best.puntaje) best = { ticker: s, puntaje: Math.round(sc), t, motivos: [`${pos <= 0.15 ? "apoyado en" : "a " + num(pos * 100, 0) + "% del rango desde"} su soporte de 3 meses (${usd(p.soporte_3m)})`, `RSI ${num(t.rsi14, 0)}`], tiene: !!(CONFIG.tenencias || {})[s] };
+    const tiene = !!ten[s];
+    const bono = tiene && A.prioridad !== "lo_que_mejor_este" ? (A.bono_base ?? 10) + clamp((tope - (peso[s] || 0)) * 1.5, 0, (A.bono_max ?? 25) - (A.bono_base ?? 10)) : 0;
+    if (A.prioridad === "solo_lo_que_tengo" && !tiene) continue;
+    puntuados.push({
+      ticker: s, puntaje: Math.round(sc), orden: sc + bono, t, tiene, peso: peso[s] || 0,
+      motivos: [`${pos <= 0.15 ? "apoyado en" : "a " + num(pos * 100, 0) + "% del rango desde"} su soporte de 3 meses (${usd(p.soporte_3m)})`, `RSI ${num(t.rsi14, 0)}`],
+    });
   }
-  return best;
+  puntuados.sort((a, b) => b.orden - a.orden);
+  const uno = puntuados[0];
+  // para partir en 75/75, el segundo también tiene que entrar en US$ 75 (y el primero)
+  const dos = uno && uno.t.precio <= MONTO_LIBRE / 2 ? puntuados.slice(1).find((x) => x.t.precio <= MONTO_LIBRE / 2) : null;
+  if (!uno) return null;
+  const fuerte = A.umbral_fuerte ?? 85;
+  const detalle = (x) => `${esc(x.ticker)} ${usd(x.t.precio)} · ${esc(x.motivos.join(" · "))}${x.tiene ? ` · ya lo tenés (${num(x.peso, 1)}%)` : " · posición nueva"}`;
+  if (A.libre_modo !== "una" && dos && uno.puntaje >= fuerte && dos.puntaje >= fuerte) {
+    return { ticker: `${uno.ticker}+${dos.ticker}`, nombre: `${uno.ticker} + ${dos.ticker} (US$ ${MONTO_LIBRE / 2} c/u)`, puntaje: Math.min(uno.puntaje, dos.puntaje), texto: `${detalle(uno)}\n   ${detalle(dos)}`, partes: [uno.ticker, dos.ticker] };
+  }
+  return { ticker: uno.ticker, nombre: uno.ticker, puntaje: uno.puntaje, texto: detalle(uno), partes: [uno.ticker] };
 }
 
 // ---------- main ----------
@@ -149,7 +170,7 @@ async function main() {
       tg("answerCallbackQuery", { callback_query_id: u.callback_query.id, text: "Anotado ✅" }).catch(() => {});
       tg("editMessageReplyMarkup", { chat_id: u.callback_query.message.chat.id, message_id: u.callback_query.message.message_id, reply_markup: { inline_keyboard: [] } }).catch(() => {});
     } else if (u.message?.text && chatOk(u.message.chat.id)) {
-      const m = u.message.text.match(/^\/compre(?:@\w+)?\s+(spy|libre|\w+)\s*(\w+)?/i);
+      const m = u.message.text.match(/^\/compre(?:@\w+)?\s+(spy|libre|[\w+]+)\s*([\w+]+)?/i);
       if (m) { que = m[1].toLowerCase() === "spy" ? "spy" : "libre"; ticker = (m[2] || (que === "libre" && m[1].toLowerCase() !== "libre" ? m[1] : "")).toUpperCase() || null; }
     }
     if (!que) continue;
@@ -160,9 +181,10 @@ async function main() {
       await send(`✅ <b>Anotado: SPY de ${nombreMes} comprado</b> (≈ ${usd(px)}).\n${compararConMes(reg, "SPY", px, mesKey)}`);
     } else if (que === "libre" && !st.libre) {
       const tk = ticker || st.sugeridoLibre || null;
-      const px = tk ? sig.tickers[tk]?.precio : null;
+      const partes = tk ? tk.split("+") : [];
+      const px = partes.length === 1 ? sig.tickers[tk]?.precio : null;
       st.libre = { fecha: d, ticker: tk, precio: px };
-      if (tk && px) cambioConfig = sumarTenencia(tk, MONTO_LIBRE, px) || cambioConfig;
+      for (const pt of partes) { const p1 = sig.tickers[pt]?.precio; if (p1) cambioConfig = sumarTenencia(pt, MONTO_LIBRE / partes.length, p1) || cambioConfig; }
       await send(`✅ <b>Anotado: US$ ${MONTO_LIBRE} de ${nombreMes}${tk ? ` en ${esc(tk)}` : ""}</b>${px ? ` (≈ ${usd(px)})` : ""}.${tk ? "\n<i>Si compraste otra cosa, mandá /compre libre TICKER.</i>" : ""}`);
     }
   }
@@ -194,8 +216,8 @@ async function main() {
     if (st.libre) return `✅ US$ ${MONTO_LIBRE}: comprado${st.libre.ticker ? ` (${esc(st.libre.ticker)})` : ""}.`;
     if (!libre) return `• US$ ${MONTO_LIBRE}: sin candidato claro hoy.`;
     const ok = libre.puntaje >= minVara;
-    const head = minVara === 0 ? `🔔 <b>US$ ${MONTO_LIBRE}: COMPRÁ ${esc(libre.ticker)} HOY O MAÑANA</b>` : ok ? `🟢 <b>US$ ${MONTO_LIBRE}: BUEN DÍA PARA ${esc(libre.ticker)}</b> (${libre.puntaje}/100)` : `⏳ <b>US$ ${MONTO_LIBRE}: ESPERAR</b> (mejor hoy: ${esc(libre.ticker)}, ${libre.puntaje}/100)`;
-    return `${head}\n   ${usd(libre.t.precio)} · ${esc(libre.motivos.join(" · "))}${libre.tiene ? " · ya lo tenés" : ""}`;
+    const head = minVara === 0 ? `🔔 <b>US$ ${MONTO_LIBRE}: COMPRÁ ${esc(libre.nombre)} HOY O MAÑANA</b>` : ok ? `🟢 <b>US$ ${MONTO_LIBRE}: BUEN DÍA PARA ${esc(libre.nombre)}</b> (${libre.puntaje}/100)` : `⏳ <b>US$ ${MONTO_LIBRE}: ESPERAR</b> (mejor hoy: ${esc(libre.nombre)}, ${libre.puntaje}/100)`;
+    return `${head}\n   ${libre.texto}`;
   };
 
   // 2) arranque de mes
@@ -234,8 +256,8 @@ async function main() {
       if (r.ok) { av.spy = true; await alertaPrivada(`Buen momento para tu SPY de ${nombreMes}: ${usd(spyT.precio)} (${spy.puntaje}/100).\n${esc(spy.motivos.join(" · "))}`, btnSpy); }
     }
     if (!st.libre && libre && libre.puntaje >= minVara && !av.libre) {
-      const r = await send(`🟢 <b>Buen momento para los US$ ${MONTO_LIBRE}: ${esc(libre.ticker)}</b>\n${usd(libre.t.precio)} · ${esc(libre.motivos.join(" · "))}\nPuntaje ${libre.puntaje}/100 · quedan ${restan} ruedas`, btnLibre);
-      if (r.ok) { av.libre = true; await alertaPrivada(`Buen momento para los US$ ${MONTO_LIBRE}: <b>${esc(libre.ticker)}</b> a ${usd(libre.t.precio)} (${libre.puntaje}/100).\n${esc(libre.motivos.join(" · "))}`, btnLibre); }
+      const r = await send(`🟢 <b>Buen momento para los US$ ${MONTO_LIBRE}: ${esc(libre.nombre)}</b>\n${libre.texto}\nPuntaje ${libre.puntaje}/100 · quedan ${restan} ruedas`, btnLibre);
+      if (r.ok) { av.libre = true; await alertaPrivada(`Buen momento para los US$ ${MONTO_LIBRE}: <b>${esc(libre.nombre)}</b> (${libre.puntaje}/100)\n${libre.texto}`, btnLibre); }
     }
   }
   // limpiar avisos viejos

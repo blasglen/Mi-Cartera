@@ -157,5 +157,13 @@
     "aporte": true,
     "cartera": "fuertes",
     "candidatos": "compra_fuerte"
+  },
+  "_nota_aporte": "Reparto de los US$150: una posición por mes; 75/75 solo si hay dos candidatos con puntaje técnico >= umbral_fuerte. Prioriza lo que ya tenés y pesa poco (bono hasta bono_max); un nombre nuevo gana solo si su señal supera ese bono.",
+  "aporte": {
+    "libre_modo": "una_o_dos_si_fuertes",
+    "prioridad": "lo_que_tengo",
+    "umbral_fuerte": 85,
+    "bono_base": 10,
+    "bono_max": 25
   }
 }

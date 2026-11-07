@@ -45,7 +45,7 @@ let APORTE = {};
 try { APORTE = JSON.parse(await fs.readFile(path.join(DATA, "aporte-state.json"), "utf8")); PRIVADO = APORTE.privado || null; } catch {}
 // Lo ya comprado en el aporte de este mes no vuelve a avisar compra por privado
 const mesActual = new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7);
-const compradoEsteMes = (sym) => APORTE.mes === mesActual && ((sym === "SPY" && APORTE.spy) || (APORTE.libre?.ticker && APORTE.libre.ticker === sym));
+const compradoEsteMes = (sym) => APORTE.mes === mesActual && ((sym === "SPY" && APORTE.spy) || (APORTE.libre?.ticker && APORTE.libre.ticker.split("+").includes(sym)));
 async function sendTo(chat, text) {
   if (DRY) { console.log("\n----- (privado, no enviado) -----\n" + text.replace(/<[^>]+>/g, "")); return 1; }
   const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true }) });
