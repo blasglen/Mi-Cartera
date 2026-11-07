@@ -39,6 +39,15 @@ const pctTxt = (x) => (x == null ? "s/d" : `${x > 0 ? "+" : x < 0 ? "−" : ""}$
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 
+// Chat privado de Blas (lo guarda aporte.mjs cuando le da /start a @BlasVigiaBot)
+let PRIVADO = null;
+try { PRIVADO = JSON.parse(await fs.readFile(path.join(DATA, "aporte-state.json"), "utf8")).privado || null; } catch {}
+async function sendTo(chat, text) {
+  if (DRY) { console.log("\n----- (privado, no enviado) -----\n" + text.replace(/<[^>]+>/g, "")); return 1; }
+  const r = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true }) });
+  return (await r.json().catch(() => ({}))).ok;
+}
+
 async function send(text) {
   if (DRY) { console.log("\n----- (no enviado) -----\n" + text.replace(/<[^>]+>/g, "")); return null; }
   const res = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
@@ -251,6 +260,9 @@ async function main() {
     if (!nuevos.length) continue;
     if (primeraVez && !TEST) { for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy; continue; }
     const id = await send(mensajeAlerta(sym, t, nuevos, enCartera, sig));
+    const v = veredicto(sym, t, nuevos, enCartera, sig);
+    if (id && PRIVADO && v.fuerza === "fuerte" && /COMPRA|VENTA/.test(v.titulo) && (enCartera || /COMPRA/.test(v.titulo)))
+      await sendTo(PRIVADO, `🚨 <b>ALERTA · ${v.titulo} FUERTE · ${esc(sym)}</b>\n${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy\n<b>${esc(v.plan)}</b>\n<i>El análisis completo (RADAR, ANALISTA, CONTROL) está en el grupo.</i>`);
     if (id === false) continue;
     enviados++;
     for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy;

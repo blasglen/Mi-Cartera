@@ -52,7 +52,10 @@ async function tg(method, body) {
   const r = await fetch(`https://api.telegram.org/bot${TOKEN}/${method}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   return r.json().catch(() => ({ ok: false }));
 }
-const send = (text, botones) => tg("sendMessage", { chat_id: CHAT, text, parse_mode: "HTML", disable_web_page_preview: true, ...(botones ? { reply_markup: { inline_keyboard: [botones] } } : {}) });
+const send = (text, botones, chat = CHAT) => tg("sendMessage", { chat_id: chat, text, parse_mode: "HTML", disable_web_page_preview: true, ...(botones ? { reply_markup: { inline_keyboard: [botones] } } : {}) });
+// Alerta al privado de Blas (si alguna vez le dio /start a @BlasVigiaBot)
+let PRIVADO = null;
+const alertaPrivada = (text, botones) => (PRIVADO ? send(`🚨 <b>ALERTA</b>\n${text}`, botones, PRIVADO) : null);
 
 // ---------- calendario ----------
 // Ruedas hábiles que quedan en el mes contando hoy (lun-vie; no descuenta feriados)
@@ -125,7 +128,8 @@ async function main() {
   let st = { mes: null, spy: null, libre: null, avisos: {}, resumenDia: null, offset: 0 };
   try { st = { ...st, ...JSON.parse(await fs.readFile(STATE_FILE, "utf8")) }; } catch {}
   const mesNuevo = st.mes !== mesKey;
-  if (mesNuevo) { st.mes = mesKey; st.spy = null; st.libre = null; st.avisos = {}; }
+  if (mesNuevo) { st.mes = mesKey; st.spy = null; st.libre = null; st.avisos = {}; st.cerrado = false; }
+  PRIVADO = st.privado || null;
 
   // 1) botones "Ya compré" (y comando /compre spy|libre TICKER)
   const up = await tg("getUpdates", { offset: st.offset || 0, timeout: 0, allowed_updates: ["callback_query", "message"] });
@@ -133,11 +137,18 @@ async function main() {
   for (const u of up.result || []) {
     st.offset = u.update_id + 1;
     let que = null, ticker = null;
-    if (u.callback_query && String(u.callback_query.message?.chat?.id) === String(CHAT)) {
+    const chatOk = (id) => String(id) === String(CHAT) || (PRIVADO && String(id) === String(PRIVADO));
+    // /start en privado: desde ahora le llegan las alertas importantes por privado
+    if (u.message?.chat?.type === "private" && /^\/start/.test(u.message.text || "")) {
+      st.privado = PRIVADO = u.message.chat.id;
+      await send("👋 Listo. Te voy a escribir por acá <b>solo cuando haya algo importante</b>:\n• buen día para comprar SPY o los US$ 150 del mes\n• último aviso del mes para no saltearte el aporte\n• señales FUERTES de compra o venta en tu cartera\n\nEl detalle completo sigue en el grupo; podés silenciarlo tranquilo.", null, PRIVADO);
+      continue;
+    }
+    if (u.callback_query && chatOk(u.callback_query.message?.chat?.id)) {
       [que, ticker] = String(u.callback_query.data || "").split(":");
       tg("answerCallbackQuery", { callback_query_id: u.callback_query.id, text: "Anotado ✅" }).catch(() => {});
-      tg("editMessageReplyMarkup", { chat_id: CHAT, message_id: u.callback_query.message.message_id, reply_markup: { inline_keyboard: [] } }).catch(() => {});
-    } else if (u.message?.text && String(u.message.chat.id) === String(CHAT)) {
+      tg("editMessageReplyMarkup", { chat_id: u.callback_query.message.chat.id, message_id: u.callback_query.message.message_id, reply_markup: { inline_keyboard: [] } }).catch(() => {});
+    } else if (u.message?.text && chatOk(u.message.chat.id)) {
       const m = u.message.text.match(/^\/compre(?:@\w+)?\s+(spy|libre|\w+)\s*(\w+)?/i);
       if (m) { que = m[1].toLowerCase() === "spy" ? "spy" : "libre"; ticker = (m[2] || (que === "libre" && m[1].toLowerCase() !== "libre" ? m[1] : "")).toUpperCase() || null; }
     }
@@ -196,7 +207,16 @@ async function main() {
   if (!st.cerrado && st.resumenDia !== d && (ahora >= (CONFIG.resumen_apertura_ar || "11:45") || TEST)) {
     const botones = [...(!st.spy ? btnSpy : []), ...(!st.libre && btnLibre ? btnLibre : [])];
     const r = await send(`💵 <b>Aporte de ${nombreMes} · quedan ${restan} ruedas</b>\n\n${lineaSpy()}\n\n${lineaLibre()}`, botones.length ? botones : null);
-    if (r.ok) st.resumenDia = d;
+    if (r.ok) {
+      st.resumenDia = d;
+      // al privado solo si hoy hay algo para comprar (o se termina el mes)
+      const verdeSpy = !st.spy && spy && spy.puntaje >= minVara;
+      const verdeLibre = !st.libre && libre && libre.puntaje >= minVara;
+      if (verdeSpy || verdeLibre) {
+        const partes = [verdeSpy ? lineaSpy() : null, verdeLibre ? lineaLibre() : null].filter(Boolean);
+        await alertaPrivada(`${minVara === 0 ? "Último aviso del mes" : "Hoy es buen día para el aporte"} de ${nombreMes}:\n\n${partes.join("\n\n")}`, [...(verdeSpy ? btnSpy : []), ...(verdeLibre && btnLibre ? btnLibre : [])]);
+      }
+    }
   }
 
   // 4) aviso en el día si aparece un buen momento (una vez por día y por parte,
@@ -211,11 +231,11 @@ async function main() {
   if (st.resumenDia === d && minVara > 0) {
     if (!st.spy && spy && spy.puntaje >= minVara && !av.spy) {
       const r = await send(`🟢 <b>Buen momento para tu SPY de ${nombreMes}</b>\n${usd(spyT.precio)} · ${esc(spy.motivos.join(" · "))}\nPuntaje ${spy.puntaje}/100 · quedan ${restan} ruedas`, btnSpy);
-      if (r.ok) av.spy = true;
+      if (r.ok) { av.spy = true; await alertaPrivada(`Buen momento para tu SPY de ${nombreMes}: ${usd(spyT.precio)} (${spy.puntaje}/100).\n${esc(spy.motivos.join(" · "))}`, btnSpy); }
     }
     if (!st.libre && libre && libre.puntaje >= minVara && !av.libre) {
       const r = await send(`🟢 <b>Buen momento para los US$ ${MONTO_LIBRE}: ${esc(libre.ticker)}</b>\n${usd(libre.t.precio)} · ${esc(libre.motivos.join(" · "))}\nPuntaje ${libre.puntaje}/100 · quedan ${restan} ruedas`, btnLibre);
-      if (r.ok) av.libre = true;
+      if (r.ok) { av.libre = true; await alertaPrivada(`Buen momento para los US$ ${MONTO_LIBRE}: <b>${esc(libre.ticker)}</b> a ${usd(libre.t.precio)} (${libre.puntaje}/100).\n${esc(libre.motivos.join(" · "))}`, btnLibre); }
     }
   }
   // limpiar avisos viejos
