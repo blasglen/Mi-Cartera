@@ -5,7 +5,12 @@
   "precio": 13.53,
   "nota": "compra del 4/11 (14 SPY), marcada a mano"
  },
- "libre": null,
+ "libre": {
+  "fecha": "2026-11",
+  "ticker": null,
+  "precio": null,
+  "nota": "ya usados (Blas, 7/11), marcado a mano"
+ },
  "avisos": {
   "2026-11-06": {
    "marcado": true,
@@ -15,7 +20,7 @@
  },
  "resumenDia": "2026-11-06",
  "offset": 108194023,
- "cerrado": false,
+ "cerrado": true,
  "sugeridoLibre": "PANW",
  "privado": 5395512203
 }
