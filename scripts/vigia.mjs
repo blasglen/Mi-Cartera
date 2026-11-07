@@ -101,50 +101,60 @@ function eventos(t) {
   return out;
 }
 
-function lectura(evs, enCartera) {
+// Veredicto directo: COMPRA / VENTA / VENTA PARCIAL / MANTENER / ESPERAR,
+// con niveles concretos. Son reglas técnicas: Blas decide.
+function pesoEnCartera(sym, sig) {
+  const ten = CONFIG.tenencias || {};
+  let total = 0;
+  for (const [s, n] of Object.entries(ten)) total += (sig.tickers[s]?.precio || 0) * n;
+  const v = (sig.tickers[sym]?.precio || 0) * (ten[sym] || 0);
+  return total ? (v / total) * 100 : null;
+}
+
+function veredicto(sym, t, evs, enCartera, sig) {
   const has = (tipo) => evs.some((e) => e.tipo === tipo);
-  if (has("alerta"))
+  const p = t.previo || {};
+  const sop = p.soporte_3m, res = p.resistencia_3m;
+  const nCompra = evs.filter((e) => e.tipo === "compra").length;
+  const tope = CONFIG.reglas?.tope_posicion_pct ?? 12;
+  const peso = enCartera ? pesoEnCartera(sym, sig) : null;
+  const esArg = (CONFIG.argentina || []).includes(sym);
+
+  if (has("alerta")) {
+    const nivel = sop ? `Perdió ${usd(sop)}. Recomprar recién si recupera ese nivel.` : "Perdió un nivel clave.";
     return enCartera
-      ? "🔴 Perdió un nivel clave. Revisá si seguís convencido de la tesis o si es momento de poner un stop."
-      : "🔴 Viene débil. Mejor esperar a que se estabilice antes de pensar en comprar.";
-  if (has("compra"))
-    return enCartera
-      ? "🟢 Posible punto para sumar en el próximo aporte (si no pasa tu tope de concentración)."
-      : "🟢 Posible punto de entrada para el aporte. Falta confirmar con noticias y fundamentos.";
+      ? { emoji: "🔴", titulo: "SEÑAL DE VENTA", fuerza: evs.filter((e) => e.tipo === "alerta").length >= 2 ? "fuerte" : "moderada", plan: nivel }
+      : { emoji: "⛔", titulo: "NO COMPRAR", fuerza: null, plan: `Viene cayendo. ${nivel}` };
+  }
+  if (has("compra")) {
+    const base = sop && t.precio >= sop * 0.99 ? sop : t.precio;
+    const plan = `Entrada: ${usd(base)} – ${usd(base * 1.02)} · Stop: ${usd(Math.min(base, t.precio) * 0.96)}${res ? ` · Objetivo: ${usd(res)}` : ""}`;
+    if (enCartera && esArg) return { emoji: "⚪", titulo: "MANTENER", fuerza: null, plan: "Buen punto técnico, pero tu regla es no sumar Argentina." };
+    return { emoji: "🟢", titulo: "SEÑAL DE COMPRA", fuerza: nCompra >= 2 ? "fuerte" : "moderada", plan };
+  }
   if (has("ruptura"))
     return enCartera
-      ? "🚀 Tendencia fuerte: buena señal para lo que ya tenés. Para sumar más, suele convenir esperar un retroceso hacia la vieja resistencia."
-      : "🚀 Tendencia fuerte, pero comprar en máximos sale caro. Si te interesa, esperá un retroceso hacia la vieja resistencia.";
-  if (has("caro"))
+      ? { emoji: "⚪", titulo: "MANTENER", fuerza: null, plan: `Rompió máximos: dejala correr. Stop de protección: ${usd(res * 0.97)}.` }
+      : { emoji: "🟡", titulo: "ESPERAR", fuerza: null, plan: `Rompió máximos. Comprar si retrocede a ${usd(res)} – ${usd(res * 1.02)}.` };
+  if (has("caro")) {
+    if (enCartera && ((peso != null && peso > tope) || (t.rsi14 != null && t.rsi14 >= 75)))
+      return { emoji: "🟠", titulo: "SEÑAL DE VENTA PARCIAL", fuerza: null, plan: `Tomar ganancia en ${usd(t.precio)}${peso != null ? ` (pesa ${num(peso, 1)}%, tope ${tope}%)` : ""}.` };
     return enCartera
-      ? "🟡 Caro en el corto plazo. Si ya pesa mucho en tu cartera, podría ser momento de tomar ganancia parcial."
-      : "🟡 Caro en el corto plazo: mejor esperar un retroceso.";
-  return "⚡ Movimiento fuera de lo normal: hay que ver qué noticia lo explica.";
+      ? { emoji: "⚪", titulo: "MANTENER", fuerza: null, plan: "Está caro: no sumar ahora." }
+      : { emoji: "🟡", titulo: "ESPERAR", fuerza: null, plan: sop ? `Caro. Mejor zona: cerca de ${usd(sop)}.` : "Caro: esperar retroceso." };
+  }
+  return { emoji: "⚪", titulo: "MANTENER", fuerza: null, plan: "Movimiento fuerte sin señal clara." };
 }
 
-function mensajeAlerta(sym, t, evs, enCartera) {
-  const lines = [
-    `🔭 <b>${esc(sym)}</b> · ${enCartera ? "📁 en cartera" : "👀 candidato"}`,
-    `${usd(t.precio)} (${pctTxt(t.var_1d_pct)} hoy · ${pctTxt(t.var_1s_pct)} en la semana)`,
+function mensajeAlerta(sym, t, evs, enCartera, sig) {
+  const v = veredicto(sym, t, evs, enCartera, sig);
+  return [
+    `${v.emoji} <b>${v.titulo} · ${esc(sym)}</b>${v.fuerza ? ` (${v.fuerza})` : ""}`,
+    `${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy · ${enCartera ? "📁 en cartera" : "👀 candidato"}`,
+    `<b>${esc(v.plan)}</b>`,
     "",
     ...evs.map((e) => `${e.emoji} ${esc(e.texto)}`),
-    "",
-    `Tendencia: ${esc(t.tendencia)}`,
-    `Medias: 20 ${usd(t.sma20)} · 50 ${usd(t.sma50)} · 200 ${usd(t.sma200)}`,
-    "",
-    `<i>${esc(lectura(evs, enCartera))}</i>`,
-  ];
-  return lines.join("\n");
-}
-
-// Semáforo corto para el resumen de apertura
-function semaforo(t) {
-  const p = t.previo || {};
-  const cercaSoporte = p.soporte_3m && t.precio <= p.soporte_3m * 1.03;
-  if (t.rsi14 != null && t.rsi14 >= U.rsi_sobrecomprado) return "🟡";
-  if (cercaSoporte || (t.rsi14 != null && t.rsi14 <= 35)) return t.sma200 && t.precio < t.sma200 * 0.9 ? "🔴" : "🟢";
-  if (t.sma50 && t.sma200 && t.precio < t.sma50 && t.precio < t.sma200) return "🔴";
-  return "⚪";
+  ].join("\n");
 }
 
 // Puntaje para "mejor punto para el aporte hoy": cerca del soporte, RSI bajo,
@@ -168,7 +178,10 @@ function mensajeApertura(sig, cartera, candidatos) {
   for (const sym of cartera) {
     const t = sig.tickers[sym];
     if (!t) continue;
-    lines.push(`${semaforo(t)} <b>${esc(sym)}</b> ${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} · RSI ${num(t.rsi14, 0)}`);
+    const evs = eventos(t);
+    const v = evs.length ? veredicto(sym, t, evs, true, sig) : { emoji: "⚪", titulo: "MANTENER" };
+    const corto = v.titulo.replace("SEÑAL DE ", "");
+    lines.push(`${v.emoji} <b>${corto}</b> · ${esc(sym)} ${usd(t.precio)} · ${pctTxt(t.var_1d_pct)}`);
   }
   const ranking = candidatos
     .concat(cartera.filter((s) => !CONFIG.argentina?.includes(s)))
@@ -178,13 +191,16 @@ function mensajeApertura(sig, cartera, candidatos) {
     .sort((a, b) => b.p - a.p)
     .slice(0, 3);
   if (ranking.length) {
-    lines.push("", "<b>Mejor punto técnico para el aporte hoy</b>");
+    const R = CONFIG.reglas || {};
+    const top = ranking[0].s;
+    lines.push("", `👉 <b>Si aportás hoy: US$ ${R.aporte_spy_usd ?? 100} a SPY + US$ ${(R.aporte_mensual_usd ?? 250) - (R.aporte_spy_usd ?? 100)} a ${esc(top === "SPY" ? ranking[1]?.s || "SPY" : top)}</b>`);
+    lines.push("", "<b>Mejores puntos técnicos para comprar</b>");
     for (const { s } of ranking) {
       const t = sig.tickers[s];
       lines.push(`• <b>${esc(s)}</b> ${usd(t.precio)} · soporte ${usd(t.previo.soporte_3m)} · RSI ${num(t.rsi14, 0)}${cartera.includes(s) ? " (ya lo tenés)" : ""}`);
     }
   }
-  lines.push("", "🟢 cerca de soporte / sobrevendido · 🟡 caro · 🔴 bajista · ⚪ sin señal", "<i>Lectura técnica, no recomendación. Vos decidís.</i>");
+  lines.push("", "<i>Señales técnicas por reglas fijas. Vos decidís.</i>");
   return lines.join("\n");
 }
 
@@ -237,12 +253,12 @@ async function main() {
     const nuevos = evs.filter((e) => !state.activos[`${sym}:${e.id}`]);
     if (!nuevos.length) continue;
     if (primeraVez && !TEST) { for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy; continue; }
-    const id = await send(mensajeAlerta(sym, t, nuevos, enCartera));
+    const id = await send(mensajeAlerta(sym, t, nuevos, enCartera, sig));
     if (id === false) continue;
     enviados++;
     for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy;
     // El log queda para los próximos bots (ANALISTA responde a message_id; REGISTRO mide resultados)
-    state.log.push({ ts: new Date().toISOString(), ticker: sym, enCartera, eventos: nuevos.map((e) => e.id), precio: t.precio, rsi14: t.rsi14, message_id: id });
+    state.log.push({ ts: new Date().toISOString(), ticker: sym, enCartera, veredicto: veredicto(sym, t, nuevos, enCartera, sig).titulo, eventos: nuevos.map((e) => e.id), precio: t.precio, rsi14: t.rsi14, message_id: id });
   }
   state.log = state.log.slice(-500);
 

@@ -183,6 +183,10 @@ ${bloqueTickers ? `DATOS DE LOS TICKERS QUE MENCIONA\n${bloqueTickers}` : ""}
 ${citado ? `ESTÁ RESPONDIENDO A ESTE MENSAJE DEL GRUPO:\n"""${citado.slice(0, 1500)}"""\n` : ""}
 MENSAJE DE BLAS: """${texto}"""
 
+SÉ DIRECTO. Si pregunta por uno o más tickers (o si conviene comprar/vender algo), arrancá cada uno con una línea:
+VEREDICTO TICKER: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR
+y abajo, en 2-3 líneas: por qué, y el plan con números (entrada · stop · objetivo, o cuánto vender y dónde recomprar). Sin vueltas ni "depende" sin decir de qué. Si te pregunta "¿qué compro?", elegí UNO y decí cuánto (respetando sus reglas).
+
 Respondé usando SOLO estos datos para precios y niveles (no inventes cifras). Si te pregunta algo que los datos no cubren (fundamentos detallados, balances), decí lo que sabés en general y aclaralo. Si pregunta por un ticker que no está en los datos, decí que no lo tenés en la lista de VIGÍA.`;
 
   const respuesta = (await ia(prompt, env, cfg)) || "Me quedé sin cupo de IA gratis por ahora 😅. Probá en unos minutos.";
@@ -190,7 +194,7 @@ Respondé usando SOLO estos datos para precios y niveles (no inventes cifras). S
   for (const [i, p] of partes.entries())
     await tg(env, "sendMessage", {
       chat_id: msg.chat.id,
-      text: i === 0 ? `🧠 <b>ANALISTA</b>\n${esc(p)}` : esc(p),
+      text: (i === 0 ? `🧠 <b>ANALISTA</b>\n` : "") + esc(p).replace(/^(VEREDICTO[^\n]*)/gm, "<b>$1</b>"),
       parse_mode: "HTML",
       disable_web_page_preview: true,
       reply_parameters: { message_id: msg.message_id, allow_sending_without_reply: true },

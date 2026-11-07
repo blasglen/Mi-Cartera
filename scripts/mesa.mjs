@@ -127,12 +127,15 @@ function control(sym, tipoAviso, sig) {
   const lines = [`🛡️ <b>CONTROL · ${esc(sym)}</b>`];
   const ok = [], no = [];
 
-  if (tipoAviso === "venta") {
+  if (tipoAviso === "mantener") {
+    if (peso != null) lines.push(`ℹ️ Pesa ${num(peso, 1)}% de tu cartera (tope ${R.tope_posicion_pct}%).`);
+    lines.push("<b>Veredicto final: ⚪ sin acción.</b>");
+  } else if (tipoAviso === "venta") {
     if (peso != null) ok.push(`Pesa ${num(peso, 1)}% de tu cartera (${usd(peso * total / 100)}).`);
     if (ARG.has(sym)) ok.push("Es Argentina: reducir va en línea con tu objetivo de bajar exposición al país.");
     if (peso > R.tope_posicion_pct) ok.push(`Está arriba de tu tope de ${R.tope_posicion_pct}%: una venta parcial te ordena.`);
     lines.push(...ok.map((t) => `✅ ${esc(t)}`));
-    lines.push(`ℹ️ Si vendés, recordá que tu horizonte es +5 años: una señal técnica sola no cambia una buena tesis.`);
+    lines.push("<b>Veredicto final: ✅ VENTA OK con tus reglas.</b>");
   } else {
     if (ARG.has(sym)) no.push("Es Argentina: tu regla es cero aportes nuevos al país.");
     if (sym === "SPY") ok.push(`SPY es tu regla fija: US$ ${R.aporte_spy_usd} de cada aporte van acá.`);
@@ -144,14 +147,15 @@ function control(sym, tipoAviso, sig) {
     else if ((CONFIG.tecnologia || []).includes(sym)) ok.push(`Tecnología es ${num(tec, 0)}% de la cartera: encaja con tu estilo de crecimiento.`);
     if (sym !== "SPY") ok.push(`Monto máximo: US$ ${libre} (los otros US$ ${R.aporte_spy_usd} del aporte van a SPY).`);
     lines.push(...ok.map((t) => `✅ ${esc(t)}`), ...no.map((t) => `⛔ ${esc(t)}`));
-    lines.push(no.length ? "<b>Veredicto: no pasa tus reglas.</b>" : "<b>Veredicto: pasa tus reglas.</b>");
+    lines.push(no.length ? "<b>Veredicto final: ⛔ COMPRA BLOQUEADA por tus reglas.</b>" : `<b>Veredicto final: ✅ COMPRA OK, hasta US$ ${sym === "SPY" ? R.aporte_mensual_usd : libre}.</b>`);
   }
   lines.push(`<i>Argentina hoy: ${num(arg, 1)}% de la cartera. Vos decidís.</i>`);
   return lines.join("\n");
 }
 
 // ---------- el debate ----------
-function tipoDe(eventos) {
+function tipoDe(eventos, veredicto) {
+  if (veredicto) return /VENTA/.test(veredicto) ? "venta" : /COMPRA/.test(veredicto) ? "compra" : "mantener";
   const venta = ["rompe_soporte_3m", "cruza_abajo_sma200", "cruce_muerte", "en_resistencia_3m", "rsi_sobrecomprado"];
   return eventos.some((e) => venta.includes(e)) ? "venta" : "compra";
 }
@@ -160,7 +164,7 @@ async function debate(sym, entrada, sig, replyTo) {
   const t = sig.tickers[sym];
   const nombre = CONFIG.nombres?.[sym] || sym;
   const enCartera = (CONFIG.cartera || []).includes(sym);
-  const tipo = tipoDe(entrada.eventos);
+  const tipo = tipoDe(entrada.eventos, entrada.veredicto);
   const datos = `${sym} (${nombre}), precio ${usd(t.precio)} en dólares MEP (CEDEAR/acción en BYMA). Hoy ${pctTxt(t.var_1d_pct)}, semana ${pctTxt(t.var_1s_pct)}, 1 mes ${pctTxt(t.var_1m_pct)}, 12 meses ${pctTxt(t.var_12m_pct)}. Tendencia: ${t.tendencia}. SMA20 ${t.sma20}, SMA50 ${t.sma50}, SMA200 ${t.sma200}. RSI14 ${t.rsi14}. Soporte 3m (sin hoy) ${t.previo?.soporte_3m}, resistencia 3m ${t.previo?.resistencia_3m}. Rango 6m ${t.rango_6m?.min}-${t.rango_6m?.max}. Señales de VIGÍA: ${entrada.eventos.join(", ")}.`;
 
   // RADAR
@@ -185,16 +189,17 @@ ${perfil}
 Datos técnicos: ${datos}
 Lo que dijo RADAR: ${radar}
 
-Respondé en este formato exacto, cada punto en 1-2 líneas:
-Lectura: (qué está pasando, combinando técnico y noticia)
-${tipo === "venta" && enCartera ? "Qué haría con lo que tiene: (mantener / reducir parcial / salir, y por qué)" : "Zona de entrada: (precio o rango en US$ y por qué)"}
-Stop: (nivel en US$ donde la tesis se invalida)
-Escenario a favor: (...)
-Escenario en contra: (...)
+VIGÍA (reglas técnicas) dijo: ${entrada.veredicto || "sin veredicto"}.
+Sé DIRECTO. Respondé en este formato exacto, máximo 5 líneas, sin introducciones:
+VEREDICTO: una de estas: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR (coincidí con VIGÍA salvo que la noticia lo contradiga claramente; si no coincidís, decilo en "Por qué")
+Por qué: (una línea, técnico + noticia)
+${tipo === "venta" ? "Plan: (vender todo / vender X% / poner stop en US$ ...; y a qué precio recomprarías)" : "Plan: entrada US$ ... · stop US$ ... · objetivo US$ ..."}
+Riesgo: (una línea)
 Confianza: baja / media / alta
 No uses frases de asesor financiero ni disclaimers largos; él decide.`);
   if (!analista) analista = "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.";
-  const idAnalista = await send("ANALISTA", `🧠 <b>ANALISTA · ${esc(sym)}</b>\n${esc(analista)}`, idRadar || replyTo);
+  const cuerpo = esc(analista).replace(/^(VEREDICTO:[^\n]*)/m, "<b>$1</b>");
+  const idAnalista = await send("ANALISTA", `🧠 <b>ANALISTA · ${esc(sym)}</b>\n${cuerpo}`, idRadar || replyTo);
 
   // CONTROL
   await send("CONTROL", control(sym, tipo, sig), idAnalista || idRadar || replyTo);
