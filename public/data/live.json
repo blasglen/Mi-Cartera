@@ -1,100 +1,100 @@
 {
   "prices": {
     "A3": 2570,
-    "AGRO": 22.9,
+    "AGRO": 22.8,
     "ALUA": 774,
-    "ALUAD": 0.49,
-    "AUSO": 2230,
-    "BBAR": 5880,
+    "ALUAD": 0.493,
+    "AUSO": 2220,
+    "BBAR": 5905,
     "BBARD": 3.735,
-    "BHIP": 188.5,
+    "BHIP": 189,
     "BMA": 9680,
     "BMA.D": 6.18,
     "BOLT": 61,
     "BPAT": 1470,
-    "BYMA": 197,
+    "BYMA": 198.25,
     "BYMAD": 0.125,
     "CADO": 518,
-    "CAPX": 2755,
+    "CAPX": 2760,
     "CARC": 17.15,
     "CECO2": 412,
-    "CELU": 146,
-    "CEPU": 1672,
+    "CELU": 147,
+    "CEPU": 1663,
     "CEPUD": 1.06,
-    "CGPA2": 1450,
-    "COME": 31.04,
+    "CGPA2": 1330,
+    "COME": 31.05,
     "COMED": 0.019,
-    "CRES": 1517,
-    "CRESD": 0.957,
-    "CTIO": 1820,
+    "CRES": 1519,
+    "CRESD": 0.967,
+    "CTIO": 1815,
     "CVH": 8560,
-    "CVHD": 5.5,
-    "DGCU2": 1185,
+    "CVHD": 5.38,
+    "DGCU2": 1175,
     "DOME": 80,
-    "ECOG": 1941,
+    "ECOG": 1937,
     "ECOGD": 1.22,
-    "EDN": 1188,
+    "EDN": 1187,
     "EDND": 0.752,
     "EDSH": 6530,
     "FERR": 15.05,
     "FIPL": 122,
-    "GAMI": 364.5,
+    "GAMI": 363.5,
     "GARO": 444,
-    "GBAN": 1525,
+    "GBAN": 1505,
     "GCDI": 10.25,
-    "GCLA": 2465,
+    "GCLA": 2375,
     "GGAL": 4915,
     "GGALD": 3.13,
     "GRIM": 2100,
     "HARG": 1045,
-    "HAVA": 3790,
-    "HSAT": 124.5,
+    "HAVA": 3710,
+    "HSAT": 123,
     "IEB": 1880,
-    "INAG": 6850,
-    "INTR": 275,
+    "INTR": 275.5,
     "INVJ": 353,
+    "INVJX": 3.1,
     "IRSA": 2100,
     "IRSAD": 1.355,
-    "LEDE": 614,
-    "LOMA": 2917.5,
+    "LEDE": 606,
+    "LOMA": 2925,
     "LOMAD": 1.86,
-    "LONG": 15,
-    "METR": 2240,
+    "LONG": 15.3,
+    "METR": 2220,
     "METRD": 1.42,
     "MIRG": 1740,
-    "MOLA": 19525,
-    "MOLI": 1930,
-    "MORI": 19.85,
+    "MOLA": 19550,
+    "MOLI": 1955,
+    "MORI": 19.8,
     "OEST": 695,
-    "PAMP": 4280,
+    "PAMP": 4272.5,
     "PAMPD": 2.71,
-    "PATA": 1020,
+    "PATA": 995,
     "POLL": 310,
-    "REGE": 6500,
-    "REIT": 1066,
+    "RAGH": 1800,
+    "REIT": 1065,
     "REITC": 0.643,
     "REITD": 0.688,
-    "RICH": 1395,
+    "RICH": 1390,
     "RIGO": 410,
     "ROSE": 138,
-    "SAMI": 367,
-    "SEMI": 11.05,
-    "SUPV": 1880,
+    "SAMI": 366,
+    "SEMI": 11,
+    "SUPV": 1871,
     "SUPVD": 1.23,
     "TECO2": 3352.5,
     "TECOD": 2.165,
-    "TGN4D": 1.625,
+    "TGN4D": 1.63,
     "TGNO4": 2585,
-    "TGSU2": 7210,
+    "TGSU2": 7220,
     "TGSUD": 4.6,
-    "TRAN": 1930,
+    "TRAN": 1937,
     "TRAND": 1.225,
-    "TXAR": 700,
+    "TXAR": 698.5,
     "TXARD": 0.438,
-    "VALO": 531.5,
+    "VALO": 531,
     "VALOD": 0.34,
-    "YPFD": 6460,
-    "YPFDD": 4.12,
+    "YPFD": 6455,
+    "YPFDD": 4.105,
     "AE38": 104560,
     "AE38C": 62.51,
     "AE38D": 66.2,
@@ -131,6 +131,7 @@
     "BB37D": 103620,
     "BB7DC": 60.75,
     "BB7DD": 65.98,
+    "BC33C": 102.2,
     "BC33D": 108,
     "BC37D": 103790,
     "BC37E": 96700,
@@ -158,6 +159,8 @@
     "BPOC7": 160980,
     "BPOD7": 160650,
     "CARP": 51000,
+    "CO26": 5089,
+    "CO26D": 3.4,
     "CO2D7": 108.5,
     "CO32": 167800,
     "CO32C": 101.2,
@@ -166,6 +169,7 @@
     "CO35C": 91.09,
     "CO35D": 94,
     "CO3D7": 122,
+    "COD7": 179.75,
     "COY27": 232.5,
     "CUAP": 39000,
     "CUAPD": 26,
@@ -174,6 +178,8 @@
     "DICPD": 31.42,
     "DIP0": 48650,
     "EF25D": 37.2,
+    "EM33C": 94.5,
+    "EM33D": 101.5,
     "ERF25": 58000,
     "ERM33": 155000,
     "GD29": 85170,
@@ -206,16 +212,17 @@
     "PARP": 33020,
     "PARPD": 21.17,
     "PAY0": 114000,
-    "PAY0D": 71.5,
     "PBA27": 102.45,
     "PBA28": 113.05,
     "PBM27": 104.95,
     "PM29C": 38,
     "PM29D": 39,
     "PMA28": 112.5,
+    "PMD26": 103.05,
     "PMM29": 61000,
     "PR17": 575,
     "PUA36": 171000,
+    "PUA6C": 101.65,
     "PUA6D": 109.05,
     "S24DC": 38.45,
     "S24DD": 40.55,
@@ -231,9 +238,9 @@
     "T30A7": 139.29,
     "T30J7": 132.15,
     "T31Y7": 130.911,
-    "TA7C": 0.086,
     "TA7D": 0.088,
     "TE7D": 0.098,
+    "TFU27": 32000,
     "TJ7D": 0.084,
     "TMF27": 127.8,
     "TMF28": 112.2,
@@ -250,6 +257,8 @@
     "TVPA": 2450,
     "TVPE": 18750,
     "TVPP": 6.9,
+    "TVPY": 8500,
+    "TVPYD": 6,
     "TX28": 1428,
     "TX28D": 0.91,
     "TX31": 1473,
@@ -270,9 +279,7 @@
     "TXMJ8": 103.9,
     "TXMJ9": 95,
     "TXS7D": 0.072,
-    "TXS8C": 0.06,
     "TXS8D": 0.061,
-    "TY30C": 0.073,
     "TY30D": 0.071,
     "TY30P": 113.7,
     "TY7D": 0.084,
@@ -295,71 +302,70 @@
     "TZXS7": 113.95,
     "TZXS8": 98.7,
     "TZXY7": 127.4,
-    "AAL": 10950,
+    "AAL": 10980,
     "AALC": 6.17,
     "AALD": 7.1,
     "AAP": 5420,
     "AAPD": 3.51,
-    "AAPL": 28200,
+    "AAPL": 28600,
     "AAPLC": 17.44,
-    "AAPLD": 18.06,
-    "ABBV": 48760,
+    "AAPLD": 18.24,
+    "ABBV": 48700,
     "ABBVC": 29.97,
     "ABBVD": 30.9,
-    "ABEV": 13840,
+    "ABE3C": 6.25,
+    "ABEV": 14030,
     "ABEV3": 4650,
     "ABEVC": 8.26,
     "ABEVD": 9,
-    "ABNB": 21030,
+    "ABNB": 21060,
     "ABNBC": 11.2,
     "ABNBD": 13.4,
-    "ABT": 45760,
+    "ABT": 45900,
+    "ABTC": 25.88,
     "ABTD": 29.33,
     "ACN": 5785,
     "ACNC": 3.435,
     "ACND": 3.635,
-    "ACWI": 9780,
+    "ACWI": 9790,
     "ACWIC": 5.98,
     "ACWID": 6.25,
-    "ADBE": 9080,
+    "ADBE": 9085,
     "ADBEC": 5.62,
     "ADBED": 5.75,
-    "ADGO": 14940,
+    "ADGO": 15060,
     "ADGOC": 9.34,
     "ADGOD": 9.55,
     "ADI": 40440,
     "ADID": 29.17,
-    "ADP": 84850,
+    "ADP": 85000,
     "ADPD": 53.1,
-    "ADS": 3980,
     "AEG": 13900,
-    "AEM": 53250,
+    "AEM": 53525,
     "AEMD": 33.38,
     "AI": 3862.5,
     "AIC": 2.48,
     "AID": 2.425,
     "AIG": 26140,
-    "AIGC": 15.15,
     "AIGD": 17.01,
     "AKO.B": 48100,
-    "AKOBD": 31,
-    "ALAB": 7195,
+    "ALAB": 7145,
+    "ALAC": 7.5,
     "ALAD": 5.29,
-    "AMAT": 111200,
+    "AMAT": 111025,
     "AMATC": 67.9,
     "AMATD": 71.1,
-    "AMD": 74750,
-    "AMDC": 44.99,
-    "AMDD": 48.4,
+    "AMD": 74450,
+    "AMDC": 44.8,
+    "AMDD": 48.6,
     "AMGN": 25600,
-    "AMGNC": 13.82,
     "AMGND": 16.43,
     "AMX": 42220,
     "AMXD": 26.63,
-    "AMZN": 3010,
+    "AMZN": 3007.5,
     "AMZNC": 1.82,
     "AMZND": 1.91,
-    "ANET": 9825,
+    "ANET": 9800,
     "ANETC": 6.35,
     "ANETD": 6.18,
     "ANF": 249350,
@@ -370,102 +376,101 @@
     "ARKK": 12620,
     "ARKKC": 7.65,
     "ARKKD": 8.1,
-    "ARM": 10210,
+    "ARM": 10640,
     "ARMD": 6.8,
-    "ASML": 16320,
+    "ASML": 16250,
     "ASMLC": 9.89,
-    "ASMLD": 10.49,
+    "ASMLD": 10.44,
     "ASR": 21920,
-    "ASTS": 3575,
+    "ASTS": 3577.5,
     "ASTSC": 2.07,
     "ASTSD": 2.24,
     "AVGO": 12550,
     "AVGOC": 7.58,
-    "AVGOD": 8.21,
+    "AVGOD": 8.16,
     "AVY": 17300,
     "AVYD": 11.41,
-    "AXP": 35400,
+    "AXP": 35660,
     "AXPC": 21.95,
     "AXPD": 22.99,
     "AZN": 77725,
     "AZNC": 42.88,
-    "AZND": 50.2,
-    "B": 33840,
+    "AZND": 49.91,
+    "B": 33860,
     "B.C": 18.75,
     "B.D": 21.7,
     "BA": 12050,
     "BA.C": 20660,
     "BA.CC": 12.95,
     "BA.CD": 13.41,
-    "BABA": 20340,
+    "BABA": 20290,
     "BABAC": 11.79,
     "BABAD": 12.95,
     "BAC": 7.29,
     "BAD": 7.73,
-    "BAK": 870,
+    "BAK": 876.5,
     "BAKD": 0.573,
     "BAYN": 31000,
-    "BB": 4735,
+    "BB": 4892.5,
     "BB.D": 3.2,
-    "BBAS3": 2482,
+    "BBAS3": 2525,
     "BBAX": 8035,
     "BBAXD": 5.15,
     "BBCA": 8665,
     "BBCAD": 5.52,
-    "BBD": 4280,
+    "BBD": 4275,
     "BBDC": 2.505,
     "BBDC3": 3990,
+    "BBDCC": 4.5,
     "BBDCD": 3.88,
     "BBDD": 2.75,
     "BBV": 42020,
     "BBVD": 27.07,
     "BCS": 37420,
-    "BHP": 66800,
+    "BHP": 66850,
     "BHPD": 42.93,
-    "BIDU": 12100,
+    "BIDU": 12410,
     "BIDUC": 7.21,
     "BIDUD": 7.92,
     "BIIB": 31980,
     "BIIBD": 20.79,
-    "BIOX": 413,
+    "BIOX": 414.5,
     "BIOXC": 0.238,
     "BIOXD": 0.267,
-    "BKNG": 385,
+    "BKNG": 381.25,
     "BKNGC": 0.242,
     "BKNGD": 0.246,
     "BKR": 12000,
     "BKRC": 7.9,
     "BKRD": 8.17,
-    "BMNR": 3907.5,
+    "BMNR": 3912.5,
     "BMNRD": 2.65,
-    "BMY": 34120,
+    "BMY": 34540,
     "BMYD": 22.4,
-    "BNG": 33240,
-    "BNGC": 21,
+    "BNG": 33220,
     "BNGD": 21.04,
     "BNY": 122975,
     "BNYD": 77.5,
-    "BP": 14910,
+    "BP": 14900,
     "BPA11": 16850,
     "BPC": 9.78,
     "BPD": 9.56,
-    "BRKB": 43120,
+    "BRKB": 43240,
     "BRKBC": 26.3,
-    "BRKBD": 27.44,
+    "BRKBD": 27.62,
     "BSBR": 7765,
-    "BX": 6630,
+    "BX": 6645,
     "BXC": 3.955,
     "BXD": 4.13,
-    "C": 65325,
+    "C": 65700,
     "C.D": 42.5,
     "CAAP": 163550,
     "CAAPD": 104.5,
     "CAH": 151325,
     "CAHD": 96.2,
     "CAR": 7655,
-    "CAR.C": 4.195,
     "CAR.D": 4.17,
-    "CAT": 46500,
+    "CAT": 46860,
     "CATC": 28,
     "CATD": 30.01,
     "CC": 41.44,
@@ -473,107 +478,98 @@
     "CCJC": 3.31,
     "CCJD": 3.24,
     "CCL": 16170,
-    "CCLC": 7.46,
     "CCLD": 10.21,
-    "CDE": 25880,
+    "CDE": 25920,
     "CDED": 14.77,
-    "CEG": 9000,
+    "CEG": 9225,
     "CEGC": 5.54,
     "CEGD": 5.98,
     "CIBR": 15250,
     "CIBRC": 9.2,
     "CIBRD": 9.8,
-    "CL": 54125,
-    "CLC": 29.7,
+    "CL": 54050,
     "CLD": 33.94,
-    "CLS": 17220,
+    "CLS": 17290,
     "CLSC": 12.09,
     "CLSD": 10.98,
-    "COIN": 8295,
+    "COIN": 8340,
     "COINC": 5.64,
-    "COIND": 5.35,
+    "COIND": 5.34,
     "COP": 9125,
     "COPD": 5.72,
-    "COPX": 8450,
+    "COPX": 8465,
     "COPXC": 5.75,
-    "COPXD": 5.44,
-    "CORN": 7160,
-    "CORNC": 4.95,
+    "COPXD": 5.43,
+    "CORN": 7170,
     "CORND": 4.53,
     "COST": 36780,
     "COSTC": 21.15,
     "COSTD": 23.5,
-    "CRM": 19880,
+    "CRM": 19900,
     "CRMC": 12.8,
     "CRMD": 12.64,
-    "CRWD": 4605,
+    "CRWD": 4565,
     "CRWDD": 2.875,
     "CRWV": 2867.5,
     "CRWVC": 1.73,
     "CRWVD": 1.81,
-    "CSCO": 31200,
+    "CSCO": 31300,
     "CSCOC": 21.4,
-    "CSCOD": 19.91,
+    "CSCOD": 19.93,
     "CSNA3": 1327,
     "CVS": 9315,
     "CVSC": 5.42,
-    "CVSD": 6.06,
+    "CVSD": 6.03,
     "CVX": 22200,
     "CVXC": 13.58,
     "CVXD": 14.25,
     "CX": 17960,
-    "CXC": 10.92,
     "CXD": 11.54,
-    "DAL": 18900,
+    "DAL": 18820,
     "DALC": 11.23,
     "DALD": 11.1,
     "DD": 49200,
     "DDD": 30.82,
-    "DE": 27940,
+    "DE": 27980,
     "DEC": 16.7,
-    "DECK": 5760,
+    "DECK": 5765,
     "DECKC": 3.355,
     "DECKD": 3.665,
     "DED": 17.95,
-    "DELL": 7415,
-    "DELLC": 7.77,
+    "DELL": 7495,
     "DELLD": 4.805,
     "DEO": 27660,
     "DEOC": 16.02,
     "DEOD": 18.16,
     "DHR": 7105,
-    "DHRC": 3.565,
     "DHRD": 4.64,
-    "DIA": 42560,
+    "DIA": 42840,
     "DIAC": 26.11,
     "DIAD": 27.49,
-    "DISN": 16130,
+    "DISN": 16180,
     "DISNC": 9.88,
     "DISND": 10.45,
-    "DOCU": 5850,
+    "DOCU": 5865,
     "DOCUC": 3.75,
     "DOCUD": 3.92,
     "DOW": 8695,
-    "DOWC": 4.67,
     "DOWD": 5.57,
     "E": 23300,
     "EBAY": 102050,
     "EBAYC": 60.7,
     "EBAYD": 64.4,
-    "ECL": 8940,
-    "ECLC": 4.99,
+    "ECL": 8960,
     "ECLD": 5.81,
-    "EEM": 19840,
-    "EEMC": 12.09,
+    "EEM": 19830,
+    "EEMC": 12.08,
     "EEMD": 12.74,
-    "EFA": 9445,
+    "EFA": 9460,
     "EFAC": 5.82,
     "EFAD": 6.09,
-    "EFX": 19250,
+    "EFX": 19690,
     "EFXC": 12.25,
     "EFXD": 12.98,
     "ELPC": 53050,
-    "ELPCD": 27.14,
     "EMBJ": 124500,
     "EMBJC": 75.2,
     "EMBJD": 78.3,
@@ -581,114 +577,109 @@
     "ERIC": 8575,
     "ERICD": 5.75,
     "ESGU": 8915,
-    "ESGUC": 5.62,
     "ESGUD": 5.92,
-    "ETHA": 16720,
+    "ETHA": 16820,
     "ETHAC": 10.55,
-    "ETHAD": 10.74,
-    "ETSY": 9350,
+    "ETHAD": 10.75,
+    "ETSY": 9400,
     "ETSYC": 5.55,
     "ETSYD": 6.26,
-    "EWJ": 10490,
+    "EWJ": 10510,
     "EWJC": 6.49,
     "EWJD": 6.75,
-    "EWY": 4547.5,
+    "EWY": 4557.5,
     "EWYC": 2.83,
     "EWYD": 2.89,
     "EWZ": 26680,
     "EWZC": 16.26,
-    "EWZD": 17.08,
-    "F": 20590,
+    "EWZD": 17.06,
+    "F": 20570,
     "FC": 11.75,
-    "FCX": 32880,
+    "FCX": 32920,
     "FCXC": 23,
     "FCXD": 21.24,
     "FD": 13.17,
-    "FDX": 51200,
-    "FDXC": 29.12,
+    "FDX": 51300,
     "FDXD": 33.68,
     "FISV": 9625,
     "FISVD": 6.05,
     "FMX": 36100,
     "FMXC": 20.13,
     "FMXD": 22.73,
-    "FSLR": 18550,
-    "FSLRC": 9.97,
+    "FNMA": 7400,
+    "FSLR": 18650,
     "FSLRD": 11.97,
-    "FXI": 11690,
+    "FXI": 11670,
     "FXIC": 7,
     "FXID": 7.44,
     "GDX": 14560,
     "GDXC": 8.79,
-    "GDXD": 9.36,
+    "GDXD": 9.33,
     "GE": 67625,
     "GEC": 41.47,
     "GED": 43.27,
-    "GEV": 7155,
-    "GEVC": 4.285,
-    "GEVD": 4.535,
-    "GFI": 65625,
+    "GEV": 7180,
+    "GEVC": 4.3,
+    "GEVD": 4.505,
+    "GFI": 65500,
     "GFID": 37.88,
     "GGB": 29440,
     "GGBC": 20,
     "GGBD": 18.36,
-    "GILD": 65000,
+    "GILD": 67225,
+    "GILDC": 43.22,
     "GILDD": 45.03,
-    "GLD": 12420,
+    "GLD": 12480,
     "GLDC": 7.54,
     "GLDD": 7.99,
     "GLNG": 7190,
     "GLNGD": 4.685,
-    "GLOB": 4260,
+    "GLOB": 4352.5,
     "GLOBC": 2.725,
     "GLOBD": 2.9,
-    "GLW": 44340,
-    "GLWC": 40.59,
+    "GLW": 44420,
     "GLWD": 28.26,
     "GM": 24120,
-    "GMC": 13.65,
-    "GMD": 15.25,
+    "GMD": 15.32,
     "GOGLC": 5.03,
     "GOGLD": 5.27,
-    "GOOGL": 8235,
-    "GPRK": 15700,
+    "GOOGL": 8240,
+    "GPRK": 15730,
     "GPRKC": 9.5,
     "GPRKD": 10,
-    "GRMN": 159750,
+    "GRMN": 160150,
     "GRMND": 100.75,
-    "GS": 111000,
+    "GS": 111125,
     "GSC": 67.1,
     "GSD": 71.3,
-    "GSG": 9590,
+    "GSG": 9645,
     "GSGD": 6.14,
     "GSK": 20990,
     "GSKC": 12.37,
     "GSKD": 13.59,
     "GT": 3620,
-    "GTC": 2.65,
     "GTD": 2.27,
     "HAL": 26980,
-    "HALC": 16,
     "HALD": 17.14,
     "HAPV3": 1323,
     "HD": 17820,
     "HDB": 20960,
     "HDC": 9.13,
     "HDD": 11.4,
-    "HIMS": 10850,
+    "HIMS": 10830,
     "HIMSC": 7.35,
-    "HIMSD": 6.79,
+    "HIMSD": 6.8,
     "HL": 24500,
     "HLC": 14,
     "HLD": 14.69,
     "HMC": 60000,
-    "HMY": 28640,
+    "HMY": 28720,
     "HMYC": 17.22,
     "HMYD": 18.26,
     "HOG": 18240,
-    "HON": 44000,
+    "HON": 45560,
     "HOND": 29.4,
-    "HOOD": 4630,
+    "HOOD": 4627.5,
     "HOODC": 2.95,
     "HOODD": 2.95,
     "HPQ": 47440,
@@ -696,130 +687,126 @@
     "HPQD": 31.63,
     "HSBC": 72775,
     "HSBCD": 43.18,
-    "HSY": 14070,
+    "HSY": 14140,
     "HSYC": 8.37,
     "HSYD": 8.96,
     "HUT": 17660,
     "HUTC": 9.61,
-    "HUTD": 11.2,
-    "HWM": 6555,
+    "HUTD": 11.16,
+    "HWM": 6590,
     "HWMD": 4.185,
     "IBB": 13180,
     "IBBC": 7.96,
     "IBBD": 8.4,
-    "IBIT": 7185,
+    "IBIT": 7180,
     "IBITC": 4.405,
-    "IBITD": 4.595,
-    "IBKR": 7450,
+    "IBITD": 4.58,
+    "IBKR": 7455,
     "IBKRC": 4.61,
     "IBKRD": 4.8,
-    "IBM": 27060,
+    "IBM": 27080,
     "IBMC": 16.97,
     "IBMD": 17.3,
     "IBN": 56500,
-    "ICLN": 5515,
+    "ICLN": 5540,
     "ICLNC": 3.3,
     "ICLND": 3.455,
     "IEMG": 10030,
     "IEMGC": 6.11,
     "IEMGD": 6.46,
-    "IEUR": 11250,
+    "IEUR": 11290,
     "IEURC": 6.83,
     "IEURD": 7.23,
     "IFF": 11550,
-    "IFFD": 7.5,
     "IJH": 9995,
     "IJHC": 6.14,
     "IJHD": 6.46,
     "ILF": 8920,
     "ILFC": 5.44,
     "ILFD": 5.74,
-    "INFY": 20750,
+    "INFY": 20810,
     "ING": 18180,
-    "INGD": 10.16,
-    "INTC": 18580,
+    "INTC": 18820,
     "INTCC": 10.72,
-    "INTCD": 11.98,
+    "INTCD": 12.09,
     "IP": 14330,
     "IPD": 8.66,
     "IREN": 2980,
     "IRENC": 1.82,
-    "IREND": 1.92,
+    "IREND": 1.89,
     "ISRG": 8395,
-    "ITA": 2313,
+    "ITA": 2308,
+    "ITAC": 4.365,
     "ITAD": 1.5,
-    "ITUB": 12380,
+    "ITUB": 12320,
     "ITUB3": 13790,
     "ITUBC": 7.16,
     "ITUBD": 7.81,
-    "IVE": 9870,
+    "IVE": 9865,
     "IVEC": 5.99,
     "IVED": 6.34,
-    "IVV": 1782,
+    "IVV": 1788,
     "IVVC": 1.07,
     "IVVD": 1.145,
-    "IVW": 10860,
+    "IVW": 10830,
     "IVWC": 6.65,
     "IVWD": 6.97,
-    "IWM": 45820,
+    "IWM": 45800,
     "IWMC": 28.65,
     "IWMD": 29.32,
     "JCI": 120000,
     "JD": 12120,
     "JDC": 7.18,
-    "JDD": 7.77,
-    "JMIA": 9170,
+    "JDD": 7.61,
+    "JMIA": 9165,
     "JMIAC": 5.16,
     "JMIAD": 5.68,
-    "JNJ": 30500,
+    "JNJ": 30620,
     "JNJC": 18.32,
     "JNJD": 19.4,
     "JOYY": 27360,
-    "JOYYD": 16.77,
-    "JPM": 37320,
+    "JPM": 37360,
     "JPMC": 22.65,
-    "JPMD": 23.75,
+    "JPMD": 23.77,
     "KB": 93450,
-    "KEEL": 15680,
+    "KEEL": 15640,
     "KEELC": 10.89,
     "KEELD": 10.07,
     "KEP": 18630,
-    "KGC": 37300,
-    "KLAC": 6740,
-    "KLACC": 5.82,
+    "KGC": 37140,
+    "KLAC": 6735,
     "KLACD": 4.3,
     "KMB": 30040,
     "KMBC": 18.66,
     "KMBD": 19.54,
-    "KO": 31780,
+    "KO": 32040,
     "KOC": 19.38,
     "KOD": 20.48,
     "KOFM": 95200,
-    "LAC": 3250,
+    "LAC": 3217.5,
     "LACD": 2.08,
     "LAR": 7085,
     "LARC": 4.56,
     "LARD": 4.36,
-    "LIN": 8410,
-    "LINC": 4.865,
+    "LIN": 8420,
     "LIND": 5.42,
-    "LLY": 41000,
+    "LLY": 40760,
     "LLYC": 24.35,
     "LLYD": 25.85,
-    "LMT": 47200,
+    "LMT": 47300,
     "LMTC": 29.9,
     "LMTD": 30.12,
     "LND": 5540,
-    "LRCX": 5950,
+    "LRCX": 5960,
     "LRCXC": 3.4,
     "LRCXD": 3.8,
     "LREN3": 3215,
     "LVS": 33940,
-    "LYG": 4250,
-    "MA": 32920,
+    "LYG": 4257.5,
+    "MA": 33120,
     "MAC": 20.38,
     "MAD": 21.26,
-    "MCD": 19260,
+    "MCD": 19250,
     "MCDC": 11.41,
     "MCDD": 12.29,
     "MDLZ": 7345,
@@ -827,112 +814,107 @@
     "MDLZD": 4.75,
     "MDT": 42320,
     "MDTD": 27.71,
-    "MELI": 21090,
+    "MELI": 21020,
     "MELIC": 12.54,
-    "MELID": 13.5,
-    "META": 42540,
-    "METAC": 25.75,
-    "METAD": 27.39,
+    "MELID": 13.42,
+    "META": 42560,
+    "METAC": 26.18,
+    "METAD": 27.31,
     "MFG": 15600,
     "MGLU3": 1690,
     "MMM": 30840,
     "MMMC": 17.21,
     "MMMD": 20.06,
-    "MO": 31820,
+    "MO": 31800,
     "MOC": 19.93,
     "MOD": 20.39,
     "MOS": 7480,
-    "MOSC": 4.635,
     "MOSD": 4.79,
-    "MP": 5805,
+    "MP": 5910,
     "MPC": 3.675,
-    "MPD": 3.88,
-    "MRK": 48100,
+    "MPD": 3.905,
+    "MRK": 48760,
     "MRKC": 29.71,
-    "MRKD": 31.21,
-    "MRNA": 21990,
+    "MRKD": 31.24,
+    "MRNA": 22530,
     "MRNAC": 10.55,
     "MRNAD": 14.5,
-    "MRSH": 21300,
-    "MRVL": 16760,
-    "MRVLD": 10.7,
-    "MS": 7365,
+    "MRSH": 21310,
+    "MRVL": 16770,
+    "MRVLD": 10.6,
+    "MS": 7380,
     "MSC": 4.525,
     "MSD": 4.735,
-    "MSFT": 29420,
+    "MSFT": 29540,
     "MSFTC": 17.96,
     "MSFTD": 18.91,
     "MSI": 43020,
     "MSTR": 10800,
     "MSTRC": 6.5,
     "MSTRD": 6.89,
-    "MU": 231125,
+    "MU": 229900,
     "MUC": 142.75,
-    "MUD": 146.5,
+    "MUD": 147,
     "MUFG": 35140,
     "MUFGD": 23.3,
     "MUX": 12930,
-    "MUXC": 10.28,
     "MUXD": 8.35,
     "NAT3D": 0.987,
     "NATU3": 1590,
-    "NBIS": 7975,
+    "NBIS": 7990,
     "NBISC": 4.9,
     "NBISD": 5.15,
-    "NEE": 7600,
+    "NEE": 7640,
     "NEEC": 4.42,
     "NEED": 4.825,
-    "NEM": 67400,
+    "NEM": 67600,
     "NEMD": 43,
-    "NFLX": 2200,
+    "NFLX": 2204,
     "NFLXC": 1.32,
     "NFLXD": 1.42,
-    "NG": 42660,
-    "NGC": 38.15,
+    "NG": 42640,
     "NGD": 26.02,
     "NGG": 72350,
-    "NIO": 1404,
+    "NIO": 1386,
     "NIOC": 0.863,
     "NIOD": 0.892,
-    "NKE": 5365,
+    "NKE": 5360,
     "NKEC": 3.29,
-    "NKED": 3.425,
-    "NMR": 15740,
+    "NKED": 3.42,
+    "NMR": 15730,
     "NOKA": 12830,
     "NOKAD": 8,
-    "NOW": 988,
+    "NOW": 984.5,
     "NOWC": 0.606,
     "NOWD": 0.634,
-    "NTES": 15380,
-    "NTESC": 8.71,
+    "NTES": 15390,
     "NTESD": 8.69,
-    "NTRA": 10270,
+    "NTRA": 10320,
     "NTRAC": 7.62,
     "NTRAD": 6.46,
-    "NU": 9965,
+    "NU": 10030,
     "NUC": 6.25,
     "NUD": 6.4,
     "NUE": 25740,
-    "NVDA": 13050,
+    "NVDA": 13040,
     "NVDAC": 7.85,
-    "NVDAD": 8.26,
-    "NVO": 9585,
+    "NVDAD": 8.28,
+    "NVO": 9615,
     "NVOC": 5.89,
     "NVOD": 6.18,
     "NVS": 67675,
-    "NVSC": 34.83,
     "NVSD": 43.78,
     "NXE": 13990,
     "NXED": 8.59,
     "O": 7605,
-    "OD": 4.91,
-    "OKLO": 1400,
+    "OD": 4.87,
+    "OKLO": 1418,
     "OKLOC": 0.798,
     "OKLOD": 0.912,
-    "ONDS": 4472.5,
+    "ONDS": 4470,
     "ONDSC": 2.62,
     "ONDSD": 2.725,
-    "ORCL": 64400,
+    "ORCL": 64525,
     "ORCLC": 39,
     "ORCLD": 40.99,
     "ORLY": 657.5,
@@ -943,117 +925,113 @@
     "OXYD": 12,
     "PAAS": 22890,
     "PAASC": 13.7,
-    "PAASD": 14.63,
+    "PAASD": 14.54,
     "PAC": 24620,
-    "PAGS": 4100,
+    "PAGS": 4235,
     "PAGSD": 2.675,
     "PANW": 10440,
     "PANWC": 7.06,
     "PANWD": 6.7,
-    "PATH": 10830,
+    "PATH": 10820,
     "PATHD": 6.92,
     "PBI": 25960,
     "PBR": 31020,
     "PBRC": 19.41,
     "PBRD": 19.75,
-    "PCAR": 56300,
+    "PCAR": 56550,
     "PCARD": 36.3,
     "PDD": 5535,
-    "PDDC": 3.14,
     "PDDD": 3.585,
-    "PEP": 13100,
+    "PEP": 13080,
     "PEPC": 7.93,
     "PEPD": 8.35,
     "PETR3": 15590,
-    "PETRC": 6.16,
     "PETRD": 10.67,
     "PFE": 12260,
     "PFEC": 7.68,
     "PFED": 7.8,
-    "PG": 18350,
+    "PG": 18420,
     "PGC": 11.25,
     "PGD": 11.6,
     "PHG": 10110,
     "PINS": 4500,
     "PINSD": 3.115,
     "PKS": 27180,
-    "PLD": 7270,
+    "PLD": 7275,
     "PLDC": 4.38,
     "PLDD": 4.66,
-    "PLTR": 89000,
+    "PLTR": 89450,
     "PLTRC": 54.5,
     "PLTRD": 57.2,
     "PM": 18400,
-    "PMC": 10.68,
     "PMD": 11.37,
     "PRIO3": 9255,
     "PSQ": 5805,
-    "PSQC": 3.14,
     "PSQD": 3.67,
-    "PSX": 67975,
+    "PSX": 68075,
     "PSXC": 45.7,
     "PSXD": 43.99,
-    "PYPL": 12100,
+    "PYPL": 12320,
     "PYPLC": 7.36,
     "PYPLD": 7.92,
     "QCOM": 24910,
     "QCOMC": 14.25,
     "QCOMD": 16.2,
-    "QQQ": 54900,
+    "QQQ": 54850,
     "QQQC": 33.34,
-    "QQQD": 35.5,
+    "QQQD": 35.13,
+    "R031192": 21500,
     "RACE": 8355,
     "RACEC": 4.79,
     "RACED": 5.42,
-    "RBLX": 41000,
+    "RBLX": 41160,
     "RBLXD": 26.29,
     "RENT3": 4510,
-    "RGTI": 9805,
+    "RGTI": 9815,
     "RGTIC": 4.865,
     "RGTID": 6.31,
-    "RIO": 17470,
+    "RIO": 17500,
     "RIOC": 10.41,
-    "RIOD": 11.39,
-    "RIOT": 9330,
+    "RIOD": 11.27,
+    "RIOT": 9270,
     "RIOTC": 5.22,
     "RIOTD": 5.81,
-    "RKLB": 7375,
+    "RKLB": 7370,
     "RKLBC": 4.455,
     "RKLBD": 4.695,
-    "ROKU": 21500,
     "ROKUD": 13.2,
     "ROST": 96150,
     "ROSTD": 63.1,
-    "RSP": 12010,
+    "RSP": 12090,
     "RSPC": 7.32,
     "RSPD": 7.7,
-    "RTX": 63000,
+    "RTX": 63225,
     "RTXD": 40.24,
     "SAN": 78650,
     "SANC": 52.6,
     "SAND": 51.9,
-    "SAP": 64650,
+    "SAP": 64875,
     "SAPD": 41.52,
-    "SATL": 5795,
+    "SATL": 5755,
     "SATLC": 3.05,
-    "SATLD": 3.705,
+    "SATLD": 3.625,
     "SBS": 16100,
     "SBSP3": 7535,
     "SBSPD": 5.15,
     "SBUX": 14630,
     "SBUXC": 8.69,
     "SBUXD": 9.24,
-    "SCCO": 139000,
+    "SCCO": 139675,
     "SCCOD": 101.5,
-    "SDA": 295,
+    "SDA": 289.25,
     "SDAD": 0.204,
-    "SE": 3917.5,
+    "SE": 3925,
     "SEC": 2.55,
     "SED": 2.54,
-    "SH": 7060,
+    "SH": 7065,
     "SHC": 4.005,
     "SHD": 4.45,
-    "SHEL": 82575,
+    "SHEL": 82625,
     "SHELC": 51.6,
     "SHELD": 52.3,
     "SHOP": 2335,
@@ -1061,58 +1039,60 @@
     "SHOPD": 1.47,
     "SHW": 8360,
     "SHWD": 5.38,
-    "SID": 11480,
+    "SID": 11440,
     "SIDC": 5.8,
-    "SIDD": 7.37,
-    "SKHY": 8480,
+    "SIDD": 7.3,
+    "SIEGY": 85500,
+    "SKHY": 8455,
     "SKHYC": 5.05,
-    "SKHYD": 5.6,
+    "SKHYD": 5.57,
     "SLB": 28100,
     "SLBC": 16.48,
     "SLBD": 18.26,
-    "SLV": 13080,
+    "SLV": 13070,
     "SLVC": 8.12,
     "SLVD": 8.37,
-    "SMH": 15490,
+    "SMH": 15480,
     "SMHC": 9.48,
-    "SMHD": 9.9,
+    "SMHD": 10,
     "SNA": 102500,
     "SNAP": 8300,
     "SNAPD": 5.43,
-    "SNDK": 8210,
+    "SNDK": 8200,
     "SNDKC": 5.69,
-    "SNDKD": 5.34,
+    "SNDKD": 5.28,
     "SNOW": 15400,
     "SNOWC": 9.78,
     "SNOWD": 9.69,
-    "SONY": 5600,
+    "SONY": 5615,
     "SONYC": 3.14,
     "SONYD": 3.515,
     "SOYB": 8425,
     "SOYBD": 5.47,
-    "SPCE": 9245,
+    "SPCE": 9115,
     "SPCED": 6.01,
-    "SPCX": 4465,
+    "SPCX": 4482.5,
     "SPCXC": 2.71,
     "SPCXD": 2.88,
-    "SPGI": 17380,
+    "SPGI": 17390,
     "SPGIC": 10.27,
     "SPGID": 11.15,
-    "SPHQ": 9620,
+    "SPHQ": 9650,
     "SPHQC": 6.02,
     "SPHQD": 6.24,
-    "SPOT": 35980,
+    "SPOT": 35820,
     "SPOTC": 22.39,
     "SPOTD": 22.89,
-    "SPXL": 16420,
+    "SPXL": 16560,
     "SPXLC": 10.15,
-    "SPXLD": 10.6,
-    "SPY": 20540,
+    "SPXLD": 10.63,
+    "SPY": 20520,
     "SPYC": 12.24,
-    "SPYD": 13.19,
+    "SPYD": 13.2,
     "STLA": 1450,
+    "STLAC": 0.84,
     "STLAD": 0.947,
-    "STNE": 4182.5,
+    "STNE": 4185,
     "STNEC": 2.48,
     "STNED": 2.685,
     "SUZ": 16020,
@@ -1127,14 +1107,14 @@
     "TCOM": 36880,
     "TCOMD": 22.68,
     "TD": 7.62,
-    "TEAM": 5470,
+    "TEAM": 5485,
     "TEAMD": 3.6,
-    "TEM": 9840,
+    "TEM": 10500,
     "TEMD": 6.33,
-    "TEN": 98425,
+    "TEN": 98500,
     "TENC": 56.2,
     "TEND": 62.1,
-    "TGT": 10920,
+    "TGT": 10930,
     "TGTC": 6.78,
     "TGTD": 7.06,
     "TIMB": 30560,
@@ -1144,90 +1124,81 @@
     "TJXD": 6.6,
     "TLN": 8945,
     "TLND": 5.26,
-    "TM": 23800,
+    "TM": 23920,
     "TMC": 13.35,
-    "TMD": 15.43,
+    "TMD": 15.38,
     "TMO": 52600,
-    "TMOC": 31.15,
     "TMOD": 33.48,
-    "TMUS": 7600,
+    "TMUS": 8235,
     "TMUSC": 4.58,
     "TMUSD": 5,
-    "TQQQ": 3500,
-    "TQQQC": 2.1,
-    "TQQQD": 2.34,
-    "TRIP": 5800,
-    "TRIPC": 4.535,
+    "TQQQ": 3507.5,
+    "TQQQC": 2.12,
+    "TQQQD": 2.26,
+    "TRIP": 5860,
     "TRIPD": 3.76,
     "TRVV": 111750,
     "TRVVD": 69.6,
-    "TSLA": 39980,
+    "TSLA": 39940,
     "TSLAC": 24.06,
-    "TSLAD": 25.51,
-    "TSM": 69775,
+    "TSLAD": 25.52,
+    "TSM": 69575,
     "TSMC": 43.12,
-    "TSMD": 44.85,
-    "TTE": 48740,
+    "TSMD": 44.68,
+    "TTE": 48980,
     "TTEC": 31.46,
-    "TTED": 30.85,
+    "TTED": 30.87,
     "TV": 1319,
     "TVD": 0.808,
-    "TWLO": 9440,
+    "TWLO": 9310,
     "TWLOD": 6.1,
-    "TXN": 92025,
+    "TXN": 92175,
     "TXNC": 57.2,
     "TXND": 58,
-    "TXR": 20490,
-    "TXRC": 13.56,
+    "TXR": 20500,
     "TXRD": 13.21,
-    "UAL": 37500,
+    "UAL": 37740,
     "UALC": 21.83,
     "UALD": 23.6,
-    "UBER": 57100,
+    "UBER": 57375,
     "UBERC": 34.38,
     "UBERD": 36.69,
     "UGP": 9080,
     "UGPD": 6.04,
     "UL": 36680,
-    "ULC": 20.23,
     "ULD": 24,
-    "UNH": 19840,
+    "UNH": 19920,
     "UNHC": 12.45,
-    "UNHD": 12.7,
-    "UNP": 24170,
-    "UNPC": 13.99,
+    "UNHD": 12.75,
+    "UNP": 24180,
     "UNPD": 16.01,
-    "UPST": 7335,
+    "UPST": 7320,
     "UPSTC": 4.295,
     "UPSTD": 4.69,
-    "URA": 10810,
+    "URA": 10820,
     "URAC": 6.26,
     "URAD": 6.97,
     "URBN": 76800,
-    "URBND": 36.31,
     "USB": 19810,
-    "USO": 16000,
+    "USO": 16430,
     "USOD": 10.56,
-    "V": 38980,
-    "VAL3C": 16.33,
-    "VAL3D": 14.8,
-    "VALE": 9605,
+    "V": 39260,
+    "VALE": 9670,
     "VALE3": 19560,
     "VALEC": 5.68,
     "VALED": 6.15,
     "VC": 23.72,
     "VD": 24.8,
-    "VEA": 11250,
+    "VEA": 11350,
     "VEAC": 6.89,
-    "VEAD": 7.3,
-    "VIG": 10440,
+    "VEAD": 7.29,
+    "VIG": 10430,
     "VIGC": 6.34,
     "VIGD": 6.71,
     "VIST": 32040,
     "VISTC": 19.2,
     "VISTD": 20.45,
     "VIV": 19120,
-    "VIVC": 12.96,
     "VIVD": 13.72,
     "VIVT3": 9585,
     "VOD": 26060,
@@ -1238,18 +1209,18 @@
     "VRTX": 9020,
     "VRTXC": 5.1,
     "VRTXD": 5.82,
-    "VST": 8020,
+    "VST": 8010,
     "VSTC": 4.78,
     "VSTD": 5.13,
     "VXX": 7265,
     "VXXC": 3.575,
     "VXXD": 4.42,
-    "VZ": 18910,
+    "VZ": 19130,
     "VZC": 11.75,
-    "VZD": 12.3,
-    "WBO": 1834,
+    "VZD": 12.29,
+    "WBO": 1832,
     "WBOD": 1.115,
-    "WDC": 4777.5,
+    "WDC": 4802.5,
     "WDCC": 2.95,
     "WDCD": 3.04,
     "WEGE3": 14730,
@@ -1257,77 +1228,75 @@
     "WELLD": 5.31,
     "WFC": 27960,
     "WFCC": 17.07,
-    "WFCD": 17.7,
-    "WMT": 11450,
+    "WFCD": 17.72,
+    "WMT": 11630,
     "WMTC": 7.22,
     "WMTD": 7.44,
     "XLB": 4795,
     "XLBC": 3.005,
     "XLBD": 3.07,
-    "XLC": 9180,
+    "XLC": 9195,
     "XLCC": 5.35,
     "XLCD": 5.81,
-    "XLE": 51000,
+    "XLE": 51550,
     "XLEC": 31.53,
     "XLED": 32.85,
     "XLF": 47920,
     "XLFC": 29.19,
     "XLFD": 30.54,
-    "XLI": 9730,
+    "XLI": 9715,
     "XLIC": 6.09,
-    "XLID": 6.27,
-    "XLK": 6000,
+    "XLID": 6.26,
+    "XLK": 5990,
     "XLKC": 3.675,
     "XLKD": 3.86,
-    "XLP": 9350,
+    "XLP": 9395,
     "XLPC": 5.72,
     "XLPD": 6.03,
-    "XLRE": 8125,
-    "XLREC": 4.58,
+    "XLRE": 8130,
     "XLRED": 5.26,
-    "XLU": 4600,
+    "XLU": 4807.5,
     "XLUC": 2.91,
-    "XLUD": 3.075,
-    "XLV": 10620,
+    "XLUD": 3.05,
+    "XLV": 10650,
     "XLVC": 6.47,
-    "XLVD": 6.84,
+    "XLVD": 6.82,
     "XLY": 4590,
     "XLYC": 2.745,
     "XLYD": 2.955,
     "XME": 5200,
     "XMEC": 3.16,
     "XMED": 3.2,
-    "XOM": 27000,
+    "XOM": 27600,
     "XOMC": 16.85,
     "XOMD": 17.73,
-    "XP": 6300,
+    "XP": 6310,
     "XPC": 3.785,
     "XPD": 4.03,
-    "XPEV": 4295,
-    "XPEVC": 2.6,
+    "XPEV": 4287.5,
     "XPEVD": 2.65,
     "XROX": 1811,
     "XROXD": 1.13,
     "XYZ": 7090,
     "XYZC": 3.785,
     "XYZD": 4.555,
-    "YELP": 15920,
+    "YELP": 16060,
     "YELPD": 10.99,
-    "ZM": 3167.5,
+    "ZM": 3172.5,
     "ZMC": 2.09,
     "ZMD": 1.98,
-    "BTC": 120645466.2,
-    "ETH": 3554530.0290000006,
-    "SOL": 142291.719,
-    "USDT": 1586.2279413,
-    "NEXO": 1162.6492647,
-    "POL": 142.9094121,
-    "DOT": 1413.0055182,
-    "DOGE": 113.21885790000002,
-    "RENDER": 2477.1240000000003,
-    "AVAX": 13068.417000000001,
-    "LINK": 17038.167,
-    "BNB": 1107147.3960000002
+    "BTC": 119006753.4,
+    "ETH": 3389054.9700000007,
+    "SOL": 137924.994,
+    "USDT": 1586.5995099000002,
+    "NEXO": 1154.1111264,
+    "POL": 141.5279391,
+    "DOT": 1385.0537145,
+    "DOGE": 111.59443619999999,
+    "RENDER": 2572.398,
+    "AVAX": 13624.182,
+    "LINK": 17022.288,
+    "BNB": 1093682.004
   },
   "catalog": [
     {
@@ -1531,15 +1500,15 @@
       "cat": "Acciones AR"
     },
     {
-      "symbol": "INAG",
-      "cat": "Acciones AR"
-    },
-    {
       "symbol": "INTR",
       "cat": "Acciones AR"
     },
     {
       "symbol": "INVJ",
+      "cat": "Acciones AR"
+    },
+    {
+      "symbol": "INVJX",
       "cat": "Acciones AR"
     },
     {
@@ -1611,7 +1580,7 @@
       "cat": "Acciones AR"
     },
     {
-      "symbol": "REGE",
+      "symbol": "RAGH",
       "cat": "Acciones AR"
     },
     {
@@ -1855,6 +1824,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "BC33C",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "BC33D",
       "cat": "Bonos"
     },
@@ -1963,6 +1936,14 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "CO26",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "CO26D",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "CO2D7",
       "cat": "Bonos"
     },
@@ -1995,6 +1976,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "COD7",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "COY27",
       "cat": "Bonos"
     },
@@ -2024,6 +2009,14 @@
     },
     {
       "symbol": "EF25D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "EM33C",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "EM33D",
       "cat": "Bonos"
     },
     {
@@ -2155,10 +2148,6 @@
       "cat": "Bonos"
     },
     {
-      "symbol": "PAY0D",
-      "cat": "Bonos"
-    },
-    {
       "symbol": "PBA27",
       "cat": "Bonos"
     },
@@ -2183,6 +2172,10 @@
       "cat": "Bonos"
     },
     {
+      "symbol": "PMD26",
+      "cat": "Bonos"
+    },
+    {
       "symbol": "PMM29",
       "cat": "Bonos"
     },
@@ -2192,6 +2185,10 @@
     },
     {
       "symbol": "PUA36",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "PUA6C",
       "cat": "Bonos"
     },
     {
@@ -2255,15 +2252,15 @@
       "cat": "Bonos"
     },
     {
-      "symbol": "TA7C",
-      "cat": "Bonos"
-    },
-    {
       "symbol": "TA7D",
       "cat": "Bonos"
     },
     {
       "symbol": "TE7D",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TFU27",
       "cat": "Bonos"
     },
     {
@@ -2328,6 +2325,14 @@
     },
     {
       "symbol": "TVPP",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPY",
+      "cat": "Bonos"
+    },
+    {
+      "symbol": "TVPYD",
       "cat": "Bonos"
     },
     {
@@ -2411,15 +2416,7 @@
       "cat": "Bonos"
     },
     {
-      "symbol": "TXS8C",
-      "cat": "Bonos"
-    },
-    {
       "symbol": "TXS8D",
-      "cat": "Bonos"
-    },
-    {
-      "symbol": "TY30C",
       "cat": "Bonos"
     },
     {
@@ -2555,6 +2552,10 @@
       "cat": "CEDEARs"
     },
     {
+      "symbol": "ABE3C",
+      "cat": "CEDEARs"
+    },
+    {
       "symbol": "ABEV",
       "cat": "CEDEARs"
     },
@@ -2584,6 +2585,10 @@
     },
     {
       "symbol": "ABT",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ABTC",
       "cat": "CEDEARs"
     },
     {
@@ -2655,10 +2660,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "ADS",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "AEG",
       "cat": "CEDEARs"
     },
@@ -2687,10 +2688,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "AIGC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "AIGD",
       "cat": "CEDEARs"
     },
@@ -2699,11 +2696,11 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "AKOBD",
+      "symbol": "ALAB",
       "cat": "CEDEARs"
     },
     {
-      "symbol": "ALAB",
+      "symbol": "ALAC",
       "cat": "CEDEARs"
     },
     {
@@ -2736,10 +2733,6 @@
     },
     {
       "symbol": "AMGN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "AMGNC",
       "cat": "CEDEARs"
     },
     {
@@ -2991,6 +2984,10 @@
       "cat": "CEDEARs"
     },
     {
+      "symbol": "BBDCC",
+      "cat": "CEDEARs"
+    },
+    {
       "symbol": "BBDCD",
       "cat": "CEDEARs"
     },
@@ -3087,19 +3084,11 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "BMYC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "BMYD",
       "cat": "CEDEARs"
     },
     {
       "symbol": "BNG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "BNGC",
       "cat": "CEDEARs"
     },
     {
@@ -3187,10 +3176,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "CAR.C",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "CAR.D",
       "cat": "CEDEARs"
     },
@@ -3224,10 +3209,6 @@
     },
     {
       "symbol": "CCL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CCLC",
       "cat": "CEDEARs"
     },
     {
@@ -3268,10 +3249,6 @@
     },
     {
       "symbol": "CL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CLC",
       "cat": "CEDEARs"
     },
     {
@@ -3324,10 +3301,6 @@
     },
     {
       "symbol": "CORN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "CORNC",
       "cat": "CEDEARs"
     },
     {
@@ -3423,10 +3396,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "CXC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "CXD",
       "cat": "CEDEARs"
     },
@@ -3479,10 +3448,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "DELLC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "DELLD",
       "cat": "CEDEARs"
     },
@@ -3500,10 +3465,6 @@
     },
     {
       "symbol": "DHR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "DHRC",
       "cat": "CEDEARs"
     },
     {
@@ -3551,10 +3512,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "DOWC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "DOWD",
       "cat": "CEDEARs"
     },
@@ -3576,10 +3533,6 @@
     },
     {
       "symbol": "ECL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ECLC",
       "cat": "CEDEARs"
     },
     {
@@ -3627,10 +3580,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "ELPCD",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "EMBJ",
       "cat": "CEDEARs"
     },
@@ -3656,10 +3605,6 @@
     },
     {
       "symbol": "ESGU",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ESGUC",
       "cat": "CEDEARs"
     },
     {
@@ -3755,10 +3700,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "FDXC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "FDXD",
       "cat": "CEDEARs"
     },
@@ -3783,11 +3724,11 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "FSLR",
+      "symbol": "FNMA",
       "cat": "CEDEARs"
     },
     {
-      "symbol": "FSLRC",
+      "symbol": "FSLR",
       "cat": "CEDEARs"
     },
     {
@@ -3867,6 +3808,10 @@
       "cat": "CEDEARs"
     },
     {
+      "symbol": "GILDC",
+      "cat": "CEDEARs"
+    },
+    {
       "symbol": "GILDD",
       "cat": "CEDEARs"
     },
@@ -3907,19 +3852,11 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "GLWC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "GLWD",
       "cat": "CEDEARs"
     },
     {
       "symbol": "GM",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "GMC",
       "cat": "CEDEARs"
     },
     {
@@ -3995,19 +3932,11 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "GTC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "GTD",
       "cat": "CEDEARs"
     },
     {
       "symbol": "HAL",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "HALC",
       "cat": "CEDEARs"
     },
     {
@@ -4243,10 +4172,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "IFFD",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "IJH",
       "cat": "CEDEARs"
     },
@@ -4276,10 +4201,6 @@
     },
     {
       "symbol": "ING",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "INGD",
       "cat": "CEDEARs"
     },
     {
@@ -4320,6 +4241,10 @@
     },
     {
       "symbol": "ITA",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "ITAC",
       "cat": "CEDEARs"
     },
     {
@@ -4435,10 +4360,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "JOYYD",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "JPM",
       "cat": "CEDEARs"
     },
@@ -4476,10 +4397,6 @@
     },
     {
       "symbol": "KLAC",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "KLACC",
       "cat": "CEDEARs"
     },
     {
@@ -4536,10 +4453,6 @@
     },
     {
       "symbol": "LIN",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "LINC",
       "cat": "CEDEARs"
     },
     {
@@ -4703,10 +4616,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "MOSC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "MOSD",
       "cat": "CEDEARs"
     },
@@ -4823,10 +4732,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "MUXC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "MUXD",
       "cat": "CEDEARs"
     },
@@ -4884,10 +4789,6 @@
     },
     {
       "symbol": "NG",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NGC",
       "cat": "CEDEARs"
     },
     {
@@ -4951,10 +4852,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "NTESC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "NTESD",
       "cat": "CEDEARs"
     },
@@ -5012,10 +4909,6 @@
     },
     {
       "symbol": "NVS",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "NVSC",
       "cat": "CEDEARs"
     },
     {
@@ -5171,10 +5064,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "PDDC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "PDDD",
       "cat": "CEDEARs"
     },
@@ -5192,10 +5081,6 @@
     },
     {
       "symbol": "PETR3",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PETRC",
       "cat": "CEDEARs"
     },
     {
@@ -5271,10 +5156,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "PMC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "PMD",
       "cat": "CEDEARs"
     },
@@ -5284,10 +5165,6 @@
     },
     {
       "symbol": "PSQ",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "PSQC",
       "cat": "CEDEARs"
     },
     {
@@ -5343,6 +5220,10 @@
       "cat": "CEDEARs"
     },
     {
+      "symbol": "R031192",
+      "cat": "CEDEARs"
+    },
+    {
       "symbol": "RACE",
       "cat": "CEDEARs"
     },
@@ -5356,10 +5237,6 @@
     },
     {
       "symbol": "RBLX",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "RBLXC",
       "cat": "CEDEARs"
     },
     {
@@ -5416,10 +5293,6 @@
     },
     {
       "symbol": "RKLBD",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "ROKU",
       "cat": "CEDEARs"
     },
     {
@@ -5592,6 +5465,10 @@
     },
     {
       "symbol": "SIDD",
+      "cat": "CEDEARs"
+    },
+    {
+      "symbol": "SIEGY",
       "cat": "CEDEARs"
     },
     {
@@ -5783,6 +5660,10 @@
       "cat": "CEDEARs"
     },
     {
+      "symbol": "STLAC",
+      "cat": "CEDEARs"
+    },
+    {
       "symbol": "STLAD",
       "cat": "CEDEARs"
     },
@@ -5931,10 +5812,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "TMOC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "TMOD",
       "cat": "CEDEARs"
     },
@@ -5964,10 +5841,6 @@
     },
     {
       "symbol": "TRIP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TRIPC",
       "cat": "CEDEARs"
     },
     {
@@ -6023,19 +5896,11 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "TVC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "TVD",
       "cat": "CEDEARs"
     },
     {
       "symbol": "TWLO",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TWLOC",
       "cat": "CEDEARs"
     },
     {
@@ -6056,10 +5921,6 @@
     },
     {
       "symbol": "TXR",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "TXRC",
       "cat": "CEDEARs"
     },
     {
@@ -6103,10 +5964,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "ULC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "ULD",
       "cat": "CEDEARs"
     },
@@ -6124,10 +5981,6 @@
     },
     {
       "symbol": "UNP",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "UNPC",
       "cat": "CEDEARs"
     },
     {
@@ -6163,10 +6016,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "URBND",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "USB",
       "cat": "CEDEARs"
     },
@@ -6180,14 +6029,6 @@
     },
     {
       "symbol": "V",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VAL3C",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VAL3D",
       "cat": "CEDEARs"
     },
     {
@@ -6252,10 +6093,6 @@
     },
     {
       "symbol": "VIV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "VIVC",
       "cat": "CEDEARs"
     },
     {
@@ -6479,10 +6316,6 @@
       "cat": "CEDEARs"
     },
     {
-      "symbol": "XLREC",
-      "cat": "CEDEARs"
-    },
-    {
       "symbol": "XLRED",
       "cat": "CEDEARs"
     },
@@ -6560,10 +6393,6 @@
     },
     {
       "symbol": "XPEV",
-      "cat": "CEDEARs"
-    },
-    {
-      "symbol": "XPEVC",
       "cat": "CEDEARs"
     },
     {
@@ -6659,5 +6488,5 @@
       "cat": "Cripto"
     }
   ],
-  "updatedAt": "2026-11-08T15:56:54.563Z"
+  "updatedAt": "2026-11-09T19:45:18.572Z"
 }
