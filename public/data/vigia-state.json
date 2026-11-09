@@ -21,7 +21,8 @@
   "MELI:en_soporte_3m": "2026-11-09",
   "GGAL:en_soporte_3m": "2026-11-09",
   "BBAR:en_soporte_3m": "2026-11-09",
-  "BMA:en_soporte_3m": "2026-11-09"
+  "BMA:en_soporte_3m": "2026-11-09",
+  "YPFD:minimo_6m": "2026-11-09"
  },
  "log": [
   {
@@ -495,6 +496,20 @@
    "rsi14": 32.09,
    "message_id": 82,
    "analista": "MANTENER",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-09T13:15:15.961Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 4.07,
+   "rsi14": 25.51,
+   "message_id": 83,
+   "analista": "SEÑAL DE VENTA",
    "debatido": true
   }
  ]

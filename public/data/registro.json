@@ -722,6 +722,19 @@
    ],
    "precio": 6.1,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-09T13:15:15.961Z",
+   "fecha": "2026-11-09",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 4.07,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -768,31 +781,31 @@
    "QQQ": 34.57
   },
   "2026-11-09": {
-   "SPY": 12.94,
-   "BBAR": 3.7,
-   "ORCL": 40.56,
+   "SPY": 12.92,
+   "BBAR": 3.72,
+   "ORCL": 40.64,
    "PANW": 6.57,
-   "MU": 145.55,
-   "NVDA": 8.22,
-   "AMD": 47.07,
+   "MU": 144.78,
+   "NVDA": 8.21,
+   "AMD": 46.89,
    "BMA": 6.1,
    "COST": 23.16,
-   "MA": 20.73,
-   "ABNB": 13.24,
-   "MELI": 13.28,
-   "META": 26.79,
+   "MA": 20.86,
+   "ABNB": 13.26,
+   "MELI": 13.24,
+   "META": 26.8,
    "YPFD": 4.07,
    "CEPU": 1.05,
    "VIST": 20.18,
    "GGAL": 3.1,
    "AVGO": 7.9,
-   "QQQ": 34.57
+   "QQQ": 34.54
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-09T13:01:47.963Z",
-  "senales": 37,
+  "actualizado": "2026-11-09T13:15:24.349Z",
+  "senales": 38,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
