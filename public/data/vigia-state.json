@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-07",
+ "fecha": "2026-11-09",
  "apertura": false,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
@@ -7,29 +7,21 @@
   "SPY:en_soporte_3m": "2026-11-06",
   "ORCL:en_soporte_3m": "2026-11-06",
   "PANW:en_soporte_3m": "2026-11-06",
-  "BBAR:rompe_soporte_3m": "2026-11-06",
-  "ABNB:sube_fuerte": "2026-11-06",
   "YPFD:en_soporte_3m": "2026-11-06",
   "CEPU:en_soporte_3m": "2026-11-06",
   "VIST:en_soporte_3m": "2026-11-06",
-  "AMD:cruza_arriba_sma200": "2026-11-06",
-  "AMD:sube_fuerte": "2026-11-06",
   "GGAL:rsi_sobrevendido": "2026-11-06",
   "AVGO:en_soporte_3m": "2026-11-06",
   "BBAR:rsi_sobrevendido": "2026-11-06",
-  "BMA:rompe_soporte_3m": "2026-11-06",
   "QQQ:en_soporte_3m": "2026-11-06",
-  "GGAL:rompe_soporte_3m": "2026-11-06",
-  "MELI:rompe_soporte_3m": "2026-11-06",
-  "MELI:minimo_6m": "2026-11-07",
   "YPFD:stop_ppc_20": "2026-11-07",
-  "YPFD:minimo_6m": "2026-11-07",
   "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
-  "GGAL:minimo_6m": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
-  "BBAR:minimo_6m": "2026-11-07",
-  "BMA:minimo_6m": "2026-11-07"
+  "MELI:en_soporte_3m": "2026-11-09",
+  "GGAL:en_soporte_3m": "2026-11-09",
+  "BBAR:en_soporte_3m": "2026-11-09",
+  "BMA:en_soporte_3m": "2026-11-09"
  },
  "log": [
   {
@@ -448,6 +440,62 @@
    "rsi14": 32.08,
    "message_id": 69,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-09T13:01:08.746Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.28,
+   "rsi14": 31.66,
+   "message_id": 79,
+   "analista": "SEÑAL DE COMPRA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-09T13:01:09.262Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.1,
+   "rsi14": 25.61,
+   "message_id": 80,
+   "analista": "MANTENER",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-09T13:01:09.520Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.7,
+   "rsi14": 28.59,
+   "message_id": 81,
+   "analista": "MANTENER",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-09T13:01:09.793Z",
+   "ticker": "BMA",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 6.1,
+   "rsi14": 32.09,
+   "message_id": 82,
+   "analista": "MANTENER",
+   "debatido": true
   }
  ]
 }

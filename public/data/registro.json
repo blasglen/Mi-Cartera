@@ -559,7 +559,14 @@
     "minimo_6m"
    ],
    "precio": 13.28,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-09",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-07T03:40:27.234Z",
@@ -573,7 +580,14 @@
     "minimo_6m"
    ],
    "precio": 4.07,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-09",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-07T03:40:27.549Z",
@@ -586,7 +600,14 @@
     "stop_ppc_20"
    ],
    "precio": 1.05,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-09",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-07T03:40:28.182Z",
@@ -600,7 +621,14 @@
     "minimo_6m"
    ],
    "precio": 3.1,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-09",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-07T03:40:28.792Z",
@@ -614,7 +642,14 @@
     "minimo_6m"
    ],
    "precio": 3.7,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-09",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-07T03:40:32.299Z",
@@ -625,6 +660,65 @@
    "analista": null,
    "eventos": [
     "minimo_6m"
+   ],
+   "precio": 6.1,
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-09",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
+  },
+  {
+   "ts": "2026-11-09T13:01:08.746Z",
+   "fecha": "2026-11-09",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.28,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-09T13:01:09.262Z",
+   "fecha": "2026-11-09",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.1,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-09T13:01:09.520Z",
+   "fecha": "2026-11-09",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.7,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-09T13:01:09.793Z",
+   "fecha": "2026-11-09",
+   "ticker": "BMA",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
    ],
    "precio": 6.1,
    "resultado": {}
@@ -672,12 +766,33 @@
    "GGAL": 3.1,
    "AVGO": 7.9,
    "QQQ": 34.57
+  },
+  "2026-11-09": {
+   "SPY": 12.94,
+   "BBAR": 3.7,
+   "ORCL": 40.56,
+   "PANW": 6.57,
+   "MU": 145.55,
+   "NVDA": 8.22,
+   "AMD": 47.07,
+   "BMA": 6.1,
+   "COST": 23.16,
+   "MA": 20.73,
+   "ABNB": 13.24,
+   "MELI": 13.28,
+   "META": 26.79,
+   "YPFD": 4.07,
+   "CEPU": 1.05,
+   "VIST": 20.18,
+   "GGAL": 3.1,
+   "AVGO": 7.9,
+   "QQQ": 34.57
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-07T03:41:12.245Z",
-  "senales": 33,
+  "actualizado": "2026-11-09T13:01:47.963Z",
+  "senales": 37,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
@@ -692,11 +807,11 @@
    },
    "SEÑAL DE VENTA": {
     "1": {
-     "total": 5,
+     "total": 11,
      "ok": 1,
-     "pct": 20,
-     "promedio": 0.458,
-     "vsSpy": -0.458
+     "pct": 9,
+     "promedio": 0.2081818181818182,
+     "vsSpy": -0.2081818181818182
     },
     "5": null,
     "20": null

@@ -13,13 +13,6 @@
  },
  "resumenDia": "2026-11-06",
  "offset": 108194030,
- "avisos": {
-  "2026-11-06": {
-   "marcado": true,
-   "spy": true,
-   "libre": true
-  }
- },
  "cerrado": true,
  "sugeridoLibre": "PANW",
  "privado": -5575931272,
@@ -103,5 +96,7 @@
    "libre": 179.34
   }
  ],
- "regla": "Aporte base US$ 250 en 2026-11, +1.5% por mes compuesto; 40% a SPY, el resto solo ante una oportunidad excelente."
+ "regla": "Aporte base US$ 250 en 2026-11, +1.5% por mes compuesto; 40% a SPY, el resto solo ante una oportunidad excelente.",
+ "verde": {},
+ "ultimoAviso": {}
 }
