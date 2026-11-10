@@ -1,6 +1,6 @@
 {
- "fecha": "2026-11-09",
- "apertura": true,
+ "fecha": "2026-11-10",
+ "apertura": false,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "CEPU:rsi_sobrevendido": "2026-11-05",

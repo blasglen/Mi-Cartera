@@ -682,7 +682,14 @@
     "en_soporte_3m"
    ],
    "precio": 13.28,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-10",
+     "ret": -0.3,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-09T13:01:09.262Z",
@@ -695,7 +702,14 @@
     "en_soporte_3m"
    ],
    "precio": 3.1,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-10",
+     "ret": 0,
+     "spy": 0,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-09T13:01:09.520Z",
@@ -708,7 +722,14 @@
     "en_soporte_3m"
    ],
    "precio": 3.7,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-10",
+     "ret": 0.54,
+     "spy": 0,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-09T13:01:09.793Z",
@@ -721,7 +742,14 @@
     "en_soporte_3m"
    ],
    "precio": 6.1,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-10",
+     "ret": 0,
+     "spy": 0,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-09T13:15:15.961Z",
@@ -734,7 +762,14 @@
     "minimo_6m"
    ],
    "precio": 4.07,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-10",
+     "ret": 0,
+     "spy": 0,
+     "acierto": false
+    }
+   }
   }
  ],
  "precios": {
@@ -800,31 +835,52 @@
    "GGAL": 3.1,
    "AVGO": 7.9,
    "QQQ": 34.54
+  },
+  "2026-11-10": {
+   "SPY": 12.92,
+   "BBAR": 3.72,
+   "ORCL": 40.64,
+   "PANW": 6.57,
+   "MU": 144.78,
+   "NVDA": 8.21,
+   "AMD": 46.89,
+   "BMA": 6.1,
+   "COST": 23.16,
+   "MA": 20.86,
+   "ABNB": 13.26,
+   "MELI": 13.24,
+   "META": 26.8,
+   "YPFD": 4.07,
+   "CEPU": 1.05,
+   "VIST": 20.18,
+   "GGAL": 3.1,
+   "AVGO": 7.9,
+   "QQQ": 34.54
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-09T23:14:01.917Z",
+  "actualizado": "2026-11-10T13:00:23.392Z",
   "senales": 38,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
-     "total": 18,
+     "total": 19,
      "ok": 3,
-     "pct": 17,
-     "promedio": -1.6461111111111115,
-     "vsSpy": -1.6461111111111115
+     "pct": 16,
+     "promedio": -1.5752631578947371,
+     "vsSpy": -1.5752631578947371
     },
     "5": null,
     "20": null
    },
    "SEÑAL DE VENTA": {
     "1": {
-     "total": 11,
+     "total": 12,
      "ok": 1,
-     "pct": 9,
-     "promedio": 0.2081818181818182,
-     "vsSpy": -0.2081818181818182
+     "pct": 8,
+     "promedio": 0.19083333333333333,
+     "vsSpy": -0.19083333333333333
     },
     "5": null,
     "20": null
