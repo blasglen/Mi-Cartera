@@ -19,8 +19,7 @@
     "AMD",
     "BABA",
     "GGAL",
-    "BBAR",
-    "BMA"
+    "BBAR"
   ],
   "candidatos": [
     "QQQ",
@@ -79,8 +78,7 @@
     "AMD": 1,
     "BABA": 4,
     "GGAL": 13,
-    "BBAR": 6,
-    "BMA": 3
+    "BBAR": 6
   },
   "reglas": {
     "tope_posicion_pct": 12,
@@ -88,7 +86,8 @@
     "aporte_base_usd": 250,
     "aporte_base_mes": "2026-11",
     "crecimiento_mensual_pct": 1.5,
-    "spy_pct": 40
+    "spy_pct": 40,
+    "simplificar_menor_pct": 1
   },
   "tecnologia": [
     "MSFT",
@@ -194,8 +193,8 @@
     "AMD": 49.73,
     "BABA": 12.93,
     "GGAL": 5.37,
-    "BBAR": 5.64,
-    "BMA": 7.01
+    "BBAR": 5.64
   },
-  "_nota_reglas": "Aporte mensual: arranca en US$250 (nov-2026) y crece 1,5% por mes compuesto (regla del 07/11/2026). 40% a SPY, el resto a elección. El monto de cada mes lo calcula scripts/aporte-monto.mjs."
+  "_nota_reglas": "Aporte mensual: arranca en US$250 (nov-2026) y crece 1,5% por mes compuesto (regla del 07/11/2026). 40% a SPY, el resto a elección. El monto de cada mes lo calcula scripts/aporte-monto.mjs.",
+  "_nota_simplificar": "Regla de Blas (11/11/2026): posiciones que pesan menos de simplificar_menor_pct% de la cartera, en Argentina o sin rendimiento ni tesis clara, se prefieren VENDER (salida total) para tener menos tickers. Vendió BMA el 11/11/2026."
 }

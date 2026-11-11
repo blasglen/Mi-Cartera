@@ -187,7 +187,7 @@ En máximo 3 líneas: qué explica el movimiento según estos titulares. Disting
 
   // ANALISTA
   const M = montoDelMes(CONFIG, new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7));
-  const perfil = `Perfil del inversor: largo plazo (+5 años), estilo crecimiento (tecnología, acepta volatilidad), aporta US$ ${M.total} este mes (crece 1,5% por mes; US$ ${M.spy} a SPY, el resto a elección), quiere bajar exposición a Argentina, compraría más si la cartera cae 25%. ${enCartera ? `YA TIENE ${sym} en cartera.` : `NO tiene ${sym}; es candidato.`}`;
+  const perfil = `Perfil del inversor: largo plazo (+5 años), estilo crecimiento (tecnología, acepta volatilidad), aporta US$ ${M.total} este mes (crece 1,5% por mes; US$ ${M.spy} a SPY, el resto a elección), quiere bajar exposición a Argentina, compraría más si la cartera cae 25%. Quiere pocos tickers: una posición de menos del 1% de la cartera en Argentina o sin rendimiento/tesis se vende entera para simplificar. ${enCartera ? `YA TIENE ${sym} en cartera.` : `NO tiene ${sym}; es candidato.`}`;
   let analista = await ia(`Sos ANALISTA, el bot que arma la tesis en una mesa de inversiones. Castellano rioplatense, directo, sin markdown ni asteriscos.
 ${perfil}
 Datos técnicos: ${datos}
