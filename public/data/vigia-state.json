@@ -52,7 +52,8 @@
   "SPY:sube_fuerte": "2026-11-11",
   "VIST:en_soporte_3m": "2026-11-11",
   "CEPU:rsi_sobrevendido": "2026-11-11",
-  "CEPU:en_soporte_3m": "2026-11-11"
+  "CEPU:en_soporte_3m": "2026-11-11",
+  "LLY:rompe_resistencia_3m": "2026-11-11"
  },
  "log": [
   {
@@ -950,6 +951,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 1.04 dólares y está sobrevendida con RSI en 29.4, aguantando pese al castigo local por riesgo país en 850 puntos. Plan: Mantener lo que ya tiene en CEPU y vender entero si perfora los 1.04 dólares para cumplir la regla de simplificar y bajar exposición a Argentina. Riesgo: Volatilidad local y riesgo regulatorio en un contexto bajista donde las medias móviles superan al precio actual. Confianza:",
    "radarTexto": "RADAR reportando. Los titulares confirman caídas generalizadas en Wall Street por el dato de inflación y cautela local con riesgo país en 850 puntos; es probable que el Merval siga castigado y buscando recuperar terreno tras desplomes recientes.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T21:00:34.042Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 27.24,
+   "rsi14": 69.98,
+   "message_id": 134,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió resistencia técnica de 26,87 impulsada por excelentes datos de ensayos clínicos confirmados en medios. Plan: Mantener la posición actual sin sumar, con stop loss técnico en la zona de la media de 50 ruedas en 22,82. Riesgo: Alta volatilidad y sobrecompra de corto plazo con RSI en 70, además de concentración sectorial en crecimiento. Confianza: alta",
+   "radarTexto": "RADAR reporta a LLY en US$ 27,24 MEP, con suba de 6,1% y ruptura de resistencia tras nuevos datos de ensayos clínicos. Es confirmado el impulso por ensayos y máximos de 52 semanas según CNBC y Scrip; es probable que influya la recuperación general de",
    "debatido": true
   }
  ]
