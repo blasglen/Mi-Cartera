@@ -47,7 +47,9 @@
   "LLY:sube_fuerte": "2026-11-11",
   "BBAR:en_soporte_3m": "2026-11-11",
   "AAPL:rompe_resistencia_3m": "2026-11-11",
-  "AAPL:sube_fuerte": "2026-11-11"
+  "AAPL:sube_fuerte": "2026-11-11",
+  "SPY:en_resistencia_3m": "2026-11-11",
+  "SPY:sube_fuerte": "2026-11-11"
  },
  "log": [
   {
@@ -880,6 +882,23 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca pausa tras romper resistencia con RSI en 60, pero la llegada del CEO Ternus y el iPhone Duo sostienen el optimismo. Plan: Mantener posición actual y ajustar stop loss en US$ 15,48. Riesgo: Corrección técnica de corto plazo tras máximos históricos. Confianza: media",
    "radarTexto": "RADAR al habla. Confirmado por titulares: subas recientes por nuevo CEO John Ternus, mejoras de analistas, récord histórico y optimismo por el iPhone Duo. Probable: mayor tracción por el liderazgo recuperado frente a Nvidia.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T17:30:22.302Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA PARCIAL",
+   "eventos": [
+    "en_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 13.46,
+   "rsi14": 51.64,
+   "message_id": 130,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: VIGÍA marca venta parcial por tocar resistencia de 13.72, a pesar del rebote de IA por CoreWeave. Plan: Vender 25% de la posición en SPY y recomprar si baja a la zona de soporte en 12.92. Riesgo: Que la inflación alta y tasas elevadas rompan la tendencia alcista de mediano plazo. Confianza: media",
+   "radarTexto": "Acá RADAR. Lo que explica el movimiento según los titulares: confirmado, el rebote del 1% por los buenos resultados de CoreWeave que calmaron las dudas sobre el gasto en inteligencia artificial. Probable, la persistencia de riesgos por inflación alta",
    "debatido": true
   }
  ]
