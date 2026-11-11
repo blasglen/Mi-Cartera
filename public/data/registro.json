@@ -770,6 +770,160 @@
      "acierto": false
     }
    }
+  },
+  {
+   "ts": "2026-11-11T13:45:20.398Z",
+   "fecha": "2026-11-11",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 48.66,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:20.934Z",
+   "fecha": "2026-11-11",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 28.43,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:21.219Z",
+   "fecha": "2026-11-11",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.97,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:21.489Z",
+   "fecha": "2026-11-11",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 163.06,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:21.777Z",
+   "fecha": "2026-11-11",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": null,
+   "eventos": [
+    "en_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 1.99,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:26.693Z",
+   "fecha": "2026-11-11",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": null,
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "minimo_6m",
+    "cae_fuerte"
+   ],
+   "precio": 7.72,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:26.961Z",
+   "fecha": "2026-11-11",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": null,
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 26.64,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:27.230Z",
+   "fecha": "2026-11-11",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": null,
+   "eventos": [
+    "rsi_sobrevendido",
+    "minimo_6m"
+   ],
+   "precio": 20.06,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:27.528Z",
+   "fecha": "2026-11-11",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": null,
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 36.31,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:27.788Z",
+   "fecha": "2026-11-11",
+   "ticker": "TSLA",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": null,
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 27.1,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T13:45:32.195Z",
+   "fecha": "2026-11-11",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "analista": null,
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 23.64,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -858,31 +1012,35 @@
    "QQQ": 34.54
   },
   "2026-11-11": {
-   "SPY": 13.18,
-   "BBAR": 3.72,
-   "ORCL": 40.64,
-   "PANW": 6.57,
-   "MU": 144.78,
-   "NVDA": 8.21,
-   "AMD": 46.89,
-   "BMA": 6.1,
-   "COST": 23.16,
-   "MA": 20.86,
-   "ABNB": 13.26,
-   "MELI": 13.24,
-   "META": 26.8,
-   "YPFD": 4.07,
-   "CEPU": 1.05,
-   "VIST": 20.18,
-   "GGAL": 3.1,
-   "AVGO": 7.9,
-   "QQQ": 34.54
+   "SPY": 13.3,
+   "BBAR": 3.76,
+   "ORCL": 43.78,
+   "PANW": 7.08,
+   "MU": 163.06,
+   "NVDA": 7.72,
+   "AMD": 57.09,
+   "BMA": 6.2,
+   "COST": 23.64,
+   "MA": 21.02,
+   "ABNB": 12.84,
+   "MELI": 13.36,
+   "META": 28.43,
+   "YPFD": 3.97,
+   "CEPU": 1.06,
+   "VIST": 20.06,
+   "GGAL": 3.18,
+   "AVGO": 9.31,
+   "QQQ": 36.31,
+   "TSM": 48.66,
+   "AMZN": 1.99,
+   "LLY": 26.64,
+   "TSLA": 27.1
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-11T13:30:21.073Z",
-  "senales": 38,
+  "actualizado": "2026-11-11T13:46:26.960Z",
+  "senales": 49,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
@@ -907,6 +1065,11 @@
     "20": null
    },
    "MANTENER": {
+    "1": null,
+    "5": null,
+    "20": null
+   },
+   "ESPERAR": {
     "1": null,
     "5": null,
     "20": null

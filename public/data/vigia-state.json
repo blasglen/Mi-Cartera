@@ -4,24 +4,38 @@
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "CEPU:rsi_sobrevendido": "2026-11-05",
-  "ORCL:en_soporte_3m": "2026-11-06",
-  "PANW:en_soporte_3m": "2026-11-06",
-  "YPFD:en_soporte_3m": "2026-11-06",
   "CEPU:en_soporte_3m": "2026-11-06",
   "VIST:en_soporte_3m": "2026-11-06",
-  "GGAL:rsi_sobrevendido": "2026-11-06",
-  "AVGO:en_soporte_3m": "2026-11-06",
-  "BBAR:rsi_sobrevendido": "2026-11-06",
-  "QQQ:en_soporte_3m": "2026-11-06",
   "YPFD:stop_ppc_20": "2026-11-07",
   "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
   "MELI:en_soporte_3m": "2026-11-09",
-  "GGAL:en_soporte_3m": "2026-11-09",
   "BBAR:en_soporte_3m": "2026-11-09",
   "BMA:en_soporte_3m": "2026-11-09",
-  "YPFD:minimo_6m": "2026-11-09"
+  "YPFD:minimo_6m": "2026-11-09",
+  "TSM:cruza_arriba_sma200": "2026-11-11",
+  "TSM:sube_fuerte": "2026-11-11",
+  "META:cruza_arriba_sma200": "2026-11-11",
+  "META:sube_fuerte": "2026-11-11",
+  "YPFD:rompe_soporte_3m": "2026-11-11",
+  "MU:cruza_arriba_sma200": "2026-11-11",
+  "MU:sube_fuerte": "2026-11-11",
+  "AMZN:en_resistencia_3m": "2026-11-11",
+  "AMZN:sube_fuerte": "2026-11-11",
+  "NVDA:rompe_soporte_3m": "2026-11-11",
+  "NVDA:rsi_sobrevendido": "2026-11-11",
+  "NVDA:minimo_6m": "2026-11-11",
+  "NVDA:cae_fuerte": "2026-11-11",
+  "LLY:en_resistencia_3m": "2026-11-11",
+  "VIST:rsi_sobrevendido": "2026-11-11",
+  "VIST:minimo_6m": "2026-11-11",
+  "QQQ:cruza_arriba_sma200": "2026-11-11",
+  "QQQ:sube_fuerte": "2026-11-11",
+  "TSLA:cruza_arriba_sma200": "2026-11-11",
+  "TSLA:sube_fuerte": "2026-11-11",
+  "COST:rompe_resistencia_3m": "2026-11-11",
+  "COST:rsi_sobrecomprado": "2026-11-11"
  },
  "log": [
   {
@@ -510,6 +524,164 @@
    "message_id": 83,
    "analista": "SEÑAL DE VENTA",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-11T13:45:20.398Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 48.66,
+   "rsi14": 49.46,
+   "message_id": 95,
+   "analista": "SEÑAL DE COMPRA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T13:45:20.934Z",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 28.43,
+   "rsi14": 48.36,
+   "message_id": 96,
+   "analista": "SEÑAL DE COMPRA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T13:45:21.219Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.97,
+   "rsi14": 24.34,
+   "message_id": 97,
+   "analista": "SEÑAL DE VENTA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T13:45:21.489Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 163.06,
+   "rsi14": 40.75,
+   "message_id": 98,
+   "analista": "SEÑAL DE COMPRA",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T13:45:21.777Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 1.99,
+   "rsi14": 61.76,
+   "message_id": 99,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T13:45:26.693Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "minimo_6m",
+    "cae_fuerte"
+   ],
+   "precio": 7.72,
+   "rsi14": 26.45,
+   "message_id": 100,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T13:45:26.961Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 26.64,
+   "rsi14": 67.29,
+   "message_id": 102,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T13:45:27.230Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rsi_sobrevendido",
+    "minimo_6m"
+   ],
+   "precio": 20.06,
+   "rsi14": 29.93,
+   "message_id": 103,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T13:45:27.528Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 36.31,
+   "rsi14": 45.43,
+   "message_id": 104,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T13:45:27.788Z",
+   "ticker": "TSLA",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 27.1,
+   "rsi14": 52.66,
+   "message_id": 105,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T13:45:32.195Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 23.64,
+   "rsi14": 72.68,
+   "message_id": 106,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
