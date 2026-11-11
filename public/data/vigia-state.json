@@ -51,7 +51,8 @@
   "SPY:en_resistencia_3m": "2026-11-11",
   "SPY:sube_fuerte": "2026-11-11",
   "VIST:en_soporte_3m": "2026-11-11",
-  "CEPU:rsi_sobrevendido": "2026-11-11"
+  "CEPU:rsi_sobrevendido": "2026-11-11",
+  "CEPU:en_soporte_3m": "2026-11-11"
  },
  "log": [
   {
@@ -933,6 +934,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI al límite de sobreventa en 29.99 sugiere rebote técnico, mientras la macro local sufre por el arrastre externo de EE.UU. y petróleo. Plan: Mantener CEPU y poner venta total si quiebra el soporte de 1.04 dólares por riesgo país y baja de exposición. Riesgo: Alta volatilidad cambiaria local y profundización de la tendencia bajista si perfora mínimos. Confianza: media",
    "radarTexto": "RADAR: Las caídas recientes en Wall Street se explican por el dato de inflación en EE.UU. y la baja del petróleo (confirmado). Es probable que este contexto afecte a las acciones locales y al Merval, aunque los titulares no detallan el impacto especí",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T19:30:20.432Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.06,
+   "rsi14": 29.4,
+   "message_id": 133,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 1.04 dólares y está sobrevendida con RSI en 29.4, aguantando pese al castigo local por riesgo país en 850 puntos. Plan: Mantener lo que ya tiene en CEPU y vender entero si perfora los 1.04 dólares para cumplir la regla de simplificar y bajar exposición a Argentina. Riesgo: Volatilidad local y riesgo regulatorio en un contexto bajista donde las medias móviles superan al precio actual. Confianza:",
+   "radarTexto": "RADAR reportando. Los titulares confirman caídas generalizadas en Wall Street por el dato de inflación y cautela local con riesgo país en 850 puntos; es probable que el Merval siga castigado y buscando recuperar terreno tras desplomes recientes.",
    "debatido": true
   }
  ]
