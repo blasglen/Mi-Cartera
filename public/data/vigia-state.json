@@ -35,7 +35,9 @@
   "TSLA:cruza_arriba_sma200": "2026-11-11",
   "TSLA:sube_fuerte": "2026-11-11",
   "COST:rompe_resistencia_3m": "2026-11-11",
-  "COST:rsi_sobrecomprado": "2026-11-11"
+  "COST:rsi_sobrecomprado": "2026-11-11",
+  "GGAL:en_soporte_3m": "2026-11-11",
+  "GGAL:rsi_sobrevendido": "2026-11-11"
  },
  "log": [
   {
@@ -682,6 +684,21 @@
    "rsi14": 72.68,
    "message_id": 106,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-11T14:00:27.482Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.16,
+   "rsi14": 29.58,
+   "message_id": 107,
+   "analista": "MANTENER",
+   "debatido": true
   }
  ]
 }
