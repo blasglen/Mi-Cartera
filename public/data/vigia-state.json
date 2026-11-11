@@ -50,7 +50,8 @@
   "AAPL:sube_fuerte": "2026-11-11",
   "SPY:en_resistencia_3m": "2026-11-11",
   "SPY:sube_fuerte": "2026-11-11",
-  "VIST:en_soporte_3m": "2026-11-11"
+  "VIST:en_soporte_3m": "2026-11-11",
+  "CEPU:rsi_sobrevendido": "2026-11-11"
  },
  "log": [
   {
@@ -916,6 +917,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y tocando soporte de tres meses sin noticias negativas que justifiquen la caída. Plan: Mantener la posición actual de VIST en cartera sin promediar a la baja por ahora. Riesgo: Volatilidad sectorial y dependencia del contexto macro local argentino. Confianza: media",
    "radarTexto": "Titulares: Los titulares no explican la caída de Vista. Confirmado: Nada sobre la empresa en las noticias. Probable: Contexto macro local positivo (riesgo país abajo de 900 y Vaca Muerta acelerando con el RIGI), pero sin impacto directo aparente en l",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T19:00:21.312Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 1.07,
+   "rsi14": 29.99,
+   "message_id": 132,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI al límite de sobreventa en 29.99 sugiere rebote técnico, mientras la macro local sufre por el arrastre externo de EE.UU. y petróleo. Plan: Mantener CEPU y poner venta total si quiebra el soporte de 1.04 dólares por riesgo país y baja de exposición. Riesgo: Alta volatilidad cambiaria local y profundización de la tendencia bajista si perfora mínimos. Confianza: media",
+   "radarTexto": "RADAR: Las caídas recientes en Wall Street se explican por el dato de inflación en EE.UU. y la baja del petróleo (confirmado). Es probable que este contexto afecte a las acciones locales y al Merval, aunque los titulares no detallan el impacto especí",
    "debatido": true
   }
  ]
