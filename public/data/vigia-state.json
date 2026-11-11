@@ -45,7 +45,9 @@
   "MELI:en_soporte_3m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "LLY:sube_fuerte": "2026-11-11",
-  "BBAR:en_soporte_3m": "2026-11-11"
+  "BBAR:en_soporte_3m": "2026-11-11",
+  "AAPL:rompe_resistencia_3m": "2026-11-11",
+  "AAPL:sube_fuerte": "2026-11-11"
  },
  "log": [
   {
@@ -861,6 +863,23 @@
    "rsi14": 31.8,
    "message_id": 126,
    "analista": "MANTENER",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T17:16:17.086Z",
+   "ticker": "AAPL",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 18.77,
+   "rsi14": 60.63,
+   "message_id": 129,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca pausa tras romper resistencia con RSI en 60, pero la llegada del CEO Ternus y el iPhone Duo sostienen el optimismo. Plan: Mantener posición actual y ajustar stop loss en US$ 15,48. Riesgo: Corrección técnica de corto plazo tras máximos históricos. Confianza: media",
+   "radarTexto": "RADAR al habla. Confirmado por titulares: subas recientes por nuevo CEO John Ternus, mejoras de analistas, récord histórico y optimismo por el iPhone Duo. Probable: mayor tracción por el liderazgo recuperado frente a Nvidia.",
    "debatido": true
   }
  ]
