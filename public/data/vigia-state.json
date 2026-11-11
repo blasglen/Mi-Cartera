@@ -44,7 +44,8 @@
   "BMA:minimo_6m": "2026-11-11",
   "MELI:en_soporte_3m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "LLY:sube_fuerte": "2026-11-11"
+  "LLY:sube_fuerte": "2026-11-11",
+  "BBAR:en_soporte_3m": "2026-11-11"
  },
  "log": [
   {
@@ -845,6 +846,20 @@
    "precio": 26.71,
    "rsi14": 67.65,
    "message_id": 121,
+   "analista": "MANTENER",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T15:45:17.947Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.77,
+   "rsi14": 31.8,
+   "message_id": 126,
    "analista": "MANTENER",
    "debatido": true
   }

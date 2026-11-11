@@ -1071,6 +1071,19 @@
    ],
    "precio": 26.71,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-11T15:45:17.947Z",
+   "fecha": "2026-11-11",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.77,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -1160,34 +1173,34 @@
   },
   "2026-11-11": {
    "SPY": 13.29,
-   "BBAR": 3.8,
-   "ORCL": 44.24,
-   "PANW": 7.08,
-   "MU": 169.71,
-   "NVDA": 7.65,
-   "AMD": 57.14,
-   "BMA": 6.14,
-   "COST": 23.55,
-   "MA": 20.86,
-   "ABNB": 12.7,
-   "MELI": 13.11,
-   "META": 27.86,
-   "YPFD": 3.93,
+   "BBAR": 3.77,
+   "ORCL": 44.34,
+   "PANW": 7.13,
+   "MU": 170.43,
+   "NVDA": 7.66,
+   "AMD": 57.5,
+   "BMA": 6.12,
+   "COST": 23.64,
+   "MA": 20.82,
+   "ABNB": 12.68,
+   "MELI": 13.12,
+   "META": 27.91,
+   "YPFD": 3.95,
    "CEPU": 1.08,
-   "VIST": 19.81,
-   "GGAL": 3.14,
-   "AVGO": 9.45,
-   "QQQ": 36.23,
+   "VIST": 19.85,
+   "GGAL": 3.13,
+   "AVGO": 9.41,
+   "QQQ": 36.29,
    "TSM": 47.86,
    "AMZN": 1.94,
    "LLY": 26.71,
-   "TSLA": 27.57
+   "TSLA": 27.53
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-11T15:30:48.677Z",
-  "senales": 60,
+  "actualizado": "2026-11-11T15:45:26.356Z",
+  "senales": 61,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
