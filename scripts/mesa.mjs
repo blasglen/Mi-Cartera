@@ -195,9 +195,9 @@ Lo que dijo RADAR: ${radar}
 
 VIGÍA (reglas técnicas) dijo: ${entrada.veredicto || "sin veredicto"}.
 Sé DIRECTO. Respondé en este formato exacto, máximo 5 líneas, sin introducciones:
-VEREDICTO: una de estas: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR (coincidí con VIGÍA salvo que la noticia lo contradiga claramente; si no coincidís, decilo en "Por qué")
+VEREDICTO: EXACTAMENTE una de estas palabras, sin agregados: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR (coincidí con VIGÍA salvo que la noticia lo contradiga claramente; si no coincidís, decilo en "Por qué")
 Por qué: (una línea, técnico + noticia)
-${tipo === "venta" ? "Plan: (vender todo / vender X% / poner stop en US$ ...; y a qué precio recomprarías)" : "Plan: entrada US$ ... · stop US$ ... · objetivo US$ ..."}
+${tipo === "venta" ? "Plan: (vender todo / vender X% / poner stop en US$ ...; y a qué precio recomprarías)" : tipo === "compra" && !(CONFIG.argentina || []).includes(sym) ? "Plan: entrada US$ ... · stop US$ ... · objetivo US$ ..." : "Plan: qué hacer con lo que ya tiene (mantener / stop en US$ ... / vender si pierde US$ ...). NO des precio de entrada: no va a sumar."}
 Riesgo: (una línea)
 Confianza: baja / media / alta
 No uses frases de asesor financiero ni disclaimers largos; él decide.`);
@@ -209,6 +209,9 @@ No uses frases de asesor financiero ni disclaimers largos; él decide.`);
   // Para REGISTRO: qué veredicto dio ANALISTA (para medir si contradecir a VIGÍA le sirve)
   const m = analista.match(/VEREDICTO:\s*(SEÑAL DE COMPRA|SEÑAL DE VENTA|VENTA PARCIAL|MANTENER|ESPERAR)/i);
   if (m) entrada.analista = m[1].toUpperCase();
+  // Guardar el razonamiento: ANALISTA en vivo (Cloudflare) lo lee para ser coherente
+  entrada.analistaTexto = analista.replace(/\s+/g, " ").slice(0, 450);
+  entrada.radarTexto = radar.replace(/\s+/g, " ").slice(0, 250);
   await send("CONTROL", control(sym, tipo, sig), idAnalista || idRadar || replyTo);
 }
 

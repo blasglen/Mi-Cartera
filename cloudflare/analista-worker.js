@@ -161,43 +161,39 @@ async function responder(msg, env) {
   const arg = new Set(cfg.argentina || []);
   const news = await Promise.all(syms.slice(0, 3).map((s) => noticias(s, cfg.nombres?.[s] || s, arg.has(s))));
   const bloqueTickers = syms.map((s, i) => `${s} (${cfg.nombres?.[s] || s})${(cfg.tenencias || {})[s] ? " [EN CARTERA]" : ""}: ${fmt(sig.tickers[s])}${news[i]?.length ? `\nTitulares 3 días:\n${news[i].join("\n")}` : ""}`).join("\n\n");
-  const avisos = (estado?.log || []).slice(-8).map((e) => `${e.ts.slice(0, 16)} ${e.ticker}: ${e.eventos.join(", ")} a US$ ${e.precio}`).join("\n");
+  const avisos = (estado?.log || []).slice(-8).map((e) => `${e.ts.slice(0, 16)} ${e.ticker}: ${e.veredicto || e.eventos.join(", ")} a US$ ${e.precio}`).join("\n");
+  // Lo último que dijo la Mesa (grupo grande) sobre cada ticker mencionado
+  const hora = (ts) => new Date(new Date(ts).getTime() - 3 * 3600e3).toISOString().slice(0, 16).replace("T", " ");
+  const dichoMesa = syms.map((sy) => {
+    const e = [...(estado?.log || [])].reverse().find((x) => x.ticker === sy);
+    if (!e) return null;
+    return `${sy} (${hora(e.ts)} hs AR): VIGÍA dijo ${e.veredicto || e.eventos.join(", ")}${e.analista ? `; ANALISTA (vos mismo, en el grupo grande) dijo ${e.analista}` : ""}${e.analistaTexto ? ` — "${e.analistaTexto}"` : ""}${e.radarTexto ? `\n  RADAR: ${e.radarTexto}` : ""}`;
+  }).filter(Boolean).join("\n");
   const R0 = cfg.reglas || {};
   const mesKey = new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 7);
   const [by, bm] = String(R0.aporte_base_mes || mesKey).split("-").map(Number), [yy, mm] = mesKey.split("-").map(Number);
   const totalMes = Math.round((R0.aporte_base_usd ?? 250) * Math.pow(1 + (R0.crecimiento_mensual_pct ?? 0) / 100, Math.max(0, (yy - by) * 12 + (mm - bm))) * 100) / 100;
   const R = { ...R0, aporte_mensual_usd: totalMes, aporte_spy_usd: Math.round(totalMes * (R0.spy_pct ?? 40)) / 100 };
 
-  const prompt = `Sos ANALISTA, el bot de análisis de la "Mesa de Inversiones" de Blas, un contador argentino que invierte desde Balanz en CEDEARs y acciones. Hablás en castellano rioplatense, directo y claro, como un colega que sabe. Respuestas cortas para leer en el celular (máximo ~12 líneas salvo que pida detalle). Sin markdown ni asteriscos; podés usar viñetas con "•" y emojis con moderación.
-
-PERFIL Y REGLAS DE BLAS
-- Largo plazo (+5 años), estilo crecimiento (tecnología, acepta volatilidad). Compraría más si la cartera cae 25%.
-- Aporte de este mes: US$ ${R.aporte_mensual_usd}: US$ ${R.aporte_spy_usd} a SPY y el resto solo ante oportunidades excelentes.
-- Regla del aporte: ${ap?.regla || "crece 1,5% por mes"}
-- Plan de aportes (mes: total / SPY / libre): ${(ap?.plan || []).map((p) => `${p.mes}: ${p.total} / ${p.spy} / ${p.libre}`).join(" · ") || "s/d"}
-- Estado del aporte de este mes: SPY ${ap?.spy ? `comprado (${ap.spy.fecha})` : "pendiente"}; libre ${ap?.libre ? `comprado${ap.libre.ticker ? " en " + ap.libre.ticker : ""}` : ap?.elegido ? `señal activa en ${ap.elegido.nombre}` : "pendiente, esperando oportunidad excelente"}.
-- Cero aportes nuevos a Argentina (quiere bajar exposición). Tope ${R.tope_posicion_pct}% por posición. Todo en dólares MEP como Balanz.
-- Quiere también señales de venta cuando correspondan. Él decide y ejecuta: vos das lectura, escenarios, niveles y riesgos, sin disclaimers largos.
-- Sin cripto.
-
-SU CARTERA AHORA (precios en vivo aprox.)
-${resumenCartera(sig, cfg)}
-
-DÓLAR: MEP ${sig.fx?.mep} · CCL ${sig.fx?.ccl}. Datos actualizados: ${sig.updatedAt} (${sig.modo}).
-
-ÚLTIMOS AVISOS DE VIGÍA
-${avisos || "(ninguno)"}
-
-${bloqueTickers ? `DATOS DE LOS TICKERS QUE MENCIONA\n${bloqueTickers}` : ""}
-
-${citado ? `ESTÁ RESPONDIENDO A ESTE MENSAJE DEL GRUPO:\n"""${citado.slice(0, 1500)}"""\n` : ""}
-MENSAJE DE BLAS: """${texto}"""
-
-SÉ DIRECTO. Si pregunta por uno o más tickers (o si conviene comprar/vender algo), arrancá cada uno con una línea:
-VEREDICTO TICKER: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR
-y abajo, en 2-3 líneas: por qué, y el plan con números (entrada · stop · objetivo, o cuánto vender y dónde recomprar). Sin vueltas ni "depende" sin decir de qué. Si te pregunta "¿qué compro?", elegí UNO y decí cuánto (respetando sus reglas).
-
-Respondé usando SOLO estos datos para precios y niveles (no inventes cifras). Si te pregunta algo que los datos no cubren (fundamentos detallados, balances), decí lo que sabés en general y aclaralo. Si pregunta por un ticker que no está en los datos, decí que no lo tenés en la lista de VIGÍA.`;
+  // Las instrucciones viven en GitHub (cloudflare/analista-instrucciones.md): se pueden
+  // ajustar sin volver a pegar este código en Cloudflare.
+  let plantilla = null;
+  try { const r = await fetch(`${REPO_RAW}/cloudflare/analista-instrucciones.md`, { cf: { cacheTtl: 60 } }); if (r.ok) plantilla = await r.text(); } catch {}
+  if (!plantilla) plantilla = "Sos ANALISTA, el analista de inversiones de Blas. Castellano rioplatense, directo, corto, sin markdown. Empezá con VEREDICTO TICKER: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR.\n\nCARTERA:\n{{CARTERA}}\n\nTICKERS:\n{{TICKERS}}\n\nLO QUE DIJO LA MESA:\n{{MESA}}\n\nMENSAJE: {{MENSAJE}}";
+  const valores = {
+    APORTE_MES: R.aporte_mensual_usd, APORTE_SPY: R.aporte_spy_usd, TOPE: R.tope_posicion_pct,
+    REGLA: ap?.regla || "crece 1,5% por mes",
+    PLAN: (ap?.plan || []).map((p) => `${p.mes}: ${p.total} / ${p.spy} / ${p.libre}`).join(" · ") || "s/d",
+    ESTADO_APORTE: `SPY ${ap?.spy ? `comprado (${ap.spy.fecha})` : "pendiente"}; libre ${ap?.libre ? `comprado${ap.libre.ticker ? " en " + ap.libre.ticker : ""}` : ap?.elegido ? `señal activa en ${ap.elegido.nombre}` : "pendiente, esperando oportunidad excelente"}.`,
+    CARTERA: resumenCartera(sig, cfg),
+    FX: `MEP ${sig.fx?.mep} · CCL ${sig.fx?.ccl}. Datos actualizados: ${sig.updatedAt} (${sig.modo}).`,
+    AVISOS: avisos || "(ninguno)",
+    TICKERS: bloqueTickers || "(no nombró tickers)",
+    MESA: dichoMesa || "(la Mesa no dijo nada todavía sobre estos tickers)",
+    CITADO: citado ? `"""${citado.slice(0, 1500)}"""` : "(ninguno)",
+    MENSAJE: texto,
+  };
+  const prompt = plantilla.replace(/\{\{(\w+)\}\}/g, (_, k) => (valores[k] ?? ""));
 
   const respuesta = (await ia(prompt, env, cfg)) || "Me quedé sin cupo de IA gratis por ahora 😅. Probá en unos minutos.";
   const partes = respuesta.match(/[\s\S]{1,3900}(?=\n|$)/g) || [respuesta];
