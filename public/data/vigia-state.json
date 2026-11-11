@@ -10,7 +10,6 @@
   "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
-  "MELI:en_soporte_3m": "2026-11-09",
   "BBAR:en_soporte_3m": "2026-11-09",
   "BMA:en_soporte_3m": "2026-11-09",
   "YPFD:minimo_6m": "2026-11-09",
@@ -37,7 +36,9 @@
   "COST:rompe_resistencia_3m": "2026-11-11",
   "COST:rsi_sobrecomprado": "2026-11-11",
   "GGAL:en_soporte_3m": "2026-11-11",
-  "GGAL:rsi_sobrevendido": "2026-11-11"
+  "GGAL:rsi_sobrevendido": "2026-11-11",
+  "MELI:rompe_soporte_3m": "2026-11-11",
+  "MELI:minimo_6m": "2026-11-11"
  },
  "log": [
   {
@@ -698,6 +699,21 @@
    "rsi14": 29.58,
    "message_id": 107,
    "analista": "MANTENER",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-11T14:30:20.129Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 13.08,
+   "rsi14": 30.12,
+   "message_id": 108,
+   "analista": "SEÑAL DE VENTA",
    "debatido": true
   }
  ]
