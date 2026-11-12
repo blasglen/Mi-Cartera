@@ -55,7 +55,8 @@
   "GGAL:rsi_sobrevendido": "2026-11-12",
   "LLY:en_resistencia_3m": "2026-11-12",
   "VIST:rsi_sobrevendido": "2026-11-12",
-  "MELI:rsi_sobrevendido": "2026-11-12"
+  "MELI:rsi_sobrevendido": "2026-11-12",
+  "VIST:minimo_6m": "2026-11-12"
  },
  "log": [
   {
@@ -1459,6 +1460,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa extrema a 29.86 y precio tocando piso de 13.05, castigado por márgenes pero con respaldo institucional de Burry y Goldman. Plan: entrada US$ 13.05 · stop US$ 11.50 · objetivo US$ 17.33 Riesgo: Volatilidad alta por presión en márgenes y tendencia bajista de corto plazo. Confianza: alta",
    "radarTexto": "RADAR al habla. La baja se explica por presión en los márgenes tras el último balance. Probable: descuento por temores de valuación y compulsa de crecimiento frente a otras tecnológicas, aunque Goldman Sachs ve upside del 41%. Confirmado: caída post-",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T20:45:18.285Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 19.63,
+   "rsi14": 28.59,
+   "message_id": 170,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y perforó el soporte mínimo de seis meses en 19,63 dólares, sin fundamentos bajistas propios que invaliden el desplome técnico. Plan: Vender todo hoy mismo y recomprar en un rebote consolidado arriba de 23,15 dólares, o si cae un 25% adicional desde este punto. Riesgo: Mayor daño bajista en el corto plazo por pérdida de la media de 200 ruedas. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares no explican el desplome actual de VIST. Como probable, se menciona un contexto general de bajas recientes en energéticas que analistas ven a precio de compra, y un mercado local impulsado por la baja del riesgo país ab",
    "debatido": true
   }
  ]
