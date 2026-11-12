@@ -51,7 +51,8 @@
   "CEPU:sube_fuerte": "2026-11-12",
   "GGAL:sube_fuerte": "2026-11-12",
   "YPFD:en_soporte_3m": "2026-11-12",
-  "AMZN:rompe_resistencia_3m": "2026-11-12"
+  "AMZN:rompe_resistencia_3m": "2026-11-12",
+  "GGAL:rsi_sobrevendido": "2026-11-12"
  },
  "log": [
   {
@@ -1391,6 +1392,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió la resistencia de 3 meses con tendencia alcista sólida respaldada por el optimismo en AWS. Plan: Mantener la posición actual de AMZN y fijar stop loss en 1.76 alineado con la SMA200. Riesgo: Volatilidad general del mercado tecnológico y sobrecompra moderada por el RSI en 60. Confianza: alta",
    "radarTexto": "RADAR reportando. AMZN a US$ 1,98 MEP, arriba de las medias con tendencia alcista y rompiendo resistencia de 3 meses. Los titulares confirman optimismo por el rol de AWS en la rentabilidad futura y la recuperación tras el balance, y señalan como prob",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T18:30:20.891Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.15,
+   "rsi14": 29.27,
+   "message_id": 166,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI sobrevendido en 29 y rebote por caída del riesgo país, pese al mal clima externo. Plan: Mantener lo que tiene, stop loss estricto si perfora soporte de US$ 3,10. Riesgo: Alto por tendencia bajista de 12 meses y volatilidad macro local. Confianza: media",
+   "radarTexto": "RADAR al habla. Confirmado por titulares: las acciones argentinas cayeron en Wall Street arrastradas por la baja del petróleo, el dato de inflación de Estados Unidos y un clima general de desplome en los mercados, aunque también hubo una rueda aislad",
    "debatido": true
   }
  ]
