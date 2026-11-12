@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-12",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:stop_ppc_20": "2026-11-07",
@@ -26,11 +26,9 @@
   "TSLA:sube_fuerte": "2026-11-11",
   "COST:rompe_resistencia_3m": "2026-11-11",
   "COST:rsi_sobrecomprado": "2026-11-11",
-  "GGAL:en_soporte_3m": "2026-11-11",
   "GGAL:rsi_sobrevendido": "2026-11-11",
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
-  "MELI:en_soporte_3m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "LLY:sube_fuerte": "2026-11-11",
   "AAPL:rompe_resistencia_3m": "2026-11-11",
@@ -51,7 +49,18 @@
   "BBAR:en_soporte_3m": "2026-11-12",
   "VIST:rompe_soporte_3m": "2026-11-12",
   "MA:rompe_resistencia_3m": "2026-11-12",
-  "MA:rsi_sobrecomprado": "2026-11-12"
+  "MA:rsi_sobrecomprado": "2026-11-12",
+  "MELI:rompe_soporte_3m": "2026-11-12",
+  "YPFD:cae_fuerte": "2026-11-12",
+  "CEPU:minimo_6m": "2026-11-12",
+  "AVGO:cruza_arriba_sma200": "2026-11-12",
+  "AVGO:sube_fuerte": "2026-11-12",
+  "VIST:cae_fuerte": "2026-11-12",
+  "GGAL:rompe_soporte_3m": "2026-11-12",
+  "GGAL:minimo_6m": "2026-11-12",
+  "BBAR:rompe_soporte_3m": "2026-11-12",
+  "BBAR:rsi_sobrevendido": "2026-11-12",
+  "BBAR:minimo_6m": "2026-11-12"
  },
  "log": [
   {
@@ -1174,6 +1183,113 @@
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca sobrecompra técnica con RSI en 74 y ruptura de resistencia, impulsado por optimismo de analistas sin confirmación oficial de la empresa. Plan: Mantener la posición actual, no sumar liquidez nueva en este activo hasta que descomprima indicadores. Riesgo: Corrección de corto plazo por sobreextensión técnica tras el rally reciente de casi veinte por ciento mensual. Confianza: media",
    "radarTexto": "RADAR reportando. El movimiento alcista es probable que se deba al optimismo de analistas (Bernstein, Motley Fool y CNBC) destacando a Mastercard para inversión y exposición a pagos. No hay confirmación oficial de la compañía sobre este salto de prec",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:45:17.798Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 13.09,
+   "rsi14": 30.17,
+   "message_id": 150,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses con fuerte presión bajista en márgenes tras el último balance. Plan: Vender toda la posición en MELI hoy y destinar esos fondos al SPY o tecnología global. Riesgo: Pérdida temporal de upside si rebota desde mínimos de seis meses. Confianza: alta",
+   "radarTexto": "RADAR reporta: MELI cae 1,1% hoy y rompe soporte de 3 meses operando a US$ 13,09 MEP. Confirmado por titulares: presión en márgenes tras el balance del Q3 y la caída acumulada de casi 12% desde entonces. Probable: el mercado duda de su valuación a co",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:45:18.026Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "cae_fuerte"
+   ],
+   "precio": 3.8,
+   "rsi14": 22.36,
+   "message_id": 151,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: VIGÍA marca mantener y el RSI en 22 indica sobreventa extrema pese al castigo general del mercado y del crudo. Plan: Mantener la posición actual; activar venta total si perfora el soporte de 3,80 dólares. Riesgo: Volatilidad local extrema y continuidad de la tendencia bajista general en activos argentinos. Confianza: media",
+   "radarTexto": "RADAR INFORMA. Confirmado: la caída de YPFD responde al retroceso general de la bolsa porteña por cuarta rueda, la baja de acciones argentinas en Wall Street y la caída previa del petróleo. Probable: impacto por la inflación en Estados Unidos y la ca",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:45:18.246Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 1.04,
+   "rsi14": 26.15,
+   "message_id": 152,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y el papel rompió mínimos de seis meses a pesar de buenos balances. Plan: Vender todo ahora y recomprar si consolida arriba de 1,21 dólares. Riesgo: Volatilidad local y tendencia bajista profunda bajo todas las medias móviles. Confianza: alta",
+   "radarTexto": "Radar al habla. Confirmado por titulares: las acciones argentinas y energéticas sufren desplomes y caen en Wall Street por datos de inflación y días negros en los mercados. Probable: CEPU toca mínimos y queda a precio de compra tras superar estimacio",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:45:18.472Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 9.84,
+   "rsi14": 57.79,
+   "message_id": 153,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cruza al alza la SMA200 con suba fuerte por rotación desde Nvidia y optimismo en semiconductores e IA. Plan: entrada US$ 9,84 · stop US$ 9,00 · objetivo US$ 11,24 Riesgo: Alta volatilidad sectorial y posible reversión si se pincha el rally de IA. Confianza: alta",
+   "radarTexto": "RADAR reporta: AVGO vuela 24,6% en MEP (US$ 9,84) cruzando la SMA200 con fuerte impulso comprador. Confirmado por titulares: capital rotando desde Nvidia hacia Broadcom y AMD tras caídas y rumores sobre Jensen Huang, sumado a optimismo general por se",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:45:22.813Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "cae_fuerte"
+   ],
+   "precio": 19.16,
+   "rsi14": 27.26,
+   "message_id": 154,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-12T14:45:23.439Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 3.06,
+   "rsi14": 24.87,
+   "message_id": 155,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-12T14:45:23.883Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "minimo_6m"
+   ],
+   "precio": 3.64,
+   "rsi14": 27.43,
+   "message_id": 157,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
