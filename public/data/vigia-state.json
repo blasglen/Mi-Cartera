@@ -60,7 +60,9 @@
   "GGAL:minimo_6m": "2026-11-12",
   "BBAR:rompe_soporte_3m": "2026-11-12",
   "BBAR:rsi_sobrevendido": "2026-11-12",
-  "BBAR:minimo_6m": "2026-11-12"
+  "BBAR:minimo_6m": "2026-11-12",
+  "MELI:en_soporte_3m": "2026-11-12",
+  "GGAL:en_soporte_3m": "2026-11-12"
  },
  "log": [
   {
@@ -1290,6 +1292,38 @@
    "rsi14": 27.43,
    "message_id": 157,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-12T15:00:25.617Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.17,
+   "rsi14": 30.65,
+   "message_id": 159,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa y toque de soporte técnico confluyen con el castigo exagerado por márgenes que atrae grandes manos. Plan: entrada US$ 13,17 · stop US$ 11,80 · objetivo US$ 17,30 Riesgo: volatilidad de corto plazo por compresión de márgenes confirmada. Confianza: alta",
+   "radarTexto": "RADAR informando. La caída post Q3 y la compresión de márgenes están confirmadas por los analistas. Es probable que la fuerte baja atraiga apuestas de grandes inversores como Michael Burry y visiones optimistas a largo plazo, pese al castigo bursátil",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T15:00:26.079Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.1,
+   "rsi14": 25.63,
+   "message_id": 160,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,10 con RSI en sobreventa extrema de 25, aguantando pese al ruido externo de Wall Street y petróleo. Plan: Mantener GGAL actual sin sumar más, listo para vender toda la posición si perfora los 3,10 dólares para cumplir la regla de simplificación. Riesgo: Volatilidad local y derrumbe sistémico externo que rompa el piso de los 3,10. Confianza: Media",
+   "radarTexto": "RADAR informando. Según los titulares, es probable que la caída responda al desplome del petróleo, un mal dato de inflación en EE.UU. y una tendencia general a la baja en Wall Street, aunque algunos medios también mencionan un rebote aislado tras la ",
+   "debatido": true
   }
  ]
 }
