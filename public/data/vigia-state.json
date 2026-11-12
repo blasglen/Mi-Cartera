@@ -18,7 +18,6 @@
   "NVDA:rsi_sobrevendido": "2026-11-11",
   "NVDA:minimo_6m": "2026-11-11",
   "NVDA:cae_fuerte": "2026-11-11",
-  "LLY:en_resistencia_3m": "2026-11-11",
   "VIST:rsi_sobrevendido": "2026-11-11",
   "VIST:minimo_6m": "2026-11-11",
   "QQQ:cruza_arriba_sma200": "2026-11-11",
@@ -29,15 +28,20 @@
   "COST:rsi_sobrecomprado": "2026-11-11",
   "GGAL:en_soporte_3m": "2026-11-11",
   "GGAL:rsi_sobrevendido": "2026-11-11",
-  "VIST:rompe_soporte_3m": "2026-11-11",
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "MELI:en_soporte_3m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "LLY:sube_fuerte": "2026-11-11",
-  "BBAR:en_soporte_3m": "2026-11-11",
   "AAPL:rompe_resistencia_3m": "2026-11-11",
-  "AAPL:sube_fuerte": "2026-11-11"
+  "AAPL:sube_fuerte": "2026-11-11",
+  "NVDA:stop_ppc_20": "2026-11-12",
+  "LLY:rompe_resistencia_3m": "2026-11-12",
+  "LLY:rsi_sobrecomprado": "2026-11-12",
+  "VIST:en_soporte_3m": "2026-11-12",
+  "BABA:en_soporte_3m": "2026-11-12",
+  "BABA:cae_fuerte": "2026-11-12",
+  "COST:sube_fuerte": "2026-11-12"
  },
  "log": [
   {
@@ -952,6 +956,84 @@
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió resistencia técnica de 26,87 impulsada por excelentes datos de ensayos clínicos confirmados en medios. Plan: Mantener la posición actual sin sumar, con stop loss técnico en la zona de la media de 50 ruedas en 22,82. Riesgo: Alta volatilidad y sobrecompra de corto plazo con RSI en 70, además de concentración sectorial en crecimiento. Confianza: alta",
    "radarTexto": "RADAR reporta a LLY en US$ 27,24 MEP, con suba de 6,1% y ruptura de resistencia tras nuevos datos de ensayos clínicos. Es confirmado el impulso por ensayos y máximos de 52 semanas según CNBC y Scrip; es probable que influya la recuperación general de",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-12T13:45:17.273Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 7.02,
+   "rsi14": 21.88,
+   "message_id": 136,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y cruce técnico bajista por desplome del 14,5 por ciento, sumado al rumor no confirmado de destitución del CEO que destruye la tesis de crecimiento. Plan: Vender toda la posición de NVDA en Argentina para limpiar la cartera, y reasignar esos fondos y los 250 dólares nuevos al SPY y tecnología global sólida. Riesgo: Volatilidad extrema por riesgo de gobernanza y posible recuperación violenta si ",
+   "radarTexto": "RADAR alerta. El derrumbe de NVDA responde a rumores periodísticos (WSJ, NYT, Forbes) sobre que el directorio prepara la destitución del CEO Jensen Huang por una supuesta relación con una ejecutiva. Es probable la remoción según los medios, pero no h",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T13:45:17.893Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 27.56,
+   "rsi14": 71.22,
+   "message_id": 137,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompe resistencia con alta demanda por la aprobación de Orforglipron en China, aunque el RSI de 71 avisa pausa. Plan: Mantener posición actual; stop técnico en la media de 20 en 24,81 dólares para asegurar ganancias. Riesgo: Sobrecompra de corto plazo y alta volatilidad global. Confianza: alta",
+   "radarTexto": "RADAR reportando. Confirmado: sube fuerte porque China aprobó su pastilla oral Orforglipron para bajar de peso, dándole ventaja de primer jugador en ese mercado. Probable: impulso por máximos históricos y optimismo de fondos en sus fármacos Mounjaro ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T13:45:18.173Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 20.02,
+   "rsi14": 29.79,
+   "message_id": 138,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y toque exacto del soporte de tres meses en 20,02 dólares, mientras la baja responde a mera toma de ganancias sectoriales. Plan: Mantener lo que ya tiene en cartera sin sumar nuevos fondos, evaluando venta total si rompe los 20 dólares para cumplir la regla de simplificación. Riesgo: Alta volatilidad sectorial y continuación de la tendencia bajista de corto plazo por debajo de todas las media",
+   "radarTexto": "RADAR reporta: Los titulares confirman un clima bursátil alcista general con caída del riesgo país abajo de 900 puntos y rebote del Brent, pero no explican la fuerte baja semanal propia de VIST. Es probable que la sangría responde a toma de ganancias",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T13:45:18.465Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 11.39,
+   "rsi14": 40.99,
+   "message_id": 139,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR alerta: BABA se hunde 10,9% en pesos (MEP) a US$ 11,39 por temores de restricciones de EE.UU. al acceso remoto de chips de IA, reportado por múltiples medios. Es probable que esto explique la caída y la baja de Tencent, mientras que la extensió",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T13:45:18.737Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 24.2,
+   "rsi14": 75.97,
+   "message_id": 140,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
