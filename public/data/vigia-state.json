@@ -52,7 +52,9 @@
   "GGAL:sube_fuerte": "2026-11-12",
   "YPFD:en_soporte_3m": "2026-11-12",
   "AMZN:rompe_resistencia_3m": "2026-11-12",
-  "GGAL:rsi_sobrevendido": "2026-11-12"
+  "GGAL:rsi_sobrevendido": "2026-11-12",
+  "LLY:en_resistencia_3m": "2026-11-12",
+  "VIST:rsi_sobrevendido": "2026-11-12"
  },
  "log": [
   {
@@ -1408,6 +1410,38 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI sobrevendido en 29 y rebote por caída del riesgo país, pese al mal clima externo. Plan: Mantener lo que tiene, stop loss estricto si perfora soporte de US$ 3,10. Riesgo: Alto por tendencia bajista de 12 meses y volatilidad macro local. Confianza: media",
    "radarTexto": "RADAR al habla. Confirmado por titulares: las acciones argentinas cayeron en Wall Street arrastradas por la baja del petróleo, el dato de inflación de Estados Unidos y un clima general de desplome en los mercados, aunque también hubo una rueda aislad",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T18:45:15.969Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 27.2,
+   "rsi14": 69.88,
+   "message_id": 167,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sigue en tendencia alcista firme por encima de sus medias y rompió resistencia gracias a la aprobación en China de su pastilla para bajar de peso. Plan: Mantener la posición actual, colocar stop loss en US$ 22,90 y vender si cae a esa zona. Riesgo: Volatilidad alta por valuación exigida y posible impacto financiero a corto plazo de sus nuevas plantas. Confianza: alta",
+   "radarTexto": "RADAR: LLY sube 0,9% hoy y toca máximos impulsada por la confirmación de China aprobando su pastilla para bajar de peso Orforglipron y un nuevo acuerdo en Hungría. Como probable, se menciona el impacto financiero de sus nuevas fábricas frente a su ca",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T18:45:16.363Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 19.85,
+   "rsi14": 30,
+   "message_id": 168,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en 30 sobrevendido y soporte en 19,69, en línea con el rebote energético pese al derrumbe mensual. Plan: Mantener VIST; vender entera si pierde el soporte de 19,69 para simplificar la cartera. Riesgo: Volatilidad alta del sector y tendencia bajista de corto plazo bajo las medias móviles. Confianza: media",
+   "radarTexto": "RADAR reportando. Titulares confirmados: Los medios destacan el desplome del riesgo país abajo de 900 puntos y oportunidades de compra en energéticas tras fuertes caídas en octubre. Causa probable: El derrumbe del riesgo país y el rebote en Wall Stre",
    "debatido": true
   }
  ]
