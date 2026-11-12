@@ -1644,7 +1644,7 @@
   },
   "2026-11-12": {
    "SPY": 13.41,
-   "BBAR": 3.74,
+   "BBAR": 3.76,
    "ORCL": 45.29,
    "PANW": 7.07,
    "MU": 171.47,
@@ -1656,8 +1656,8 @@
    "ABNB": 12.75,
    "MELI": 13.31,
    "META": 27.76,
-   "YPFD": 3.95,
-   "CEPU": 1.08,
+   "YPFD": 3.94,
+   "CEPU": 1.07,
    "VIST": 19.81,
    "GGAL": 3.15,
    "AVGO": 9.34,
@@ -1671,7 +1671,7 @@
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-12T13:00:22.706Z",
+  "actualizado": "2026-11-12T13:15:15.552Z",
   "senales": 67,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
