@@ -46,7 +46,9 @@
   "CEPU:en_soporte_3m": "2026-11-12",
   "CEPU:rsi_sobrevendido": "2026-11-12",
   "AMZN:en_resistencia_3m": "2026-11-12",
-  "BABA:rompe_soporte_3m": "2026-11-12"
+  "BABA:rompe_soporte_3m": "2026-11-12",
+  "AMZN:sube_fuerte": "2026-11-12",
+  "BBAR:en_soporte_3m": "2026-11-12"
  },
  "log": [
   {
@@ -1103,6 +1105,38 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte técnico de 11.45 dólares y el castigo por restricciones de EE.UU. a chips de IA invalida la tesis de crecimiento. Plan: Vender todo hoy y reciclar capital fuera de Argentina; recompraría recién si consolida arriba de la SMA50 en 12.52 dólares. Riesgo: Intervención geopolítica y desliste o mayores restricciones regulatorias en el sector tecnológico chino. Confianza: alta",
    "radarTexto": "Confirmado por titulares: caida fuerte por temores a controles de EE.UU. al acceso remoto a chips de IA y endurecimiento de escrutinio. Probable: efecto contagio por tensiones con Nvidia en el sector tecnologico chino.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:15:18.890Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 1.99,
+   "rsi14": 61.69,
+   "message_id": 145,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sigue la tendencia alcista apoyada en la fuerza de AWS y expectativas de mercado, sin romper soportes clave. Plan: Mantener la posición actual sin sumar, con stop técnico en 1.77 dólares MEP. Riesgo: Volatilidad de corto plazo por rumores sin confirmación dura y cercanía a la resistencia de 2. Confianza: media",
+   "radarTexto": "RADAR reporta: AMZN vuela +5% hoy y +12,2% en la semana en MEP. Los titulares apuntan como probable a expectativas por anuncios para el 19 de noviembre y el motor rentable de AWS, sin confirmaciones de hechos duros nuevos.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:15:19.311Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.75,
+   "rsi14": 31.01,
+   "message_id": 146,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de tres meses con RSI en sobreventa de treinta y uno, aguantando pese al ruido local y la caída general del Merval. Plan: Mantener la posición actual en BBAR; vender si pierde los tres dólares con setenta centavos para simplificar cartera y bajar exposición argentina. Riesgo: Alta exposición al riesgo regulatorio y macroeconómico local en un contexto de tendencia bajista estructural. Confianza: me",
+   "radarTexto": "RADAR reportando. Movimiento bajista confirmado por caídas generales en Wall Street y Merval tras datos de inflación, suba del riesgo país y tomas de ganancias en noviembre. Es probable que influya un clima generalizado de incertidumbre local, aunque",
    "debatido": true
   }
  ]
