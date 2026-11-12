@@ -41,7 +41,12 @@
   "VIST:en_soporte_3m": "2026-11-12",
   "BABA:en_soporte_3m": "2026-11-12",
   "BABA:cae_fuerte": "2026-11-12",
-  "COST:sube_fuerte": "2026-11-12"
+  "COST:sube_fuerte": "2026-11-12",
+  "MELI:minimo_6m": "2026-11-12",
+  "CEPU:en_soporte_3m": "2026-11-12",
+  "CEPU:rsi_sobrevendido": "2026-11-12",
+  "AMZN:en_resistencia_3m": "2026-11-12",
+  "BABA:rompe_soporte_3m": "2026-11-12"
  },
  "log": [
   {
@@ -1034,6 +1039,71 @@
    "rsi14": 75.97,
    "message_id": 140,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-12T14:00:24.927Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 13.15,
+   "rsi14": 30.55,
+   "message_id": 141,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta por tendencia bajista y quiebre de mínimos, a pesar de la sobreventa y la apuesta de Burry. Plan: Vender toda la posición en MELI por estar abajo del 1% y romper tesis, y reasignar a tecnología global. Riesgo: Volatilidad alta y pérdida de capital si el margen presiona más el precio. Confianza: media",
+   "radarTexto": "RADAR: MELI cae a US$ 13,15 (-19,1% mensual) tocando mínimo de 6 meses. Confirmado por titulares: presión en márgenes tras el balance del Q3 y fuerte baja acumulada. Probable: sobreventa extrema (RSI 30,55) atrayendo apuestas grandes como la de Micha",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:00:25.347Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 1.06,
+   "rsi14": 29.65,
+   "message_id": 142,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Está tocando soporte técnico en 1.04 y sobrevendido por pánico local, pese a buenos fundamentos. Plan: Mantener CEPU evaluando si perfora el soporte operativo. Riesgo: Volatilidad regulatoria argentina y derrumbe general de activos locales. Confianza: Media",
+   "radarTexto": "RADAR reportando. Los titulares confirman que CEPU cayó por el desplome general de acciones argentinas en Wall Street y el dato de inflación. Es probable que también influya una toma de ganancias generalizada en el sector energético tras bajas mensua",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:00:25.568Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 1.96,
+   "rsi14": 59.68,
+   "message_id": 143,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sube por AWS y optimismo, pero técnico en resistencia de tres meses en uno noventa y seis. Plan: Mantener lo que tiene en Amazon sin sumar, stop loss en uno setenta y seis si quiebra la media de doscientos. Riesgo: Corrección de corto por zona de resistencia y volatilidad general. Confianza: media",
+   "radarTexto": "RADAR reportando. AMZN sube a US$ 1,96 MEP impulsada por optimismo general sobre AWS y expectativas de nuevos máximos. Confirmado por titulares: anuncios positivos del CEO Andy Jassy y desarrollos en la nube. Probable: especulación ante catalizadores",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:00:25.796Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 11.29,
+   "rsi14": 40.22,
+   "message_id": 144,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte técnico de 11.45 dólares y el castigo por restricciones de EE.UU. a chips de IA invalida la tesis de crecimiento. Plan: Vender todo hoy y reciclar capital fuera de Argentina; recompraría recién si consolida arriba de la SMA50 en 12.52 dólares. Riesgo: Intervención geopolítica y desliste o mayores restricciones regulatorias en el sector tecnológico chino. Confianza: alta",
+   "radarTexto": "Confirmado por titulares: caida fuerte por temores a controles de EE.UU. al acceso remoto a chips de IA y endurecimiento de escrutinio. Probable: efecto contagio por tensiones con Nvidia en el sector tecnologico chino.",
+   "debatido": true
   }
  ]
 }
