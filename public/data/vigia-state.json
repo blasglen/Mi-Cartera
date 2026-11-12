@@ -7,31 +7,16 @@
   "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
-  "YPFD:minimo_6m": "2026-11-09",
-  "TSM:cruza_arriba_sma200": "2026-11-11",
-  "TSM:sube_fuerte": "2026-11-11",
-  "META:cruza_arriba_sma200": "2026-11-11",
-  "YPFD:rompe_soporte_3m": "2026-11-11",
-  "MU:cruza_arriba_sma200": "2026-11-11",
-  "MU:sube_fuerte": "2026-11-11",
   "NVDA:rompe_soporte_3m": "2026-11-11",
   "NVDA:rsi_sobrevendido": "2026-11-11",
   "NVDA:minimo_6m": "2026-11-11",
   "NVDA:cae_fuerte": "2026-11-11",
   "VIST:rsi_sobrevendido": "2026-11-11",
-  "VIST:minimo_6m": "2026-11-11",
-  "QQQ:cruza_arriba_sma200": "2026-11-11",
-  "QQQ:sube_fuerte": "2026-11-11",
-  "TSLA:cruza_arriba_sma200": "2026-11-11",
-  "TSLA:sube_fuerte": "2026-11-11",
   "COST:rompe_resistencia_3m": "2026-11-11",
   "COST:rsi_sobrecomprado": "2026-11-11",
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "LLY:sube_fuerte": "2026-11-11",
-  "AAPL:rompe_resistencia_3m": "2026-11-11",
-  "AAPL:sube_fuerte": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
   "LLY:rompe_resistencia_3m": "2026-11-12",
   "LLY:rsi_sobrecomprado": "2026-11-12",
@@ -65,7 +50,9 @@
   "SPY:en_resistencia_3m": "2026-11-12",
   "SPY:sube_fuerte": "2026-11-12",
   "CEPU:sube_fuerte": "2026-11-12",
-  "GGAL:sube_fuerte": "2026-11-12"
+  "GGAL:sube_fuerte": "2026-11-12",
+  "YPFD:en_soporte_3m": "2026-11-12",
+  "AMZN:rompe_resistencia_3m": "2026-11-12"
  },
  "log": [
   {
@@ -1373,6 +1360,38 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: VIGÍA marca rebote técnico tras castigo mensual y RADAR ve al Merval buscando recuperar terreno. Plan: Mantener GGAL en cartera evaluando venta total si rompe soporte para simplificar a menos del uno por ciento. Riesgo: Volatilidad local y dependencia del contexto internacional adverso. Confianza: Media",
    "radarTexto": "RADAR reportando. Confirmado: las acciones argentinas sufrieron caídas recientes en Wall Street por la baja del petróleo y el dato de inflación de EEUU, aunque con un rebote posterior del 4% y riesgo país bajo 900 puntos. Probable: la necesidad del M",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T17:45:18.962Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.99,
+   "rsi14": 26.37,
+   "message_id": 164,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Está tocando el soporte crítico de 3,93 dólares pero el contexto local bajista y la cautela general frenan cualquier compra nueva. Plan: Mantener lo que ya tiene sin sumar más; vender toda la posición si perfora los 3,93 dólares para simplificar y sacar Argentina. Riesgo: Volatilidad local y riesgo regulatorio hundiendo el precio por debajo del soporte. Confianza: Media",
+   "radarTexto": "RADAR reportando. Los titulares confirman una caída general de la bolsa porteña y de las acciones argentinas en Wall Street por cautela del mercado. Es probable que esto arrastre a YPFD a pesar del rebote del Brent y la baja del riesgo país.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T17:45:19.496Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 1.98,
+   "rsi14": 60.99,
+   "message_id": 165,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió la resistencia de 3 meses con tendencia alcista sólida respaldada por el optimismo en AWS. Plan: Mantener la posición actual de AMZN y fijar stop loss en 1.76 alineado con la SMA200. Riesgo: Volatilidad general del mercado tecnológico y sobrecompra moderada por el RSI en 60. Confianza: alta",
+   "radarTexto": "RADAR reportando. AMZN a US$ 1,98 MEP, arriba de las medias con tendencia alcista y rompiendo resistencia de 3 meses. Los titulares confirman optimismo por el rol de AWS en la rentabilidad futura y la recuperación tras el balance, y señalan como prob",
    "debatido": true
   }
  ]
