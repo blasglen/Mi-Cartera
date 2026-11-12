@@ -61,7 +61,11 @@
   "BBAR:rsi_sobrevendido": "2026-11-12",
   "BBAR:minimo_6m": "2026-11-12",
   "MELI:en_soporte_3m": "2026-11-12",
-  "GGAL:en_soporte_3m": "2026-11-12"
+  "GGAL:en_soporte_3m": "2026-11-12",
+  "SPY:en_resistencia_3m": "2026-11-12",
+  "SPY:sube_fuerte": "2026-11-12",
+  "CEPU:sube_fuerte": "2026-11-12",
+  "GGAL:sube_fuerte": "2026-11-12"
  },
  "log": [
   {
@@ -1322,6 +1326,53 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,10 con RSI en sobreventa extrema de 25, aguantando pese al ruido externo de Wall Street y petróleo. Plan: Mantener GGAL actual sin sumar más, listo para vender toda la posición si perfora los 3,10 dólares para cumplir la regla de simplificación. Riesgo: Volatilidad local y derrumbe sistémico externo que rompa el piso de los 3,10. Confianza: Media",
    "radarTexto": "RADAR informando. Según los titulares, es probable que la caída responda al desplome del petróleo, un mal dato de inflación en EE.UU. y una tendencia general a la baja en Wall Street, aunque algunos medios también mencionan un rebote aislado tras la ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T16:15:18.080Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA PARCIAL",
+   "eventos": [
+    "en_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 13.47,
+   "rsi14": 51.92,
+   "message_id": 161,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR reporta: SPY sube 4,3% a US$ 13,47 por MEP, con tendencia alcista firme. Confirmado por titulares: Ruido en tecnológicas por salida del CEO de Nvidia y temores sobre acciones de IA. Probable: Presión bajista general y riesgo de pérdidas en el S",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T16:15:18.777Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 1.14,
+   "rsi14": 41.92,
+   "message_id": 162,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR al habla. Confirmado: CEPU metió fuerte suba hoy (+8,4%) tras presentar excelentes resultados en el tercer trimestre con sólidos márgenes y entrar en zona de precios de compra según analistas. Probable: el papel rebotó fuerte aprovechando la ga",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T16:15:19.077Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 3.23,
+   "rsi14": 33.37,
+   "message_id": 163,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: VIGÍA marca rebote técnico tras castigo mensual y RADAR ve al Merval buscando recuperar terreno. Plan: Mantener GGAL en cartera evaluando venta total si rompe soporte para simplificar a menos del uno por ciento. Riesgo: Volatilidad local y dependencia del contexto internacional adverso. Confianza: Media",
+   "radarTexto": "RADAR reportando. Confirmado: las acciones argentinas sufrieron caídas recientes en Wall Street por la baja del petróleo y el dato de inflación de EEUU, aunque con un rebote posterior del 4% y riesgo país bajo 900 puntos. Probable: la necesidad del M",
    "debatido": true
   }
  ]

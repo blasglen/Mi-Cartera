@@ -1823,6 +1823,46 @@
    ],
    "precio": 3.1,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-12T16:15:18.080Z",
+   "fecha": "2026-11-12",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA PARCIAL",
+   "analista": null,
+   "eventos": [
+    "en_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 13.47,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-12T16:15:18.777Z",
+   "fecha": "2026-11-12",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": null,
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 1.14,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-12T16:15:19.077Z",
+   "fecha": "2026-11-12",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": "MANTENER",
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 3.23,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -1937,37 +1977,37 @@
    "AAPL": 18.67
   },
   "2026-11-12": {
-   "SPY": 13.44,
-   "BBAR": 3.77,
-   "ORCL": 44.96,
-   "PANW": 6.73,
-   "MU": 167.42,
-   "NVDA": 7.34,
-   "AMD": 61.81,
-   "BMA": 6.02,
-   "COST": 24.1,
-   "MA": 21.19,
-   "ABNB": 12.87,
-   "MELI": 13.13,
-   "META": 27.59,
-   "YPFD": 3.92,
-   "CEPU": 1.08,
-   "VIST": 19.49,
-   "GGAL": 3.2,
-   "AVGO": 9.84,
-   "QQQ": 36.63,
-   "TSM": 48.32,
-   "AMZN": 1.97,
-   "LLY": 27.33,
-   "TSLA": 27.6,
-   "AAPL": 18.93,
-   "BABA": 11.13
+   "SPY": 13.47,
+   "BBAR": 3.82,
+   "ORCL": 45.49,
+   "PANW": 6.79,
+   "MU": 168.09,
+   "NVDA": 7.37,
+   "AMD": 62.12,
+   "BMA": 6.1,
+   "COST": 24.15,
+   "MA": 21.17,
+   "ABNB": 12.93,
+   "MELI": 13.23,
+   "META": 27.6,
+   "YPFD": 4,
+   "CEPU": 1.14,
+   "VIST": 19.81,
+   "GGAL": 3.23,
+   "AVGO": 9.92,
+   "QQQ": 36.75,
+   "TSM": 48.37,
+   "AMZN": 1.98,
+   "LLY": 27.34,
+   "TSLA": 27.7,
+   "AAPL": 18.95,
+   "BABA": 11.16
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-12T16:00:28.581Z",
-  "senales": 89,
+  "actualizado": "2026-11-12T16:22:43.306Z",
+  "senales": 92,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
