@@ -1,6 +1,6 @@
 {
- "fecha": "2026-11-11",
- "apertura": true,
+ "fecha": "2026-11-12",
+ "apertura": false,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:stop_ppc_20": "2026-11-07",
@@ -11,12 +11,9 @@
   "TSM:cruza_arriba_sma200": "2026-11-11",
   "TSM:sube_fuerte": "2026-11-11",
   "META:cruza_arriba_sma200": "2026-11-11",
-  "META:sube_fuerte": "2026-11-11",
   "YPFD:rompe_soporte_3m": "2026-11-11",
   "MU:cruza_arriba_sma200": "2026-11-11",
   "MU:sube_fuerte": "2026-11-11",
-  "AMZN:en_resistencia_3m": "2026-11-11",
-  "AMZN:sube_fuerte": "2026-11-11",
   "NVDA:rompe_soporte_3m": "2026-11-11",
   "NVDA:rsi_sobrevendido": "2026-11-11",
   "NVDA:minimo_6m": "2026-11-11",
@@ -32,14 +29,7 @@
   "COST:rsi_sobrecomprado": "2026-11-11",
   "GGAL:en_soporte_3m": "2026-11-11",
   "GGAL:rsi_sobrevendido": "2026-11-11",
-  "MELI:rompe_soporte_3m": "2026-11-11",
-  "MELI:minimo_6m": "2026-11-11",
-  "MELI:rsi_sobrevendido": "2026-11-11",
-  "YPFD:cae_fuerte": "2026-11-11",
-  "NVDA:stop_ppc_20": "2026-11-11",
   "VIST:rompe_soporte_3m": "2026-11-11",
-  "BBAR:rsi_sobrevendido": "2026-11-11",
-  "BBAR:minimo_6m": "2026-11-11",
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "MELI:en_soporte_3m": "2026-11-11",
@@ -47,13 +37,7 @@
   "LLY:sube_fuerte": "2026-11-11",
   "BBAR:en_soporte_3m": "2026-11-11",
   "AAPL:rompe_resistencia_3m": "2026-11-11",
-  "AAPL:sube_fuerte": "2026-11-11",
-  "SPY:en_resistencia_3m": "2026-11-11",
-  "SPY:sube_fuerte": "2026-11-11",
-  "VIST:en_soporte_3m": "2026-11-11",
-  "CEPU:rsi_sobrevendido": "2026-11-11",
-  "CEPU:en_soporte_3m": "2026-11-11",
-  "LLY:rompe_resistencia_3m": "2026-11-11"
+  "AAPL:sube_fuerte": "2026-11-11"
  },
  "log": [
   {
