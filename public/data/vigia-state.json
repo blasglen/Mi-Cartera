@@ -54,7 +54,8 @@
   "AMZN:rompe_resistencia_3m": "2026-11-12",
   "GGAL:rsi_sobrevendido": "2026-11-12",
   "LLY:en_resistencia_3m": "2026-11-12",
-  "VIST:rsi_sobrevendido": "2026-11-12"
+  "VIST:rsi_sobrevendido": "2026-11-12",
+  "MELI:rsi_sobrevendido": "2026-11-12"
  },
  "log": [
   {
@@ -1442,6 +1443,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en 30 sobrevendido y soporte en 19,69, en línea con el rebote energético pese al derrumbe mensual. Plan: Mantener VIST; vender entera si pierde el soporte de 19,69 para simplificar la cartera. Riesgo: Volatilidad alta del sector y tendencia bajista de corto plazo bajo las medias móviles. Confianza: media",
    "radarTexto": "RADAR reportando. Titulares confirmados: Los medios destacan el desplome del riesgo país abajo de 900 puntos y oportunidades de compra en energéticas tras fuertes caídas en octubre. Causa probable: El derrumbe del riesgo país y el rebote en Wall Stre",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T19:30:18.759Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 13.05,
+   "rsi14": 29.86,
+   "message_id": 169,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa extrema a 29.86 y precio tocando piso de 13.05, castigado por márgenes pero con respaldo institucional de Burry y Goldman. Plan: entrada US$ 13.05 · stop US$ 11.50 · objetivo US$ 17.33 Riesgo: Volatilidad alta por presión en márgenes y tendencia bajista de corto plazo. Confianza: alta",
+   "radarTexto": "RADAR al habla. La baja se explica por presión en los márgenes tras el último balance. Probable: descuento por temores de valuación y compulsa de crecimiento frente a otras tecnológicas, aunque Goldman Sachs ve upside del 41%. Confirmado: caída post-",
    "debatido": true
   }
  ]
