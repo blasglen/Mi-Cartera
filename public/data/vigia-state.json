@@ -48,7 +48,10 @@
   "AMZN:en_resistencia_3m": "2026-11-12",
   "BABA:rompe_soporte_3m": "2026-11-12",
   "AMZN:sube_fuerte": "2026-11-12",
-  "BBAR:en_soporte_3m": "2026-11-12"
+  "BBAR:en_soporte_3m": "2026-11-12",
+  "VIST:rompe_soporte_3m": "2026-11-12",
+  "MA:rompe_resistencia_3m": "2026-11-12",
+  "MA:rsi_sobrecomprado": "2026-11-12"
  },
  "log": [
   {
@@ -1137,6 +1140,39 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de tres meses con RSI en sobreventa de treinta y uno, aguantando pese al ruido local y la caída general del Merval. Plan: Mantener la posición actual en BBAR; vender si pierde los tres dólares con setenta centavos para simplificar cartera y bajar exposición argentina. Riesgo: Alta exposición al riesgo regulatorio y macroeconómico local en un contexto de tendencia bajista estructural. Confianza: me",
    "radarTexto": "RADAR reportando. Movimiento bajista confirmado por caídas generales en Wall Street y Merval tras datos de inflación, suba del riesgo país y tomas de ganancias en noviembre. Es probable que influya un clima generalizado de incertidumbre local, aunque",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:30:20.293Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 19.72,
+   "rsi14": 28.84,
+   "message_id": 147,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta tras romper soporte de 20.08 y caer 20 por ciento semanal, sin noticias que justifiquen el desplome. Plan: Vender toda la posición en Vist hoy mismo para simplificar y limpiar exposición argentina. Riesgo: Vender en mínimo por capitulación si el petróleo rebota fuerte. Confianza: alta",
+   "radarTexto": "RADAR al habla. Los titulares no explican la caída de VIST, solo mencionan un contexto general de euforia en Wall Street, baja del riesgo país a la zona de 853 puntos y rebote del Brent. Como probable, se vincula con la toma de ganancias generalizada",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-12T14:30:20.774Z",
+   "ticker": "MA",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 21.62,
+   "rsi14": 74.53,
+   "message_id": 148,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca sobrecompra técnica con RSI en 74 y ruptura de resistencia, impulsado por optimismo de analistas sin confirmación oficial de la empresa. Plan: Mantener la posición actual, no sumar liquidez nueva en este activo hasta que descomprima indicadores. Riesgo: Corrección de corto plazo por sobreextensión técnica tras el rally reciente de casi veinte por ciento mensual. Confianza: media",
+   "radarTexto": "RADAR reportando. El movimiento alcista es probable que se deba al optimismo de analistas (Bernstein, Motley Fool y CNBC) destacando a Mastercard para inversión y exposición a pagos. No hay confirmación oficial de la compañía sobre este salto de prec",
    "debatido": true
   }
  ]
