@@ -32,7 +32,8 @@
   "AAPL:rompe_resistencia_3m": "2026-11-13",
   "LLY:en_resistencia_3m": "2026-11-13",
   "GGAL:minimo_6m": "2026-11-13",
-  "BBAR:minimo_6m": "2026-11-13"
+  "BBAR:minimo_6m": "2026-11-13",
+  "YPFD:en_soporte_3m": "2026-11-13"
  },
  "log": [
   {
@@ -1583,6 +1584,22 @@
    "rsi14": 28.25,
    "message_id": 179,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-13T14:30:28.539Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 4,
+   "rsi14": 26.59,
+   "message_id": 180,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,93 dólares en plena caída de acciones locales y petróleo, respetando la señal técnica. Plan: Mantener lo que ya tiene de YPFD; vender si rompe y pierde el soporte de 3,93 dólares. Riesgo: Alta volatilidad local y profundización de la tendencia bajista del crudo. Confianza: media",
+   "radarTexto": "RADAR Informa. Confirmado por titulares: caída de acciones argentinas en Wall Street y bolsa porteña por baja del petróleo y cautela local. Probable: impacto de la inflación de EE.UU. en los mercados.",
+   "debatido": true
   }
  ]
 }
