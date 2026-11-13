@@ -16,9 +16,6 @@
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
-  "BABA:cae_fuerte": "2026-11-12",
-  "MELI:minimo_6m": "2026-11-12",
-  "BABA:rompe_soporte_3m": "2026-11-12",
   "BBAR:rsi_sobrevendido": "2026-11-12",
   "GGAL:en_soporte_3m": "2026-11-12",
   "GGAL:rsi_sobrevendido": "2026-11-12",
@@ -44,7 +41,11 @@
   "PANW:en_soporte_3m": "2026-11-13",
   "PANW:cae_fuerte": "2026-11-13",
   "NFLX:en_soporte_3m": "2026-11-13",
-  "YPFD:minimo_6m": "2026-11-13"
+  "YPFD:minimo_6m": "2026-11-13",
+  "MELI:cruce_muerte": "2026-11-13",
+  "AVGO:cruza_abajo_sma200": "2026-11-13",
+  "AVGO:cae_fuerte": "2026-11-13",
+  "BABA:en_soporte_3m": "2026-11-13"
  },
  "log": [
   {
@@ -1757,6 +1758,55 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y Radar confirma derrumbe por contexto externo y ajuste local, rompiendo mínimos. Plan: Vender toda la posición en YPFD por debajo del filtro del 1% y usar los fondos para sumar tecnología; recompro si estabiliza tendencia arriba de SMA200. Riesgo: Alta exposición a volatilidad local y derrumbe del petróleo sin soporte técnico previo. Confianza: alta",
    "radarTexto": "RADAR ALERTA. Confirmado: la caída local se debe a la racha negativa de la bolsa porteña, el retroceso general de las acciones argentinas en Wall Street y la alta volatilidad financiera global con caída del petróleo. Probable: afectación por el conte",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T17:15:16.956Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruce_muerte"
+   ],
+   "precio": 13.17,
+   "rsi14": 31.75,
+   "message_id": 193,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca cruce de muerte y el papel rompió soportes tras el castigo al margen en el Q3. Plan: Vender todo ahora para simplificar la cartera y sacar el remanente de Argentina; recompraría recién si consolida arriba de 15. Riesgo: Rebote técnico violento por sobreventa extrema con RSI en 31. Confianza: alta",
+   "radarTexto": "Confirmado por titulares: caída posbalance del 11,9 por ciento tras el Q3 con presión en márgenes. Probable: arrastre por mínimos de 52 semanas, análisis técnicos bajistas y validación del sector.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T17:15:17.515Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 9.37,
+   "rsi14": 52.62,
+   "message_id": 194,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y cruce bajista de la media de 200, mientras Broadcom cae por miedo al financiamiento de IA y toma de ganancias. Plan: Vender todo ahora mismo y recomprar en el soporte de 7.90 dólares si el mercado se estabiliza. Riesgo: Volatilidad alta en IA y pérdida temporal de capital si el rebote frena abruptamente. Confianza: alta",
+   "radarTexto": "RADAR informa: Confirmado: AVGO cae hoy arrastrada por temores sobre riesgos en el financiamiento de IA y toma de ganancias tras una fuerte racha alcista previa. Probable: El mercado reacciona a los titulares que cuestionan su exposición al sector y ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T17:15:17.740Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 11.09,
+   "rsi14": 38.19,
+   "message_id": 195,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca compra en soporte de tres meses pese al castigo por regulaciones de chips y cercanía de balance. Plan: entrada US$ 11,09 · stop US$ 10,50 · objetivo US$ 15,00 Riesgo: alto por tensiones geopolíticas entre EE.UU. y China y volatilidad regulatoria. Confianza: media",
+   "radarTexto": "RADAR reportando. La caída se explica porque el escándalo de Jensen Huang y Nvidia genera temores de regulaciones más estrictas en EE.UU. y restricciones a los chips de IA (confirmado por Bloomberg y Barron's), mientras que es probable que la baja se",
    "debatido": true
   }
  ]
