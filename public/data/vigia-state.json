@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-13",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:stop_ppc_20": "2026-11-07",
@@ -33,7 +33,9 @@
   "LLY:en_resistencia_3m": "2026-11-13",
   "GGAL:minimo_6m": "2026-11-13",
   "BBAR:minimo_6m": "2026-11-13",
-  "YPFD:en_soporte_3m": "2026-11-13"
+  "YPFD:en_soporte_3m": "2026-11-13",
+  "NVDA:cae_fuerte": "2026-11-13",
+  "VIST:rsi_sobrevendido": "2026-11-13"
  },
  "log": [
   {
@@ -1599,6 +1601,38 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,93 dólares en plena caída de acciones locales y petróleo, respetando la señal técnica. Plan: Mantener lo que ya tiene de YPFD; vender si rompe y pierde el soporte de 3,93 dólares. Riesgo: Alta volatilidad local y profundización de la tendencia bajista del crudo. Confianza: media",
    "radarTexto": "RADAR Informa. Confirmado por titulares: caída de acciones argentinas en Wall Street y bolsa porteña por baja del petróleo y cautela local. Probable: impacto de la inflación de EE.UU. en los mercados.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T14:45:19.882Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "cae_fuerte"
+   ],
+   "precio": 7.2,
+   "rsi14": 22.69,
+   "message_id": 182,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y tendencia bajista confirmada por la salida de Jensen Huang. Plan: Mantener la posición actual de NVDA sin promediar a la baja por ahora. Riesgo: Cambio estructural en la gestión y pérdida de liderazgo tecnológico. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado por titulares: la baja de Nvidia responde a la renuncia de Jensen Huang como CEO, generando incertidumbre sobre el futuro de la empresa sin su liderazgo. Probable: la salida de millonarios como KoGuan y la evaluación de n",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T14:45:20.167Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 19.81,
+   "rsi14": 29.74,
+   "message_id": 183,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y soporte clave en 19.69 frente a una baja sin fundamentos operativos sólidos. Plan: Mantener la posición actual en VIST y esperar estabilización sin promediar a la baja todavía. Riesgo: Volatilidad sectorial y perforación de soportes mínimos. Confianza: media",
+   "radarTexto": "Titulares: No explican nada concreto sobre la baja diaria de Vista. Probable: Ajusta por el castigo general a energéticas de octubre y lectura de oportunidad (El Cronista). Confirmado: Nada en las noticias recientes justifica el -0,6% de hoy.",
    "debatido": true
   }
  ]
