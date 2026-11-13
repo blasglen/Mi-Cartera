@@ -20,7 +20,6 @@
   "BABA:cae_fuerte": "2026-11-12",
   "MELI:minimo_6m": "2026-11-12",
   "BABA:rompe_soporte_3m": "2026-11-12",
-  "MA:rsi_sobrecomprado": "2026-11-12",
   "AVGO:sube_fuerte": "2026-11-12",
   "BBAR:rsi_sobrevendido": "2026-11-12",
   "GGAL:en_soporte_3m": "2026-11-12",
@@ -32,7 +31,10 @@
   "LLY:rompe_resistencia_3m": "2026-11-13",
   "LLY:rsi_sobrecomprado": "2026-11-13",
   "BBAR:en_soporte_3m": "2026-11-13",
-  "AAPL:rompe_resistencia_3m": "2026-11-13"
+  "AAPL:rompe_resistencia_3m": "2026-11-13",
+  "LLY:en_resistencia_3m": "2026-11-13",
+  "GGAL:minimo_6m": "2026-11-13",
+  "BBAR:minimo_6m": "2026-11-13"
  },
  "log": [
   {
@@ -1464,7 +1466,11 @@
    ],
    "precio": 13.19,
    "rsi14": 30.76,
-   "message_id": 171
+   "message_id": 171,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa y soporte de tres meses intacto, sumado a una posible venta exagerada tras el balance que atrae grandes jugadores. Plan: entrada US$ 13,17 · stop US$ 12,00 · objetivo US$ 17,33 Riesgo: Alta volatilidad por presión en márgenes y tendencia técnica bajista de corto plazo. Confianza: media",
+   "radarTexto": "Confirmado: la caída tras el balance del Q3 genera presión en márgenes y desplome de precios. Probable: venta exagerada por agotamiento de tendencia, mientras Michael Burry apuesta fuerte por el papel tras salir de Nvidia.",
+   "debatido": true
   },
   {
    "ts": "2026-11-13T13:45:17.944Z",
@@ -1476,7 +1482,11 @@
    ],
    "precio": 13.51,
    "rsi14": 52.8,
-   "message_id": 172
+   "message_id": 172,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: VIGÍA marca salida técnica en resistencia de tres meses pese a la proyección alcista de Goldman para tecnología. Plan: Vender un 10 por ciento de SPY, poner stop en 12.66 y recomprar al testear soporte de 12.92. Riesgo: Recorte mayor por volatilidad en semiconductores si Nvidia profundiza su ruido reciente. Confianza: media",
+   "radarTexto": "RADAR reporta: Los titulares confirman volatilidad reciente tras caídas y ruido en torno a Nvidia, pero Goldman proyecta subas por valoraciones tecnológicas atractivas. Es probable que el mercado debata entre mínimos y nuevos máximos frente a este es",
+   "debatido": true
   },
   {
    "ts": "2026-11-13T13:45:18.186Z",
@@ -1488,7 +1498,11 @@
    ],
    "precio": 1.99,
    "rsi14": 61.95,
-   "message_id": 173
+   "message_id": 173,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió resistencia a 1,99 dólares MEP impulsada por Anthropic, aunque opera sobrecomprada cerca de la zona alta del rango. Plan: Mantener la posición actual de Amazon y no sumar más capital este mes. Riesgo: Volatilidad de corto plazo si se concreta el desarme de posición de Cathie Wood. Confianza: media",
+   "radarTexto": "RADAR reporta: AMZN pica en punta a US$ 1,99 MEP tras romper resistencia, impulsada por analistas evaluando si es compra de noviembre y el impacto de un posible IPO de Anthropic. Confirmado por titulares: debate sobre su valuación y desarme de posici",
+   "debatido": true
   },
   {
    "ts": "2026-11-13T13:45:18.420Z",
@@ -1501,7 +1515,11 @@
    ],
    "precio": 27.25,
    "rsi14": 70.08,
-   "message_id": 174
+   "message_id": 174,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Tendencia alcista intacta sobre medias y máximos por la aprobación en China de su fármaco para la obesidad. Plan: Mantener lo que ya tiene de LLY sin sumar más, aprovechando la suba. Riesgo: Volatilidad por costos de plantas y RSI sobrecomprado tras el rally. Confianza: alta",
+   "radarTexto": "RADAR: LLY vuela un 23,4% mensual y toca máximo por ruptura de resistencia. Confirmado por titulares: China aprobó su pastilla para adelgazar Orforglipron y hay optimismo por nuevos máximos y listas de mejores acciones. Probable: que mantenga la rach",
+   "debatido": true
   },
   {
    "ts": "2026-11-13T13:45:18.664Z",
@@ -1513,7 +1531,8 @@
    ],
    "precio": 3.72,
    "rsi14": 29.46,
-   "message_id": 175
+   "message_id": 175,
+   "debatido": "salteado (límite por corrida)"
   },
   {
    "ts": "2026-11-13T13:45:23.023Z",
@@ -1525,7 +1544,47 @@
    ],
    "precio": 18.97,
    "rsi14": 62.67,
-   "message_id": 176
+   "message_id": 176,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-13T14:00:24.337Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 27.16,
+   "rsi14": 69.69,
+   "message_id": 177,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-13T14:00:24.790Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.1,
+   "rsi14": 27.08,
+   "message_id": 178,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-13T14:00:25.080Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.67,
+   "rsi14": 28.25,
+   "message_id": 179,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
