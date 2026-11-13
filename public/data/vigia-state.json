@@ -43,7 +43,8 @@
   "VIST:en_soporte_3m": "2026-11-13",
   "PANW:en_soporte_3m": "2026-11-13",
   "PANW:cae_fuerte": "2026-11-13",
-  "NFLX:en_soporte_3m": "2026-11-13"
+  "NFLX:en_soporte_3m": "2026-11-13",
+  "YPFD:minimo_6m": "2026-11-13"
  },
  "log": [
   {
@@ -1740,6 +1741,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses con RSI de 39 y grandes fondos acumulando cerca de mínimos. Plan: entrada US$ 1,37 · stop US$ 1,32 · objetivo US$ 1,79 Riesgo: Alta volatilidad bajista si perfora el soporte actual de corto plazo. Confianza: alta",
    "radarTexto": "RADAR reporta: Netflix (NFLX) opera a US$ 1,37 MEP, bajando 2,9% hoy y tocando soporte de 3 meses. Confirmado por titulares: instituciones sumaron acciones cerca de mínimos de 52 semanas y hay debate sobre si es oportunidad de compra tras el respaldo",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T17:00:30.597Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.93,
+   "rsi14": 23.76,
+   "message_id": 192,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y Radar confirma derrumbe por contexto externo y ajuste local, rompiendo mínimos. Plan: Vender toda la posición en YPFD por debajo del filtro del 1% y usar los fondos para sumar tecnología; recompro si estabiliza tendencia arriba de SMA200. Riesgo: Alta exposición a volatilidad local y derrumbe del petróleo sin soporte técnico previo. Confianza: alta",
+   "radarTexto": "RADAR ALERTA. Confirmado: la caída local se debe a la racha negativa de la bolsa porteña, el retroceso general de las acciones argentinas en Wall Street y la alta volatilidad financiera global con caída del petróleo. Probable: afectación por el conte",
    "debatido": true
   }
  ]
