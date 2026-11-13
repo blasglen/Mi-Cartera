@@ -2371,6 +2371,47 @@
    ],
    "precio": 19.81,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T15:45:15.432Z",
+   "fecha": "2026-11-13",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 13.04,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T15:45:15.885Z",
+   "fecha": "2026-11-13",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 1.94,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T15:45:16.383Z",
+   "fecha": "2026-11-13",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 19.48,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -2512,37 +2553,37 @@
    "BABA": 11.18
   },
   "2026-11-13": {
-   "SPY": 13.34,
-   "BBAR": 3.72,
-   "ORCL": 43.83,
-   "PANW": 6.78,
-   "MU": 163.96,
-   "NVDA": 7.2,
-   "AMD": 57.28,
-   "BMA": 5.94,
-   "COST": 24.38,
-   "MA": 21.22,
-   "ABNB": 13.13,
-   "MELI": 13.11,
-   "META": 28.05,
-   "YPFD": 3.98,
-   "CEPU": 1.11,
-   "VIST": 19.77,
-   "GGAL": 3.13,
-   "AVGO": 9.39,
-   "QQQ": 36.19,
-   "TSM": 46.92,
-   "AMZN": 1.98,
-   "LLY": 27.16,
-   "TSLA": 27.66,
-   "AAPL": 19.13,
-   "BABA": 11.1
+   "SPY": 13.25,
+   "BBAR": 3.69,
+   "ORCL": 43.82,
+   "PANW": 6.71,
+   "MU": 161.15,
+   "NVDA": 7.07,
+   "AMD": 56.19,
+   "BMA": 5.88,
+   "COST": 24.49,
+   "MA": 21.23,
+   "ABNB": 13.08,
+   "MELI": 13.04,
+   "META": 27.56,
+   "YPFD": 3.95,
+   "CEPU": 1.1,
+   "VIST": 19.48,
+   "GGAL": 3.1,
+   "AVGO": 9.24,
+   "QQQ": 35.68,
+   "TSM": 46.4,
+   "AMZN": 1.94,
+   "LLY": 27.21,
+   "TSLA": 27.49,
+   "AAPL": 18.98,
+   "BABA": 11.05
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-13T15:00:26.816Z",
-  "senales": 111,
+  "actualizado": "2026-11-13T15:45:47.871Z",
+  "senales": 114,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

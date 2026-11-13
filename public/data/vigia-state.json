@@ -16,7 +16,6 @@
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
-  "VIST:en_soporte_3m": "2026-11-12",
   "BABA:cae_fuerte": "2026-11-12",
   "MELI:minimo_6m": "2026-11-12",
   "BABA:rompe_soporte_3m": "2026-11-12",
@@ -35,7 +34,12 @@
   "BBAR:minimo_6m": "2026-11-13",
   "YPFD:en_soporte_3m": "2026-11-13",
   "NVDA:cae_fuerte": "2026-11-13",
-  "VIST:rsi_sobrevendido": "2026-11-13"
+  "VIST:rsi_sobrevendido": "2026-11-13",
+  "MELI:rompe_soporte_3m": "2026-11-13",
+  "MELI:rsi_sobrevendido": "2026-11-13",
+  "AMZN:en_resistencia_3m": "2026-11-13",
+  "VIST:rompe_soporte_3m": "2026-11-13",
+  "VIST:minimo_6m": "2026-11-13"
  },
  "log": [
   {
@@ -1633,6 +1637,56 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y soporte clave en 19.69 frente a una baja sin fundamentos operativos sólidos. Plan: Mantener la posición actual en VIST y esperar estabilización sin promediar a la baja todavía. Riesgo: Volatilidad sectorial y perforación de soportes mínimos. Confianza: media",
    "radarTexto": "Titulares: No explican nada concreto sobre la baja diaria de Vista. Probable: Ajusta por el castigo general a energéticas de octubre y lectura de oportunidad (El Cronista). Confirmado: Nada en las noticias recientes justifica el -0,6% de hoy.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T15:45:15.432Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 13.04,
+   "rsi14": 29.8,
+   "message_id": 185,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta tras romper soporte de tres meses con RSI en sobreventa, coincidiendo con castigo al e-commerce y presión en márgenes. Plan: Vender toda la posición en MELI hoy mismo para simplificar y sacar riesgo argentino, destinando esos fondos a la estrategia global. Riesgo: Volatilidad de corto plazo y perder un rebote técnico si el mercado absorbe rápido la noticia. Confianza: alta",
+   "radarTexto": "RADAR AL TOQUE: MELI cae a mínimos por presión en márgenes tras el Q3 y castigo generalizado a e-commerce (confirmado), mientras Michael Burry apuesta fuerte y se debate su valuación justa (probable).",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T15:45:15.885Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 1.94,
+   "rsi14": 58.23,
+   "message_id": 186,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Cotiza a 1,94 pegado a la resistencia de 1,96 y hay cautela por dudas en IA, pero la tendencia alcista sobre sus medias valida retener. Plan: Mantener lo que tiene en AMZN; activar venta si perfora el soporte de 1,77. Riesgo: Volatilidad por tomas de ganancia en zona de resistencia y ruidos sectoriales sobre inteligencia artificial. Confianza: media",
+   "radarTexto": "RADAR: AMZN opera a US$ 1,94 MEP (+0,3% hoy) pegado a su resistencia de 3 meses en 1,96. Confirmado por titulares: debate en el mercado sobre si es compra en noviembre, comparativas con Google, venta de acciones por Cathie Wood y dudas sobre riesgos ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T15:45:16.383Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 19.48,
+   "rsi14": 28.12,
+   "message_id": 187,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de soporte e hizo mínimo de seis meses, y Radar confirma castigo local a energéticas que anula la tesis. Plan: Vender toda la posición de VIST hoy a mercado y reasignar esos fondos a crecimiento global según tu perfil. Riesgo: Materializar una pérdida temporal si el sector petrolero local rebota rápido desde estos mínimos técnicos. Confianza: alta",
+   "radarTexto": "RADAR reporta: Los titulares no explican el movimiento bajista actual de VIST. Como probable, el castigo general a energéticas locales tras caídas de octubre y el foco en bonos/riesgo país desvían la atención de la acción.",
    "debatido": true
   }
  ]
