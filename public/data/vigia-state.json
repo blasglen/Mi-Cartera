@@ -16,8 +16,6 @@
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
-  "GGAL:en_soporte_3m": "2026-11-12",
-  "GGAL:rsi_sobrevendido": "2026-11-12",
   "MELI:en_soporte_3m": "2026-11-13",
   "SPY:en_resistencia_3m": "2026-11-13",
   "AMZN:rompe_resistencia_3m": "2026-11-13",
@@ -46,7 +44,8 @@
   "AVGO:cae_fuerte": "2026-11-13",
   "BABA:en_soporte_3m": "2026-11-13",
   "MA:rompe_resistencia_3m": "2026-11-13",
-  "MA:rsi_sobrecomprado": "2026-11-13"
+  "MA:rsi_sobrecomprado": "2026-11-13",
+  "CEPU:sube_fuerte": "2026-11-13"
  },
  "log": [
   {
@@ -1825,6 +1824,22 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca sobrecompra técnica con RSI en 71.84 y RADAR confirma que la suba actual es por ruido de mercado sin catalyst fundamental. Plan: Mantener la posición actual sin sumar nuevos fondos hasta que descomprima indicadores y testee soportes más abajo. Riesgo: Corrección de corto plazo por sobrecompra y volatilidad tecnológica general. Confianza: media",
    "radarTexto": "RADAR: Los titulares no explican el movimiento del día en MA. Probable: ruido de comparativas con Visa, Coinbase y SoFi, además de debates sobre valor justo. Confirmado: no hay catalyst oficial reciente que justifique la suba.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T18:15:22.506Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "sube_fuerte"
+   ],
+   "precio": 1.14,
+   "rsi14": 43.48,
+   "message_id": 197,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rebote técnico desde soporte de 1.04 avalado por buenos balances y menor riesgo país, pese a tendencia bajista de fondo. Plan: Mantener CEPU sin sumar, listo para liquidar si rompe el soporte operativo y simplificar la cartera bajando exposición a Argentina. Riesgo: Alta volatilidad local y presión bajista si Wall Street profundiza su corrección. Confianza: Media",
+   "radarTexto": "RADAR reportando. Confirmado por titulares: rebote de energéticas tras castigo en octubre y balance sólido del tercer trimestre. Probable: arrastre por la baja general de Wall Street y mejora del clima financiero local con riesgo país en baja.",
    "debatido": true
   }
  ]
