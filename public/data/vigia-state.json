@@ -10,7 +10,6 @@
   "NVDA:rompe_soporte_3m": "2026-11-11",
   "NVDA:rsi_sobrevendido": "2026-11-11",
   "NVDA:minimo_6m": "2026-11-11",
-  "COST:rompe_resistencia_3m": "2026-11-11",
   "COST:rsi_sobrecomprado": "2026-11-11",
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
@@ -45,7 +44,10 @@
   "BABA:en_soporte_3m": "2026-11-13",
   "MA:rompe_resistencia_3m": "2026-11-13",
   "MA:rsi_sobrecomprado": "2026-11-13",
-  "CEPU:sube_fuerte": "2026-11-13"
+  "CEPU:sube_fuerte": "2026-11-13",
+  "GGAL:en_soporte_3m": "2026-11-13",
+  "GGAL:rsi_sobrevendido": "2026-11-13",
+  "BBAR:rsi_sobrevendido": "2026-11-13"
  },
  "log": [
   {
@@ -1840,6 +1842,39 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Rebote técnico desde soporte de 1.04 avalado por buenos balances y menor riesgo país, pese a tendencia bajista de fondo. Plan: Mantener CEPU sin sumar, listo para liquidar si rompe el soporte operativo y simplificar la cartera bajando exposición a Argentina. Riesgo: Alta volatilidad local y presión bajista si Wall Street profundiza su corrección. Confianza: Media",
    "radarTexto": "RADAR reportando. Confirmado por titulares: rebote de energéticas tras castigo en octubre y balance sólido del tercer trimestre. Probable: arrastre por la baja general de Wall Street y mejora del clima financiero local con riesgo país en baja.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T19:00:36.831Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.13,
+   "rsi14": 29.73,
+   "message_id": 198,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y rebote en soporte de tres meses compensan la tendencia bajista general. Plan: Mantener lo que ya tiene y vender todo si pierde el soporte de US$ 3,08 para simplificar la cartera. Riesgo: Alta exposición a volatilidad local y profundización de la caída del Merval. Confianza: media",
+   "radarTexto": "RADAR reporta: GGAL en US$ 3,13, hoy +1,6% con señales de sobreventa (RSI 29,7) tocando soporte de 3 meses. Confirmado por titulares: caída previa de acciones argentinas en Wall Street por dato de inflación de EEUU y baja del petróleo. Probable: búsq",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T19:00:37.446Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.68,
+   "rsi14": 29.84,
+   "message_id": 199,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: El papel está sobrevendido con RSI en 29.84 tocando soporte de 3.65, y aunque el contexto macro local presiona al sector bancario, sostiene la estructura técnica. Plan: Mantener la posición actual de BBAR y venderse entera si perfora los US$ 3.65 para cumplir la regla de bajar exposición a Argentina. Riesgo: Alto, tendencia bajista consolidada por debajo de todas las medias móviles y presión bajista externa. Confianza",
+   "radarTexto": "RADAR reporta: Los titulares confirman caídas en la Bolsa porteña y en Wall Street arrastradas por la baja del petróleo y el dato de inflación de Estados Unidos, además de un derrumbe en los bancos. Es probable que este contexto presione al sector y ",
    "debatido": true
   }
  ]
