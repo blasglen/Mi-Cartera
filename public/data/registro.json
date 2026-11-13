@@ -2214,6 +2214,85 @@
      "acierto": false
     }
    }
+  },
+  {
+   "ts": "2026-11-13T13:45:17.505Z",
+   "fecha": "2026-11-13",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "analista": null,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.19,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T13:45:17.944Z",
+   "fecha": "2026-11-13",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA PARCIAL",
+   "analista": null,
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 13.51,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T13:45:18.186Z",
+   "fecha": "2026-11-13",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": null,
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 1.99,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T13:45:18.420Z",
+   "fecha": "2026-11-13",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": null,
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 27.25,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T13:45:18.664Z",
+   "fecha": "2026-11-13",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "analista": null,
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.72,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-13T13:45:23.023Z",
+   "fecha": "2026-11-13",
+   "ticker": "AAPL",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "analista": null,
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 18.97,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -2355,37 +2434,37 @@
    "BABA": 11.18
   },
   "2026-11-13": {
-   "SPY": 13.41,
-   "BBAR": 3.66,
-   "ORCL": 44.86,
-   "PANW": 6.82,
-   "MU": 169.86,
-   "NVDA": 7.36,
-   "AMD": 61.89,
-   "BMA": 5.9,
+   "SPY": 13.51,
+   "BBAR": 3.72,
+   "ORCL": 45.81,
+   "PANW": 7.05,
+   "MU": 169.21,
+   "NVDA": 7.53,
+   "AMD": 60.81,
+   "BMA": 5.91,
    "COST": 24.13,
    "MA": 21.03,
-   "ABNB": 12.84,
-   "MELI": 13.08,
-   "META": 27.49,
-   "YPFD": 3.96,
+   "ABNB": 13.03,
+   "MELI": 13.19,
+   "META": 27.75,
+   "YPFD": 4,
    "CEPU": 1.09,
-   "VIST": 19.65,
-   "GGAL": 3.08,
-   "AVGO": 9.9,
-   "QQQ": 36.5,
-   "TSM": 47.93,
-   "AMZN": 1.97,
-   "LLY": 27.21,
-   "TSLA": 28.15,
-   "AAPL": 18.85,
-   "BABA": 11.17
+   "VIST": 19.91,
+   "GGAL": 3.11,
+   "AVGO": 9.73,
+   "QQQ": 36.74,
+   "TSM": 48.42,
+   "AMZN": 1.99,
+   "LLY": 27.25,
+   "TSLA": 28.49,
+   "AAPL": 18.97,
+   "BABA": 10.98
   }
  },
  "ultimoResumen": "2026-11-06",
  "resumen": {
-  "actualizado": "2026-11-13T13:30:21.306Z",
-  "senales": 99,
+  "actualizado": "2026-11-13T13:45:25.160Z",
+  "senales": 105,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

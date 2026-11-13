@@ -19,22 +19,20 @@
   "VIST:en_soporte_3m": "2026-11-12",
   "BABA:cae_fuerte": "2026-11-12",
   "MELI:minimo_6m": "2026-11-12",
-  "AMZN:en_resistencia_3m": "2026-11-12",
   "BABA:rompe_soporte_3m": "2026-11-12",
   "MA:rsi_sobrecomprado": "2026-11-12",
-  "MELI:rompe_soporte_3m": "2026-11-12",
-  "AVGO:cruza_arriba_sma200": "2026-11-12",
   "AVGO:sube_fuerte": "2026-11-12",
-  "GGAL:minimo_6m": "2026-11-12",
-  "BBAR:rompe_soporte_3m": "2026-11-12",
   "BBAR:rsi_sobrevendido": "2026-11-12",
-  "BBAR:minimo_6m": "2026-11-12",
   "GGAL:en_soporte_3m": "2026-11-12",
   "YPFD:en_soporte_3m": "2026-11-12",
   "GGAL:rsi_sobrevendido": "2026-11-12",
-  "LLY:en_resistencia_3m": "2026-11-12",
-  "VIST:rsi_sobrevendido": "2026-11-12",
-  "VIST:minimo_6m": "2026-11-12"
+  "MELI:en_soporte_3m": "2026-11-13",
+  "SPY:en_resistencia_3m": "2026-11-13",
+  "AMZN:rompe_resistencia_3m": "2026-11-13",
+  "LLY:rompe_resistencia_3m": "2026-11-13",
+  "LLY:rsi_sobrecomprado": "2026-11-13",
+  "BBAR:en_soporte_3m": "2026-11-13",
+  "AAPL:rompe_resistencia_3m": "2026-11-13"
  },
  "log": [
   {
@@ -1455,6 +1453,79 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y perforó el soporte mínimo de seis meses en 19,63 dólares, sin fundamentos bajistas propios que invaliden el desplome técnico. Plan: Vender todo hoy mismo y recomprar en un rebote consolidado arriba de 23,15 dólares, o si cae un 25% adicional desde este punto. Riesgo: Mayor daño bajista en el corto plazo por pérdida de la media de 200 ruedas. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares no explican el desplome actual de VIST. Como probable, se menciona un contexto general de bajas recientes en energéticas que analistas ven a precio de compra, y un mercado local impulsado por la baja del riesgo país ab",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-13T13:45:17.505Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.19,
+   "rsi14": 30.76,
+   "message_id": 171
+  },
+  {
+   "ts": "2026-11-13T13:45:17.944Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA PARCIAL",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 13.51,
+   "rsi14": 52.8,
+   "message_id": 172
+  },
+  {
+   "ts": "2026-11-13T13:45:18.186Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 1.99,
+   "rsi14": 61.95,
+   "message_id": 173
+  },
+  {
+   "ts": "2026-11-13T13:45:18.420Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 27.25,
+   "rsi14": 70.08,
+   "message_id": 174
+  },
+  {
+   "ts": "2026-11-13T13:45:18.664Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.72,
+   "rsi14": 29.46,
+   "message_id": 175
+  },
+  {
+   "ts": "2026-11-13T13:45:23.023Z",
+   "ticker": "AAPL",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 18.97,
+   "rsi14": 62.67,
+   "message_id": 176
   }
  ]
 }
