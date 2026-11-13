@@ -39,7 +39,8 @@
   "MELI:rsi_sobrevendido": "2026-11-13",
   "AMZN:en_resistencia_3m": "2026-11-13",
   "VIST:rompe_soporte_3m": "2026-11-13",
-  "VIST:minimo_6m": "2026-11-13"
+  "VIST:minimo_6m": "2026-11-13",
+  "VIST:en_soporte_3m": "2026-11-13"
  },
  "log": [
   {
@@ -1687,6 +1688,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de soporte e hizo mínimo de seis meses, y Radar confirma castigo local a energéticas que anula la tesis. Plan: Vender toda la posición de VIST hoy a mercado y reasignar esos fondos a crecimiento global según tu perfil. Riesgo: Materializar una pérdida temporal si el sector petrolero local rebota rápido desde estos mínimos técnicos. Confianza: alta",
    "radarTexto": "RADAR reporta: Los titulares no explican el movimiento bajista actual de VIST. Como probable, el castigo general a energéticas locales tras caídas de octubre y el foco en bonos/riesgo país desvían la atención de la acción.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T16:00:29.264Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 19.55,
+   "rsi14": 28.32,
+   "message_id": 189,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 19.55 en medio de toma de ganancias sectorial, pero los fundamentals del shale oil resisten. Plan: Mantener la posición actual en VIST sin agregar capital; vender toda la posición si perfora los 19 dólares para simplificar cartera. Riesgo: Alta volatilidad y profundización de la corrección bajista si el petróleo sigue cediendo. Confianza: media",
+   "radarTexto": "RADAR reportando. Lo confirmado según titulares: caídas sectoriales recientes y atención del mercado en energéticas tras bajas de octubre. Lo probable: toma de ganancias alineada con el rebote del Brent y la reconfiguración de carteras en noviembre.",
    "debatido": true
   }
  ]
