@@ -47,7 +47,8 @@
   "CEPU:sube_fuerte": "2026-11-13",
   "GGAL:en_soporte_3m": "2026-11-13",
   "GGAL:rsi_sobrevendido": "2026-11-13",
-  "BBAR:rsi_sobrevendido": "2026-11-13"
+  "BBAR:rsi_sobrevendido": "2026-11-13",
+  "COST:rompe_resistencia_3m": "2026-11-13"
  },
  "log": [
   {
@@ -1875,6 +1876,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: El papel está sobrevendido con RSI en 29.84 tocando soporte de 3.65, y aunque el contexto macro local presiona al sector bancario, sostiene la estructura técnica. Plan: Mantener la posición actual de BBAR y venderse entera si perfora los US$ 3.65 para cumplir la regla de bajar exposición a Argentina. Riesgo: Alto, tendencia bajista consolidada por debajo de todas las medias móviles y presión bajista externa. Confianza",
    "radarTexto": "RADAR reporta: Los titulares confirman caídas en la Bolsa porteña y en Wall Street arrastradas por la baja del petróleo y el dato de inflación de Estados Unidos, además de un derrumbe en los bancos. Es probable que este contexto presione al sector y ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T19:30:26.429Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 24.33,
+   "rsi14": 76.92,
+   "message_id": 200,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca esperar por RSI sobrecomprado en 76, aunque la ruptura de resistencia por dividendo especial y recompra presiona al alza. Plan: Mantener la posición actual sin agregar capital este mes, destinando los 150 dólares libres a tecnología global. Riesgo: Corrección de corto plazo tras el rally reciente y sobreextensión técnica. Confianza: media",
+   "radarTexto": "RADAR acá. Confirmado por titulares: dividendo especial de 30 dólares y recompra de acciones de 4 mil millones. Probable: refugio frente al caos de la inteligencia artificial y optimismo general de los analistas que impulsa la demanda.",
    "debatido": true
   }
  ]
