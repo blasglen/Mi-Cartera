@@ -40,7 +40,9 @@
   "AMZN:en_resistencia_3m": "2026-11-13",
   "VIST:rompe_soporte_3m": "2026-11-13",
   "VIST:minimo_6m": "2026-11-13",
-  "VIST:en_soporte_3m": "2026-11-13"
+  "VIST:en_soporte_3m": "2026-11-13",
+  "PANW:en_soporte_3m": "2026-11-13",
+  "PANW:cae_fuerte": "2026-11-13"
  },
  "log": [
   {
@@ -1704,6 +1706,23 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 19.55 en medio de toma de ganancias sectorial, pero los fundamentals del shale oil resisten. Plan: Mantener la posición actual en VIST sin agregar capital; vender toda la posición si perfora los 19 dólares para simplificar cartera. Riesgo: Alta volatilidad y profundización de la corrección bajista si el petróleo sigue cediendo. Confianza: media",
    "radarTexto": "RADAR reportando. Lo confirmado según titulares: caídas sectoriales recientes y atención del mercado en energéticas tras bajas de octubre. Lo probable: toma de ganancias alineada con el rebote del Brent y la reconfiguración de carteras en noviembre.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T16:15:21.012Z",
+   "ticker": "PANW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 6.7,
+   "rsi14": 37.48,
+   "message_id": 190,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: El papel toca soporte de tres meses con RSI en 37 y el mercado convalida la baja como oportunidad por IA. Plan: entrada US$ 6,70 · stop US$ 6,30 · objetivo US$ 8,20 Riesgo: Volatilidad de corto plazo y ruptura de la media de 200 ruedas. Confianza: alta",
+   "radarTexto": "RADAR reportando. PANW cae fuerte hoy y acumula -23,5% mensual por una fuerte corrección. Confirmado por titulares: KeyBanc mejoró la calificación y ve la baja como oportunidad de compra, impulsado por su herramienta de IA y presupuestos de cibersegu",
    "debatido": true
   }
  ]
