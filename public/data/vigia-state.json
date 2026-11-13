@@ -42,7 +42,8 @@
   "VIST:minimo_6m": "2026-11-13",
   "VIST:en_soporte_3m": "2026-11-13",
   "PANW:en_soporte_3m": "2026-11-13",
-  "PANW:cae_fuerte": "2026-11-13"
+  "PANW:cae_fuerte": "2026-11-13",
+  "NFLX:en_soporte_3m": "2026-11-13"
  },
  "log": [
   {
@@ -1723,6 +1724,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: El papel toca soporte de tres meses con RSI en 37 y el mercado convalida la baja como oportunidad por IA. Plan: entrada US$ 6,70 · stop US$ 6,30 · objetivo US$ 8,20 Riesgo: Volatilidad de corto plazo y ruptura de la media de 200 ruedas. Confianza: alta",
    "radarTexto": "RADAR reportando. PANW cae fuerte hoy y acumula -23,5% mensual por una fuerte corrección. Confirmado por titulares: KeyBanc mejoró la calificación y ve la baja como oportunidad de compra, impulsado por su herramienta de IA y presupuestos de cibersegu",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T16:30:20.730Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.37,
+   "rsi14": 39.61,
+   "message_id": 191,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses con RSI de 39 y grandes fondos acumulando cerca de mínimos. Plan: entrada US$ 1,37 · stop US$ 1,32 · objetivo US$ 1,79 Riesgo: Alta volatilidad bajista si perfora el soporte actual de corto plazo. Confianza: alta",
+   "radarTexto": "RADAR reporta: Netflix (NFLX) opera a US$ 1,37 MEP, bajando 2,9% hoy y tocando soporte de 3 meses. Confirmado por titulares: instituciones sumaron acciones cerca de mínimos de 52 semanas y hay debate sobre si es oportunidad de compra tras el respaldo",
    "debatido": true
   }
  ]
