@@ -44,7 +44,9 @@
   "MELI:cruce_muerte": "2026-11-13",
   "AVGO:cruza_abajo_sma200": "2026-11-13",
   "AVGO:cae_fuerte": "2026-11-13",
-  "BABA:en_soporte_3m": "2026-11-13"
+  "BABA:en_soporte_3m": "2026-11-13",
+  "MA:rompe_resistencia_3m": "2026-11-13",
+  "MA:rsi_sobrecomprado": "2026-11-13"
  },
  "log": [
   {
@@ -1806,6 +1808,23 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca compra en soporte de tres meses pese al castigo por regulaciones de chips y cercanía de balance. Plan: entrada US$ 11,09 · stop US$ 10,50 · objetivo US$ 15,00 Riesgo: alto por tensiones geopolíticas entre EE.UU. y China y volatilidad regulatoria. Confianza: media",
    "radarTexto": "RADAR reportando. La caída se explica porque el escándalo de Jensen Huang y Nvidia genera temores de regulaciones más estrictas en EE.UU. y restricciones a los chips de IA (confirmado por Bloomberg y Barron's), mientras que es probable que la baja se",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-13T17:45:18.883Z",
+   "ticker": "MA",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "rsi_sobrecomprado"
+   ],
+   "precio": 21.25,
+   "rsi14": 71.84,
+   "message_id": 196,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca sobrecompra técnica con RSI en 71.84 y RADAR confirma que la suba actual es por ruido de mercado sin catalyst fundamental. Plan: Mantener la posición actual sin sumar nuevos fondos hasta que descomprima indicadores y testee soportes más abajo. Riesgo: Corrección de corto plazo por sobrecompra y volatilidad tecnológica general. Confianza: media",
+   "radarTexto": "RADAR: Los titulares no explican el movimiento del día en MA. Probable: ruido de comparativas con Visa, Coinbase y SoFi, además de debates sobre valor justo. Confirmado: no hay catalyst oficial reciente que justifique la suba.",
    "debatido": true
   }
  ]
