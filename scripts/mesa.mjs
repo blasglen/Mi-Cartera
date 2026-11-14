@@ -25,6 +25,8 @@ const DATA = path.join(ROOT, "public", "data");
 const STATE_FILE = path.join(DATA, "vigia-state.json");
 const CONFIG = JSON.parse(await fs.readFile(path.join(ROOT, "scripts", "vigia-config.json"), "utf8"));
 
+let APRENDIZAJE = { eventos: {} };
+try { APRENDIZAJE = JSON.parse(await fs.readFile(path.join(DATA, "aprendizaje.json"), "utf8")); } catch {}
 const env = process.env;
 const CHAT = env.TG_CHAT_ID;
 const TOKENS = { VIGIA: env.TG_VIGIA, RADAR: env.TG_RADAR, ANALISTA: env.TG_ANALISTA, CONTROL: env.TG_CONTROL };
@@ -194,6 +196,7 @@ Datos técnicos: ${datos}
 Lo que dijo RADAR: ${radar}
 
 VIGÍA (reglas técnicas) dijo: ${entrada.veredicto || "sin veredicto"}.
+Historial propio de estas señales (acierto a 5 ruedas): ${(entrada.eventos || []).map((ev) => { const x = APRENDIZAJE.eventos?.[ev]; return x ? `${ev} ${x.acierto_pct}% en ${x.n} casos (${x.estado})` : `${ev} sin historial`; }).join("; ")}. Si una señal tiene historial flojo, bajá la confianza.
 Sé DIRECTO. Respondé en este formato exacto, máximo 5 líneas, sin introducciones:
 VEREDICTO: EXACTAMENTE una de estas palabras, sin agregados: SEÑAL DE COMPRA / SEÑAL DE VENTA / VENTA PARCIAL / MANTENER / ESPERAR (coincidí con VIGÍA salvo que la noticia lo contradiga claramente; si no coincidís, decilo en "Por qué")
 Por qué: (una línea, técnico + noticia)

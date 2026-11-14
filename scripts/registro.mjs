@@ -54,7 +54,7 @@ async function main() {
     if (existente) { if (e.analista && !existente.analista) existente.analista = e.analista; continue; }
     if (ya.has(k) || !e.precio) continue;
     const fecha = new Date(new Date(e.ts).getTime() - 3 * 3600e3).toISOString().slice(0, 10);
-    reg.senales.push({ ts: e.ts, fecha, ticker: e.ticker, enCartera: e.enCartera, veredicto: veredictoDe(e), analista: e.analista || null, eventos: e.eventos, precio: e.precio });
+    reg.senales.push({ ts: e.ts, fecha, ticker: e.ticker, enCartera: e.enCartera, veredicto: e.sombra ? "SOMBRA" : veredictoDe(e), sombra: !!e.sombra, analista: e.analista || null, eventos: e.eventos, precio: e.precio });
     nuevas++;
   }
 
@@ -99,6 +99,7 @@ async function main() {
   }
 
   reg.resumen = estadisticas(reg); // para que ANALISTA lo pueda leer
+  await aprender(reg);
   console.log(`REGISTRO: ${reg.senales.length} señales (${nuevas} nuevas) · ${fechas.length} días de precios`);
   if (!process.argv.includes("--dry")) await fs.writeFile(FILE, JSON.stringify(reg, null, 1));
 }
@@ -167,3 +168,63 @@ function resumen(reg) {
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
+
+
+// ---------- APRENDIZAJE ----------
+// Cada tipo de evento tiene una dirección implícita (sube / baja). Se mide a 5
+// ruedas si el precio fue para ese lado, con "suavizado" hacia 50% para que
+// pocos casos no muevan nada: p = (aciertos + 5) / (casos + 10).
+//  - ≥ MIN casos y p < APAGAR  → "apagada": VIGÍA no la avisa (la sigue midiendo en sombra)
+//  - apagada y p > REACTIVAR   → vuelve a "normal"
+//  - ≥ MIN casos y p > CONFIABLE → "confiable": cuenta doble para que una señal sea fuerte
+// Nunca toca reglas de plata (aporte, SPY, Argentina, topes).
+const DIR_EVENTO = {
+  en_soporte_3m: 1, rsi_sobrevendido: 1, cruza_arriba_sma200: 1, cruce_dorado: 1, rompe_resistencia_3m: 1,
+  rompe_soporte_3m: -1, cruza_abajo_sma200: -1, cruce_muerte: -1, en_resistencia_3m: -1, rsi_sobrecomprado: -1,
+  stop_ppc_20: -1, stop_ppc_30: -1, minimo_6m: -1,
+};
+const NOMBRE_EV = {
+  en_soporte_3m: "apoyado en soporte", rompe_soporte_3m: "rompió soporte", en_resistencia_3m: "contra resistencia", rompe_resistencia_3m: "rompió máximos",
+  rsi_sobrevendido: "RSI sobrevendido", rsi_sobrecomprado: "RSI sobrecomprado", cruza_arriba_sma200: "cruza la media de 200 hacia arriba", cruza_abajo_sma200: "pierde la media de 200",
+  cruce_dorado: "cruce dorado", cruce_muerte: "cruce de la muerte", stop_ppc_20: "stop −20%", stop_ppc_30: "stop −30%", minimo_6m: "mínimo de 6 meses",
+};
+
+async function aprender(reg) {
+  const A = { min: 15, apagar: 0.45, reactivar: 0.52, confiable: 0.60, plazo: 5 };
+  const FILE_A = path.join(DATA, "aprendizaje.json");
+  let prev = { eventos: {} };
+  try { prev = JSON.parse(await fs.readFile(FILE_A, "utf8")); } catch {}
+  const st = {};
+  for (const s of reg.senales) {
+    const r = s.resultado?.[A.plazo];
+    if (!r) continue;
+    for (const ev of new Set(s.eventos || [])) {
+      const dir = DIR_EVENTO[ev];
+      if (!dir) continue;
+      st[ev] = st[ev] || { n: 0, ok: 0 };
+      st[ev].n++;
+      if (dir * r.ret > 0) st[ev].ok++;
+    }
+  }
+  const eventos = {}, cambios = [];
+  for (const [ev, x] of Object.entries(st)) {
+    const p = (x.ok + 5) / (x.n + 10);
+    const antes = prev.eventos?.[ev]?.estado || "aprendiendo";
+    let estado = x.n < A.min ? "aprendiendo" : p < A.apagar ? "apagada" : p > A.confiable ? "confiable" : "normal";
+    if (antes === "apagada" && x.n >= A.min && p <= A.reactivar) estado = "apagada"; // histéresis
+    eventos[ev] = { n: x.n, ok: x.ok, acierto_pct: Math.round((x.ok / x.n) * 100), p: Math.round(p * 1000) / 1000, estado };
+    if (estado !== antes && !(antes === "aprendiendo" && estado === "normal")) cambios.push({ ev, antes, estado, ...eventos[ev] });
+  }
+  const out = { actualizado: new Date().toISOString(), plazo_ruedas: A.plazo, reglas: A, eventos, historial: [...(prev.historial || []), ...cambios.map((c) => ({ fecha: hoy(), ...c }))].slice(-200) };
+  if (!process.argv.includes("--dry")) await fs.writeFile(FILE_A, JSON.stringify(out, null, 1));
+  if (cambios.length) {
+    const linea = (c) => c.estado === "apagada" ? `🔕 Apago "${NOMBRE_EV[c.ev] || c.ev}": acertó ${c.acierto_pct}% en ${c.n} casos. La sigo midiendo en silencio.`
+      : c.estado === "confiable" ? `⭐ "${NOMBRE_EV[c.ev] || c.ev}" pasa a confiable: acertó ${c.acierto_pct}% en ${c.n} casos. Ahora cuenta doble.`
+      : c.antes === "apagada" ? `🔔 Vuelvo a prender "${NOMBRE_EV[c.ev] || c.ev}": mejoró a ${c.acierto_pct}% en ${c.n} casos.`
+      : `↩️ "${NOMBRE_EV[c.ev] || c.ev}" vuelve a normal (${c.acierto_pct}% en ${c.n} casos).`;
+    const texto = `🧠 <b>APRENDIZAJE · la Mesa se ajustó</b>\n${cambios.map((c) => esc(linea(c))).join("\n")}\n<i>Basado en el resultado a ${A.plazo} ruedas de cada señal. Tus reglas de aporte no cambian.</i>`;
+    if (DRY) console.log("\n----- APRENDIZAJE (no enviado) -----\n" + texto.replace(/<[^>]+>/g, ""));
+    else await fetch(`https://api.telegram.org/bot${env.TG_CONTROL}/sendMessage`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: env.TG_CHAT_ID, text: texto, parse_mode: "HTML" }) }).catch(() => {});
+  }
+  console.log(`APRENDIZAJE: ${Object.keys(eventos).length} eventos medidos, ${cambios.length} cambio(s)`);
+}

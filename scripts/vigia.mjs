@@ -39,6 +39,14 @@ const pctTxt = (x) => (x == null ? "s/d" : `${x > 0 ? "+" : x < 0 ? "−" : ""}$
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 
+// Lo que aprendió REGISTRO (public/data/aprendizaje.json): eventos apagados,
+// confiables y su % de acierto histórico
+let APRENDIZAJE = { eventos: {} };
+try { APRENDIZAJE = JSON.parse(await fs.readFile(path.join(DATA, "aprendizaje.json"), "utf8")); } catch {}
+const estadoEv = (id) => APRENDIZAJE.eventos?.[id]?.estado || "aprendiendo";
+const pesoEv = (e) => (estadoEv(e.id) === "confiable" ? 2 : 1);
+const historialEv = (id) => { const x = APRENDIZAJE.eventos?.[id]; return x && x.n >= 10 ? ` <i>(📊 acertó ${x.acierto_pct}% en ${x.n})</i>` : ""; };
+
 // Chat privado de Blas (lo guarda aporte.mjs cuando le da /start a @BlasVigiaBot)
 let PRIVADO = null;
 let APORTE = {};
@@ -139,7 +147,7 @@ function veredicto(sym, t, evs, enCartera, sig) {
   const has = (tipo) => evs.some((e) => e.tipo === tipo);
   const p = t.previo || {};
   const sop = p.soporte_3m, res = p.resistencia_3m;
-  const nCompra = evs.filter((e) => e.tipo === "compra").length;
+  const nCompra = evs.filter((e) => e.tipo === "compra").reduce((a, e) => a + pesoEv(e), 0);
   const tope = CONFIG.reglas?.tope_posicion_pct ?? 12;
   const peso = enCartera ? pesoEnCartera(sym, sig) : null;
   const esArg = (CONFIG.argentina || []).includes(sym);
@@ -149,7 +157,7 @@ function veredicto(sym, t, evs, enCartera, sig) {
     let nivel = sop && t.precio < sop ? `Perdió ${usd(sop)}. Recomprar recién si recupera ese nivel.` : stop ? "Cortá la pérdida o definí ya hasta dónde la bancás." : "Perdió un nivel clave.";
     if (enCartera && esArg) nivel += " Además va en línea con tu objetivo de bajar Argentina.";
     return enCartera
-      ? { emoji: "🔴", titulo: "SEÑAL DE VENTA", fuerza: evs.filter((e) => e.tipo === "alerta").length >= 2 ? "fuerte" : "moderada", plan: nivel }
+      ? { emoji: "🔴", titulo: "SEÑAL DE VENTA", fuerza: evs.filter((e) => e.tipo === "alerta").reduce((a, e) => a + pesoEv(e), 0) >= 2 ? "fuerte" : "moderada", plan: nivel }
       : { emoji: "⛔", titulo: "NO COMPRAR", fuerza: null, plan: `Viene cayendo. ${nivel}` };
   }
   if (has("compra")) {
@@ -179,7 +187,7 @@ function mensajeAlerta(sym, t, evs, enCartera, sig) {
     `${usd(t.precio)} · ${pctTxt(t.var_1d_pct)} hoy · ${enCartera ? "📁 en cartera" : "👀 candidato"}`,
     `<b>${esc(v.plan)}</b>`,
     "",
-    ...evs.map((e) => `${e.emoji} ${esc(e.texto)}`),
+    ...evs.map((e) => `${e.emoji} ${esc(e.texto)}${historialEv(e.id)}`),
   ].join("\n");
 }
 
@@ -259,7 +267,16 @@ async function main() {
     const ahora = new Set(eventos(t, sym).map((e) => `${sym}:${e.id}`));
     for (const k of Object.keys(state.activos))
       if (k.startsWith(`${sym}:`) && !ahora.has(k) && state.activos[k] !== hoy) delete state.activos[k];
-    const nuevos = evs.filter((e) => !state.activos[`${sym}:${e.id}`]);
+    const nuevosTodos = evs.filter((e) => !state.activos[`${sym}:${e.id}`]);
+    // Eventos que REGISTRO apagó por mal historial: no se avisan, pero se anotan
+    // "en sombra" para seguir midiéndolos (y prenderlos de nuevo si mejoran)
+    const sombra = nuevosTodos.filter((e) => estadoEv(e.id) === "apagada");
+    let nuevos = nuevosTodos.filter((e) => estadoEv(e.id) !== "apagada");
+    if (nuevos.length && nuevos.every((e) => e.tipo === "info")) nuevos = [];
+    if (sombra.length && !primeraVez) {
+      for (const e of sombra) state.activos[`${sym}:${e.id}`] = hoy;
+      state.log.push({ ts: new Date().toISOString(), ticker: sym, enCartera, sombra: true, eventos: sombra.map((e) => e.id), precio: t.precio, rsi14: t.rsi14, message_id: null });
+    }
     if (!nuevos.length) continue;
     if (primeraVez && !TEST) { for (const e of nuevos) state.activos[`${sym}:${e.id}`] = hoy; continue; }
     const id = await send(mensajeAlerta(sym, t, nuevos, enCartera, sig));
