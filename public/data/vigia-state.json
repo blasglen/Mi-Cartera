@@ -15,7 +15,6 @@
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
   "MELI:en_soporte_3m": "2026-11-13",
-  "LLY:en_resistencia_3m": "2026-11-13",
   "AMZN:en_resistencia_3m": "2026-11-13",
   "VIST:en_soporte_3m": "2026-11-13",
   "MELI:cruce_muerte": "2026-11-13",
@@ -35,7 +34,8 @@
   "COST:en_resistencia_3m": "2026-11-16",
   "COST:cruce_dorado": "2026-11-16",
   "MELI:minimo_6m": "2026-11-16",
-  "BBAR:en_soporte_3m": "2026-11-16"
+  "BBAR:en_soporte_3m": "2026-11-16",
+  "LLY:rompe_resistencia_3m": "2026-11-16"
  },
  "log": [
   {
@@ -2079,6 +2079,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte de tres meses con RSI en zona de sobreventa, mientras la baja responde a ruido electoral sin fundamentos directos en contra. Plan: Mantener la posición actual, colocar stop loss estricto si perfora los 3 dólares con 60 centavos y vender si rompe ese piso. Riesgo: Volatilidad política local y profundización de la tendencia bajista general del mercado argentino. Confianza: baja",
    "radarTexto": "Titulares: Las noticias hablan de elecciones, recompra global en euros y recomendaciones de compra, pero no explican la baja puntual de BBAR. Probable: ruido electoral y volatilidad general. Confirmado: nada directo sobre la caída del papel.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T14:30:24.953Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 27.68,
+   "rsi14": 72.1,
+   "message_id": 214,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió resistencia técnica de 27,39 con el impulso alcista de ventas récord de Mounjaro y Zepbound. Plan: Mantener la posición actual, fijando stop loss en la media de 50 ruedas en 23,17. Riesgo: RSI en 72,1 indica sobrecompra de corto plazo y posible toma de ganancias. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado: las ventas de Mounjaro y Zepbound subieron un 48 por ciento alcanzando 14.900 millones de dólares y hubo novedades de crecimiento en ObesityWeek 2026. Probable: el combo para bajar de peso con 23 por ciento de eficacia y",
    "debatido": true
   }
  ]
