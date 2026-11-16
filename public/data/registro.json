@@ -2805,6 +2805,35 @@
    ],
    "precio": 7.2,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-16T13:30:36.118Z",
+   "fecha": "2026-11-16",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 45.13,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-16T13:30:36.915Z",
+   "fecha": "2026-11-16",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 10.96,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -2992,20 +3021,20 @@
    "VIST": 19.75,
    "GGAL": 3.17,
    "AVGO": 9.41,
-   "QQQ": 36.06,
-   "TSM": 47.06,
+   "QQQ": 35.85,
+   "TSM": 45.13,
    "AMZN": 1.96,
    "LLY": 27.26,
    "TSLA": 27.62,
    "AAPL": 18.84,
-   "BABA": 11.11,
+   "BABA": 10.96,
    "NFLX": 1.37
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-16T13:15:23.891Z",
-  "senales": 127,
+  "actualizado": "2026-11-16T13:31:08.848Z",
+  "senales": 129,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

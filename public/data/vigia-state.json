@@ -20,8 +20,10 @@
   "VIST:en_soporte_3m": "2026-11-13",
   "NFLX:en_soporte_3m": "2026-11-13",
   "MELI:cruce_muerte": "2026-11-13",
-  "BABA:en_soporte_3m": "2026-11-13",
-  "NVDA:en_soporte_3m": "2026-11-16"
+  "NVDA:en_soporte_3m": "2026-11-16",
+  "TSM:cruza_abajo_sma200": "2026-11-16",
+  "TSM:cae_fuerte": "2026-11-16",
+  "BABA:rompe_soporte_3m": "2026-11-16"
  },
  "log": [
   {
@@ -1881,6 +1883,39 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 22 y toque de soporte de tres meses superan el ruido sobre la salida de Huang. Plan: entrada US$ 7,20 · stop US$ 6,80 · objetivo US$ 9,00 Riesgo: Alta volatilidad por ruido político de Trump y rumores sobre el CEO. Confianza: media",
    "radarTexto": "Acá RADAR. Los titulares confirman salida y posible vuelta de Jensen Huang como CEO, caídas por temor a su renuncia y roces con la política de Trump; no hay datos ciertos sobre su regreso.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:30:36.118Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 45.13,
+   "rsi14": 41.5,
+   "message_id": 202,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta tras cruzar la SMA200 con baja fuerte y RADAR no ve noticias propias que lo salven. Plan: Vender toda la posición actual de TSM para simplificar cartera y recomprar en el soporte de 41,66. Riesgo: Volatilidad alta del sector tecnológico y pérdida temporal de upside si rebota antes. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:30:36.915Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 10.96,
+   "rsi14": 37.18,
+   "message_id": 203,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de tres meses a once con catorce y opera abajo de todas las medias sin noticias frescas que justifiquen la baja. Plan: Vender toda la posición en BABA ahora mismo para simplificar cartera y liberar capital de riesgo. Riesgo: Continuación de la tendencia bajista sectorial con pérdida total del soporte previo. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
    "debatido": true
   }
  ]
