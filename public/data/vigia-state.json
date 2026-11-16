@@ -48,7 +48,9 @@
   "BBAR:cae_fuerte": "2026-11-16",
   "MELI:rompe_soporte_3m": "2026-11-16",
   "GGAL:rsi_sobrevendido": "2026-11-16",
-  "MELI:en_soporte_3m": "2026-11-16"
+  "MELI:en_soporte_3m": "2026-11-16",
+  "GGAL:rompe_soporte_3m": "2026-11-16",
+  "GGAL:cae_fuerte": "2026-11-16"
  },
  "log": [
   {
@@ -2330,6 +2332,23 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa a 30.5 tocando soporte de 3 meses en 13.04 sin noticias negativas fundamentales que justifiquen la baja. Plan: entrada US$ 12,91 · stop US$ 12,20 · objetivo US$ 16,00 Riesgo: Alta volatilidad por tendencia bajista de corto plazo y ruptura del piso de los 13 dólares. Confianza: media",
    "radarTexto": "RADAR acá. Los titulares no explican la caída de hoy; son análisis generales, comparativas y menciones de largo plazo. Probable que baje por la tendencia bajista del papel, pero no hay un hecho puntual confirmado en las noticias.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T18:45:21.101Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 3.03,
+   "rsi14": 29.12,
+   "message_id": 230,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses operando a 3,03 dólares en un contexto electoral adverso y tendencia bajista general. Plan: Vender toda la posición en GGAL para simplificar la cartera y bajar la exposición a Argentina; no hay precio de recompra previsto. Riesgo: Contagio bajista del panel líder argentino y volatilidad política local. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares recientes no explican la caída de GGAL; solo mencionan un Merval mixto tras semanas difíciles, riesgo país en 830 puntos y elecciones sacudiendo activos. Lo confirmado: contexto electoral y tasas cediendo. Lo probable:",
    "debatido": true
   }
  ]
