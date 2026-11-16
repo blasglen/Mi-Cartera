@@ -886,6 +886,12 @@
      "ret": -0.3,
      "spy": 0,
      "acierto": false
+    },
+    "5": {
+     "fecha": "2026-11-16",
+     "ret": -0.75,
+     "spy": 3.17,
+     "acierto": false
     }
    }
   },
@@ -905,6 +911,12 @@
      "fecha": "2026-11-10",
      "ret": 0,
      "spy": 0,
+     "acierto": null
+    },
+    "5": {
+     "fecha": "2026-11-16",
+     "ret": 2.26,
+     "spy": 3.17,
      "acierto": null
     }
    }
@@ -926,6 +938,12 @@
      "ret": 0.54,
      "spy": 0,
      "acierto": null
+    },
+    "5": {
+     "fecha": "2026-11-16",
+     "ret": 1.08,
+     "spy": 3.17,
+     "acierto": null
     }
    }
   },
@@ -945,6 +963,12 @@
      "fecha": "2026-11-10",
      "ret": 0,
      "spy": 0,
+     "acierto": null
+    },
+    "5": {
+     "fecha": "2026-11-16",
+     "ret": -0.66,
+     "spy": 3.17,
      "acierto": null
     }
    }
@@ -966,6 +990,12 @@
      "ret": 0,
      "spy": 0,
      "acierto": false
+    },
+    "5": {
+     "fecha": "2026-11-16",
+     "ret": -1.47,
+     "spy": 3.17,
+     "acierto": true
     }
    }
   },
@@ -2226,7 +2256,14 @@
     "en_soporte_3m"
    ],
    "precio": 13.19,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": -0.08,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T13:45:17.944Z",
@@ -2239,7 +2276,14 @@
     "en_resistencia_3m"
    ],
    "precio": 13.51,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": -1.33,
+     "spy": 0.08,
+     "acierto": true
+    }
+   }
   },
   {
    "ts": "2026-11-13T13:45:18.186Z",
@@ -2252,7 +2296,14 @@
     "rompe_resistencia_3m"
    ],
    "precio": 1.99,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": -1.51,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T13:45:18.420Z",
@@ -2266,7 +2317,14 @@
     "rsi_sobrecomprado"
    ],
    "precio": 27.25,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.04,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T13:45:18.664Z",
@@ -2279,7 +2337,14 @@
     "en_soporte_3m"
    ],
    "precio": 3.72,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.54,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T13:45:23.023Z",
@@ -2292,7 +2357,14 @@
     "rompe_resistencia_3m"
    ],
    "precio": 18.97,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": -0.69,
+     "spy": 0.08,
+     "acierto": true
+    }
+   }
   },
   {
    "ts": "2026-11-13T14:00:24.337Z",
@@ -2305,7 +2377,14 @@
     "en_resistencia_3m"
    ],
    "precio": 27.16,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.37,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T14:00:24.790Z",
@@ -2318,7 +2397,14 @@
     "minimo_6m"
    ],
    "precio": 3.1,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 2.26,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T14:00:25.080Z",
@@ -2331,7 +2417,14 @@
     "minimo_6m"
    ],
    "precio": 3.67,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.91,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T14:30:28.539Z",
@@ -2344,7 +2437,14 @@
     "en_soporte_3m"
    ],
    "precio": 4,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.25,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T14:45:19.882Z",
@@ -2357,7 +2457,14 @@
     "cae_fuerte"
    ],
    "precio": 7.2,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T14:45:20.167Z",
@@ -2370,7 +2477,14 @@
     "rsi_sobrevendido"
    ],
    "precio": 19.81,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": -0.3,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T15:45:15.432Z",
@@ -2384,7 +2498,14 @@
     "rsi_sobrevendido"
    ],
    "precio": 13.04,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.07,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T15:45:15.885Z",
@@ -2397,7 +2518,14 @@
     "en_resistencia_3m"
    ],
    "precio": 1.94,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.03,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T15:45:16.383Z",
@@ -2411,7 +2539,14 @@
     "minimo_6m"
    ],
    "precio": 19.48,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.39,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T16:00:29.264Z",
@@ -2424,7 +2559,14 @@
     "en_soporte_3m"
    ],
    "precio": 19.55,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.02,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T16:15:21.012Z",
@@ -2438,7 +2580,14 @@
     "cae_fuerte"
    ],
    "precio": 6.7,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.94,
+     "spy": 0.08,
+     "acierto": true
+    }
+   }
   },
   {
    "ts": "2026-11-13T16:30:20.730Z",
@@ -2451,7 +2600,14 @@
     "en_soporte_3m"
    ],
    "precio": 1.37,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T17:00:30.597Z",
@@ -2464,7 +2620,14 @@
     "minimo_6m"
    ],
    "precio": 3.93,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 2.04,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T17:15:16.956Z",
@@ -2477,7 +2640,14 @@
     "cruce_muerte"
    ],
    "precio": 13.17,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.08,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T17:15:17.515Z",
@@ -2491,7 +2661,14 @@
     "cae_fuerte"
    ],
    "precio": 9.37,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.43,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
   },
   {
    "ts": "2026-11-13T17:15:17.740Z",
@@ -2504,7 +2681,14 @@
     "en_soporte_3m"
    ],
    "precio": 11.09,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.18,
+     "spy": 0.08,
+     "acierto": true
+    }
+   }
   },
   {
    "ts": "2026-11-13T17:45:18.883Z",
@@ -2518,7 +2702,14 @@
     "rsi_sobrecomprado"
    ],
    "precio": 21.25,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": -0.47,
+     "spy": 0.08,
+     "acierto": true
+    }
+   }
   },
   {
    "ts": "2026-11-13T18:15:22.506Z",
@@ -2531,7 +2722,14 @@
     "sube_fuerte"
    ],
    "precio": 1.14,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T19:00:36.831Z",
@@ -2545,7 +2743,14 @@
     "rsi_sobrevendido"
    ],
    "precio": 3.13,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.28,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T19:00:37.446Z",
@@ -2558,7 +2763,14 @@
     "rsi_sobrevendido"
    ],
    "precio": 3.68,
-   "resultado": {}
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 1.63,
+     "spy": 0.08,
+     "acierto": null
+    }
+   }
   },
   {
    "ts": "2026-11-13T19:30:26.429Z",
@@ -2571,6 +2783,27 @@
     "rompe_resistencia_3m"
    ],
    "precio": 24.33,
+   "resultado": {
+    "1": {
+     "fecha": "2026-11-16",
+     "ret": 0.16,
+     "spy": 0.08,
+     "acierto": false
+    }
+   }
+  },
+  {
+   "ts": "2026-11-16T13:00:28.976Z",
+   "fecha": "2026-11-16",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 7.2,
    "resultado": {}
   }
  ],
@@ -2739,44 +2972,72 @@
    "AAPL": 18.84,
    "BABA": 11.08,
    "NFLX": 1.37
+  },
+  "2026-11-16": {
+   "SPY": 13.33,
+   "BBAR": 3.74,
+   "ORCL": 44.26,
+   "PANW": 6.83,
+   "MU": 165.57,
+   "NVDA": 7.2,
+   "AMD": 56.88,
+   "BMA": 6.06,
+   "COST": 24.37,
+   "MA": 21.15,
+   "ABNB": 13.21,
+   "MELI": 13.18,
+   "META": 28.36,
+   "YPFD": 4.01,
+   "CEPU": 1.14,
+   "VIST": 19.75,
+   "GGAL": 3.17,
+   "AVGO": 9.41,
+   "QQQ": 36.06,
+   "TSM": 47.06,
+   "AMZN": 1.96,
+   "LLY": 27.26,
+   "TSLA": 27.62,
+   "AAPL": 18.84,
+   "BABA": 11.11,
+   "NFLX": 1.37
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-14T01:03:37.715Z",
-  "senales": 126,
+  "actualizado": "2026-11-16T13:00:51.049Z",
+  "senales": 127,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
-     "total": 30,
-     "ok": 10,
-     "pct": 33,
-     "promedio": -0.7756666666666667,
-     "vsSpy": -0.8070000000000004
+     "total": 34,
+     "ok": 12,
+     "pct": 35,
+     "promedio": -0.6244117647058823,
+     "vsSpy": -0.6614705882352944
     },
     "5": {
-     "total": 18,
+     "total": 19,
      "ok": 10,
-     "pct": 56,
-     "promedio": 4.516111111111112,
-     "vsSpy": 0.8861111111111115
+     "pct": 53,
+     "promedio": 4.238947368421053,
+     "vsSpy": 0.6331578947368425
     },
     "20": null
    },
    "SEÑAL DE VENTA": {
     "1": {
-     "total": 29,
+     "total": 36,
      "ok": 9,
-     "pct": 31,
-     "promedio": -0.3696551724137931,
-     "vsSpy": 0.35551724137931034
+     "pct": 25,
+     "promedio": -0.5527777777777776,
+     "vsSpy": 0.5258333333333334
     },
     "5": {
-     "total": 11,
-     "ok": 7,
-     "pct": 64,
-     "promedio": -1.7318181818181815,
-     "vsSpy": -1.8981818181818184
+     "total": 12,
+     "ok": 8,
+     "pct": 67,
+     "promedio": -1.4649999999999999,
+     "vsSpy": -2.126666666666667
     },
     "20": null
    },
@@ -2787,22 +3048,22 @@
    },
    "ESPERAR": {
     "1": {
-     "total": 3,
-     "ok": 1,
-     "pct": 33,
-     "promedio": 0.39666666666666667,
-     "vsSpy": -0.49333333333333335
+     "total": 6,
+     "ok": 3,
+     "pct": 50,
+     "promedio": 0.36499999999999994,
+     "vsSpy": -0.4533333333333333
     },
     "5": null,
     "20": null
    },
    "SEÑAL DE VENTA PARCIAL": {
     "1": {
-     "total": 2,
-     "ok": 2,
+     "total": 3,
+     "ok": 3,
      "pct": 100,
-     "promedio": 0.41000000000000003,
-     "vsSpy": -0.445
+     "promedio": 0.7166666666666668,
+     "vsSpy": -0.7666666666666667
     },
     "5": null,
     "20": null
@@ -2810,11 +3071,11 @@
   },
   "porCombo": {
    "en_soporte_3m": {
-    "total": 11,
+    "total": 12,
     "ok": 6,
-    "pct": 55,
-    "promedio": 4.178181818181819,
-    "vsSpy": 0.5481818181818183
+    "pct": 50,
+    "promedio": 3.7675,
+    "vsSpy": 0.1758333333333335
    },
    "cae_fuerte+en_soporte_3m": {
     "total": 1,
@@ -2866,11 +3127,11 @@
     "vsSpy": -4.88
    },
    "minimo_6m": {
-    "total": 2,
-    "ok": 2,
+    "total": 3,
+    "ok": 3,
     "pct": 100,
-    "promedio": 2.395,
-    "vsSpy": -6.025
+    "promedio": 2.0866666666666664,
+    "vsSpy": -5.5633333333333335
    },
    "minimo_6m+stop_ppc_20": {
     "total": 1,

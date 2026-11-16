@@ -1,13 +1,12 @@
 {
- "fecha": "2026-11-13",
- "apertura": true,
+ "fecha": "2026-11-16",
+ "apertura": false,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:stop_ppc_20": "2026-11-07",
   "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
-  "NVDA:rompe_soporte_3m": "2026-11-11",
   "NVDA:rsi_sobrevendido": "2026-11-11",
   "NVDA:minimo_6m": "2026-11-11",
   "COST:rsi_sobrecomprado": "2026-11-11",
@@ -16,39 +15,13 @@
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
   "MELI:en_soporte_3m": "2026-11-13",
-  "SPY:en_resistencia_3m": "2026-11-13",
-  "AMZN:rompe_resistencia_3m": "2026-11-13",
-  "LLY:rompe_resistencia_3m": "2026-11-13",
-  "LLY:rsi_sobrecomprado": "2026-11-13",
-  "BBAR:en_soporte_3m": "2026-11-13",
-  "AAPL:rompe_resistencia_3m": "2026-11-13",
   "LLY:en_resistencia_3m": "2026-11-13",
-  "GGAL:minimo_6m": "2026-11-13",
-  "BBAR:minimo_6m": "2026-11-13",
-  "YPFD:en_soporte_3m": "2026-11-13",
-  "NVDA:cae_fuerte": "2026-11-13",
-  "VIST:rsi_sobrevendido": "2026-11-13",
-  "MELI:rompe_soporte_3m": "2026-11-13",
-  "MELI:rsi_sobrevendido": "2026-11-13",
   "AMZN:en_resistencia_3m": "2026-11-13",
-  "VIST:rompe_soporte_3m": "2026-11-13",
-  "VIST:minimo_6m": "2026-11-13",
   "VIST:en_soporte_3m": "2026-11-13",
-  "PANW:en_soporte_3m": "2026-11-13",
-  "PANW:cae_fuerte": "2026-11-13",
   "NFLX:en_soporte_3m": "2026-11-13",
-  "YPFD:minimo_6m": "2026-11-13",
   "MELI:cruce_muerte": "2026-11-13",
-  "AVGO:cruza_abajo_sma200": "2026-11-13",
-  "AVGO:cae_fuerte": "2026-11-13",
   "BABA:en_soporte_3m": "2026-11-13",
-  "MA:rompe_resistencia_3m": "2026-11-13",
-  "MA:rsi_sobrecomprado": "2026-11-13",
-  "CEPU:sube_fuerte": "2026-11-13",
-  "GGAL:en_soporte_3m": "2026-11-13",
-  "GGAL:rsi_sobrevendido": "2026-11-13",
-  "BBAR:rsi_sobrevendido": "2026-11-13",
-  "COST:rompe_resistencia_3m": "2026-11-13"
+  "NVDA:en_soporte_3m": "2026-11-16"
  },
  "log": [
   {
@@ -1892,6 +1865,22 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca esperar por RSI sobrecomprado en 76, aunque la ruptura de resistencia por dividendo especial y recompra presiona al alza. Plan: Mantener la posición actual sin agregar capital este mes, destinando los 150 dólares libres a tecnología global. Riesgo: Corrección de corto plazo tras el rally reciente y sobreextensión técnica. Confianza: media",
    "radarTexto": "RADAR acá. Confirmado por titulares: dividendo especial de 30 dólares y recompra de acciones de 4 mil millones. Probable: refugio frente al caos de la inteligencia artificial y optimismo general de los analistas que impulsa la demanda.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:00:28.976Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 7.2,
+   "rsi14": 22.64,
+   "message_id": 201,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 22 y toque de soporte de tres meses superan el ruido sobre la salida de Huang. Plan: entrada US$ 7,20 · stop US$ 6,80 · objetivo US$ 9,00 Riesgo: Alta volatilidad por ruido político de Trump y rumores sobre el CEO. Confianza: media",
+   "radarTexto": "Acá RADAR. Los titulares confirman salida y posible vuelta de Jensen Huang como CEO, caídas por temor a su renuncia y roces con la política de Trump; no hay datos ciertos sobre su regreso.",
    "debatido": true
   }
  ]
