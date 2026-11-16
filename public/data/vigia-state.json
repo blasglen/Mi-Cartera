@@ -34,7 +34,8 @@
   "GGAL:en_soporte_3m": "2026-11-16",
   "COST:en_resistencia_3m": "2026-11-16",
   "COST:cruce_dorado": "2026-11-16",
-  "MELI:minimo_6m": "2026-11-16"
+  "MELI:minimo_6m": "2026-11-16",
+  "BBAR:en_soporte_3m": "2026-11-16"
  },
  "log": [
   {
@@ -2062,6 +2063,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta tras quebrar mínimos y tocar soporte en 13,04 sin noticias bajistas claras que lo justifiquen. Plan: Vender toda la posición de MELI ahora mismo por debajo del 1 por ciento para simplificar y mandar los 150 dólares libres más los 100 de SPY a este último. Riesgo: Vender en mínimo exacto de seis meses perdiendo la eventual recuperación del soporte. Confianza: baja",
    "radarTexto": "RADAR reportando. MELI cayó a mínimos de 52 semanas y toca soporte de 6 meses en 13,04 dólares MEP. Los titulares no explican las causas del movimiento actual de precios, aunque confirman compras de fondos y visión positiva a largo plazo en Wall Stre",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T14:15:19.333Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.7,
+   "rsi14": 31.88,
+   "message_id": 213,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte de tres meses con RSI en zona de sobreventa, mientras la baja responde a ruido electoral sin fundamentos directos en contra. Plan: Mantener la posición actual, colocar stop loss estricto si perfora los 3 dólares con 60 centavos y vender si rompe ese piso. Riesgo: Volatilidad política local y profundización de la tendencia bajista general del mercado argentino. Confianza: baja",
+   "radarTexto": "Titulares: Las noticias hablan de elecciones, recompra global en euros y recomendaciones de compra, pero no explican la baja puntual de BBAR. Probable: ruido electoral y volatilidad general. Confirmado: nada directo sobre la caída del papel.",
    "debatido": true
   }
  ]
