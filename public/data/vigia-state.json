@@ -15,7 +15,6 @@
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
   "MELI:en_soporte_3m": "2026-11-13",
-  "AMZN:en_resistencia_3m": "2026-11-13",
   "MELI:cruce_muerte": "2026-11-13",
   "NVDA:en_soporte_3m": "2026-11-16",
   "TSM:cruza_abajo_sma200": "2026-11-16",
@@ -39,7 +38,8 @@
   "VIST:rompe_soporte_3m": "2026-11-16",
   "BBAR:minimo_6m": "2026-11-16",
   "NFLX:en_soporte_3m": "2026-11-16",
-  "PANW:en_soporte_3m": "2026-11-16"
+  "PANW:en_soporte_3m": "2026-11-16",
+  "YPFD:rompe_soporte_3m": "2026-11-16"
  },
  "log": [
   {
@@ -2177,6 +2177,22 @@
    "rsi14": 37.62,
    "message_id": 220,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-16T15:00:24.139Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.89,
+   "rsi14": 25.65,
+   "message_id": 221,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,89 dólares por castigo local y caída del crudo, confirmando tendencia bajista. Plan: Vender toda la posición en YPFD hoy para simplificar la cartera y bajar exposición a Argentina. Riesgo: Rebote técnico violento por sobreventa extrema con el RSI en 25,65. Confianza: media",
+   "radarTexto": "Acá RADAR. YPFD cayó 3,4% a US$ 3,89 y rompió soporte por un castigo general a las acciones argentinas y la caída internacional del petróleo, a pesar de novedades en Vaca Muerta. Confirmado: castigo al mercado local y baja del crudo; probable: impact",
+   "debatido": true
   }
  ]
 }
