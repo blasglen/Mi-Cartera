@@ -14,7 +14,6 @@
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
-  "MELI:en_soporte_3m": "2026-11-13",
   "MELI:cruce_muerte": "2026-11-13",
   "NVDA:en_soporte_3m": "2026-11-16",
   "TSM:cruza_abajo_sma200": "2026-11-16",
@@ -46,7 +45,9 @@
   "GGAL:minimo_6m": "2026-11-16",
   "BBAR:rompe_soporte_3m": "2026-11-16",
   "BBAR:rsi_sobrevendido": "2026-11-16",
-  "BBAR:cae_fuerte": "2026-11-16"
+  "BBAR:cae_fuerte": "2026-11-16",
+  "MELI:rompe_soporte_3m": "2026-11-16",
+  "GGAL:rsi_sobrevendido": "2026-11-16"
  },
  "log": [
   {
@@ -2280,6 +2281,38 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 3,65 operando a 3,60 con riesgo país arriba de 840 puntos y tendencia bajista dura. Plan: Vender toda la posición en BBAR hoy mismo para simplificar y sacar exposición a Argentina. Riesgo: Volatilidad local y ruido electoral que sigan deprimiendo al sector financiero argentino. Confianza: baja",
    "radarTexto": "RADAR reportando. Confirmado: la suba del riesgo país por encima de 840 puntos sacude a las acciones argentinas que caen fuerte, incluyendo a los bancos. Probable: el ruido electoral también presiona al mercado local, mientras en España BBVA anunció ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T18:15:20.940Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 12.9,
+   "rsi14": 30.46,
+   "message_id": 227,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGIA marca rotura de soporte a 12,90 con tendencia bajista y sin noticias que justifiquen la caída. Plan: Vender todo MELI para simplificar cartera y salir de Argentina, redirigiendo esos fondos a crecimiento global. Riesgo: Vender en el mínimo del rango de 6 meses justo con RSI en zona de sobreventa rozando 30. Confianza: media",
+   "radarTexto": "RADAR reporta MELI a US$ 12,90 MEP (-2,6% hoy), rompiendo soporte de 3 meses y en tendencia bajista clara. Los titulares de los últimos días no explican el movimiento actual de precios; solo mencionan análisis generales de largo plazo y cobertura de ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T18:15:21.567Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.06,
+   "rsi14": 29.63,
+   "message_id": 228,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: RSI sobrevendido pero tendencia bajista profunda sin catalizador claro y con mandato de reducir exposición a Argentina. Plan: Vender el total de GGAL ya que representa menos del 1% de la cartera y no cumple la tesis de crecimiento global. Riesgo: Materializar pérdida en soporte clave de US$ 3,06 ante persistencia del sesgo político local. Confianza: Media",
+   "radarTexto": "RADAR informando. Los titulares no explican el movimiento específico de GGAL de hoy. Es probable que la baja esté vinculada a la volatilidad general por elecciones y al clima financiero reciente, aunque los medios solo destacan un rebote general del ",
    "debatido": true
   }
  ]
