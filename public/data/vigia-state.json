@@ -18,12 +18,22 @@
   "LLY:en_resistencia_3m": "2026-11-13",
   "AMZN:en_resistencia_3m": "2026-11-13",
   "VIST:en_soporte_3m": "2026-11-13",
-  "NFLX:en_soporte_3m": "2026-11-13",
   "MELI:cruce_muerte": "2026-11-13",
   "NVDA:en_soporte_3m": "2026-11-16",
   "TSM:cruza_abajo_sma200": "2026-11-16",
   "TSM:cae_fuerte": "2026-11-16",
-  "BABA:rompe_soporte_3m": "2026-11-16"
+  "BABA:rompe_soporte_3m": "2026-11-16",
+  "YPFD:en_soporte_3m": "2026-11-16",
+  "MU:cruza_abajo_sma200": "2026-11-16",
+  "MU:cae_fuerte": "2026-11-16",
+  "NVDA:rompe_soporte_3m": "2026-11-16",
+  "LLY:rsi_sobrecomprado": "2026-11-16",
+  "VIST:rsi_sobrevendido": "2026-11-16",
+  "VIST:minimo_6m": "2026-11-16",
+  "BABA:minimo_6m": "2026-11-16",
+  "GGAL:en_soporte_3m": "2026-11-16",
+  "COST:en_resistencia_3m": "2026-11-16",
+  "COST:cruce_dorado": "2026-11-16"
  },
  "log": [
   {
@@ -1917,6 +1927,125 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de tres meses a once con catorce y opera abajo de todas las medias sin noticias frescas que justifiquen la baja. Plan: Vender toda la posición en BABA ahora mismo para simplificar cartera y liberar capital de riesgo. Riesgo: Continuación de la tendencia bajista sectorial con pérdida total del soporte previo. Confianza: baja",
    "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:45:18.519Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.97,
+   "rsi14": 26.79,
+   "message_id": 204,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,93 dólares con RSI en sobreventa extrema, aguantando pese al castigo local y caída del petróleo. Plan: Mantener la posición actual; vender si perfora 3,93 para simplificar y limpiar riesgo argentino. Riesgo: Volatilidad local y caída externa del crudo que fuercen la ruptura del soporte. Confianza: baja",
+   "radarTexto": "Confirmado: caída del petróleo Brent y volatilidad financiera internacional con suba del VIX. Probable: castigo a empresas argentinas y pérdida de valor de mercado pese a precios internacionales previos.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:45:19.112Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 155.29,
+   "rsi14": 38.78,
+   "message_id": 205,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta tras caer fuerte y romper la media de 200, mientras el mercado duda de la sostenibilidad del negocio a pesar del optimismo histórico. Plan: Vender todo lo de Micron ahora y usar los 250 dólares del mes más lo liquidado para sumar al SPY y algún ganador global; recompraría recién si supera los 180 dólares. Riesgo: Quedar fuera de un rebote rápido si el mercado interpreta la caída como ruido temp",
+   "radarTexto": "RADAR al habla. Los titulares debaten si es oportunidad de compra o si los buenos precios de memoria no alcanzan, sin confirmar un catalizador exclusivo para la caída de hoy. Probable: dudas sobre la sostenibilidad del negocio frente al optimismo de ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:45:19.441Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 6.98,
+   "rsi14": 21.1,
+   "message_id": 206,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por ruptura de soporte con RSI en sobreventa extrema de 21, pero la renuncia confirmada del CEO Jensen Huang destruye la tesis estructural de Nvidia. Plan: Vender todo lo de Nvidia ahora mismo, sin esperar ningún rebote, y destinar esos fondos y los 150 dólares libres de este mes íntegramente a SPY para cumplir tu objetivo de bajar exposición a riesgo idiosincrático. Riesgo: Volatilidad extrema y ",
+   "radarTexto": "RADAR informando. La caída se explica por la renuncia del CEO Jensen Huang y el impacto de su salida. Es confirmado que renunció y probable que evalúe un retorno que genera ruido en el mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:45:19.719Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrecomprado"
+   ],
+   "precio": 27.53,
+   "rsi14": 71.43,
+   "message_id": 207,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sigue en fuerte tendencia alcista apoyada por ventas récord de Mounjaro y Zepbound, a pesar del RSI sobrecomprado. Plan: Mantener lo que ya tiene en LLY sin agregar más capital y liquidar si pierde los US$ 20.74. Riesgo: Volatilidad alta por sobrecompra técnica y dependencia del éxito continuo en fármacos de obesidad. Confianza: media",
+   "radarTexto": "RADAR Informa. Confirmado: Los ingresos salieron 48 por ciento arriba por ventas récord de Mounjaro y Zepbound a 14 mil 900 millones. Probable: El rally se alimenta del furor por sus fármacos para bajar de peso y proyecciones optimistas de analistas ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T13:45:20.010Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rsi_sobrevendido",
+    "minimo_6m"
+   ],
+   "precio": 19.51,
+   "rsi14": 29.29,
+   "message_id": 208,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-16T13:45:26.537Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 10.78,
+   "rsi14": 35.75,
+   "message_id": 209,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-16T13:45:27.159Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.11,
+   "rsi14": 31.05,
+   "message_id": 210,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-16T13:45:27.441Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_resistencia_3m",
+    "cruce_dorado"
+   ],
+   "precio": 24.56,
+   "rsi14": 78.12,
+   "message_id": 211,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
