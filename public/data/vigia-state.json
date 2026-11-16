@@ -47,7 +47,8 @@
   "BBAR:rsi_sobrevendido": "2026-11-16",
   "BBAR:cae_fuerte": "2026-11-16",
   "MELI:rompe_soporte_3m": "2026-11-16",
-  "GGAL:rsi_sobrevendido": "2026-11-16"
+  "GGAL:rsi_sobrevendido": "2026-11-16",
+  "MELI:en_soporte_3m": "2026-11-16"
  },
  "log": [
   {
@@ -2313,6 +2314,22 @@
    "analista": "VENTA PARCIAL",
    "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: RSI sobrevendido pero tendencia bajista profunda sin catalizador claro y con mandato de reducir exposición a Argentina. Plan: Vender el total de GGAL ya que representa menos del 1% de la cartera y no cumple la tesis de crecimiento global. Riesgo: Materializar pérdida en soporte clave de US$ 3,06 ante persistencia del sesgo político local. Confianza: Media",
    "radarTexto": "RADAR informando. Los titulares no explican el movimiento específico de GGAL de hoy. Es probable que la baja esté vinculada a la volatilidad general por elecciones y al clima financiero reciente, aunque los medios solo destacan un rebote general del ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T18:30:21.863Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.91,
+   "rsi14": 30.5,
+   "message_id": 229,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa a 30.5 tocando soporte de 3 meses en 13.04 sin noticias negativas fundamentales que justifiquen la baja. Plan: entrada US$ 12,91 · stop US$ 12,20 · objetivo US$ 16,00 Riesgo: Alta volatilidad por tendencia bajista de corto plazo y ruptura del piso de los 13 dólares. Confianza: media",
+   "radarTexto": "RADAR acá. Los titulares no explican la caída de hoy; son análisis generales, comparativas y menciones de largo plazo. Probable que baje por la tendencia bajista del papel, pero no hay un hecho puntual confirmado en las noticias.",
    "debatido": true
   }
  ]
