@@ -41,7 +41,8 @@
   "PANW:en_soporte_3m": "2026-11-16",
   "YPFD:rompe_soporte_3m": "2026-11-16",
   "SPY:en_soporte_3m": "2026-11-16",
-  "LLY:en_resistencia_3m": "2026-11-16"
+  "LLY:en_resistencia_3m": "2026-11-16",
+  "AMZN:en_resistencia_3m": "2026-11-16"
  },
  "log": [
   {
@@ -2226,6 +2227,21 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Sigue en tendencia alcista firme apoyada por Mounjaro y Zepbound, aunque el RSI alto y la resistencia piden cautela. Plan: Mantener lo que ya tiene y fijar stop loss en 23,16 dólares para proteger ganancias. Riesgo: Corrección de corto plazo por sobrecompra técnica y toma de ganancias. Confianza: media",
    "radarTexto": "RADAR reporta LLY a $27,58 MEP (+0,7% hoy). Confirmado: la suba responde a la compra de Calytrix Bio por hasta USD 1.500 millones para expandir su cartera de cáncer hematológico y al salto del 48% en ingresos impulsado por Mounjaro y Zepbound. Probab",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T16:30:22.462Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 1.93,
+   "rsi14": 55.13,
+   "message_id": 224,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR reporta: AMZN cotiza a US$ 1,93 (-2,0% hoy) tras tocar resistencia de 3 meses. Confirmado por titulares: acuerdo de AWS por US$ 5 mil millones con Blackstone para centros de datos y pérdida de 40 satélites por un fallo en el cohete Vulcan. Prob",
    "debatido": true
   }
  ]
