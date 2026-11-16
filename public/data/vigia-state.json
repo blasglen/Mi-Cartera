@@ -39,7 +39,9 @@
   "BBAR:minimo_6m": "2026-11-16",
   "NFLX:en_soporte_3m": "2026-11-16",
   "PANW:en_soporte_3m": "2026-11-16",
-  "YPFD:rompe_soporte_3m": "2026-11-16"
+  "YPFD:rompe_soporte_3m": "2026-11-16",
+  "SPY:en_soporte_3m": "2026-11-16",
+  "LLY:en_resistencia_3m": "2026-11-16"
  },
  "log": [
   {
@@ -2192,6 +2194,38 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,89 dólares por castigo local y caída del crudo, confirmando tendencia bajista. Plan: Vender toda la posición en YPFD hoy para simplificar la cartera y bajar exposición a Argentina. Riesgo: Rebote técnico violento por sobreventa extrema con el RSI en 25,65. Confianza: media",
    "radarTexto": "Acá RADAR. YPFD cayó 3,4% a US$ 3,89 y rompió soporte por un castigo general a las acciones argentinas y la caída internacional del petróleo, a pesar de novedades en Vaca Muerta. Confirmado: castigo al mercado local y baja del crudo; probable: impact",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T15:45:22.242Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 13.17,
+   "rsi14": 45.54,
+   "message_id": 222,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: El papel toca el soporte de 3 meses en 12.92 con RSI neutral de 45.54, absorbiendo la baja por la presión sobre Nvidia y los futuros. Plan: entrada US$ 13.17 · stop US$ 12.50 · objetivo US$ 13.72 Riesgo: Volatilidad de corto plazo por el contexto tecnológico y tensiones políticas en EE.UU. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado por titulares: caída previa a los resultados de Nvidia, la presión de Scott Bessent sobre la compañía y la baja general de futuros. Probable: cautela por el inminente IPO de Anthropic y temores de una corrección mayor seg",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T15:45:22.910Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 27.58,
+   "rsi14": 71.66,
+   "message_id": 223,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sigue en tendencia alcista firme apoyada por Mounjaro y Zepbound, aunque el RSI alto y la resistencia piden cautela. Plan: Mantener lo que ya tiene y fijar stop loss en 23,16 dólares para proteger ganancias. Riesgo: Corrección de corto plazo por sobrecompra técnica y toma de ganancias. Confianza: media",
+   "radarTexto": "RADAR reporta LLY a $27,58 MEP (+0,7% hoy). Confirmado: la suba responde a la compra de Calytrix Bio por hasta USD 1.500 millones para expandir su cartera de cáncer hematológico y al salto del 48% en ingresos impulsado por Mounjaro y Zepbound. Probab",
    "debatido": true
   }
  ]
