@@ -42,7 +42,11 @@
   "YPFD:rompe_soporte_3m": "2026-11-16",
   "SPY:en_soporte_3m": "2026-11-16",
   "LLY:en_resistencia_3m": "2026-11-16",
-  "AMZN:en_resistencia_3m": "2026-11-16"
+  "AMZN:en_resistencia_3m": "2026-11-16",
+  "GGAL:minimo_6m": "2026-11-16",
+  "BBAR:rompe_soporte_3m": "2026-11-16",
+  "BBAR:rsi_sobrevendido": "2026-11-16",
+  "BBAR:cae_fuerte": "2026-11-16"
  },
  "log": [
   {
@@ -2242,6 +2246,40 @@
    "message_id": 224,
    "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
    "radarTexto": "RADAR reporta: AMZN cotiza a US$ 1,93 (-2,0% hoy) tras tocar resistencia de 3 meses. Confirmado por titulares: acuerdo de AWS por US$ 5 mil millones con Blackstone para centros de datos y pérdida de 40 satélites por un fallo en el cohete Vulcan. Prob",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T17:45:17.894Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.07,
+   "rsi14": 30.02,
+   "message_id": 225,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: Vigía marca venta por tendencia bajista y perforación de mínimos de seis meses, sin noticias que respalden a Galicia. Plan: Vender toda la posición de GGAL para simplificar cartera a menos del 1% y redirigir a tecnología. Riesgo: Volatilidad local y costo de oportunidad frente al crecimiento global de largo plazo. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares no explican el movimiento bajista de GGAL. Probable contexto según los medios: el Merval venía de cortar bajas y registrar rebotes en una semana atravesada por la tensión electoral y el riesgo país en 830 puntos. Confi",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-16T17:45:18.297Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 3.6,
+   "rsi14": 29.64,
+   "message_id": 226,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 3,65 operando a 3,60 con riesgo país arriba de 840 puntos y tendencia bajista dura. Plan: Vender toda la posición en BBAR hoy mismo para simplificar y sacar exposición a Argentina. Riesgo: Volatilidad local y ruido electoral que sigan deprimiendo al sector financiero argentino. Confianza: baja",
+   "radarTexto": "RADAR reportando. Confirmado: la suba del riesgo país por encima de 840 puntos sacude a las acciones argentinas que caen fuerte, incluyendo a los bancos. Probable: el ruido electoral también presiona al mercado local, mientras en España BBVA anunció ",
    "debatido": true
   }
  ]
