@@ -25,23 +25,23 @@
   "VIST:minimo_6m": "2026-11-16",
   "BABA:minimo_6m": "2026-11-16",
   "COST:en_resistencia_3m": "2026-11-16",
-  "COST:cruce_dorado": "2026-11-16",
   "MELI:minimo_6m": "2026-11-16",
   "YPFD:minimo_6m": "2026-11-16",
   "VIST:rompe_soporte_3m": "2026-11-16",
   "BBAR:minimo_6m": "2026-11-16",
-  "PANW:en_soporte_3m": "2026-11-16",
   "YPFD:rompe_soporte_3m": "2026-11-16",
   "SPY:en_soporte_3m": "2026-11-16",
-  "LLY:en_resistencia_3m": "2026-11-16",
   "GGAL:minimo_6m": "2026-11-16",
   "BBAR:rompe_soporte_3m": "2026-11-16",
   "BBAR:rsi_sobrevendido": "2026-11-16",
   "BBAR:cae_fuerte": "2026-11-16",
-  "MELI:rompe_soporte_3m": "2026-11-16",
   "GGAL:rsi_sobrevendido": "2026-11-16",
   "GGAL:rompe_soporte_3m": "2026-11-16",
-  "GGAL:cae_fuerte": "2026-11-16"
+  "GGAL:cae_fuerte": "2026-11-16",
+  "MELI:en_soporte_3m": "2026-11-17",
+  "BABA:stop_ppc_20": "2026-11-17",
+  "BABA:cae_fuerte": "2026-11-17",
+  "NFLX:en_soporte_3m": "2026-11-17"
  },
  "log": [
   {
@@ -2341,6 +2341,43 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses operando a 3,03 dólares en un contexto electoral adverso y tendencia bajista general. Plan: Vender toda la posición en GGAL para simplificar la cartera y bajar la exposición a Argentina; no hay precio de recompra previsto. Riesgo: Contagio bajista del panel líder argentino y volatilidad política local. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares recientes no explican la caída de GGAL; solo mencionan un Merval mixto tras semanas difíciles, riesgo país en 830 puntos y elecciones sacudiendo activos. Lo confirmado: contexto electoral y tasas cediendo. Lo probable:",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:00:36.603Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.91,
+   "rsi14": 30.53,
+   "message_id": 231
+  },
+  {
+   "ts": "2026-11-17T14:00:37.228Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20",
+    "cae_fuerte"
+   ],
+   "precio": 10.32,
+   "rsi14": 32.48,
+   "message_id": 232
+  },
+  {
+   "ts": "2026-11-17T14:00:37.524Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.34,
+   "rsi14": 36.49,
+   "message_id": 233
   }
  ]
 }
