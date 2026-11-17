@@ -58,7 +58,9 @@
   "TSM:en_soporte_3m": "2026-11-17",
   "QQQ:en_soporte_3m": "2026-11-17",
   "QQQ:cruza_abajo_sma200": "2026-11-17",
-  "QQQ:cae_fuerte": "2026-11-17"
+  "QQQ:cae_fuerte": "2026-11-17",
+  "CRM:en_soporte_3m": "2026-11-17",
+  "CRM:cae_fuerte": "2026-11-17"
  },
  "log": [
   {
@@ -2673,6 +2675,23 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: QQQ perforó la media de 200 y está en soporte por pánico en tecnológicas, pero los balances de Nvidia y Apple pueden profundizar la caída. Plan: entrada US$ 34,28 · stop US$ 32,50 · objetivo US$ 42,00 Riesgo: Alta volatilidad sectorial y posible quiebre de mínimos de seis meses en plena corrección de noviembre. Confianza: baja",
    "radarTexto": "RADAR: El Nasdaq va rumbo a su peor noviembre desde 2008 en una semana clave para la inteligencia artificial. Confirmado: caídas por tensión ante balances tecnológicos y defensa de inversores; probable: impacto por resultados de Nvidia y Apple y vola",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T16:00:27.080Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 11.49,
+   "rsi14": 31.53,
+   "message_id": 252,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca el soporte clave de 11,27 y la media de 200 en 11,45 con RSI sobrevendido, mientras el mercado castiga el gasto en IA sin romper la tendencia de fondo. Plan: entrada US$ 11,49 · stop US$ 10,80 · objetivo US$ 14,00 Riesgo: Alta volatilidad sectorial y presión bajista de corto plazo que puede perforar soportes. Confianza: media",
+   "radarTexto": "RADAR. Salesforce cae fuerte arrastrando al Dow por baja general del mercado y cautela en gasto en IA. Confirmado: presión bajista y arrastre del índice. Probable: temores por retorno de inversión en inteligencia artificial.",
    "debatido": true
   }
  ]
