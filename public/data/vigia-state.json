@@ -54,7 +54,8 @@
   "CRM:cruza_abajo_sma200": "2026-11-17",
   "VIST:rompe_soporte_3m": "2026-11-17",
   "BBAR:en_soporte_3m": "2026-11-17",
-  "GGAL:minimo_6m": "2026-11-17"
+  "GGAL:minimo_6m": "2026-11-17",
+  "VIST:rsi_sobrevendido": "2026-11-17"
  },
  "log": [
   {
@@ -2767,6 +2768,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Viga marca venta por minimo de seis meses en dos dolares noventa y nueve y tendencia bajista dura, y Radar confirma clima rojo externo y riesgo pais arriba de ochocientos cincuenta. Plan: Vender toda la posicion de Galicia para simplificar cartera y llevar el capital a tecnologia norteamericana con los doscientos cincuenta dolares; no hay precio de recompra. Riesgo: Volatilidad local y perder un rebote tecnico s",
    "radarTexto": "RADAR reportando. Los titulares muestran un mercado local mixto con activos cotizando en baja y riesgo pais arriba de 850 puntos, en un contexto de caidas externas en Wall Street. Probable: la baja de GGAL acompaña ese clima rojo y la suba de los dol",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T19:15:31.382Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 19.24,
+   "rsi14": 29.88,
+   "message_id": 258,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en 29.88 marca sobreventa extrema y soportes en 18.95 aguantan, pese al ruido político local que hunde a Argentina. Plan: Mantener lo que tiene en VIST sin sumar capital nuevo y vender entera si perfora los US$ 18.95 para simplificar. Riesgo: Volatilidad geopolítica local y caída temporal de flujos globales hacia Vaca Muerta. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares confirman un castigo generalizado a las acciones argentinas con derrumbe y suba del riesgo país. Como probable, se vincula al reacomodamiento de carteras de inversores globales tras compras fuertes en Vaca Muerta como ",
    "debatido": true
   }
  ]
