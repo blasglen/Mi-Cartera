@@ -54,7 +54,9 @@
   "VIST:rompe_soporte_3m": "2026-11-17",
   "BBAR:en_soporte_3m": "2026-11-17",
   "GGAL:minimo_6m": "2026-11-17",
-  "VIST:rsi_sobrevendido": "2026-11-17"
+  "VIST:rsi_sobrevendido": "2026-11-17",
+  "GGAL:rsi_sobrevendido": "2026-11-17",
+  "CRM:rsi_sobrevendido": "2026-11-17"
  },
  "log": [
   {
@@ -2783,6 +2785,38 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en 29.88 marca sobreventa extrema y soportes en 18.95 aguantan, pese al ruido político local que hunde a Argentina. Plan: Mantener lo que tiene en VIST sin sumar capital nuevo y vender entera si perfora los US$ 18.95 para simplificar. Riesgo: Volatilidad geopolítica local y caída temporal de flujos globales hacia Vaca Muerta. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares confirman un castigo generalizado a las acciones argentinas con derrumbe y suba del riesgo país. Como probable, se vincula al reacomodamiento de carteras de inversores globales tras compras fuertes en Vaca Muerta como ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T21:00:24.885Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.01,
+   "rsi14": 29.39,
+   "message_id": 259,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: RSI sobrevendido da rebote técnico pero perforó mínimos, con riesgo país arriba de 850 puntos y tendencia bajista dura. Plan: Vender toda la posición de GGAL ya que representa menos del 1% y no cumple la tesis de bajar exposición a Argentina. Riesgo: Contexto local adverso y debilidad sistémica que puede profundizar la caída en bancos. Confianza: media",
+   "radarTexto": "Radar reportando. Los titulares confirman un clima general de mercado en rojo con caída de activos y suba del riesgo país arriba de 850 puntos. Es probable que este contexto local adverso y la debilidad de Wall Street arrastren a GGAL.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T21:00:25.285Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 11.29,
+   "rsi14": 29.66,
+   "message_id": 260,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema rompiendo soporte por pánico sectorial infundado en IA. Plan: entrada US$ 11,29 · stop US$ 10,00 · objetivo US$ 15,00 Riesgo: Alta volatilidad por presión bajista de corto plazo en software. Confianza: baja",
+   "radarTexto": "RADAR reporta: CRM se hunde un 11,1% a US$ 11,29 MEP, operando bajista y con RSI en sobreventa (29,66). Confirmado por titulares: El desplome se debe a una fuerte caída del sector software ante temores de crecimiento en IA y advertencias de que compe",
    "debatido": true
   }
  ]
