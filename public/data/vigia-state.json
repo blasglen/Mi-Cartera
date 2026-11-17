@@ -32,7 +32,6 @@
   "BBAR:rsi_sobrevendido": "2026-11-16",
   "BBAR:cae_fuerte": "2026-11-16",
   "GGAL:rsi_sobrevendido": "2026-11-16",
-  "GGAL:rompe_soporte_3m": "2026-11-16",
   "GGAL:cae_fuerte": "2026-11-16",
   "MELI:en_soporte_3m": "2026-11-17",
   "BABA:stop_ppc_20": "2026-11-17",
@@ -46,7 +45,10 @@
   "GOOGL:cae_fuerte": "2026-11-17",
   "VIST:en_soporte_3m": "2026-11-17",
   "PANW:en_soporte_3m": "2026-11-17",
-  "COST:rompe_resistencia_3m": "2026-11-17"
+  "COST:rompe_resistencia_3m": "2026-11-17",
+  "YPFD:rompe_soporte_3m": "2026-11-17",
+  "VIST:minimo_6m": "2026-11-17",
+  "GGAL:en_soporte_3m": "2026-11-17"
  },
  "log": [
   {
@@ -2514,6 +2516,54 @@
    "rsi14": 79.17,
    "message_id": 242,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-17T15:00:24.265Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.88,
+   "rsi14": 25.55,
+   "message_id": 243,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses con el papel en mínimos de seis meses a 3,88 dólares por la suba del riesgo país y ruidos legales, marcando tendencia bajista total. Plan: Vender toda la posición de YPFD hoy para simplificar cartera y salir de Argentina, y reasignar esos fondos a crecimiento global; no hay precio de recompra previsto. Riesgo: Volatilidad local extrema y persistencia de juicios internacionales que si",
+   "radarTexto": "RADAR al habla. El desplome responde a la caída general de activos argentinos con riesgo país arriba de 840 puntos y a la pérdida de US$ 8.000 millones de valor de mercado (confirmado); como probable, influyen la apelación por el juicio con Burford y",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:00:24.781Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 19.45,
+   "rsi14": 29.08,
+   "message_id": 244,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y RSI en 29.08 confirma debilidad extrema, sin noticias recientes que justifiquen el desplome. Plan: Vender toda la posición en VIST por debajo del 1% y rotar esos dólares al remanente de US$ 150 del aporte mensual a tecnología global. Riesgo: Mala ejecución en la salida y perder un rebote técnico de corto plazo desde el mínimo de 6 meses. Confianza: media",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:00:25.030Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.05,
+   "rsi14": 29.42,
+   "message_id": 245,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: GGAL rompió soporte técnico en 3,05 con tendencia bajista y riesgo país arriba de 850, contradiciendo el mantenimiento de Vigía. Plan: Vender toda la posición actual de GGAL para limpiar riesgo argentino y simplificar la cartera a menos del 1%. Riesgo: Volatilidad local y caída sostenida del sector financiero argentino. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares confirman mercados locales en rojo, suba del dólar y riesgo país arriba de 850 puntos por un contexto externo bajista. Es probable que esto golpee al Merval, aunque los medios también destacan optimismo de brokers y Wa",
+   "debatido": true
   }
  ]
 }
