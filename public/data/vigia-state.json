@@ -41,7 +41,9 @@
   "MELI:en_soporte_3m": "2026-11-17",
   "BABA:stop_ppc_20": "2026-11-17",
   "BABA:cae_fuerte": "2026-11-17",
-  "NFLX:en_soporte_3m": "2026-11-17"
+  "NFLX:en_soporte_3m": "2026-11-17",
+  "LLY:en_resistencia_3m": "2026-11-17",
+  "COST:cruce_dorado": "2026-11-17"
  },
  "log": [
   {
@@ -2352,7 +2354,11 @@
    ],
    "precio": 12.91,
    "rsi14": 30.53,
-   "message_id": 231
+   "message_id": 231,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de seis meses con RSI en zona de sobreventa extrema, absorbiendo ventas de fondos mientras entra soporte institucional. Plan: entrada US$ 12,93 · stop US$ 12,00 · objetivo US$ 15,50 Riesgo: Alta volatilidad técnica con tendencia bajista de corto plazo y presión vendedora institucional. Confianza: media",
+   "radarTexto": "RADAR: MELI bajó 2,4% y toca mínimos de 6 meses (USD 12,93 MEP). Confirmado por titulares: caídas a nuevos pisos de 52 semanas y ventas de ciertos fondos (Spear Holdings). Probable: impacto de noticias mixtas donde conviven compras institucionales (M",
+   "debatido": true
   },
   {
    "ts": "2026-11-17T14:00:37.228Z",
@@ -2365,7 +2371,11 @@
    ],
    "precio": 10.32,
    "rsi14": 32.48,
-   "message_id": 232
+   "message_id": 232,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y el precio perforó soportes clave por controles de EE.UU. a tecnológicas chinas. Plan: Vender todo ahora mismo para simplificar y recomprar si rompe la resistencia de 15. Riesgo: Caída adicional por tensiones geopolíticas y desarme técnico profundo. Confianza: baja",
+   "radarTexto": "RADAR: BABA cae fuerte por nuevos controles de EE.UU. a chips y restricciones a tecnológicas chinas, además de una tormenta perfecta previa a su balance. Es probable que esto presione la acción, aunque los titulares no confirman el impacto exacto en ",
+   "debatido": true
   },
   {
    "ts": "2026-11-17T14:00:37.524Z",
@@ -2377,7 +2387,40 @@
    ],
    "precio": 1.34,
    "rsi14": 36.49,
-   "message_id": 233
+   "message_id": 233,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 1.34 perforando los 1.35 por ruido de ingresos publicitarios y recortes de Evercore. Plan: entrada US$ 1,34 · stop US$ 1,25 · objetivo US$ 1,75 Riesgo: Alta volatilidad por ruptura de medias móviles y castigo sectorial a mediano plazo. Confianza: baja",
+   "radarTexto": "Titulares: La baja al mínimo anual y a zona de soporte se explica por la revisión a la baja en la previsión de ingresos por publicidad para 2026 y la salida del papel de la lista de favoritos de Evercore. Probable: el desplome frente a máximos y la f",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:30:22.493Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 26.86,
+   "rsi14": 65.09,
+   "message_id": 234,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Cotiza en resistencia técnica tras un rally impulsado por obesidad, generando una toma de ganancias lógica. Plan: Mantener lo que ya tiene en cartera sin sumar nuevos nominales. Riesgo: Volatilidad de corto plazo y posible corrección si no rompe máximos. Confianza: media",
+   "radarTexto": "RADAR reporta: LLY cotiza a US$ 26,86 MEP y baja 1,9% hoy, tocando resistencia de 3 meses en zona de máximos. Confirmado por titulares: El movimiento responde a la euforia por su negocio de drogas para la obesidad que supera a la inteligencia artific",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:30:22.964Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruce_dorado"
+   ],
+   "precio": 24.47,
+   "rsi14": 77.63,
+   "message_id": 235,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
