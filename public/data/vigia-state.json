@@ -53,7 +53,12 @@
   "ORCL:en_soporte_3m": "2026-11-17",
   "ORCL:cae_fuerte": "2026-11-17",
   "SNOW:en_soporte_3m": "2026-11-17",
-  "SNOW:cae_fuerte": "2026-11-17"
+  "SNOW:cae_fuerte": "2026-11-17",
+  "MELI:rsi_sobrevendido": "2026-11-17",
+  "TSM:en_soporte_3m": "2026-11-17",
+  "QQQ:en_soporte_3m": "2026-11-17",
+  "QQQ:cruza_abajo_sma200": "2026-11-17",
+  "QQQ:cae_fuerte": "2026-11-17"
  },
  "log": [
   {
@@ -2618,6 +2623,56 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte duro de tres meses tras una baja injustificada por fundamentals, ideal para tu perfil de crecimiento a largo plazo. Plan: entrada US$ 9,55 · stop US$ 8,30 · objetivo US$ 12,80 Riesgo: Volatilidad alta por valuación exigida y posible arrastre de los grandes fondos. Confianza: media",
    "radarTexto": "RADAR reportando. SNOW cayó 7,6% hoy operando a US$ 9,55 MEP, tocando soporte de 3 meses. Probable: presión vendedora tras fuertes caídas recientes y dudas por valuación alta. No hay confirmación oficial en titulares de un hecho puntual hoy que justi",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:45:29.740Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 12.83,
+   "rsi14": 30,
+   "message_id": 249,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 30 da sobreventa extrema con soporte en mínimos de 6 meses y respaldo institucional de compras de Burry. Plan: entrada US$ 12,83 · stop US$ 11,50 · objetivo US$ 17,00 Riesgo: volatilidad del sector tecnológico y ruptura del soporte mínimo de 6 meses. Confianza: media",
+   "radarTexto": "RADAR REPORTE MELI. Los titulares confirman compra de Michael Burry y calificación positiva de Susquehanna, además de la caída a mínimos de 52 semanas. Es probable que la baja responda a toma de ganancias institucional o rotación de cartera reflejada",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:45:30.349Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 42.28,
+   "rsi14": 36.5,
+   "message_id": 250,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: TSM cae 10,6 por ciento hasta el soporte clave de 41,66 dólares por ruido sectorial en IA, ignorando récords de ventas. Plan: entrada US$ 42,28 · stop US$ 39,50 · objetivo US$ 56,00 Riesgo: Alta volatilidad por tensiones geopolíticas y castigo generalizado a semiconductores. Confianza: media",
+   "radarTexto": "RADAR reportando. TSM se hunde un 10,6 por ciento hoy a US$ 42,28 MEP tras perder casi un 10 en tres días pese a reportar un mes récord de 587 mil millones de dólares taiwaneses. Confirmado: la caída ocurre a pesar de los récords de ventas y la deman",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:45:30.648Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "en_soporte_3m",
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 34.69,
+   "rsi14": 38.05,
+   "message_id": 251,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: QQQ perforó la media de 200 y está en soporte por pánico en tecnológicas, pero los balances de Nvidia y Apple pueden profundizar la caída. Plan: entrada US$ 34,28 · stop US$ 32,50 · objetivo US$ 42,00 Riesgo: Alta volatilidad sectorial y posible quiebre de mínimos de seis meses en plena corrección de noviembre. Confianza: baja",
+   "radarTexto": "RADAR: El Nasdaq va rumbo a su peor noviembre desde 2008 en una semana clave para la inteligencia artificial. Confirmado: caídas por tensión ante balances tecnológicos y defensa de inversores; probable: impacto por resultados de Nvidia y Apple y vola",
    "debatido": true
   }
  ]
