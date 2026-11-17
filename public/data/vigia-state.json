@@ -48,7 +48,12 @@
   "COST:rompe_resistencia_3m": "2026-11-17",
   "YPFD:rompe_soporte_3m": "2026-11-17",
   "VIST:minimo_6m": "2026-11-17",
-  "GGAL:en_soporte_3m": "2026-11-17"
+  "GGAL:en_soporte_3m": "2026-11-17",
+  "GGAL:rompe_soporte_3m": "2026-11-17",
+  "ORCL:en_soporte_3m": "2026-11-17",
+  "ORCL:cae_fuerte": "2026-11-17",
+  "SNOW:en_soporte_3m": "2026-11-17",
+  "SNOW:cae_fuerte": "2026-11-17"
  },
  "log": [
   {
@@ -2563,6 +2568,56 @@
    "analista": "VENTA PARCIAL",
    "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: GGAL rompió soporte técnico en 3,05 con tendencia bajista y riesgo país arriba de 850, contradiciendo el mantenimiento de Vigía. Plan: Vender toda la posición actual de GGAL para limpiar riesgo argentino y simplificar la cartera a menos del 1%. Riesgo: Volatilidad local y caída sostenida del sector financiero argentino. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares confirman mercados locales en rojo, suba del dólar y riesgo país arriba de 850 puntos por un contexto externo bajista. Es probable que esto golpee al Merval, aunque los medios también destacan optimismo de brokers y Wa",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:15:18.392Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.02,
+   "rsi14": 28.74,
+   "message_id": 246,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,08 con un RSI de 28,74 en sobreventa, en sintonía con el salto del riesgo país por encima de 850 puntos. Plan: Vender toda la posición actual de GGAL para simplificar cartera y bajar exposición a Argentina, sin recompra prevista. Riesgo: Profundización de la caída por compresión de múltiplos locales y arrastre regional bajista. Confianza: media",
+   "radarTexto": "RADAR reportando. GGAL perforó soporte a US$ 3,02 en MEP (-5,1% hoy, -19,2% en el mes) con RSI de 28,74 en zona de sobreventa. Confirmado por titulares: mercados en rojo, caída general de acciones y bonos argentinos, y suba del riesgo país por encima",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:15:18.874Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 41.19,
+   "rsi14": 41.29,
+   "message_id": 247,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza cerca del soporte de tres meses tras una baja injustificada por ruido de mercado sobre su deuda de IA. Plan: entrada US$ 41,19 · stop US$ 38,50 · objetivo US$ 52,00 Riesgo: Alta volatilidad sectorial y posible persistencia de la tendencia bajista de corto plazo. Confianza: baja",
+   "radarTexto": "RADAR: ORCL cayó 7,4% hoy. Confirmado por titulares: stress del mercado por su infraestructura de IA financiada con deuda y dudas sobre su balance. Probable: movimientos del fondo Apaloosa (Burry salió de puts pero sigue bajista en el sector y apunta",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T15:15:19.135Z",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 9.55,
+   "rsi14": 38.94,
+   "message_id": 248,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte duro de tres meses tras una baja injustificada por fundamentals, ideal para tu perfil de crecimiento a largo plazo. Plan: entrada US$ 9,55 · stop US$ 8,30 · objetivo US$ 12,80 Riesgo: Volatilidad alta por valuación exigida y posible arrastre de los grandes fondos. Confianza: media",
+   "radarTexto": "RADAR reportando. SNOW cayó 7,6% hoy operando a US$ 9,55 MEP, tocando soporte de 3 meses. Probable: presión vendedora tras fuertes caídas recientes y dudas por valuación alta. No hay confirmación oficial en titulares de un hecho puntual hoy que justi",
    "debatido": true
   }
  ]
