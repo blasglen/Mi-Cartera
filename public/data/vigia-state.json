@@ -63,7 +63,8 @@
   "CRM:cae_fuerte": "2026-11-17",
   "META:cruza_abajo_sma200": "2026-11-17",
   "META:cae_fuerte": "2026-11-17",
-  "CRM:cruza_abajo_sma200": "2026-11-17"
+  "CRM:cruza_abajo_sma200": "2026-11-17",
+  "VIST:rompe_soporte_3m": "2026-11-17"
  },
  "log": [
   {
@@ -2728,6 +2729,22 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: Vigía marca no comprar y rompió la media de 200, pero hay sobreventa extrema y pánico por IA. Plan: entrada US$ 11.27 · stop US$ 10.50 · objetivo US$ 13.50 Riesgo: Destrucción de negocio por inteligencia artificial y tendencia bajista dura. Confianza: baja",
    "radarTexto": "RADAR reporta: CRM se desploma 11% en dólares MEP por el castigo al sector software y temores por el impacto de la inteligencia artificial. Confirmado en titulares: caída previa al IPO de Anthropic, cautela en gastos y advertencias sobre IA buscando ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T16:45:22.477Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 19.25,
+   "rsi14": 28.41,
+   "message_id": 255,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta tras romper soporte de 19,59 y RADAR confirma derrumbe argentino y sectorial. Plan: Vender toda la posición en VIST ahora mismo y reasignar el capital a tecnología global. Riesgo: Materializar pérdida en soporte, con riesgo de rebote técnico si el RSI en 28 corrige. Confianza: media",
+   "radarTexto": "RADAR ALERTA. Confirmado: derrumbe general de activos argentinos y suba del riesgo país a 855 puntos junto a una caída global de acciones del sector energético. Probable: arrastre por la debacle local y la venta generalizada en mercados internacional",
    "debatido": true
   }
  ]
