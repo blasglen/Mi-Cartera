@@ -53,7 +53,8 @@
   "META:cae_fuerte": "2026-11-17",
   "CRM:cruza_abajo_sma200": "2026-11-17",
   "VIST:rompe_soporte_3m": "2026-11-17",
-  "BBAR:en_soporte_3m": "2026-11-17"
+  "BBAR:en_soporte_3m": "2026-11-17",
+  "GGAL:minimo_6m": "2026-11-17"
  },
  "log": [
   {
@@ -2750,6 +2751,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,48 dólares y RSI en 27,55 muestra sobreventa, aguantando pese al riesgo país en 855 puntos. Plan: Mantener BBAR vigilando de cerca; se vende entero si pierde el soporte actual para simplificar la cartera y bajar exposición local. Riesgo: Volatilidad política argentina y escalada del riesgo país que rompa el piso técnico. Confianza: baja",
    "radarTexto": "RADAR: Confirmado: El Merval cayó fuerte arrastrado por suba del riesgo país a 855 puntos y salto del dólar. Probable: El castigo a BBAR responde a este clima local adverso, aunque el papel toca soporte crítico.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T19:00:26.414Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 2.99,
+   "rsi14": 28.11,
+   "message_id": 257,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Viga marca venta por minimo de seis meses en dos dolares noventa y nueve y tendencia bajista dura, y Radar confirma clima rojo externo y riesgo pais arriba de ochocientos cincuenta. Plan: Vender toda la posicion de Galicia para simplificar cartera y llevar el capital a tecnologia norteamericana con los doscientos cincuenta dolares; no hay precio de recompra. Riesgo: Volatilidad local y perder un rebote tecnico s",
+   "radarTexto": "RADAR reportando. Los titulares muestran un mercado local mixto con activos cotizando en baja y riesgo pais arriba de 850 puntos, en un contexto de caidas externas en Wall Street. Probable: la baja de GGAL acompaña ese clima rojo y la suba de los dol",
    "debatido": true
   }
  ]
