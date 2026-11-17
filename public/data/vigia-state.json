@@ -60,7 +60,10 @@
   "QQQ:cruza_abajo_sma200": "2026-11-17",
   "QQQ:cae_fuerte": "2026-11-17",
   "CRM:en_soporte_3m": "2026-11-17",
-  "CRM:cae_fuerte": "2026-11-17"
+  "CRM:cae_fuerte": "2026-11-17",
+  "META:cruza_abajo_sma200": "2026-11-17",
+  "META:cae_fuerte": "2026-11-17",
+  "CRM:cruza_abajo_sma200": "2026-11-17"
  },
  "log": [
   {
@@ -2692,6 +2695,39 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca el soporte clave de 11,27 y la media de 200 en 11,45 con RSI sobrevendido, mientras el mercado castiga el gasto en IA sin romper la tendencia de fondo. Plan: entrada US$ 11,49 · stop US$ 10,80 · objetivo US$ 14,00 Riesgo: Alta volatilidad sectorial y presión bajista de corto plazo que puede perforar soportes. Confianza: media",
    "radarTexto": "RADAR. Salesforce cae fuerte arrastrando al Dow por baja general del mercado y cautela en gasto en IA. Confirmado: presión bajista y arrastre del índice. Probable: temores por retorno de inversión en inteligencia artificial.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T16:30:27.740Z",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 27.29,
+   "rsi14": 43.06,
+   "message_id": 253,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta al romper la SMA200 (27,31) operando en 27,29, presionado por la baja de perspectiva de S&P y multa en Italia que anulan el optimismo de IA. Plan: Vender toda la posición en META para simplificar cartera, sin gatillo de recompra por ahora. Riesgo: Mayor presión regulatoria y crediticia que profundice el castigo en el corto plazo. Confianza: media",
+   "radarTexto": "RADAR ALERTA META: El papel cae 4,2% a US$ 27,29 MEP y rompe la media de 200 (27,31). Confirmado: UBS ve 30% de suba por IA y S&P le bajó la perspectiva de crédito junto a una multa en Italia. Probable: la baja responde al castigo crediticio y regula",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T16:30:28.404Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "cruza_abajo_sma200"
+   ],
+   "precio": 11.44,
+   "rsi14": 31.17,
+   "message_id": 254,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: Vigía marca no comprar y rompió la media de 200, pero hay sobreventa extrema y pánico por IA. Plan: entrada US$ 11.27 · stop US$ 10.50 · objetivo US$ 13.50 Riesgo: Destrucción de negocio por inteligencia artificial y tendencia bajista dura. Confianza: baja",
+   "radarTexto": "RADAR reporta: CRM se desploma 11% en dólares MEP por el castigo al sector software y temores por el impacto de la inteligencia artificial. Confirmado en titulares: caída previa al IPO de Anthropic, cautela en gastos y advertencias sobre IA buscando ",
    "debatido": true
   }
  ]
