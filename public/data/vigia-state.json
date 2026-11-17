@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-17",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:stop_ppc_20": "2026-11-07",
@@ -22,14 +22,10 @@
   "MU:cae_fuerte": "2026-11-16",
   "NVDA:rompe_soporte_3m": "2026-11-16",
   "VIST:rsi_sobrevendido": "2026-11-16",
-  "VIST:minimo_6m": "2026-11-16",
   "BABA:minimo_6m": "2026-11-16",
-  "COST:en_resistencia_3m": "2026-11-16",
   "MELI:minimo_6m": "2026-11-16",
   "YPFD:minimo_6m": "2026-11-16",
-  "VIST:rompe_soporte_3m": "2026-11-16",
   "BBAR:minimo_6m": "2026-11-16",
-  "YPFD:rompe_soporte_3m": "2026-11-16",
   "SPY:en_soporte_3m": "2026-11-16",
   "GGAL:minimo_6m": "2026-11-16",
   "BBAR:rompe_soporte_3m": "2026-11-16",
@@ -43,7 +39,14 @@
   "BABA:cae_fuerte": "2026-11-17",
   "NFLX:en_soporte_3m": "2026-11-17",
   "LLY:en_resistencia_3m": "2026-11-17",
-  "COST:cruce_dorado": "2026-11-17"
+  "COST:cruce_dorado": "2026-11-17",
+  "MELI:rompe_soporte_3m": "2026-11-17",
+  "YPFD:en_soporte_3m": "2026-11-17",
+  "GOOGL:en_soporte_3m": "2026-11-17",
+  "GOOGL:cae_fuerte": "2026-11-17",
+  "VIST:en_soporte_3m": "2026-11-17",
+  "PANW:en_soporte_3m": "2026-11-17",
+  "COST:rompe_resistencia_3m": "2026-11-17"
  },
  "log": [
   {
@@ -2420,6 +2423,96 @@
    "precio": 24.47,
    "rsi14": 77.63,
    "message_id": 235,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-17T14:45:18.976Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 12.89,
+   "rsi14": 30.39,
+   "message_id": 237,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR alerta: MELI perforó soporte y toca mínimos por presión vendedora institucional (confirmado: venta de Spear Holdings). Como probable, el mercado ignora temporalmente compras de Michael Burry y la visión positiva de analistas.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:45:19.299Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.9,
+   "rsi14": 25.77,
+   "message_id": 238,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3,90 USD con RSI sobrevendido, aguantando pese al ruido político y el riesgo país en 840 puntos. Plan: Mantener la posición actual, vender si pierde el soporte de 3,90 USD para simplificar y sacar Argentina. Riesgo: Alto por volatilidad local, juicios adversos y tendencia bajista general de activos argentinos. Confianza: baja",
+   "radarTexto": "RADAR reporta: YPFD cae a US$ 3,90 MEP (-3,1% hoy) por desplome general de activos argentinos y suba del riesgo país sobre 840 puntos, con impacto por un juicio adverso. Es probable que también pese la pérdida de valor de mercado y el ruido político ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:45:19.595Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 5.17,
+   "rsi14": 35.42,
+   "message_id": 239,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa y ruido externo sin fundamento real. Plan: entrada US$ 5,17 · stop US$ 4,80 · objetivo US$ 6,40 Riesgo: Alta volatilidad técnica de corto plazo y ruptura del soporte crítico. Confianza: media",
+   "radarTexto": "RADAR: Los titulares no explican la caída de hoy. Es probable que se hable de dudas sobre su financiamiento, la transición de fundadores y una calificación neutral de UBS, pero no hay un gatillo confirmado para el desplome.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:45:19.904Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 19.61,
+   "rsi14": 29.66,
+   "message_id": 240,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de tres meses con RSI en zona de sobreventa, castigada por el ruido local y externo sin problemas operativos propios. Plan: Mantener la posición actual de VIST y destinar los US$ 150 restantes del aporte a tecnología global. Riesgo: Profundización del riesgo país argentino y arrastre bajista generalizado en Wall Street. Confianza: media",
+   "radarTexto": "RADAR informando. Confirmado por titulares: caída generalizada de acciones argentinas, suba del dólar y riesgo país arriba de 850 puntos. Probable: el derrumbe de VIST responde a este contexto local adverso y de caída en Wall Street, sin menciones es",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-17T14:45:26.434Z",
+   "ticker": "PANW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 6.59,
+   "rsi14": 36.42,
+   "message_id": 241,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-17T14:45:27.024Z",
+   "ticker": "COST",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 24.76,
+   "rsi14": 79.17,
+   "message_id": 242,
    "debatido": "salteado (límite por corrida)"
   }
  ]
