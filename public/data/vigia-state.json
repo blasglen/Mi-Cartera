@@ -40,7 +40,13 @@
   "ORCL:en_soporte_3m": "2026-11-18",
   "CRM:rompe_soporte_3m": "2026-11-18",
   "MELI:en_soporte_3m": "2026-11-18",
-  "BBAR:en_soporte_3m": "2026-11-18"
+  "BBAR:en_soporte_3m": "2026-11-18",
+  "MELI:rompe_soporte_3m": "2026-11-18",
+  "NVDA:rompe_soporte_3m": "2026-11-18",
+  "BBAR:rsi_sobrevendido": "2026-11-18",
+  "ADBE:en_soporte_3m": "2026-11-18",
+  "ADBE:cruza_abajo_sma200": "2026-11-18",
+  "ADBE:cae_fuerte": "2026-11-18"
  },
  "log": [
   {
@@ -3037,6 +3043,72 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Está tocando el soporte de 3,48 dólares con un RSI en sobreventa de 30, aguantando en un mercado local volátil con riesgo país en 855 puntos. Plan: Mantener lo que ya tiene en BBAR; vender toda la posición si pierde el soporte de 3,48 dólares para cumplir tu regla de simplificar y bajar exposición a Argentina. Riesgo: Alto, tendencia totalmente bajista debajo de todas las medias móviles y exposición a la inestabilidad",
    "radarTexto": "RADAR INFORMANDO Confirmado por titulares: La Bolsa porteña registró altibajos con caídas fuertes y una posterior recuperación superior al 2%, en un contexto de riesgo país en 855 puntos y dólar en alza. Probable: La volatilidad local y recompras int",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:15:17.765Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 12.69,
+   "rsi14": 29.03,
+   "message_id": 278,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 3 meses con tendencia bajista y malos comparativos, pese a la compra de Burry. Plan: Vender todo MELI para simplificar cartera y no retener posiciones chicas con tesis rota. Riesgo: Vender en sobreventa (RSI 29) si el mercado reacciona rápido al respaldo institucional. Confianza: baja",
+   "radarTexto": "RADAR reportando. MELI cayó 1,8% hoy y rompió su soporte de 3 meses en USD 12,69 con tendencia bajista y RSI en sobreventa. Probable: ajuste de precio tras recortes de targets y comparativas con Shopify y Booking. Confirmado por titulares: Michael Bu",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:15:18.173Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 6.82,
+   "rsi14": 20.12,
+   "message_id": 279,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca quiebre de soporte técnico y el rumor de salida del CEO genera incertidumbre directiva pese a buenos balances. Plan: Vender toda la posición en NVDA para simplificar cartera y reasignar capital a tecnología global sin riesgo local. Riesgo: Volatilidad extrema por rumores de liderazgo y pérdida de tendencia de mediano plazo. Confianza: media",
+   "radarTexto": "RADAR al habla. Confirmado por titulares: reportó buenos resultados (earnings beat) que impulsaron alzas en el sector, pero hay turbulencias por un escándalo y rumores sobre la salida de Jensen Huang como CEO. Probable: la fuerte caída mensual respon",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:15:18.395Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.5,
+   "rsi14": 28.46,
+   "message_id": 280,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI sobrevendido en 28 respalda rebote técnico, pese a la presión bajista del mercado local y el riesgo país en 855. Plan: Mantener la posición actual de BBAR sin agregar capital; vender toda la posición si perfora el soporte de 3,48 dólares. Riesgo: Alto por volatilidad cambiaria local y tendencia bajista general debajo de las medias móviles. Confianza: baja",
+   "radarTexto": "RADAR reportando. Los titulares confirman una fuerte caída reciente de la Bolsa (-4,9%) y suba del riesgo país a 855 puntos por tensión cambiaria. Es probable que la baja arrastre al sector financiero, aunque el contexto local se cruza con fuertes ap",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:15:18.614Z",
+   "ticker": "ADBE",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "en_soporte_3m",
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 5.55,
+   "rsi14": 42.28,
+   "message_id": 281,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGIA marca no comprar por tendencia bajista y quiebre de medias, aunque la baja de hoy es por mercado y Burry acumuló. Plan: entrada US$ 5.46 · stop US$ 5.20 · objetivo US$ 6.90 Riesgo: Volatilidad alta en soporte con tendencia de fondo bajista. Confianza: baja",
+   "radarTexto": "RADAR: ADBE se hunde 6,8% hoy por ventas generales. Probable: pesa la baja previa a pesar de la compra reportada de Michael Burry. Confirmado: no hay otros factores en las noticias.",
    "debatido": true
   }
  ]
