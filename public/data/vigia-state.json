@@ -52,7 +52,9 @@
   "BBAR:minimo_6m": "2026-11-18",
   "VIST:rompe_soporte_3m": "2026-11-18",
   "GGAL:rompe_soporte_3m": "2026-11-18",
-  "CRM:en_soporte_3m": "2026-11-18"
+  "CRM:en_soporte_3m": "2026-11-18",
+  "YPFD:minimo_6m": "2026-11-18",
+  "BBAR:rompe_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -3227,6 +3229,38 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rompió soporte de 11.27 con RSI en 28.89 por castigo exagerado tras despidos y alianza Copilotforce. Plan: entrada US$ 11.16 · stop US$ 10.50 · objetivo US$ 13.50 Riesgo: Volatilidad tecnológica y ruptura definitiva de mínimos de 6 meses. Confianza: baja",
    "radarTexto": "RADAR reporta: CRM se desploma 12,1% hoy y rompe soportes. Confirmado por titulares: caídas en el S&P por nerviosismo tecnológico, nuevos despidos y la alianza con Copilotforce. Probable: búsqueda de piso tras la baja y análisis sobre si el castigo e",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T16:00:33.884Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.79,
+   "rsi14": 24.35,
+   "message_id": 289,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta técnica por mínimo de 6 meses en 3.79 y Radar no trae noticias que salven el desplome. Plan: Vender todo ahora y recomprar recién si rompe la resistencia de 4.72 con volumen. Riesgo: Volatilidad local extrema y pérdida de capital si el papel sigue perforando mínimos. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T16:00:34.256Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.44,
+   "rsi14": 26.78,
+   "message_id": 290,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,48 dólares con tendencia bajista furiosa y sin noticias que lo salven. Plan: Vender todo ahora mismo, sin mirar atrás, y no recomprar. Riesgo: Quedar atrapado en un cuchillo que cae directo al fondo del pozo local. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
    "debatido": true
   }
  ]
