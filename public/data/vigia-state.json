@@ -19,7 +19,6 @@
   "SPY:en_soporte_3m": "2026-11-16",
   "BABA:stop_ppc_20": "2026-11-17",
   "BABA:cae_fuerte": "2026-11-17",
-  "MELI:rompe_soporte_3m": "2026-11-17",
   "VIST:en_soporte_3m": "2026-11-17",
   "MELI:rsi_sobrevendido": "2026-11-17",
   "CRM:cae_fuerte": "2026-11-17",
@@ -39,7 +38,9 @@
   "QQQ:en_soporte_3m": "2026-11-18",
   "NFLX:en_soporte_3m": "2026-11-18",
   "ORCL:en_soporte_3m": "2026-11-18",
-  "CRM:rompe_soporte_3m": "2026-11-18"
+  "CRM:rompe_soporte_3m": "2026-11-18",
+  "MELI:en_soporte_3m": "2026-11-18",
+  "BBAR:en_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -3005,6 +3006,38 @@
    "rsi14": 28.6,
    "message_id": 275,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T15:00:23.962Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.84,
+   "rsi14": 29.99,
+   "message_id": 276,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa y castigo por rotación sectorial sin noticias bajistas propias. Plan: entrada US$ 12,84 · stop US$ 11,50 · objetivo US$ 17,33 Riesgo: Volatilidad del sector tecnológico y ruptura del soporte local que invalide el rebote técnico. Confianza: media",
+   "radarTexto": "RADAR informa: La baja responde a la tendencia general del mercado sin un gatillo bajista directo en los titulares. Es probable que el castigo mensual refleje rotación de cartera o corrección sectorial, mientras que está confirmado el interés alcista",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:00:24.565Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.54,
+   "rsi14": 30.21,
+   "message_id": 277,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Está tocando el soporte de 3,48 dólares con un RSI en sobreventa de 30, aguantando en un mercado local volátil con riesgo país en 855 puntos. Plan: Mantener lo que ya tiene en BBAR; vender toda la posición si pierde el soporte de 3,48 dólares para cumplir tu regla de simplificar y bajar exposición a Argentina. Riesgo: Alto, tendencia totalmente bajista debajo de todas las medias móviles y exposición a la inestabilidad",
+   "radarTexto": "RADAR INFORMANDO Confirmado por titulares: La Bolsa porteña registró altibajos con caídas fuertes y una posterior recuperación superior al 2%, en un contexto de riesgo país en 855 puntos y dólar en alza. Probable: La volatilidad local y recompras int",
+   "debatido": true
   }
  ]
 }
