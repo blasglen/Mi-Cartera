@@ -26,7 +26,6 @@
   "YPFD:en_soporte_3m": "2026-11-17",
   "GOOGL:en_soporte_3m": "2026-11-17",
   "VIST:en_soporte_3m": "2026-11-17",
-  "VIST:minimo_6m": "2026-11-17",
   "GGAL:en_soporte_3m": "2026-11-17",
   "ORCL:en_soporte_3m": "2026-11-17",
   "SNOW:en_soporte_3m": "2026-11-17",
@@ -39,8 +38,7 @@
   "CRM:cruza_abajo_sma200": "2026-11-17",
   "BBAR:en_soporte_3m": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
-  "GGAL:rsi_sobrevendido": "2026-11-17",
-  "CRM:rsi_sobrevendido": "2026-11-17"
+  "PANW:en_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -2802,6 +2800,18 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema rompiendo soporte por pánico sectorial infundado en IA. Plan: entrada US$ 11,29 · stop US$ 10,00 · objetivo US$ 15,00 Riesgo: Alta volatilidad por presión bajista de corto plazo en software. Confianza: baja",
    "radarTexto": "RADAR reporta: CRM se hunde un 11,1% a US$ 11,29 MEP, operando bajista y con RSI en sobreventa (29,66). Confirmado por titulares: El desplome se debe a una fuerte caída del sector software ante temores de crecimiento en IA y advertencias de que compe",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-18T13:15:31.667Z",
+   "ticker": "PANW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 6.53,
+   "rsi14": 35.62,
+   "message_id": 261
   }
  ]
 }
