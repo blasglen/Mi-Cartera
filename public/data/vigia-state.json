@@ -12,7 +12,6 @@
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "NVDA:stop_ppc_20": "2026-11-12",
   "BABA:rompe_soporte_3m": "2026-11-16",
   "BABA:minimo_6m": "2026-11-16",
   "MELI:minimo_6m": "2026-11-16",
@@ -55,7 +54,8 @@
   "CRM:en_soporte_3m": "2026-11-18",
   "YPFD:minimo_6m": "2026-11-18",
   "BBAR:rompe_soporte_3m": "2026-11-18",
-  "YPFD:rompe_soporte_3m": "2026-11-18"
+  "YPFD:rompe_soporte_3m": "2026-11-18",
+  "NVDA:stop_ppc_30": "2026-11-18"
  },
  "log": [
   {
@@ -3278,6 +3278,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,80 cayendo a 3,74 con fuerte derrumbe local y tendencia bajista confirmada. Plan: Vender toda la posición en YPFD por debajo del límite del 1% y reasignar a tecnología de largo plazo. Riesgo: Volatilidad política argentina y profundización de la tendencia bajista actual. Confianza: media",
    "radarTexto": "RADAR al habla. El desplome de YPFD a 3,74 dólares MEP se explica por un contexto confirmado de derrumbe de acciones argentinas y suba del riesgo país. Como probable, influyen ruidos políticos locales y cuestionamientos socioambientales en Chubut, a ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T17:15:17.849Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30"
+   ],
+   "precio": 6.64,
+   "rsi14": 19.05,
+   "message_id": 292,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca salida tras el castigo post resultados y ruido sobre el liderazgo, con RSI extremo en 19 pero precio rompiendo mínimos y abajo de todas las medias. Plan: Vender todo ahora para simplificar cartera y sacar exposición local, esperando recomprar recién si estabiliza arriba de la media de 200. Riesgo: Volatilidad alta y posible daño estructural de corto plazo en el sector tecnológico. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado: la baja se da tras la presentación de resultados del Q3, con caídas en empresas vinculadas (CoreWeave, Nebius) y tropiezos de los nuevos líderes en la llamada de ganancias. Probable: la salida de Jensen Huang y dudas sob",
    "debatido": true
   }
  ]
