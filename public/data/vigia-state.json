@@ -27,7 +27,8 @@
   "CRM:cruza_abajo_sma200": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
   "PANW:en_soporte_3m": "2026-11-18",
-  "CRM:rsi_sobrevendido": "2026-11-18"
+  "CRM:rsi_sobrevendido": "2026-11-18",
+  "GGAL:en_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -2820,6 +2821,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI sobrevendido en 29.55 tras castigo por despidos y temores tech, respetando soporte de largo plazo. Plan: entrada US$ 11.27 · stop US$ 10.50 · objetivo US$ 14.00 Riesgo: Alta volatilidad sectorial y tendencia bajista de corto plazo vigente. Confianza: baja",
    "radarTexto": "RADAR reportando. Confirmado por titulares: caídas fuertes liderando bajas del S&P por temores tecnológicos, nuevos despidos internos y la alianza con Copilotforce. Probable: ajuste de mercado generalizado y lectura de debilidad operativa.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T14:30:26.535Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.03,
+   "rsi14": 30.43,
+   "message_id": 263,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 2,99 con RSI en sobreventa, soportando el castigo macro local y externo sin romper pisos. Plan: Mantener lo que tiene en GGAL atento a la regla de simplificación, con stop estricto si pierde los US$ 2,99. Riesgo: Alto por tendencia bajista definida, compresión de múltiplos y riesgo país arriba de 850 puntos. Confianza: baja",
+   "radarTexto": "RADAR reporta: GGAL sube 1,3% a US$ 3,03, tocando soporte de 3 meses en 2,99 con tendencia bajista. Probable: el castigo responde a un mercado condicionado por Wall Street en rojo, dólar al alza y riesgo país sobre 850 puntos. Confirmado por titulare",
    "debatido": true
   }
  ]

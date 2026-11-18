@@ -4226,6 +4226,20 @@
    ],
    "precio": 11.27,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-18T14:30:26.535Z",
+   "fecha": "2026-11-18",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "sombra": false,
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.03,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -4454,41 +4468,41 @@
    "CRM": 11.29
   },
   "2026-11-18": {
-   "SPY": 13,
+   "SPY": 13.02,
    "BBAR": 3.55,
-   "ORCL": 41.34,
-   "PANW": 6.7,
-   "MU": 153.37,
-   "NVDA": 7.05,
-   "AMD": 54.16,
+   "ORCL": 41.36,
+   "PANW": 6.66,
+   "MU": 153.12,
+   "NVDA": 7.07,
+   "AMD": 54,
    "BMA": 5.82,
-   "COST": 24.39,
-   "MA": 20.65,
-   "ABNB": 12.65,
-   "MELI": 12.76,
-   "META": 27.33,
+   "COST": 24.37,
+   "MA": 20.66,
+   "ABNB": 12.67,
+   "MELI": 12.75,
+   "META": 27.52,
    "YPFD": 3.89,
    "CEPU": 1.11,
    "VIST": 19.17,
-   "GGAL": 3.06,
-   "AVGO": 9.5,
-   "QQQ": 35.09,
-   "TSM": 43.64,
+   "GGAL": 3.03,
+   "AVGO": 9.47,
+   "QQQ": 35.13,
+   "TSM": 43.48,
    "AMZN": 1.91,
-   "LLY": 26.68,
-   "TSLA": 27.16,
-   "AAPL": 18.65,
-   "BABA": 10.18,
+   "LLY": 26.48,
+   "TSLA": 27.22,
+   "AAPL": 18.64,
+   "BABA": 10.19,
    "NFLX": 1.32,
-   "GOOGL": 5.21,
-   "SNOW": 9.59,
+   "GOOGL": 5.18,
+   "SNOW": 9.72,
    "CRM": 11.36
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-18T14:15:18.558Z",
-  "senales": 186,
+  "actualizado": "2026-11-18T14:30:55.617Z",
+  "senales": 187,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
