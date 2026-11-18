@@ -54,7 +54,9 @@
   "BBAR:rompe_soporte_3m": "2026-11-18",
   "YPFD:rompe_soporte_3m": "2026-11-18",
   "NVDA:stop_ppc_30": "2026-11-18",
-  "NVDA:stop_ppc_20": "2026-11-18"
+  "NVDA:stop_ppc_20": "2026-11-18",
+  "MELI:stop_ppc_20": "2026-11-18",
+  "BABA:rsi_sobrevendido": "2026-11-18"
  },
  "log": [
   {
@@ -3309,6 +3311,38 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca salida por tendencia bajista y cruce de medias, respaldado por la fuerte caída tras las dudas de Wall Street en la última llamada. Plan: Vender todo hoy a 6,72 dólares y recomprar cuando cruce al alza la media de 50 ruedas en 9,36 dólares. Riesgo: Pierdes el rebote inicial si el mercado recupera rápido el soporte histórico. Confianza: baja",
    "radarTexto": "RADAR al habla. Los titulares confirman que Nvidia presentó resultados sólidos pero los nuevos líderes trastabillaron en la llamada de ganancias y Wall Street quedó dividido. Es probable que la baja también refleje dudas sobre socios de infraestructu",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T20:30:19.759Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 12.54,
+   "rsi14": 28.07,
+   "message_id": 294,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta bajo medias móviles con RSI en sobreventa y presión bajista por bajas de precios objetivo. Plan: Vender todo por regla de simplificación y tendencia bajista, recomprando solo si rompe la resistencia de 17.33 dólares. Riesgo: Caída adicional por debajo del soporte actual y volatilidad de corto plazo en tecnología. Confianza: baja",
+   "radarTexto": "RADAR alerta MELI. El movimiento responde a bajas de precios objetivo y comparativas con Booking y Shopify, sumado a rumores de que Michael Burry y Druckenmiller habrían aumentado posiciones, aunque esto último no está confirmado oficialmente en los ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T20:30:20.254Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 9.95,
+   "rsi14": 29.81,
+   "message_id": 295,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema y soporte de seis meses perforado por ruido geopolítico con Nvidia que castigó el balance. Plan: entrada US$ 9,95 · stop US$ 9,00 · objetivo US$ 12,30 Riesgo: Alta volatilidad regulatoria china y ruido geopolítico constante. Confianza: baja",
+   "radarTexto": "RADAR al habla. Confirmado: BABA toca mínimo de 22 meses tras un reporte sobre Nvidia vinculando a Alibaba con un presunto espía chino y temores por sus chips de IA. Probable: Fuerte impacto por los informes y la previa de balances en un momento muy ",
    "debatido": true
   }
  ]
