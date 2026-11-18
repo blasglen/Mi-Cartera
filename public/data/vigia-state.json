@@ -55,7 +55,8 @@
   "YPFD:minimo_6m": "2026-11-18",
   "BBAR:rompe_soporte_3m": "2026-11-18",
   "YPFD:rompe_soporte_3m": "2026-11-18",
-  "NVDA:stop_ppc_30": "2026-11-18"
+  "NVDA:stop_ppc_30": "2026-11-18",
+  "NVDA:stop_ppc_20": "2026-11-18"
  },
  "log": [
   {
@@ -3294,6 +3295,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca salida tras el castigo post resultados y ruido sobre el liderazgo, con RSI extremo en 19 pero precio rompiendo mínimos y abajo de todas las medias. Plan: Vender todo ahora para simplificar cartera y sacar exposición local, esperando recomprar recién si estabiliza arriba de la media de 200. Riesgo: Volatilidad alta y posible daño estructural de corto plazo en el sector tecnológico. Confianza: media",
    "radarTexto": "RADAR reportando. Confirmado: la baja se da tras la presentación de resultados del Q3, con caídas en empresas vinculadas (CoreWeave, Nebius) y tropiezos de los nuevos líderes en la llamada de ganancias. Probable: la salida de Jensen Huang y dudas sob",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T17:30:21.946Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 6.72,
+   "rsi14": 19.54,
+   "message_id": 293,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca salida por tendencia bajista y cruce de medias, respaldado por la fuerte caída tras las dudas de Wall Street en la última llamada. Plan: Vender todo hoy a 6,72 dólares y recomprar cuando cruce al alza la media de 50 ruedas en 9,36 dólares. Riesgo: Pierdes el rebote inicial si el mercado recupera rápido el soporte histórico. Confianza: baja",
+   "radarTexto": "RADAR al habla. Los titulares confirman que Nvidia presentó resultados sólidos pero los nuevos líderes trastabillaron en la llamada de ganancias y Wall Street quedó dividido. Es probable que la baja también refleje dudas sobre socios de infraestructu",
    "debatido": true
   }
  ]
