@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-18",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "YPFD:stop_ppc_20": "2026-11-07",
@@ -22,13 +22,24 @@
   "MELI:rompe_soporte_3m": "2026-11-17",
   "VIST:en_soporte_3m": "2026-11-17",
   "MELI:rsi_sobrevendido": "2026-11-17",
-  "CRM:en_soporte_3m": "2026-11-17",
   "CRM:cae_fuerte": "2026-11-17",
   "CRM:cruza_abajo_sma200": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
   "PANW:en_soporte_3m": "2026-11-18",
   "CRM:rsi_sobrevendido": "2026-11-18",
-  "GGAL:en_soporte_3m": "2026-11-18"
+  "GGAL:en_soporte_3m": "2026-11-18",
+  "TSM:en_soporte_3m": "2026-11-18",
+  "YPFD:en_soporte_3m": "2026-11-18",
+  "AMZN:en_resistencia_3m": "2026-11-18",
+  "NVDA:en_soporte_3m": "2026-11-18",
+  "NVDA:minimo_6m": "2026-11-18",
+  "LLY:en_resistencia_3m": "2026-11-18",
+  "VIST:minimo_6m": "2026-11-18",
+  "GGAL:rsi_sobrevendido": "2026-11-18",
+  "QQQ:en_soporte_3m": "2026-11-18",
+  "NFLX:en_soporte_3m": "2026-11-18",
+  "ORCL:en_soporte_3m": "2026-11-18",
+  "CRM:rompe_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -2838,6 +2849,162 @@
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 2,99 con RSI en sobreventa, soportando el castigo macro local y externo sin romper pisos. Plan: Mantener lo que tiene en GGAL atento a la regla de simplificación, con stop estricto si pierde los US$ 2,99. Riesgo: Alto por tendencia bajista definida, compresión de múltiplos y riesgo país arriba de 850 puntos. Confianza: baja",
    "radarTexto": "RADAR reporta: GGAL sube 1,3% a US$ 3,03, tocando soporte de 3 meses en 2,99 con tendencia bajista. Probable: el castigo responde a un mercado condicionado por Wall Street en rojo, dólar al alza y riesgo país sobre 850 puntos. Confirmado por titulare",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-18T14:45:17.194Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 42.42,
+   "rsi14": 36.52,
+   "message_id": 265,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: TSM está tocando soporte crítico de tres meses con RSI en 36, absorbiendo la liquidación general del sector semiconductores. Plan: entrada US$ 42,42 · stop US$ 40,50 · objetivo US$ 50,00 Riesgo: Volatilidad alta por presión bajista en IA y recortes recientes de calificación. Confianza: media",
+   "radarTexto": "RADAR reporta: TSM cae a US$ 42,42 (-3,8% hoy). Probable según titulares: liquidación general de semiconductores y dudas sobre el sector tras caídas de Nvidia. Confirmado: recortes de calificación a TSMC y reportes de límites de crédito a clientes de",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T14:45:17.432Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.83,
+   "rsi14": 25.66,
+   "message_id": 266,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3.8 dólares con RSI sobrevendido de 25, aguantando pese al castigo local y los fundamentales de Vaca Muerta. Plan: Mantener YPFD y vender si pierde el soporte de 3.8 dólares para simplificar la cartera como pidió. Riesgo: Volatilidad política argentina y profundización de la tendencia bajista general del mercado local. Confianza: media",
+   "radarTexto": "RADAR informando. El desplome y la baja mensual responden al derrumbe de las acciones argentinas y al alza del riesgo país (confirmado). Como probable, influyen las apuestas de magnates por Vaca Muerta, el avance del proyecto LNG y las proyecciones a",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T14:45:17.673Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 1.93,
+   "rsi14": 54.79,
+   "message_id": 267,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Cotiza firme en zona de resistencia técnica y el optimismo por IA y Black Friday sostiene el precio. Plan: Mantener la posición actual en Amazon sin agregar capital nuevo hasta ver ruptura de resistencia. Riesgo: Corrección de corto plazo si no logra superar los 1,96 dólares MEP. Confianza: media",
+   "radarTexto": "RADAR: Amazon sube a 1,93 dólares MEP impulsada por el optimismo en IA tras las elecciones de mitad de término y la previa de Black Friday. Confirmado: donación de acciones de Bezos y estimaciones de UBS con potencial alcista pese a recortes en AWS. ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T14:45:17.909Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 6.87,
+   "rsi14": 20.42,
+   "message_id": 268,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y el papel rompió mínimos de seis meses con tendencia bajista clara, a pesar de que los resultados trimestrales fueron buenos. Plan: Vender todo ahora mismo para simplificar cartera y salir de riesgo argentino, aprovechando los US$ 100 de aporte base más el producido para reubicar en SPY o tecnología global. Riesgo: Volatilidad alta y posible aceleración de la baja si el papel perfora el soport",
+   "radarTexto": "RADAR: Confirmado: El papel sube y genera rally por buenos resultados del tercer trimestre (earnings beat) a pesar de turbulencias y escrutinio regulatorio. Probable: El mercado reacciona bien a los números pese a la salida confirmada de Jensen Huang",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T14:45:24.404Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 26.88,
+   "rsi14": 65.15,
+   "message_id": 269,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T14:45:24.844Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 18.9,
+   "rsi14": 27.31,
+   "message_id": 270,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T14:45:25.100Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3,
+   "rsi14": 28.83,
+   "message_id": 271,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T14:45:25.350Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 34.93,
+   "rsi14": 38.93,
+   "message_id": 272,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T14:45:25.580Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.33,
+   "rsi14": 36,
+   "message_id": 273,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T14:45:29.949Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 40.5,
+   "rsi14": 40.02,
+   "message_id": 274,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-18T14:45:30.368Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 11.11,
+   "rsi14": 28.6,
+   "message_id": 275,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
