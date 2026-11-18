@@ -8,18 +8,15 @@
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
   "NVDA:rsi_sobrevendido": "2026-11-11",
-  "NVDA:minimo_6m": "2026-11-11",
   "COST:rsi_sobrecomprado": "2026-11-11",
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "NVDA:stop_ppc_20": "2026-11-12",
   "BABA:rompe_soporte_3m": "2026-11-16",
-  "NVDA:rompe_soporte_3m": "2026-11-16",
   "BABA:minimo_6m": "2026-11-16",
   "MELI:minimo_6m": "2026-11-16",
   "SPY:en_soporte_3m": "2026-11-16",
-  "BBAR:rsi_sobrevendido": "2026-11-16",
   "BABA:stop_ppc_20": "2026-11-17",
   "BABA:cae_fuerte": "2026-11-17",
   "MELI:rompe_soporte_3m": "2026-11-17",
@@ -30,15 +27,13 @@
   "ORCL:en_soporte_3m": "2026-11-17",
   "SNOW:en_soporte_3m": "2026-11-17",
   "MELI:rsi_sobrevendido": "2026-11-17",
-  "TSM:en_soporte_3m": "2026-11-17",
-  "QQQ:en_soporte_3m": "2026-11-17",
   "CRM:en_soporte_3m": "2026-11-17",
   "CRM:cae_fuerte": "2026-11-17",
   "META:cruza_abajo_sma200": "2026-11-17",
   "CRM:cruza_abajo_sma200": "2026-11-17",
-  "BBAR:en_soporte_3m": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
-  "PANW:en_soporte_3m": "2026-11-18"
+  "PANW:en_soporte_3m": "2026-11-18",
+  "CRM:rsi_sobrevendido": "2026-11-18"
  },
  "log": [
   {
@@ -2815,6 +2810,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa y la caída responde a desarme de fondos previo al balance, manteniendo intacta la tendencia alcista de fondo. Plan: entrada US$ 6,53 · stop US$ 5,70 · objetivo US$ 8,50 Riesgo: Alta volatilidad esperada por opciones y postura neutral de Guggenheim antes de resultados. Confianza: media",
    "radarTexto": "RADAR reporta: La caída se explica por toma de ganancias y ventas de grandes fondos antes del balance. Es confirmado: fondos vendiendo y bajas previas a resultados; es probable: expectativa de alta volatilidad (swing del 10% en opciones) y postura Ne",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T13:45:17.316Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 11.27,
+   "rsi14": 29.55,
+   "message_id": 262,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI sobrevendido en 29.55 tras castigo por despidos y temores tech, respetando soporte de largo plazo. Plan: entrada US$ 11.27 · stop US$ 10.50 · objetivo US$ 14.00 Riesgo: Alta volatilidad sectorial y tendencia bajista de corto plazo vigente. Confianza: baja",
+   "radarTexto": "RADAR reportando. Confirmado por titulares: caídas fuertes liderando bajas del S&P por temores tecnológicos, nuevos despidos internos y la alianza con Copilotforce. Probable: ajuste de mercado generalizado y lectura de debilidad operativa.",
    "debatido": true
   }
  ]
