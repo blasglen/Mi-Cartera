@@ -46,7 +46,11 @@
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "ADBE:en_soporte_3m": "2026-11-18",
   "ADBE:cruza_abajo_sma200": "2026-11-18",
-  "ADBE:cae_fuerte": "2026-11-18"
+  "ADBE:cae_fuerte": "2026-11-18",
+  "META:cruza_abajo_sma200": "2026-11-18",
+  "GOOGL:en_soporte_3m": "2026-11-18",
+  "GGAL:minimo_6m": "2026-11-18",
+  "BBAR:minimo_6m": "2026-11-18"
  },
  "log": [
   {
@@ -3109,6 +3113,70 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGIA marca no comprar por tendencia bajista y quiebre de medias, aunque la baja de hoy es por mercado y Burry acumuló. Plan: entrada US$ 5.46 · stop US$ 5.20 · objetivo US$ 6.90 Riesgo: Volatilidad alta en soporte con tendencia de fondo bajista. Confianza: baja",
    "radarTexto": "RADAR: ADBE se hunde 6,8% hoy por ventas generales. Probable: pesa la baja previa a pesar de la compra reportada de Michael Burry. Confirmado: no hay otros factores en las noticias.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:30:20.101Z",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200"
+   ],
+   "precio": 27.29,
+   "rsi14": 42.89,
+   "message_id": 282,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marcó cruce bajista de la SMA200 y el papel cotiza a 27,29 dólares presionado por tono defensivo del mercado y venta de directivos. Plan: Vender toda la posición en Meta para simplificar la cartera y sacar el remanente de Argentina, reciclando los dólares hacia SPY o tecnología global. Riesgo: Que el precio rebote rápido desde los 23,55 dólares y te pierdas la suba por vender en el soporte técnico. Confian",
+   "radarTexto": "RADAR reporta META a US$ 27,29 (-1,5%). Probable baja por tono defensivo, caídas previas y venta de un directivo. No hay confirmación oficial de causa única en los titulares.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:30:20.587Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.17,
+   "rsi14": 35.38,
+   "message_id": 283,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Está tocando soporte de tres meses con RSI en zona de sobreventa y el mercado debate si ya está barata tras la fuerte caída. Plan: entrada US$ 5,17 · stop US$ 4,80 · objetivo US$ 6,40 Riesgo: Alta volatilidad tecnológica de corto plazo y posible profundización de la tendencia bajista general. Confianza: media",
+   "radarTexto": "RADAR reporta: Los titulares confirman que la caída de Alphabet genera debate sobre si está barata, con menciones a compras de Michael Burry y recomendación de compra de HSBC. Es probable que el desplome desde máximos alimente la búsqueda de piso y l",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:30:20.834Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 2.97,
+   "rsi14": 27.75,
+   "message_id": 284,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta con GGAL en mínimos de 6 meses a 2,97 dólares y el riesgo país presiona a la baja sin noticias propias que salven la tesis argentina. Plan: Vender toda la posición en GGAL para simplificar cartera y sumar los US$ 150 restantes a tu estrategia de crecimiento en tecnología; no hay precio de recompra previsto. Riesgo: Volatilidad local extrema y pérdida de capital si el papel profundiza la tendenc",
+   "radarTexto": "RADAR informa: Los titulares confirman suba del riesgo país y caída de bonos y acciones argentinas, con Wall Street a la baja; es probable que esto presione a GGAL. Los titulares no explican qué pasa específicamente con Galicia.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:30:21.082Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.46,
+   "rsi14": 27.12,
+   "message_id": 285,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por baja tendencial y perforó soporte con RSI sobrevendido de 27.12, sin noticias que justifiquen el derrumbe. Plan: Vender todo por regla de simplificación de cartera y recortar exposición a Argentina, para migrar esos fondos a tecnología. Riesgo: Rebote técnico violento desde mínimos de seis meses que te haga vender en el piso exacto de la corrección local. Confianza: media",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
    "debatido": true
   }
  ]
