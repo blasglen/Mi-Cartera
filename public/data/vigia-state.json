@@ -54,7 +54,8 @@
   "GGAL:rompe_soporte_3m": "2026-11-18",
   "CRM:en_soporte_3m": "2026-11-18",
   "YPFD:minimo_6m": "2026-11-18",
-  "BBAR:rompe_soporte_3m": "2026-11-18"
+  "BBAR:rompe_soporte_3m": "2026-11-18",
+  "YPFD:rompe_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -3261,6 +3262,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,48 dólares con tendencia bajista furiosa y sin noticias que lo salven. Plan: Vender todo ahora mismo, sin mirar atrás, y no recomprar. Riesgo: Quedar atrapado en un cuchillo que cae directo al fondo del pozo local. Confianza: baja",
    "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T16:15:16.408Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.74,
+   "rsi14": 23.73,
+   "message_id": 291,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,80 cayendo a 3,74 con fuerte derrumbe local y tendencia bajista confirmada. Plan: Vender toda la posición en YPFD por debajo del límite del 1% y reasignar a tecnología de largo plazo. Riesgo: Volatilidad política argentina y profundización de la tendencia bajista actual. Confianza: media",
+   "radarTexto": "RADAR al habla. El desplome de YPFD a 3,74 dólares MEP se explica por un contexto confirmado de derrumbe de acciones argentinas y suba del riesgo país. Como probable, influyen ruidos políticos locales y cuestionamientos socioambientales en Chubut, a ",
    "debatido": true
   }
  ]
