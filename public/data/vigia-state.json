@@ -2811,7 +2811,11 @@
    ],
    "precio": 6.53,
    "rsi14": 35.62,
-   "message_id": 261
+   "message_id": 261,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa y la caída responde a desarme de fondos previo al balance, manteniendo intacta la tendencia alcista de fondo. Plan: entrada US$ 6,53 · stop US$ 5,70 · objetivo US$ 8,50 Riesgo: Alta volatilidad esperada por opciones y postura neutral de Guggenheim antes de resultados. Confianza: media",
+   "radarTexto": "RADAR reporta: La caída se explica por toma de ganancias y ventas de grandes fondos antes del balance. Es confirmado: fondos vendiendo y bajas previas a resultados; es probable: expectativa de alta volatilidad (swing del 10% en opciones) y postura Ne",
+   "debatido": true
   }
  ]
 }
