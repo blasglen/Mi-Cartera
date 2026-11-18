@@ -19,7 +19,6 @@
   "SPY:en_soporte_3m": "2026-11-16",
   "BABA:stop_ppc_20": "2026-11-17",
   "BABA:cae_fuerte": "2026-11-17",
-  "VIST:en_soporte_3m": "2026-11-17",
   "MELI:rsi_sobrevendido": "2026-11-17",
   "CRM:cae_fuerte": "2026-11-17",
   "CRM:cruza_abajo_sma200": "2026-11-17",
@@ -50,7 +49,10 @@
   "META:cruza_abajo_sma200": "2026-11-18",
   "GOOGL:en_soporte_3m": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
-  "BBAR:minimo_6m": "2026-11-18"
+  "BBAR:minimo_6m": "2026-11-18",
+  "VIST:rompe_soporte_3m": "2026-11-18",
+  "GGAL:rompe_soporte_3m": "2026-11-18",
+  "CRM:en_soporte_3m": "2026-11-18"
  },
  "log": [
   {
@@ -3177,6 +3179,54 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por baja tendencial y perforó soporte con RSI sobrevendido de 27.12, sin noticias que justifiquen el derrumbe. Plan: Vender todo por regla de simplificación de cartera y recortar exposición a Argentina, para migrar esos fondos a tecnología. Riesgo: Rebote técnico violento desde mínimos de seis meses que te haga vender en el piso exacto de la corrección local. Confianza: media",
    "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:45:19.482Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 18.69,
+   "rsi14": 26.62,
+   "message_id": 286,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses con tendencia bajista clara y RSI en zona de sobreventa, aunque Peter Thiel mantiene compras fuertes. Plan: Vender toda la posición en VIST para simplificar cartera y girar esos 150 dólares libres más los nuevos 250 a crecimiento en EE.UU. Riesgo: Vender en el mínimo del rango de 6 meses y perder un rebote técnico abrupto por la noticia del fondo de Thiel. Confianza: media",
+   "radarTexto": "RADAR reporta: VIST cae 1,4% (USD 18,69) y rompe soporte de 3 meses, arrastrada por un recorte general de Wall Street en acciones argentinas (confirmado). Es probable que la fuerte compra de acciones por parte de Peter Thiel en Vista (casi 59% más, a",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:45:19.963Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 2.95,
+   "rsi14": 27.17,
+   "message_id": 287,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses a 2,99 y opera en mínimo de seis meses a 2,95 con tendencia bajista confirmada y riesgo país al alza. Plan: Vender toda la posición de GGAL por estar abajo del 1% de la cartera y no cumplir la tesis, reasignando ese capital y los US$ 150 restantes a crecimiento en tecnología (SPY y tecnología). Riesgo: Rebote técnico de corto plazo por sobreventa extrema (RSI 27) antes de continuar l",
+   "radarTexto": "RADAR reportando. Los titulares confirman un clima bursátil local bajista impulsado por la suba del riesgo país y caídas en Wall Street, mientras que el fuerte ingreso de magnates a Vaca Muerta es un dato probable que aún no frena el desplome bancari",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-18T15:45:20.208Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 11.16,
+   "rsi14": 28.89,
+   "message_id": 288,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rompió soporte de 11.27 con RSI en 28.89 por castigo exagerado tras despidos y alianza Copilotforce. Plan: entrada US$ 11.16 · stop US$ 10.50 · objetivo US$ 13.50 Riesgo: Volatilidad tecnológica y ruptura definitiva de mínimos de 6 meses. Confianza: baja",
+   "radarTexto": "RADAR reporta: CRM se desploma 12,1% hoy y rompe soportes. Confirmado por titulares: caídas en el S&P por nerviosismo tecnológico, nuevos despidos y la alianza con Copilotforce. Probable: búsqueda de piso tras la baja y análisis sobre si el castigo e",
    "debatido": true
   }
  ]
