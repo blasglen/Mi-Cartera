@@ -29,7 +29,6 @@
   "MELI:rompe_soporte_3m": "2026-11-18",
   "NVDA:rompe_soporte_3m": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
-  "ADBE:en_soporte_3m": "2026-11-18",
   "ADBE:cae_fuerte": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
   "BBAR:minimo_6m": "2026-11-18",
@@ -41,7 +40,8 @@
   "AMZN:rompe_resistencia_3m": "2026-11-19",
   "AMZN:sube_fuerte": "2026-11-19",
   "NVDA:stop_ppc_20": "2026-11-19",
-  "BBAR:en_soporte_3m": "2026-11-19"
+  "BBAR:en_soporte_3m": "2026-11-19",
+  "MELI:stop_ppc_20": "2026-11-19"
  },
  "log": [
   {
@@ -3377,6 +3377,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte de tres meses con RSI sobrevendido, pese al clima político y económico adverso en Argentina. Plan: Mantener lo que ya tiene en BBAR; liquidar si pierde 3,40 dólares para simplificar cartera. Riesgo: Alto riesgo país y tendencia bajista estructural que puede quebrar el soporte actual. Confianza: baja",
    "radarTexto": "RADAR al habla. Los titulares confirman un mercado presionado con riesgo país al alza, bonos y acciones a la baja, y magnates apostando a Vaca Muerta. Es probable que la caída de BBAR responda a ese clima bursátil adverso, aunque los títulos no menci",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:00:28.500Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 12.54,
+   "rsi14": 28.07,
+   "message_id": 299,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de medias y RSI en sobreventa de 28, sumado a presión de márgenes en Brasil. Plan: Vender toda la posición hoy para simplificar la cartera y recomprar en un soporte más sólido cerca de 11 dólares. Riesgo: Volatilidad alta y tendencia bajista profunda que puede seguir destruyendo valor en corto plazo. Confianza: baja",
+   "radarTexto": "RADAR. MELI a US$ 12,54 (-1,5%). Probable: presión en márgenes y temores sobre Brasil como gatillos de compra según Seeking Alpha, junto a recortes de precios objetivo a 12 meses. Confirmado: no hay hechos concretos en los titulares que expliquen la ",
    "debatido": true
   }
  ]
