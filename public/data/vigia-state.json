@@ -56,7 +56,9 @@
   "BABA:stop_ppc_20": "2026-11-19",
   "CRM:rompe_soporte_3m": "2026-11-19",
   "YPFD:rompe_soporte_3m": "2026-11-19",
-  "BABA:minimo_6m": "2026-11-19"
+  "BABA:minimo_6m": "2026-11-19",
+  "TSM:en_soporte_3m": "2026-11-19",
+  "QQQ:en_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3809,6 +3811,38 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta y rompió el soporte de 6 meses a 10,21 dólares por temores regulatorios de EE.UU. a los chips. Plan: Vender todo ahora mismo para simplificar cartera y no superar el límite de menos del 1 por ciento en Argentina. Riesgo: El papel cotiza en mínimos de 6 meses bajo todas las medias móviles con tendencia fuertemente bajista. Confianza: media",
    "radarTexto": "RADAR reporta: Alibaba presentó balance con ingresos al alza por nube de IA y ganancia firme, pero el papel se desplomó. Confirmado por titulares: caídas previas y derrumbe tras el reporte por resultados mixtos y temor a restricciones de EE.UU. a chi",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:00:26.944Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 42.39,
+   "rsi14": 36.45,
+   "message_id": 334,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: TSM está en soporte de tres meses con RSI en sobreventa y RADAR confirma que la baja del sector es por ruido externo, no por fundamentos. Plan: entrada US$ 42,39 · stop US$ 39,50 · objetivo US$ 56,00 Riesgo: Volatilidad geopolítica de Taiwén y profundización de la corrección en semiconductores. Confianza: media",
+   "radarTexto": "RADAR al habla. La baja responde a una venta masiva del sector semiconductores arrastrado por problemas de liderazgo en Nvidia y rebajas de calificación. Es probable que los grandes fondos estén aprovechando para acumular y que el precio actual sea u",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:00:27.369Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 34.91,
+   "rsi14": 38.84,
+   "message_id": 335,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca compra en soporte de tres meses a 34.28 dólares y la cautela por Nvidia cede ante buenos previos tecnológicos. Plan: entrada US$ 34,91 · stop US$ 33,50 · objetivo US$ 39,81 Riesgo: volatilidad tecnológica alta y ruptura de medias móviles de corto plazo. Confianza: media",
+   "radarTexto": "RADAR reportando. El movimiento está marcado por la cautela y la expectativa de los inversores ante el inminente balance de Nvidia y el debut bursátil de Anthropic. Como probable, se señala el optimismo por los resultados tecnológicos previos que ali",
    "debatido": true
   }
  ]
