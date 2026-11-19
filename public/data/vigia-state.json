@@ -48,7 +48,13 @@
   "BBAR:rompe_soporte_3m": "2026-11-19",
   "ORCL:en_soporte_3m": "2026-11-19",
   "CRM:rsi_sobrevendido": "2026-11-19",
-  "CRM:cruza_abajo_sma200": "2026-11-19"
+  "CRM:cruza_abajo_sma200": "2026-11-19",
+  "META:cruza_abajo_sma200": "2026-11-19",
+  "AMZN:en_resistencia_3m": "2026-11-19",
+  "NVDA:rompe_soporte_3m": "2026-11-19",
+  "NVDA:minimo_6m": "2026-11-19",
+  "BABA:stop_ppc_20": "2026-11-19",
+  "CRM:rompe_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3691,6 +3697,84 @@
    "precio": 11.34,
    "rsi14": 29.92,
    "message_id": 319,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-19T15:33:14.246Z",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200"
+   ],
+   "precio": 27.27,
+   "rsi14": 42.76,
+   "message_id": 326,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca cruce bajista de la SMA200 y el radar confirma presión por miedo al capex en IA y suba de cortos. Plan: Vender toda la posición en Meta para limpiar cartera y usar los US$ 150 libres más el rescate para sumar a SPY. Riesgo: Volatilidad alta en tecnología y pérdida de soporte clave de largo plazo. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado: Meta frenó la emisión de acciones sin derecho a voto por demandas de inversores y subió el interés en corto tras el Q3. Probable: la presión vendedora sigue por el miedo al capex en IA y testeo de apps de predicción.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:33:14.868Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 1.97,
+   "rsi14": 59.31,
+   "message_id": 327,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sube fuerte apoyada en publicidad y la participación en Anthropic, testeando resistencia técnica en 1.96 dólares MEP. Plan: Mantener la posición actual en Amazon sin sumar capital nuevo por ahora. Riesgo: Corrección a la zona de medias móviles en 1.88 si no logra romper la resistencia actual. Confianza: media",
+   "radarTexto": "RADAR reporta: El subidón responde a la buena racha bursátil, el foco en el negocio publicitario y el impacto de su fuerte inversión en Anthropic rumbeada hacia su IPO. Confirmado: participación accionaria gigante en Anthropic y suba de acciones; pro",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:33:15.601Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 6.75,
+   "rsi14": 19.68,
+   "message_id": 328,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 3 meses y mínimos de 6 meses con RSI sobrevendido en 19.68, sumado a investigaciones y salida del CEO que anulan el buen balance. Plan: Vender toda la posición actual de NVDA y recomprar si consolida cambio de tendencia arriba de la media de 200 ruedas en 8.81 dólares. Riesgo: Caída libre por pérdida de liderazgo y presión vendedora institucional. Confianza: media",
+   "radarTexto": "RADAR reportando. Según titulares, está confirmado que Nvidia rindió muy bien pero el papel cae por investigaciones, la salida de Jensen Huang como CEO y competencia en alza. Es probable que haya dudas sobre el liderazgo futuro y presión para vender.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:33:15.902Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 10.28,
+   "rsi14": 32.17,
+   "message_id": 330,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y el precio perforó soportes con tendencia bajista clara, aunque los fundamentos de Alibaba siguen sólidos. Plan: Vender toda la posición de BABA para simplificar la cartera y bajar exposición a riesgo operativo chino. Riesgo: Volatilidad alta y posibles restricciones de EE.UU. a semiconductores que sigan deprimiendo la cotización. Confianza: media",
+   "radarTexto": "Confirmado por titulares: Alibaba reportó ingresos sólidos y mejoras en ganancias e inteligencia artificial, pero las acciones cayeron por reportes mixtos y temores a restricciones de EE.UU. a los chips. Probable: la baja previa se debió a incertidum",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:33:16.203Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 11.13,
+   "rsi14": 28.57,
+   "message_id": 331,
    "debatido": "salteado (límite por corrida)"
   }
  ]
