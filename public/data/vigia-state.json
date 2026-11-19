@@ -54,7 +54,8 @@
   "NVDA:rompe_soporte_3m": "2026-11-19",
   "NVDA:minimo_6m": "2026-11-19",
   "BABA:stop_ppc_20": "2026-11-19",
-  "CRM:rompe_soporte_3m": "2026-11-19"
+  "CRM:rompe_soporte_3m": "2026-11-19",
+  "YPFD:rompe_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3776,6 +3777,22 @@
    "rsi14": 28.57,
    "message_id": 331,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-19T15:45:17.364Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.76,
+   "rsi14": 26.38,
+   "message_id": 332,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de soporte a 3,76 dólares y el papel opera bajista bajo todas las medias, anulando el fundamento técnico del LNG por pánico local. Plan: Vender todo YPFD ahora mismo y usar esos dólares más los 150 restantes del aporte para sumar tecnología a largo plazo; recompraría solo si supera los 4,72 dólares con volumen. Riesgo: Volatilidad local y riesgo país destruyendo la valuación argentina a",
+   "radarTexto": "RADAR ALERTA. Movimiento explicado por desplome de acciones argentinas y suba del riesgo país (confirmado). El FID de Argentina LNG aprobado y fuerte suba prevista por Allaria (probable).",
+   "debatido": true
   }
  ]
 }
