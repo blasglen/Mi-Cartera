@@ -20,12 +20,9 @@
   "CRM:cruza_abajo_sma200": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
   "CRM:rsi_sobrevendido": "2026-11-18",
-  "TSM:en_soporte_3m": "2026-11-18",
-  "AMZN:en_resistencia_3m": "2026-11-18",
   "NVDA:minimo_6m": "2026-11-18",
   "VIST:minimo_6m": "2026-11-18",
   "GGAL:rsi_sobrevendido": "2026-11-18",
-  "QQQ:en_soporte_3m": "2026-11-18",
   "NFLX:en_soporte_3m": "2026-11-18",
   "ORCL:en_soporte_3m": "2026-11-18",
   "CRM:rompe_soporte_3m": "2026-11-18",
@@ -34,18 +31,17 @@
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "ADBE:en_soporte_3m": "2026-11-18",
   "ADBE:cae_fuerte": "2026-11-18",
-  "META:cruza_abajo_sma200": "2026-11-18",
-  "GOOGL:en_soporte_3m": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
   "BBAR:minimo_6m": "2026-11-18",
   "VIST:rompe_soporte_3m": "2026-11-18",
   "GGAL:rompe_soporte_3m": "2026-11-18",
   "YPFD:minimo_6m": "2026-11-18",
-  "BBAR:rompe_soporte_3m": "2026-11-18",
   "YPFD:rompe_soporte_3m": "2026-11-18",
-  "NVDA:stop_ppc_30": "2026-11-18",
-  "MELI:stop_ppc_20": "2026-11-18",
-  "BABA:rsi_sobrevendido": "2026-11-18"
+  "BABA:rsi_sobrevendido": "2026-11-18",
+  "AMZN:rompe_resistencia_3m": "2026-11-19",
+  "AMZN:sube_fuerte": "2026-11-19",
+  "NVDA:stop_ppc_20": "2026-11-19",
+  "BBAR:en_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3332,6 +3328,55 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema y soporte de seis meses perforado por ruido geopolítico con Nvidia que castigó el balance. Plan: entrada US$ 9,95 · stop US$ 9,00 · objetivo US$ 12,30 Riesgo: Alta volatilidad regulatoria china y ruido geopolítico constante. Confianza: baja",
    "radarTexto": "RADAR al habla. Confirmado: BABA toca mínimo de 22 meses tras un reporte sobre Nvidia vinculando a Alibaba con un presunto espía chino y temores por sus chips de IA. Probable: Fuerte impacto por los informes y la previa de balances en un momento muy ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T13:45:20.645Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 1.99,
+   "rsi14": 60.3,
+   "message_id": 296,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Rompió la resistencia de 3 meses en 1.96 impulsada por el valor de Anthropic, operando fuerte sobre todas sus medias móviles. Plan: Mantener lo que ya tiene en Amazon sin sumar capital nuevo este mes, ya que rompió máximos recientes. Riesgo: Volatilidad de corto plazo por el RSI en 60 y la baja de calificación de UBS que el mercado por ahora ignora. Confianza: media",
+   "radarTexto": "RADAR: AMZN vuela 4,8% a US$ 1,99 MEP y rompe resistencia de 3 meses. Confirmado: la suba se explica por el rebote de la acción pese a una baja de calificación de UBS y el foco puesto en la inversión millonaria en Anthropic de cara a su IPO. Probable",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T13:45:21.106Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 6.7,
+   "rsi14": 19.34,
+   "message_id": 297,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta con el precio cayendo a 6,70 dólares MEP y rompiendo soportes mientras Wall Street rota capital hacia competidores. Plan: Vender toda la posición en NVDA para simplificar cartera y recomprar en un piso confirmado o si estabiliza arriba de la media de 200. Riesgo: Volatilidad extrema con el RSI en sobreventa profunda de 19 y tendencia bajista consolidada. Confianza: baja",
+   "radarTexto": "RADAR reportando. NVDA cae fuerte a US$ 6,70 MEP (-2,3% hoy, -18,4% semanal) por una crisis que beneficia a la competencia, mientras fondos y analistas debaten si comprar la baja tras resultados mixtos. Confirmado: hay presión vendedora, resultados m",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T13:45:21.347Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.46,
+   "rsi14": 28.86,
+   "message_id": 298,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte de tres meses con RSI sobrevendido, pese al clima político y económico adverso en Argentina. Plan: Mantener lo que ya tiene en BBAR; liquidar si pierde 3,40 dólares para simplificar cartera. Riesgo: Alto riesgo país y tendencia bajista estructural que puede quebrar el soporte actual. Confianza: baja",
+   "radarTexto": "RADAR al habla. Los titulares confirman un mercado presionado con riesgo país al alza, bonos y acciones a la baja, y magnates apostando a Vaca Muerta. Es probable que la caída de BBAR responda a ese clima bursátil adverso, aunque los títulos no menci",
    "debatido": true
   }
  ]

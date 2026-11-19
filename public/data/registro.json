@@ -5107,6 +5107,49 @@
      "acierto": false
     }
    }
+  },
+  {
+   "ts": "2026-11-19T13:45:20.645Z",
+   "fecha": "2026-11-19",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "sombra": false,
+   "analista": "MANTENER",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 1.99,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-19T13:45:21.106Z",
+   "fecha": "2026-11-19",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 6.7,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-19T13:45:21.347Z",
+   "fecha": "2026-11-19",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "sombra": false,
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.46,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -5367,42 +5410,42 @@
    "ADBE": 5.42
   },
   "2026-11-19": {
-   "SPY": 12.85,
-   "BBAR": 3.43,
-   "ORCL": 40.11,
-   "PANW": 7.15,
-   "MU": 148.7,
-   "NVDA": 6.61,
-   "AMD": 55.72,
-   "BMA": 5.7,
-   "COST": 24.08,
-   "MA": 20.56,
-   "ABNB": 12.76,
-   "MELI": 12.46,
-   "META": 27.12,
-   "YPFD": 3.71,
-   "CEPU": 1.1,
-   "VIST": 18.27,
+   "SPY": 12.95,
+   "BBAR": 3.46,
+   "ORCL": 41.03,
+   "PANW": 7.82,
+   "MU": 154.99,
+   "NVDA": 6.7,
+   "AMD": 56.85,
+   "BMA": 5.67,
+   "COST": 24.04,
+   "MA": 20.27,
+   "ABNB": 12.6,
+   "MELI": 12.57,
+   "META": 27.32,
+   "YPFD": 3.74,
+   "CEPU": 1.12,
+   "VIST": 18.44,
    "GGAL": 2.93,
-   "AVGO": 9.57,
-   "QQQ": 34.8,
-   "TSM": 42.41,
-   "AMZN": 1.95,
-   "LLY": 26.01,
-   "TSLA": 27.03,
-   "AAPL": 18.55,
-   "BABA": 9.9,
+   "AVGO": 9.76,
+   "QQQ": 35.36,
+   "TSM": 42.92,
+   "AMZN": 1.99,
+   "LLY": 25.77,
+   "TSLA": 27.42,
+   "AAPL": 18.58,
+   "BABA": 9.72,
    "NFLX": 1.31,
-   "GOOGL": 5.14,
-   "SNOW": 9.82,
-   "CRM": 11.09,
-   "ADBE": 5.42
+   "GOOGL": 5.33,
+   "SNOW": 10.14,
+   "CRM": 11.14,
+   "ADBE": 5.45
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-19T13:30:31.165Z",
-  "senales": 218,
+  "actualizado": "2026-11-19T13:46:10.874Z",
+  "senales": 221,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
