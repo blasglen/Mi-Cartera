@@ -5689,6 +5689,34 @@
    ],
    "precio": 35.09,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-19T20:00:27.228Z",
+   "fecha": "2026-11-19",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 5.07,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-19T20:00:27.792Z",
+   "fecha": "2026-11-19",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 9.94,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -5949,43 +5977,43 @@
    "ADBE": 5.42
   },
   "2026-11-19": {
-   "SPY": 12.78,
-   "BBAR": 3.28,
-   "ORCL": 39.66,
-   "PANW": 7.66,
-   "MU": 149.3,
-   "NVDA": 6.57,
-   "AMD": 52.16,
-   "BMA": 5.57,
-   "COST": 24.24,
-   "MA": 20.29,
+   "SPY": 12.75,
+   "BBAR": 3.27,
+   "ORCL": 39.48,
+   "PANW": 7.68,
+   "MU": 148.08,
+   "NVDA": 6.53,
+   "AMD": 51.66,
+   "BMA": 5.54,
+   "COST": 24.16,
+   "MA": 20.25,
    "ABNB": 12.32,
-   "MELI": 12.05,
-   "META": 26.82,
-   "YPFD": 3.57,
+   "MELI": 12.01,
+   "META": 26.6,
+   "YPFD": 3.54,
    "CEPU": 1.07,
-   "VIST": 17.92,
-   "GGAL": 2.83,
-   "AVGO": 9.51,
-   "QQQ": 34.63,
-   "TSM": 42.24,
-   "AMZN": 1.91,
-   "LLY": 25.77,
-   "TSLA": 26.82,
-   "AAPL": 18.61,
-   "BABA": 10,
+   "VIST": 17.85,
+   "GGAL": 2.81,
+   "AVGO": 9.46,
+   "QQQ": 34.46,
+   "TSM": 41.98,
+   "AMZN": 1.9,
+   "LLY": 25.74,
+   "TSLA": 26.64,
+   "AAPL": 18.6,
+   "BABA": 9.94,
    "NFLX": 1.29,
-   "GOOGL": 5.13,
-   "SNOW": 9.7,
-   "CRM": 10.89,
+   "GOOGL": 5.07,
+   "SNOW": 9.65,
+   "CRM": 10.87,
    "ADBE": 5.34,
-   "UBER": 35.05
+   "UBER": 34.83
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-19T19:45:18.603Z",
-  "senales": 259,
+  "actualizado": "2026-11-19T20:00:43.453Z",
+  "senales": 261,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

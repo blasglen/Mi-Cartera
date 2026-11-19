@@ -66,7 +66,9 @@
   "NFLX:en_soporte_3m": "2026-11-19",
   "GOOGL:en_soporte_3m": "2026-11-19",
   "UBER:en_soporte_3m": "2026-11-19",
-  "UBER:cae_fuerte": "2026-11-19"
+  "UBER:cae_fuerte": "2026-11-19",
+  "GOOGL:minimo_6m": "2026-11-19",
+  "BABA:rsi_sobrevendido": "2026-11-19"
  },
  "log": [
   {
@@ -3995,6 +3997,38 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza cerca del soporte de tres meses con el papel castigado por debilidad sectorial, mientras avanza con drones y robotaxis. Plan: entrada US$ 35.09 · stop US$ 33.50 · objetivo US$ 41.74 Riesgo: Tendencia bajista de corto plazo con volatilidad tecnológica y ruptura posible del soporte. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares confirman el inicio de entregas comerciales de comida con drones en Texas y la revisión de analistas sobre robotaxis y competencia con Lyft, mientras que la baja del papel es probable que responda a la debilidad genera",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T20:00:27.228Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 5.07,
+   "rsi14": 34.28,
+   "message_id": 345,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta por tendencia bajista total y ruptura de mínimos, y la noticia de Anthropic no compensa el castigo local. Plan: Vender toda la posición en Google y los US$ 150 restantes van a comprar más tecnología en EE.UU.; recomprar si rompe resistencia de 6,40. Riesgo: Profundización de la caída global tech y riesgo cambiario del CCL local. Confianza: media",
+   "radarTexto": "RADAR informando. Los titulares destacan rebotes recientes y movimientos de inversores, además de la salida a bolsa de Anthropic respaldada por Google. Probable: optimismo por Big Tech y la valuación de Google frente a rivales; no hay impacto confirm",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T20:00:27.792Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 9.94,
+   "rsi14": 29.69,
+   "message_id": 346,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema y soporte de 6 meses perforado, respaldado por sólidos ingresos en nube e IA a pesar del ruido de mercado. Plan: entrada US$ 9,94 · stop US$ 9,00 · objetivo US$ 12,24 Riesgo: Alta volatilidad en acciones chinas y tendencia bajista estructural vigente. Confianza: baja",
+   "radarTexto": "RADAR al habla. Confirmado por titulares: Alibaba reportó ingresos sólidos y crecimiento en la nube por inteligencia artificial, pero las ganancias se compensan por pérdidas en sus laboratorios de IA y reportes mixtos. Probable: caída previa por duda",
    "debatido": true
   }
  ]
