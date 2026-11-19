@@ -3,7 +3,6 @@
  "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
-  "YPFD:stop_ppc_20": "2026-11-07",
   "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
@@ -12,12 +11,10 @@
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "MELI:minimo_6m": "2026-11-16",
-  "SPY:en_soporte_3m": "2026-11-16",
   "MELI:rsi_sobrevendido": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
   "VIST:minimo_6m": "2026-11-18",
   "GGAL:rsi_sobrevendido": "2026-11-18",
-  "NFLX:en_soporte_3m": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "ADBE:cae_fuerte": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
@@ -58,7 +55,14 @@
   "YPFD:rompe_soporte_3m": "2026-11-19",
   "BABA:minimo_6m": "2026-11-19",
   "TSM:en_soporte_3m": "2026-11-19",
-  "QQQ:en_soporte_3m": "2026-11-19"
+  "QQQ:en_soporte_3m": "2026-11-19",
+  "SPY:rompe_soporte_3m": "2026-11-19",
+  "TSM:minimo_6m": "2026-11-19",
+  "YPFD:stop_ppc_30": "2026-11-19",
+  "YPFD:cae_fuerte": "2026-11-19",
+  "NVDA:stop_ppc_30": "2026-11-19",
+  "NVDA:cae_fuerte": "2026-11-19",
+  "BABA:rompe_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3844,6 +3848,85 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca compra en soporte de tres meses a 34.28 dólares y la cautela por Nvidia cede ante buenos previos tecnológicos. Plan: entrada US$ 34,91 · stop US$ 33,50 · objetivo US$ 39,81 Riesgo: volatilidad tecnológica alta y ruptura de medias móviles de corto plazo. Confianza: media",
    "radarTexto": "RADAR reportando. El movimiento está marcado por la cautela y la expectativa de los inversores ante el inminente balance de Nvidia y el debut bursátil de Anthropic. Como probable, se señala el optimismo por los resultados tecnológicos previos que ali",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:15:17.826Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 12.74,
+   "rsi14": 37.55,
+   "message_id": 336,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca ruptura de soporte de 3 meses en 12,92 operando a 12,74, presionado por toma de ganancias en tecnológicas tras la IPO de Anthropic. Plan: Vender el 100% de la posición actual en SPY y recomprar si consolida arriba de la SMA200 en 12,68 o si perfora un 25% abajo. Riesgo: Profundización de la corrección por temores de burbuja en el sector tecnológico y alta concentración del índice. Confianza: baja",
+   "radarTexto": "RADAR ALERTA SPY. Cedear MEP a 12,74, baja 2,0% hoy y rompe soporte de 3 meses. Confirmado por titulares: ruido de mercado por la histórica IPO de Anthropic, temores de burbuja de IA y debates sobre la concentración del S&P 500. Probable: toma de gan",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:15:18.262Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 41.62,
+   "rsi14": 35.11,
+   "message_id": 337,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y rompió mínimos de 6 meses por el contagio bajista de Nvidia, aunque el negocio estructural sigue intacto. Plan: Vender todo ahora y recomprar el 100% si recupera la media de 200 en US$ 46,37. Riesgo: Profundización de la corrección en semiconductores arrastrada por el sector tecnológico global. Confianza: media",
+   "radarTexto": "RADAR reportando. El castigo a TSM se explica por una fuerte venta generalizada en semiconductores vinculada a turbulencias y dudas en Nvidia. Como probable, los analistas debaten si es una gran oportunidad de compra por crecimiento o si pesa demasia",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:15:18.493Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30",
+    "cae_fuerte"
+   ],
+   "precio": 3.67,
+   "rsi14": 25.16,
+   "message_id": 338,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y rompió mínimos con tendencia bajista fuerte, ignorando por ahora la buena noticia del GNL. Plan: Vender toda la posición en YPFD por debajo del 1% y reasignar los US$ 150 libres a tecnología en EE.UU. Riesgo: Vender en sobreventa extrema (RSI 25) justo antes de un rebote por catalizadores de Vaca Muerta. Confianza: baja",
+   "radarTexto": "RADAR Informa. Movimiento: YPFD cae fuerte a US$ 3,67 (-6% hoy, RSI 25 sobreventa). Confirmado por titulares: aprobación unánime del FID de Argentina LNG y traspaso a Eni y XRG, con firma récord el 30/11, más fuerte apuesta de magnates en Vaca Muerta",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:15:18.767Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30",
+    "cae_fuerte"
+   ],
+   "precio": 6.55,
+   "rsi14": 18.47,
+   "message_id": 339,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y se desploma 30% mensual tras balances, investigaciones y salida de Jensen Huang. Plan: Vender todo NVDA, sumar los 250 dólares del mes (100 a SPY y 150 a elección) y recomprar si rompe al alza los 8.54 dólares. Riesgo: Volatilidad extrema en tecnología y pérdida temporal de capital en el corto plazo. Confianza: media",
+   "radarTexto": "Confirmado: Nvidia cae fuerte tras balances récord con investigaciones en puerta y la salida de Jensen Huang. Probable: el mercado no le da todo el impulso de Anthropic y rotan hacia acciones competidoras.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T17:15:18.999Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 10.09,
+   "rsi14": 30.71,
+   "message_id": 340,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
