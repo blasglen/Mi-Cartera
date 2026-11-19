@@ -26,22 +26,26 @@
   "NFLX:en_soporte_3m": "2026-11-18",
   "ORCL:en_soporte_3m": "2026-11-18",
   "CRM:rompe_soporte_3m": "2026-11-18",
-  "MELI:rompe_soporte_3m": "2026-11-18",
   "NVDA:rompe_soporte_3m": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "ADBE:cae_fuerte": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
   "BBAR:minimo_6m": "2026-11-18",
-  "VIST:rompe_soporte_3m": "2026-11-18",
-  "GGAL:rompe_soporte_3m": "2026-11-18",
   "YPFD:minimo_6m": "2026-11-18",
-  "YPFD:rompe_soporte_3m": "2026-11-18",
   "BABA:rsi_sobrevendido": "2026-11-18",
   "AMZN:rompe_resistencia_3m": "2026-11-19",
   "AMZN:sube_fuerte": "2026-11-19",
   "NVDA:stop_ppc_20": "2026-11-19",
   "BBAR:en_soporte_3m": "2026-11-19",
-  "MELI:stop_ppc_20": "2026-11-19"
+  "MELI:stop_ppc_20": "2026-11-19",
+  "MELI:en_soporte_3m": "2026-11-19",
+  "YPFD:en_soporte_3m": "2026-11-19",
+  "AVGO:cruza_arriba_sma200": "2026-11-19",
+  "AVGO:sube_fuerte": "2026-11-19",
+  "VIST:en_soporte_3m": "2026-11-19",
+  "GGAL:en_soporte_3m": "2026-11-19",
+  "QQQ:cruza_arriba_sma200": "2026-11-19",
+  "ADBE:en_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3394,6 +3398,109 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de medias y RSI en sobreventa de 28, sumado a presión de márgenes en Brasil. Plan: Vender toda la posición hoy para simplificar la cartera y recomprar en un soporte más sólido cerca de 11 dólares. Riesgo: Volatilidad alta y tendencia bajista profunda que puede seguir destruyendo valor en corto plazo. Confianza: baja",
    "radarTexto": "RADAR. MELI a US$ 12,54 (-1,5%). Probable: presión en márgenes y temores sobre Brasil como gatillos de compra según Seeking Alpha, junto a recortes de precios objetivo a 12 meses. Confirmado: no hay hechos concretos en los titulares que expliquen la ",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:15:18.278Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.67,
+   "rsi14": 28.88,
+   "message_id": 300,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de 3 meses con RSI en sobreventa de 28.88 en tendencia bajista, mientras analistas debaten presiones de márgenes pero ven oportunidad. Plan: entrada US$ 12.67 · stop US$ 11.50 · objetivo US$ 15.50 Riesgo: Alta volatilidad por temores en Brasil y baja de márgenes, con tendencia de corto plazo claramente bajista. Confianza: baja",
+   "radarTexto": "RADAR: MELI opera a USD 12,67 MEP (-0,5% hoy, -21,4% mensual) y toca soporte de 3 meses con RSI en zona de sobreventa (28,88), en tendencia bajista. Confirmado por titulares: analistas discuten presiones en márgenes, temores sobre Brasil y recortes d",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:15:18.693Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.8,
+   "rsi14": 26.95,
+   "message_id": 301,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte crítico de 3.80 con RSI sobrevendido de 26, y aunque el contexto local presiona, el proyecto LNG avanza. Plan: Mantener la posición actual, vender si pierde el soporte de US$ 3.80 al cierre para simplificar y limpiar Argentina. Riesgo: Volatilidad política local y profundización del desplome argentino. Confianza: baja",
+   "radarTexto": "RADAR informando. El desplome responde a la caída general de activos argentinos y suba del riesgo país, según los titulares. Como confirmado figura el aval al FID de Argentina LNG y traspaso a Eni y XRG; como probable, una fuerte suba proyectada por ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:15:19.001Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 9.87,
+   "rsi14": 57.12,
+   "message_id": 302,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rompió la media de 200 al alza respaldada por la fuerte guía de IA de Nvidia y Broadcom. Plan: entrada US$ 9,87 · stop US$ 9,00 · objetivo US$ 12,00 Riesgo: Alta volatilidad en semiconductores y corrección general de mercado. Confianza: media",
+   "radarTexto": "RADAR: AVGO vuela +6,6% hoy y +24,9% en la semana impulsada por la crisis y los resultados de Nvidia. Confirmado: sube por la guía de ingresos por IA que superó estimaciones y por el impulso de las acciones competidoras. Probable: se beneficia del op",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:15:19.226Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 18.77,
+   "rsi14": 27.82,
+   "message_id": 303,
+   "analistaTexto": "VEREDICTO: COMPRAR Por qué: RSI en zona de sobreventa extrema y soporte de seis meses, con la compra fuerte de Peter Thiel respaldando el papel. Plan: Mantener lo que ya tiene y sumar los US$ 150 restantes del aporte mensual en este precio. Riesgo: Tendencia bajista de corto plazo y volatilidad propia del sector energético argentino. Confianza: media",
+   "radarTexto": "RADAR reporta: Los titulares confirman que el magnate Peter Thiel amplió fuerte su apuesta y aumentó casi un 59 por ciento su inversión en Vista Energy, alcanzando unos 123 millones de dólares. Es probable que este respaldo del mercado internacional ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:15:19.468Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 2.98,
+   "rsi14": 29.4,
+   "message_id": 304,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-19T14:15:23.836Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200"
+   ],
+   "precio": 35.57,
+   "rsi14": 43.21,
+   "message_id": 305,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-19T14:15:24.246Z",
+   "ticker": "ADBE",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.42,
+   "rsi14": 39.55,
+   "message_id": 306,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
