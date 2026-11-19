@@ -13,7 +13,6 @@
   "BMA:en_soporte_3m": "2026-11-11",
   "MELI:minimo_6m": "2026-11-16",
   "SPY:en_soporte_3m": "2026-11-16",
-  "BABA:stop_ppc_20": "2026-11-17",
   "MELI:rsi_sobrevendido": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
   "VIST:minimo_6m": "2026-11-18",
@@ -41,7 +40,15 @@
   "MELI:rompe_soporte_3m": "2026-11-19",
   "NVDA:en_soporte_3m": "2026-11-19",
   "AVGO:en_resistencia_3m": "2026-11-19",
-  "BABA:en_soporte_3m": "2026-11-19"
+  "BABA:en_soporte_3m": "2026-11-19",
+  "YPFD:minimo_6m": "2026-11-19",
+  "MU:cruza_arriba_sma200": "2026-11-19",
+  "MU:sube_fuerte": "2026-11-19",
+  "GGAL:rompe_soporte_3m": "2026-11-19",
+  "BBAR:rompe_soporte_3m": "2026-11-19",
+  "ORCL:en_soporte_3m": "2026-11-19",
+  "CRM:rsi_sobrevendido": "2026-11-19",
+  "CRM:cruza_abajo_sma200": "2026-11-19"
  },
  "log": [
   {
@@ -3593,6 +3600,98 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Testea soporte clave de 10,26 USD tras una caída semanal del 19,7% impulsada por castigo a inversiones en IA a pesar de buenos ingresos en cloud. Plan: entrada US$ 10,26 · stop US$ 9,50 · objetivo US$ 14,00 Riesgo: Alta volatilidad en acciones chinas y persistencia de tendencia bajista general. Confianza: media",
    "radarTexto": "RADAR: BABA cae un 19,7% semanal testeando su soporte de 10,26 USD MEP. Confirmado por titulares: presenta balance mixto con crecimiento en cloud e IA, pero ganancias opacadas por pérdidas en sus laboratorios de IA. Probable: el mercado castiga el de",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:00:26.181Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.79,
+   "rsi14": 26.82,
+   "message_id": 314,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta con tendencia bajista y soporte roto, y aunque hay buenas noticias de Vaca Muerta, el precio sigue cayendo fuerte. Plan: Vender toda la posición en YPFD para simplificar la cartera y bajar exposición a Argentina. Riesgo: Volatilidad local y riesgo país que sigan deprimiendo los activos argentinos a corto plazo. Confianza: media",
+   "radarTexto": "RADAR reporta: El desplome se da en un contexto de caída general de activos argentinos y suba del riesgo país, según los titulares. Confirmado: el directorio aprobó el FID de Argentina LNG y la firma será el 30 de noviembre. Probable: Allaria prevé u",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:00:26.597Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 158.93,
+   "rsi14": 41.58,
+   "message_id": 315,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Reconquista la SMA200 saliendo de sobreventa con viento de cola por recompras y demanda del sector de IA. Plan: entrada US$ 158,93 · stop US$ 138,50 · objetivo US$ 196,50 Riesgo: Falso quiebre alcista en la SMA200 que vuelva a testear el soporte de US$ 139,10. Confianza: media",
+   "radarTexto": "RADAR Reporte MU: Rebote del +5,5% impulsado por optimismo general en chips de IA y cobertura sobre catalizadores y recompra de acciones. Confirmado: suba por clima favorable en tecnológicas; probable: impacto de catalizadores futuros y rumores de sp",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:00:26.849Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 2.95,
+   "rsi14": 28.68,
+   "message_id": 316,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 2,99 con volumen y la macro local presiona a la baja. Plan: Vender toda la posición de GGAL para simplificar la cartera y bajar exposición a Argentina. Riesgo: Rebote técnico por estar en mínimos de 6 meses y con RSI sobrevendido. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado: El desplome se da con un riesgo país arriba de 850 puntos y mercados bajo presión. Probable: Las tensiones macroeconómicas y financieras arrastran a la baja a los activos locales.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:00:27.073Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.43,
+   "rsi14": 28.32,
+   "message_id": 317,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió el soporte de 3,48 con RSI en sobreventa y dudas sobre recompras. Plan: Vender toda la posición en BBAR al precio de mercado y reasignar los US$ 150 restantes a tecnología. Riesgo: Volatilidad cambiaria y presión bajista general en el mercado local. Confianza: media",
+   "radarTexto": "RADAR reportando. El movimiento bajista de BBAR se explica por la presión general de los mercados y el riesgo país en alza (confirmado), sumado a la incertidumbre sobre sus recompras de acciones y el predominio de vendedores (probable).",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T15:00:27.308Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 41.26,
+   "rsi14": 41.72,
+   "message_id": 318,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-19T15:00:31.664Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rsi_sobrevendido",
+    "cruza_abajo_sma200"
+   ],
+   "precio": 11.34,
+   "rsi14": 29.92,
+   "message_id": 319,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
