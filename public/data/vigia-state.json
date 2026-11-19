@@ -74,7 +74,8 @@
   "SNOW:en_soporte_3m": "2026-11-19",
   "SNOW:cae_fuerte": "2026-11-19",
   "GOOGL:rompe_soporte_3m": "2026-11-19",
-  "GOOGL:cae_fuerte": "2026-11-19"
+  "GOOGL:cae_fuerte": "2026-11-19",
+  "PFE:en_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -4101,6 +4102,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de soporte con tendencia bajista clara y Radar no ve fundamentos lógicos para la caída de hoy. Plan: Vender toda la posición de Google y usar esos fondos más tus 150 dólares libres para comprar tecnología global diversificada en EE.UU.; recomprarías si cruza al alza la SMA20. Riesgo: Volatilidad alta en tecnología y perder un rebote técnico rápido. Confianza: baja",
    "radarTexto": "RADAR reporta: Los titulares mencionan rebotes recientes impulsados por inversores y el IPO de Anthropic, pero no explican la fuerte caída de hoy. Probable: toma de ganancias o efecto arrastre general de tecnología; confirmado: ninguno que justifique",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T20:45:17.772Z",
+   "ticker": "PFE",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 7.22,
+   "rsi14": 34.42,
+   "message_id": 351,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 34 y tocando soporte de corto plazo tras una toma de ganancias sin cambios en fundamentos. Plan: entrada US$ 7,22 · stop US$ 6,95 · objetivo US$ 8,10 Riesgo: Volatilidad sectorial y perforación de la media de 200 ruedas. Confianza: media",
+   "radarTexto": "RADAR reportando. Según los titulares, es probable que la baja sea una toma de ganancias tras su reciente rally y volumen alto, mientras que se debate si sus nuevos productos, adquisiciones y fuerte caja podrán revivir su crecimiento y sostener el di",
    "debatido": true
   }
  ]
