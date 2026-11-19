@@ -25,7 +25,6 @@
   "GGAL:rsi_sobrevendido": "2026-11-18",
   "NFLX:en_soporte_3m": "2026-11-18",
   "ORCL:en_soporte_3m": "2026-11-18",
-  "CRM:rompe_soporte_3m": "2026-11-18",
   "NVDA:rompe_soporte_3m": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "ADBE:cae_fuerte": "2026-11-18",
@@ -45,7 +44,9 @@
   "VIST:en_soporte_3m": "2026-11-19",
   "GGAL:en_soporte_3m": "2026-11-19",
   "QQQ:cruza_arriba_sma200": "2026-11-19",
-  "ADBE:en_soporte_3m": "2026-11-19"
+  "ADBE:en_soporte_3m": "2026-11-19",
+  "VIST:rompe_soporte_3m": "2026-11-19",
+  "CRM:en_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3501,6 +3502,38 @@
    "rsi14": 39.55,
    "message_id": 306,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-19T14:30:21.289Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 18.74,
+   "rsi14": 27.69,
+   "message_id": 307,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Quebró el soporte clave de 18,95 con tendencia bajista confirmada y, pese a las compras de Peter Thiel, tu objetivo es des",
+   "radarTexto": "RADAR Informa. Confirmado por los titulares: El magnate Peter Thiel aumentó fuerte sus inversiones y compras de acciones en Vista Energy, la petrolera de Galuccio en Vaca Muerta. Probable: Los titulares no vinculan explícitamente esa compra instituci",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T14:30:21.773Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 11.34,
+   "rsi14": 29.92,
+   "message_id": 308,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota en soporte clave de tres meses con RSI en sobreventa extrema, ignorando el ruido bajista de despidos y temores a la inteligencia artificial. Plan: entrada US$ 11,34 · stop US$ 10,50 · objetivo US$ 15,00 Riesgo: Volatilidad alta por debilidad sectorial y posible ruptura del soporte de largo plazo en 11,44. Confianza: media",
+   "radarTexto": "RADAR: Salesforce cae fuerte esta semana arrastrada por el sector software, temores al impacto de la inteligencia artificial y reportes de nuevos despidos y un ciberataque. Confirmado: despidos, ciberataque y entrada de Coatue con posición millonaria",
+   "debatido": true
   }
  ]
 }
