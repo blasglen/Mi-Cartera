@@ -64,7 +64,9 @@
   "BABA:rompe_soporte_3m": "2026-11-19",
   "SPY:en_soporte_3m": "2026-11-19",
   "NFLX:en_soporte_3m": "2026-11-19",
-  "GOOGL:en_soporte_3m": "2026-11-19"
+  "GOOGL:en_soporte_3m": "2026-11-19",
+  "UBER:en_soporte_3m": "2026-11-19",
+  "UBER:cae_fuerte": "2026-11-19"
  },
  "log": [
   {
@@ -3976,6 +3978,23 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota en soporte clave de tres meses con RSI en zona de sobreventa, a pesar del ruido por mayor capex en inteligencia artificial. Plan: entrada US$ 5,13 · stop US$ 4,90 · objetivo US$ 6,40 Riesgo: Volatilidad de corto plazo por presión en márgenes y tendencia bajista general en el panel local. Confianza: media",
    "radarTexto": "RADAR reporta: Los titulares confirman subas por rebotes y optimismo en Big Tech, pero caídas por mayor inversión en Capex (2026). Es probable que influya el IPO de Anthropic (respaldada por Google) y movimientos de inversores multimillonarios, aunqu",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T18:45:19.287Z",
+   "ticker": "UBER",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 35.09,
+   "rsi14": 42.48,
+   "message_id": 344,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza cerca del soporte de tres meses con el papel castigado por debilidad sectorial, mientras avanza con drones y robotaxis. Plan: entrada US$ 35.09 · stop US$ 33.50 · objetivo US$ 41.74 Riesgo: Tendencia bajista de corto plazo con volatilidad tecnológica y ruptura posible del soporte. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares confirman el inicio de entregas comerciales de comida con drones en Texas y la revisión de analistas sobre robotaxis y competencia con Lyft, mientras que la baja del papel es probable que responda a la debilidad genera",
    "debatido": true
   }
  ]
