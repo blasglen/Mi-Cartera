@@ -5632,6 +5632,34 @@
    ],
    "precio": 10.09,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-19T17:30:22.707Z",
+   "fecha": "2026-11-19",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.85,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-19T17:30:23.251Z",
+   "fecha": "2026-11-19",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.31,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -5892,42 +5920,42 @@
    "ADBE": 5.42
   },
   "2026-11-19": {
-   "SPY": 12.74,
-   "BBAR": 3.31,
-   "ORCL": 39.39,
-   "PANW": 7.57,
-   "MU": 147.98,
-   "NVDA": 6.55,
-   "AMD": 50.94,
-   "BMA": 5.58,
-   "COST": 23.96,
-   "MA": 20.1,
-   "ABNB": 12.48,
-   "MELI": 12.13,
-   "META": 26.9,
-   "YPFD": 3.67,
-   "CEPU": 1.08,
-   "VIST": 18.16,
-   "GGAL": 2.85,
-   "AVGO": 9.47,
-   "QQQ": 34.46,
-   "TSM": 41.62,
-   "AMZN": 1.93,
-   "LLY": 25.57,
-   "TSLA": 26.42,
-   "AAPL": 18.43,
-   "BABA": 10.09,
-   "NFLX": 1.3,
-   "GOOGL": 5.19,
-   "SNOW": 9.92,
-   "CRM": 11.02,
-   "ADBE": 5.35
+   "SPY": 12.85,
+   "BBAR": 3.36,
+   "ORCL": 40.19,
+   "PANW": 7.68,
+   "MU": 150.35,
+   "NVDA": 6.63,
+   "AMD": 52.31,
+   "BMA": 5.6,
+   "COST": 24.05,
+   "MA": 20.24,
+   "ABNB": 12.49,
+   "MELI": 12.23,
+   "META": 27.18,
+   "YPFD": 3.68,
+   "CEPU": 1.09,
+   "VIST": 18.18,
+   "GGAL": 2.87,
+   "AVGO": 9.64,
+   "QQQ": 34.83,
+   "TSM": 42.34,
+   "AMZN": 1.95,
+   "LLY": 25.81,
+   "TSLA": 26.88,
+   "AAPL": 18.55,
+   "BABA": 10.16,
+   "NFLX": 1.31,
+   "GOOGL": 5.23,
+   "SNOW": 10.09,
+   "CRM": 11.12,
+   "ADBE": 5.39
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-19T17:19:33.119Z",
-  "senales": 255,
+  "actualizado": "2026-11-19T17:31:53.003Z",
+  "senales": 257,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
