@@ -55,7 +55,8 @@
   "NVDA:minimo_6m": "2026-11-19",
   "BABA:stop_ppc_20": "2026-11-19",
   "CRM:rompe_soporte_3m": "2026-11-19",
-  "YPFD:rompe_soporte_3m": "2026-11-19"
+  "YPFD:rompe_soporte_3m": "2026-11-19",
+  "BABA:minimo_6m": "2026-11-19"
  },
  "log": [
   {
@@ -3792,6 +3793,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de soporte a 3,76 dólares y el papel opera bajista bajo todas las medias, anulando el fundamento técnico del LNG por pánico local. Plan: Vender todo YPFD ahora mismo y usar esos dólares más los 150 restantes del aporte para sumar tecnología a largo plazo; recompraría solo si supera los 4,72 dólares con volumen. Riesgo: Volatilidad local y riesgo país destruyendo la valuación argentina a",
    "radarTexto": "RADAR ALERTA. Movimiento explicado por desplome de acciones argentinas y suba del riesgo país (confirmado). El FID de Argentina LNG aprobado y fuerte suba prevista por Allaria (probable).",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T16:15:21.951Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 10.21,
+   "rsi14": 31.49,
+   "message_id": 333,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta y rompió el soporte de 6 meses a 10,21 dólares por temores regulatorios de EE.UU. a los chips. Plan: Vender todo ahora mismo para simplificar cartera y no superar el límite de menos del 1 por ciento en Argentina. Riesgo: El papel cotiza en mínimos de 6 meses bajo todas las medias móviles con tendencia fuertemente bajista. Confianza: media",
+   "radarTexto": "RADAR reporta: Alibaba presentó balance con ingresos al alza por nube de IA y ganancia firme, pero el papel se desplomó. Confirmado por titulares: caídas previas y derrumbe tras el reporte por resultados mixtos y temor a restricciones de EE.UU. a chi",
    "debatido": true
   }
  ]
