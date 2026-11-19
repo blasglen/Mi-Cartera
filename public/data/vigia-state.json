@@ -72,7 +72,9 @@
   "SPY:cruza_abajo_sma200": "2026-11-19",
   "GOOGL:stop_ppc_20": "2026-11-19",
   "SNOW:en_soporte_3m": "2026-11-19",
-  "SNOW:cae_fuerte": "2026-11-19"
+  "SNOW:cae_fuerte": "2026-11-19",
+  "GOOGL:rompe_soporte_3m": "2026-11-19",
+  "GOOGL:cae_fuerte": "2026-11-19"
  },
  "log": [
   {
@@ -4045,7 +4047,11 @@
    ],
    "precio": 12.65,
    "rsi14": 36.46,
-   "message_id": 347
+   "message_id": 347,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta tras cruzar la sma200 y Radar confirma racha bajista por temores de burbuja en inteligencia artificial. Plan: Mantener los 100 dólares mensuales en SPY, asignar los 150 restantes a tecnología global y duplicar aporte si cae 25%. Riesgo: Profundización de la corrección en tecnológicas y pérdida temporal del principal soporte técnico. Confianza: baja",
+   "radarTexto": "RADAR reporta: Los titulares confirman una racha bajista de seis ruedas y temores sobre una burbuja de inteligencia artificial, mientras que analistas dividen aguas entre advertencias de venta y pronósticos alcistas a largo plazo.",
+   "debatido": true
   },
   {
    "ts": "2026-11-19T20:15:18.879Z",
@@ -4057,7 +4063,11 @@
    ],
    "precio": 5.02,
    "rsi14": 33.19,
-   "message_id": 348
+   "message_id": 348,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta con precio perforando mínimos y tendencia bajista, ignorando el ruido alcista de IA. Plan: Vender todo ahora por la señal y la regla de simplificación; recomprar si consolida arriba de SMA50. Riesgo: Caída mayor hacia mínimos de 6 meses tras perder soporte clave. Confianza: media",
+   "radarTexto": "RADAR: Los titulares recientes mencionan subas y rebotes de GOOGL impulsados por inversores multimillonarios, el impulso en Big Tech y el IPO de Anthropic respaldada por Google. Probable: optimismo por IA y grandes inversores. Confirmado: no surge un",
+   "debatido": true
   },
   {
    "ts": "2026-11-19T20:15:19.163Z",
@@ -4070,7 +4080,28 @@
    ],
    "precio": 9.56,
    "rsi14": 39.73,
-   "message_id": 349
+   "message_id": 349,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses en 9,40 con RSI en 39,7 absorbiendo ruido por venta de directores y recortes de UBS. Plan: entrada US$ 9,56 · stop US$ 8,30 · objetivo US$ 12,80 Riesgo: Volatilidad alta por valuación exigida y ventas de insiders que pueden extender la corrección. Confianza: media",
+   "radarTexto": "Che, los titulares explican poco pero apuntan a ruido por valuación alta, ventas de acciones de un director (Frank Slootman) y bajas de precio objetivo. Confirmado: venta de acciones de Slootman y recortes de precio objetivo (UBS). Probable: presión ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T20:30:28.189Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 4.99,
+   "rsi14": 32.71,
+   "message_id": 350,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de soporte con tendencia bajista clara y Radar no ve fundamentos lógicos para la caída de hoy. Plan: Vender toda la posición de Google y usar esos fondos más tus 150 dólares libres para comprar tecnología global diversificada en EE.UU.; recomprarías si cruza al alza la SMA20. Riesgo: Volatilidad alta en tecnología y perder un rebote técnico rápido. Confianza: baja",
+   "radarTexto": "RADAR reporta: Los titulares mencionan rebotes recientes impulsados por inversores y el IPO de Anthropic, pero no explican la fuerte caída de hoy. Probable: toma de ganancias o efecto arrastre general de tecnología; confirmado: ninguno que justifique",
+   "debatido": true
   }
  ]
 }
