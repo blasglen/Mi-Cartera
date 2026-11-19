@@ -16,7 +16,6 @@
   "VIST:minimo_6m": "2026-11-18",
   "GGAL:rsi_sobrevendido": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
-  "ADBE:cae_fuerte": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
   "BBAR:minimo_6m": "2026-11-18",
   "AMZN:rompe_resistencia_3m": "2026-11-19",
@@ -64,7 +63,8 @@
   "NVDA:cae_fuerte": "2026-11-19",
   "BABA:rompe_soporte_3m": "2026-11-19",
   "SPY:en_soporte_3m": "2026-11-19",
-  "NFLX:en_soporte_3m": "2026-11-19"
+  "NFLX:en_soporte_3m": "2026-11-19",
+  "GOOGL:en_soporte_3m": "2026-11-19"
  },
  "log": [
   {
@@ -3960,6 +3960,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa y opiniones divididas sobre si es piso o trampa. Plan: entrada US$ 1.31 · stop US$ 1.25 · objetivo US$ 1.70 Riesgo: Alta volatilidad y tendencia bajista general de corto plazo. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares confirman que Netflix cotiza cerca de mínimos anuales con opiniones mixtas, mientras que Michael Burry analiza un precio de compra y Seeking Alpha ve una oportunidad. Es probable que la baja prolongada y los precios at",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-19T18:15:17.963Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.13,
+   "rsi14": 35.67,
+   "message_id": 343,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota en soporte clave de tres meses con RSI en zona de sobreventa, a pesar del ruido por mayor capex en inteligencia artificial. Plan: entrada US$ 5,13 · stop US$ 4,90 · objetivo US$ 6,40 Riesgo: Volatilidad de corto plazo por presión en márgenes y tendencia bajista general en el panel local. Confianza: media",
+   "radarTexto": "RADAR reporta: Los titulares confirman subas por rebotes y optimismo en Big Tech, pero caídas por mayor inversión en Capex (2026). Es probable que influya el IPO de Anthropic (respaldada por Google) y movimientos de inversores multimillonarios, aunqu",
    "debatido": true
   }
  ]
