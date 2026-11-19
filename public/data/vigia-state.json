@@ -68,7 +68,11 @@
   "UBER:en_soporte_3m": "2026-11-19",
   "UBER:cae_fuerte": "2026-11-19",
   "GOOGL:minimo_6m": "2026-11-19",
-  "BABA:rsi_sobrevendido": "2026-11-19"
+  "BABA:rsi_sobrevendido": "2026-11-19",
+  "SPY:cruza_abajo_sma200": "2026-11-19",
+  "GOOGL:stop_ppc_20": "2026-11-19",
+  "SNOW:en_soporte_3m": "2026-11-19",
+  "SNOW:cae_fuerte": "2026-11-19"
  },
  "log": [
   {
@@ -4030,6 +4034,43 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema y soporte de 6 meses perforado, respaldado por sólidos ingresos en nube e IA a pesar del ruido de mercado. Plan: entrada US$ 9,94 · stop US$ 9,00 · objetivo US$ 12,24 Riesgo: Alta volatilidad en acciones chinas y tendencia bajista estructural vigente. Confianza: baja",
    "radarTexto": "RADAR al habla. Confirmado por titulares: Alibaba reportó ingresos sólidos y crecimiento en la nube por inteligencia artificial, pero las ganancias se compensan por pérdidas en sus laboratorios de IA y reportes mixtos. Probable: caída previa por duda",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-19T20:15:18.267Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200"
+   ],
+   "precio": 12.65,
+   "rsi14": 36.46,
+   "message_id": 347
+  },
+  {
+   "ts": "2026-11-19T20:15:18.879Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 5.02,
+   "rsi14": 33.19,
+   "message_id": 348
+  },
+  {
+   "ts": "2026-11-19T20:15:19.163Z",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 9.56,
+   "rsi14": 39.73,
+   "message_id": 349
   }
  ]
 }
