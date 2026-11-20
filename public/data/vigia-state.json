@@ -93,7 +93,11 @@
   "TSLA:cae_fuerte": "2026-11-20",
   "NFLX:rompe_soporte_3m": "2026-11-20",
   "NFLX:rsi_sobrevendido": "2026-11-20",
-  "NFLX:cae_fuerte": "2026-11-20"
+  "NFLX:cae_fuerte": "2026-11-20",
+  "PFE:rompe_soporte_3m": "2026-11-20",
+  "PFE:rsi_sobrevendido": "2026-11-20",
+  "PFE:cae_fuerte": "2026-11-20",
+  "AMD:en_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4767,6 +4771,40 @@
    "rsi14": 27.54,
    "message_id": 396,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T21:00:25.513Z",
+   "ticker": "PFE",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 6.99,
+   "rsi14": 29.34,
+   "message_id": 397,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte técnico operando en mínimos de tres meses con RSI sobrevendido, sin noticias que justifiquen la baja. Plan: Vender toda la posición en PFE para simplificar la cartera y no comprar por debajo del 1%, reinvirtiendo los fondos en tecnología. Riesgo: Vender en el piso técnico exacto si rebotara por sobreventa extrema. Confianza: baja",
+   "radarTexto": "Titulares: Los titulares no explican la caída de hoy. Probable: Debate sobre su crecimiento frente a competidores, la sostenibilidad de su dividendo del 6,25 por ciento y su valoración atractiva según analistas. Confirmado: Sin datos confirmados en l",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T21:00:26.097Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 43.39,
+   "rsi14": 38.69,
+   "message_id": 398,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 42,68 dólares y oversold relativo tras el castigo injustificado por short report. Plan: entrada US$ 43,39 · stop US$ 41,50 · objetivo US$ 54,00 Riesgo: Volatilidad extrema a corto plazo por contagio sectorial y presión bajista general. Confianza: baja",
+   "radarTexto": "RADAR reporta: AMD se desplomó 17% hoy por una combinación confirmada en titulares de un reporte en contra de la empresa (short report) y la caída relacionada con Anthropic, además de la presión bajista general del sector. No hay información confirma",
+   "debatido": true
   }
  ]
 }
