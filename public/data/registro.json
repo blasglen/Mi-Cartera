@@ -6533,6 +6533,35 @@
    ],
    "precio": 25.02,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T17:15:19.286Z",
+   "fecha": "2026-11-20",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": null,
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 5.03,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T17:15:19.887Z",
+   "fecha": "2026-11-20",
+   "ticker": "UBER",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": null,
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 34.84,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -6827,44 +6856,44 @@
    "PFE": 7.28
   },
   "2026-11-20": {
-   "SPY": 12.57,
-   "BBAR": 3.12,
-   "ORCL": 36.78,
-   "PANW": 7.44,
-   "MU": 131.35,
-   "NVDA": 6.1,
-   "AMD": 46.79,
-   "BMA": 5.41,
-   "COST": 25.02,
-   "MA": 20.58,
-   "ABNB": 12.35,
-   "MELI": 12.25,
-   "META": 25.7,
-   "YPFD": 3.54,
-   "CEPU": 1.06,
-   "VIST": 18.2,
-   "GGAL": 2.73,
-   "AVGO": 8.54,
-   "QQQ": 33.47,
-   "TSM": 38.66,
-   "AMZN": 1.88,
-   "LLY": 25.96,
-   "TSLA": 25.31,
-   "AAPL": 18.59,
-   "BABA": 9.88,
+   "SPY": 12.47,
+   "BBAR": 3.09,
+   "ORCL": 36.41,
+   "PANW": 7.43,
+   "MU": 128.45,
+   "NVDA": 6.02,
+   "AMD": 46.01,
+   "BMA": 5.34,
+   "COST": 24.8,
+   "MA": 20.49,
+   "ABNB": 12.29,
+   "MELI": 12.21,
+   "META": 25.43,
+   "YPFD": 3.5,
+   "CEPU": 1.05,
+   "VIST": 18.12,
+   "GGAL": 2.7,
+   "AVGO": 8.45,
+   "QQQ": 33.12,
+   "TSM": 38.06,
+   "AMZN": 1.85,
+   "LLY": 25.83,
+   "TSLA": 25.07,
+   "AAPL": 18.46,
+   "BABA": 9.81,
    "NFLX": 1.28,
-   "GOOGL": 5.1,
-   "SNOW": 9.26,
-   "CRM": 10.94,
-   "ADBE": 5.45,
-   "UBER": 35.11,
-   "PFE": 7.37
+   "GOOGL": 5.03,
+   "SNOW": 9.08,
+   "CRM": 10.89,
+   "ADBE": 5.41,
+   "UBER": 34.84,
+   "PFE": 7.33
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-20T17:00:50.811Z",
-  "senales": 283,
+  "actualizado": "2026-11-20T17:15:35.963Z",
+  "senales": 285,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

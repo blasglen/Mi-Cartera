@@ -62,7 +62,10 @@
   "SPY:minimo_6m": "2026-11-20",
   "GOOGL:minimo_6m": "2026-11-20",
   "COST:rompe_resistencia_3m": "2026-11-20",
-  "COST:rsi_sobrecomprado": "2026-11-20"
+  "COST:rsi_sobrecomprado": "2026-11-20",
+  "GOOGL:stop_ppc_20": "2026-11-20",
+  "UBER:en_soporte_3m": "2026-11-20",
+  "UBER:cae_fuerte": "2026-11-20"
  },
  "log": [
   {
@@ -4386,6 +4389,31 @@
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: Rompió máximos por dividendo especial y suba de ventas, pero el RSI en 77 y la ruptura con sobrecompra exigen prudencia técnica. Plan: Mantener posición actual sin agregar capital este mes, vigilando soporte en 23.12. Riesgo: Corrección de corto plazo por vértigo alcista tras el dividendo extraordinario. Confianza: baja",
    "radarTexto": "Confirmado: Nuevo máximo histórico por dividendo especial de 35 dólares y suba de ventas. Probable: Compras de pánico por apagones tecnológicos que generan refugio de consumo.",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-20T17:15:19.286Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 5.03,
+   "rsi14": 33.36,
+   "message_id": 372
+  },
+  {
+   "ts": "2026-11-20T17:15:19.887Z",
+   "ticker": "UBER",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 34.84,
+   "rsi14": 41.29,
+   "message_id": 373
   }
  ]
 }
