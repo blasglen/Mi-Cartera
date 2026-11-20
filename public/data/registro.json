@@ -6562,6 +6562,48 @@
    ],
    "precio": 34.84,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T18:00:23.171Z",
+   "fecha": "2026-11-20",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.24,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T18:00:23.647Z",
+   "fecha": "2026-11-20",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "sombra": false,
+   "analista": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 17.99,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T18:00:23.886Z",
+   "fecha": "2026-11-20",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.28,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -6856,44 +6898,44 @@
    "PFE": 7.28
   },
   "2026-11-20": {
-   "SPY": 12.48,
-   "BBAR": 3.08,
-   "ORCL": 36.55,
-   "PANW": 7.43,
-   "MU": 128.46,
-   "NVDA": 6.04,
-   "AMD": 46.13,
-   "BMA": 5.39,
-   "COST": 24.8,
-   "MA": 20.42,
+   "SPY": 12.52,
+   "BBAR": 3.09,
+   "ORCL": 36.59,
+   "PANW": 7.52,
+   "MU": 129,
+   "NVDA": 6.06,
+   "AMD": 46.46,
+   "BMA": 5.38,
+   "COST": 24.85,
+   "MA": 20.41,
    "ABNB": 12.3,
-   "MELI": 12.2,
-   "META": 25.4,
-   "YPFD": 3.51,
+   "MELI": 12.24,
+   "META": 25.43,
+   "YPFD": 3.5,
    "CEPU": 1.05,
-   "VIST": 18.1,
-   "GGAL": 2.69,
-   "AVGO": 8.39,
-   "QQQ": 33.17,
-   "TSM": 38.22,
+   "VIST": 17.99,
+   "GGAL": 2.7,
+   "AVGO": 8.4,
+   "QQQ": 33.3,
+   "TSM": 38.46,
    "AMZN": 1.85,
-   "LLY": 25.78,
-   "TSLA": 25.06,
-   "AAPL": 18.42,
-   "BABA": 9.83,
+   "LLY": 25.85,
+   "TSLA": 25.09,
+   "AAPL": 18.52,
+   "BABA": 9.8,
    "NFLX": 1.28,
-   "GOOGL": 5.02,
-   "SNOW": 9.11,
-   "CRM": 10.92,
-   "ADBE": 5.46,
-   "UBER": 34.81,
-   "PFE": 7.34
+   "GOOGL": 5.05,
+   "SNOW": 9.21,
+   "CRM": 11.02,
+   "ADBE": 5.48,
+   "UBER": 34.92,
+   "PFE": 7.36
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-20T17:31:52.429Z",
-  "senales": 285,
+  "actualizado": "2026-11-20T18:02:14.786Z",
+  "senales": 288,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {

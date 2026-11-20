@@ -10,22 +10,17 @@
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "MELI:minimo_6m": "2026-11-16",
   "MELI:rsi_sobrevendido": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
-  "VIST:minimo_6m": "2026-11-18",
   "GGAL:rsi_sobrevendido": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
   "BBAR:minimo_6m": "2026-11-18",
   "MELI:stop_ppc_20": "2026-11-19",
-  "VIST:rompe_soporte_3m": "2026-11-19",
-  "MELI:rompe_soporte_3m": "2026-11-19",
   "YPFD:minimo_6m": "2026-11-19",
   "GGAL:rompe_soporte_3m": "2026-11-19",
   "BBAR:rompe_soporte_3m": "2026-11-19",
   "CRM:rsi_sobrevendido": "2026-11-19",
-  "META:cruza_abajo_sma200": "2026-11-19",
   "NVDA:rompe_soporte_3m": "2026-11-19",
   "NVDA:minimo_6m": "2026-11-19",
   "BABA:stop_ppc_20": "2026-11-19",
@@ -34,7 +29,6 @@
   "SPY:rompe_soporte_3m": "2026-11-19",
   "TSM:minimo_6m": "2026-11-19",
   "YPFD:stop_ppc_30": "2026-11-19",
-  "YPFD:cae_fuerte": "2026-11-19",
   "NVDA:stop_ppc_30": "2026-11-19",
   "BABA:rsi_sobrevendido": "2026-11-19",
   "SNOW:cae_fuerte": "2026-11-19",
@@ -65,7 +59,10 @@
   "COST:rsi_sobrecomprado": "2026-11-20",
   "GOOGL:stop_ppc_20": "2026-11-20",
   "UBER:en_soporte_3m": "2026-11-20",
-  "UBER:cae_fuerte": "2026-11-20"
+  "UBER:cae_fuerte": "2026-11-20",
+  "MELI:en_soporte_3m": "2026-11-20",
+  "VIST:en_soporte_3m": "2026-11-20",
+  "NFLX:en_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4421,6 +4418,54 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con fuerte baja diaria y sin noticias negativas propias que invaliden el negocio. Plan: entrada US$ 34,81 · stop US$ 32,50 · objetivo US$ 41,74 Riesgo: Tendencia bajista de corto plazo y presión general del mercado que puede romper soportes. Confianza: baja",
    "radarTexto": "RADAR: Los titulares no explican la caída fuerte de hoy. Probable: ajuste de mercado general a pesar de sumar aliados como Amazon y McDonald's. Confirmado: la acción sigue operando bajo presión y busca sostenerse en mínimos de tres meses.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T18:00:23.171Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.24,
+   "rsi14": 28.18,
+   "message_id": 374,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa extrema a 28 y tocando soporte de tres meses en 12,06 dólares, pese al ruido bajista de la noticia. Plan: entrada US$ 12,24 · stop US$ 11,50 · objetivo US$ 15,00 Riesgo: Alta volatilidad por presión vendedora continua y tendencia bajista general. Confianza: media",
+   "radarTexto": "Titulares: Confirmado que MELI creció 44 por ciento en ventas y que se derrumbó 28 por ciento estando cerca de mínimos anuales. Probable que haya presión vendedora continua y dudas sobre si evitarla pese al castigo bursátil.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T18:00:23.647Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 17.99,
+   "rsi14": 26.16,
+   "message_id": 375,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Cotiza en soporte crítico de tres meses con RSI en zona de sobreventa y el respaldo del fondo de Peter Thiel acumulando fuerte. Plan: Mantener la posición actual, vender si pierde el soporte de 17.80 dólares para simplificar y sacar exposición argentina. Riesgo: Volatilidad sectorial y dependencia del humor macro local que arrastre al papel por debajo del soporte. Confianza: media",
+   "radarTexto": "RADAR reporta VIST en US$ 17,99 por MEP (-27,8% mensual, tendencia bajista pero en soporte de 3 meses). Confirmado por titulares: el magnate Peter Thiel aumentó fuerte su posición en la petrolera de Galuccio en Vaca Muerta, acumulando unos US$ 123 mi",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T18:00:23.886Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.28,
+   "rsi14": 31.71,
+   "message_id": 376,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 31 sobre soporte trimestral clave, con castigo irracional de mercado por compresión de múltiplos. Plan: entrada US$ 1,28 · stop US$ 1,15 · objetivo US$ 1,75 Riesgo: Tendencia bajista macro y posible prolongación del desarme fiscal de fin de año en Wall Street. Confianza: media",
+   "radarTexto": "RADAR informando. Los titulares confirman bajas de Wall Street, mínimos de varios años y recortes de múltiplos a la mitad por menor margen de streaming. Es probable que Wall Street se equivoque y que la baja sirva para impuestos, según analistas.",
    "debatido": true
   }
  ]
