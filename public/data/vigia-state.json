@@ -57,7 +57,8 @@
   "ADBE:en_soporte_3m": "2026-11-20",
   "ADBE:cruce_muerte": "2026-11-20",
   "SNOW:en_soporte_3m": "2026-11-20",
-  "CRM:en_soporte_3m": "2026-11-20"
+  "CRM:en_soporte_3m": "2026-11-20",
+  "CRM:rompe_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4315,6 +4316,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa extrema perforando soporte clave, mientras la baja por recortes de costos y ruido sectorial abre una ventana de entrada asimétrica. Plan: entrada US$ 11,19 · stop US$ 10,50 · objetivo US$ 14,00 Riesgo: Volatilidad alta por tendencia bajista vigente y presión temporal en tecnología. Confianza: media",
    "radarTexto": "RADAR reportando. Los titulares confirman recortes de empleo, reducción de costos, un ciberataque y presión bajista por nerviosismo tecnológico; es probable que la baja de valoración genere oportunidades según analistas y la distancia con el rally de",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T15:30:24.671Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 11.11,
+   "rsi14": 28.42,
+   "message_id": 368,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca ruptura de soporte y el papel opera bajista, mientras RADAR confirma problemas internos y de ciberseguridad. Plan: entrada US$ 10,00 · stop US$ 9,00 · objetivo US$ 14,00 Riesgo: Alto por tendencia bajista y pérdida de mínimos previos sin soporte claro cercano. Confianza: baja",
+   "radarTexto": "RADAR al habla. Confirmado: la caída responde a recortes de personal, un ciberataque y bajas generalizadas en tecnológicas. Probable: dudas sobre la sustentabilidad del negocio, pese a que algunos ven valor por castigo excesivo.",
    "debatido": true
   }
  ]
