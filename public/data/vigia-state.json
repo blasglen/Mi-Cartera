@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-20",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "CEPU:stop_ppc_20": "2026-11-07",
@@ -37,11 +37,7 @@
   "YPFD:stop_ppc_30": "2026-11-19",
   "YPFD:cae_fuerte": "2026-11-19",
   "NVDA:stop_ppc_30": "2026-11-19",
-  "UBER:en_soporte_3m": "2026-11-19",
-  "UBER:cae_fuerte": "2026-11-19",
-  "GOOGL:minimo_6m": "2026-11-19",
   "BABA:rsi_sobrevendido": "2026-11-19",
-  "GOOGL:stop_ppc_20": "2026-11-19",
   "SNOW:cae_fuerte": "2026-11-19",
   "TSM:rompe_soporte_3m": "2026-11-20",
   "TSM:stop_ppc_20": "2026-11-20",
@@ -56,7 +52,12 @@
   "SPY:cruza_abajo_sma200": "2026-11-20",
   "GOOGL:rompe_soporte_3m": "2026-11-20",
   "GOOGL:cae_fuerte": "2026-11-20",
-  "BABA:rompe_soporte_3m": "2026-11-20"
+  "BABA:rompe_soporte_3m": "2026-11-20",
+  "MU:rompe_soporte_3m": "2026-11-20",
+  "MU:minimo_6m": "2026-11-20",
+  "ADBE:en_soporte_3m": "2026-11-20",
+  "ADBE:cruce_muerte": "2026-11-20",
+  "SNOW:en_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4248,6 +4249,56 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por ruptura de soporte técnico y el balance confirmó la tendencia bajista, superando el potencial de la inteligencia artificial. Plan: Vender toda la posición en BABA ahora y recomprar recién si supera la resistencia de 15 dólares. Riesgo: Caída mayor por debilidad estructural en China y soporte perdido. Confianza: baja",
    "radarTexto": "RADAR: BABA cayó fuerte por balances mixtos y dudas previas, confirmado por la baja de hoy y la semana. Es probable que la apuesta al negocio de la nube e inteligencia artificial compense parcialmente los riesgos, según reportes de Reuters y Bloomber",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:45:18.410Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 134.86,
+   "rsi14": 32.65,
+   "message_id": 363,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta por ruptura de soporte y mínimo de 6 meses tras una toma de ganancias en IA sin noticias bajistas estructurales. Plan: Vender toda la posición en MU hoy y destinar esos fondos al SPY junto con tus 250 dólares mensuales. Riesgo: Volatilidad alta en tecnología y perder un rebote técnico de corto plazo al salir en mínimos. Confianza: baja",
+   "radarTexto": "RADAR: La baja se explica de forma probable por la toma de ganancias y corrección general en acciones de inteligencia artificial. No hay un hecho puntual confirmado en los titulares que justifique el desplome de hoy.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:45:18.654Z",
+   "ticker": "ADBE",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "en_soporte_3m",
+    "cruce_muerte"
+   ],
+   "precio": 5.46,
+   "rsi14": 40.11,
+   "message_id": 365,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGIA marca no comprar por tendencia bajista y cruce de la muerte, aunque testea soporte y Burry apuesta al papel. Plan: entrada US$ 5,00 · stop US$ 4,50 · objetivo US$ 6,50 Riesgo: volatilidad alta por presión de competencia y tendencia bajista vigente. Confianza: baja",
+   "radarTexto": "RADAR: ADBE opera a US$ 5,46 MEP (-0,9% hoy) testeando soporte de 3 meses en tendencia bajista y con cruce de la muerte. Titulares confirman fin de suscripciones gratis para fotógrafos y apuesta alcista de Michael Burry; es probable que la baja prolo",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:45:18.897Z",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.44,
+   "rsi14": 38.83,
+   "message_id": 366,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses en nueve cuarenta con RSI en treinta y nueve, absorbiendo ruido bajista de BofA y ventas de directores. Plan: entrada US$ 9,44 · stop US$ 8,30 · objetivo US$ 11,50 Riesgo: Volatilidad alta por novedades de IA y ruptura de medias móviles de corto plazo. Confianza: media",
+   "radarTexto": "Confirmado: bajas recientes y recorte de precio objetivo de BofA, sumado a ventas planificadas de un director. Probable: toma de ganancias estacional y ruido de mercado por novedades en IA.",
    "debatido": true
   }
  ]

@@ -6418,6 +6418,50 @@
    ],
    "precio": 9.91,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T14:45:18.410Z",
+   "fecha": "2026-11-20",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 134.86,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T14:45:18.654Z",
+   "fecha": "2026-11-20",
+   "ticker": "ADBE",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "sombra": false,
+   "analista": "ESPERAR",
+   "eventos": [
+    "en_soporte_3m",
+    "cruce_muerte"
+   ],
+   "precio": 5.46,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T14:45:18.897Z",
+   "fecha": "2026-11-20",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.44,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -6712,44 +6756,44 @@
    "PFE": 7.28
   },
   "2026-11-20": {
-   "SPY": 12.6,
-   "BBAR": 3.11,
-   "ORCL": 38.3,
-   "PANW": 7.59,
-   "MU": 141.57,
-   "NVDA": 6.33,
-   "AMD": 50.3,
-   "BMA": 5.29,
-   "COST": 24.48,
-   "MA": 20.29,
-   "ABNB": 12.24,
-   "MELI": 11.88,
-   "META": 25.73,
+   "SPY": 12.57,
+   "BBAR": 3.16,
+   "ORCL": 37.65,
+   "PANW": 7.43,
+   "MU": 134.86,
+   "NVDA": 6.14,
+   "AMD": 48.8,
+   "BMA": 5.37,
+   "COST": 24.29,
+   "MA": 20.42,
+   "ABNB": 12.34,
+   "MELI": 12.17,
+   "META": 25.72,
    "YPFD": 3.46,
    "CEPU": 1.05,
-   "VIST": 17.54,
-   "GGAL": 2.68,
-   "AVGO": 9.28,
-   "QQQ": 33.86,
-   "TSM": 39.62,
+   "VIST": 17.39,
+   "GGAL": 2.75,
+   "AVGO": 9.1,
+   "QQQ": 33.58,
+   "TSM": 39.55,
    "AMZN": 1.86,
-   "LLY": 25.64,
-   "TSLA": 26.08,
-   "AAPL": 18.59,
-   "BABA": 9.85,
-   "NFLX": 1.28,
-   "GOOGL": 4.99,
-   "SNOW": 9.23,
-   "CRM": 10.75,
-   "ADBE": 5.3,
-   "UBER": 34.52,
+   "LLY": 25.72,
+   "TSLA": 25.99,
+   "AAPL": 18.52,
+   "BABA": 9.76,
+   "NFLX": 1.3,
+   "GOOGL": 5.08,
+   "SNOW": 9.44,
+   "CRM": 10.87,
+   "ADBE": 5.46,
+   "UBER": 35.84,
    "PFE": 7.37
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-20T14:30:19.760Z",
-  "senales": 275,
+  "actualizado": "2026-11-20T14:46:26.746Z",
+  "senales": 278,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
