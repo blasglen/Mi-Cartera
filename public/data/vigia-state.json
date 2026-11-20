@@ -29,7 +29,6 @@
   "NVDA:rompe_soporte_3m": "2026-11-19",
   "NVDA:minimo_6m": "2026-11-19",
   "BABA:stop_ppc_20": "2026-11-19",
-  "CRM:rompe_soporte_3m": "2026-11-19",
   "YPFD:rompe_soporte_3m": "2026-11-19",
   "BABA:minimo_6m": "2026-11-19",
   "SPY:rompe_soporte_3m": "2026-11-19",
@@ -57,7 +56,8 @@
   "MU:minimo_6m": "2026-11-20",
   "ADBE:en_soporte_3m": "2026-11-20",
   "ADBE:cruce_muerte": "2026-11-20",
-  "SNOW:en_soporte_3m": "2026-11-20"
+  "SNOW:en_soporte_3m": "2026-11-20",
+  "CRM:en_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4299,6 +4299,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses en nueve cuarenta con RSI en treinta y nueve, absorbiendo ruido bajista de BofA y ventas de directores. Plan: entrada US$ 9,44 · stop US$ 8,30 · objetivo US$ 11,50 Riesgo: Volatilidad alta por novedades de IA y ruptura de medias móviles de corto plazo. Confianza: media",
    "radarTexto": "Confirmado: bajas recientes y recorte de precio objetivo de BofA, sumado a ventas planificadas de un director. Probable: toma de ganancias estacional y ruido de mercado por novedades en IA.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T15:15:25.907Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 11.19,
+   "rsi14": 28.89,
+   "message_id": 367,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en zona de sobreventa extrema perforando soporte clave, mientras la baja por recortes de costos y ruido sectorial abre una ventana de entrada asimétrica. Plan: entrada US$ 11,19 · stop US$ 10,50 · objetivo US$ 14,00 Riesgo: Volatilidad alta por tendencia bajista vigente y presión temporal en tecnología. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares confirman recortes de empleo, reducción de costos, un ciberataque y presión bajista por nerviosismo tecnológico; es probable que la baja de valoración genere oportunidades según analistas y la distancia con el rally de",
    "debatido": true
   }
  ]
