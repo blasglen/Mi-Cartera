@@ -52,7 +52,11 @@
   "CEPU:en_soporte_3m": "2026-11-20",
   "CEPU:cae_fuerte": "2026-11-20",
   "BABA:en_soporte_3m": "2026-11-20",
-  "QQQ:en_soporte_3m": "2026-11-20"
+  "QQQ:en_soporte_3m": "2026-11-20",
+  "SPY:cruza_abajo_sma200": "2026-11-20",
+  "GOOGL:rompe_soporte_3m": "2026-11-20",
+  "GOOGL:cae_fuerte": "2026-11-20",
+  "BABA:rompe_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4195,6 +4199,55 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa, a pesar de la presión inflacionaria y la caída de semiconductores. Plan: entrada US$ 34,06 · stop US$ 32,50 · objetivo US$ 39,80 Riesgo: Volatilidad por datos de inflación y debilidad técnica de corto plazo. Confianza: media",
    "radarTexto": "RADAR: El Nasdaq cayó por presión vendedora y datos de inflación más calientes confirmados, junto con la fuerte baja de chips como AMD y TSMC. Es probable que el mercado también refleje cautela y nerviosismo por el debut de la OPI de Anthropic.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:15:25.427Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200"
+   ],
+   "precio": 12.66,
+   "rsi14": 36.65,
+   "message_id": 359,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca cruza abajo de SMA200 y el mercado cae por derrumbe tecnológico y tensión con Irán. Plan: Vender SPY si la cartera cae 25% para reestructurar, y reinvertir los US$ 250 del mes en crecimiento bajista. Riesgo: Profundización de la corrección global y daño al portafolio de largo plazo. Confianza: baja",
+   "radarTexto": "RADAR INFORMANDO. Confirmado por titulares: caída por derrumbe de las mega tecnológicas y tensión geopolítica de EE.UU. con Irán. Probable: corrección tras máximos y toma de ganancias, completando cuatro semanas a la baja.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:15:25.869Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 5,
+   "rsi14": 32.82,
+   "message_id": 360,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGIA marca venta por ruptura de soporte y baja fuerte, avalado por la presión de Anthropic y la tendencia bajista clara. Plan: Vender toda la posición en GOOGL por debajo del 1% para simplificar y recomprar si consolida arriba de la SMA50 en US$ 5.90. Riesgo: Perder un rebote técnico de corto plazo impulsado por sobreventa en el RSI. Confianza: baja",
+   "radarTexto": "RADAR al habla. Confirmado: Las acciones de Alphabet cayeron por la salida a bolsa de Anthropic en el Nasdaq, que revaluó la participación de Google, y por dudas sobre si una baja del 30 desde su máximo es suficiente. Probable: Analistas como Jim Cra",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:15:26.103Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 9.91,
+   "rsi14": 29.48,
+   "message_id": 361,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por ruptura de soporte técnico y el balance confirmó la tendencia bajista, superando el potencial de la inteligencia artificial. Plan: Vender toda la posición en BABA ahora y recomprar recién si supera la resistencia de 15 dólares. Riesgo: Caída mayor por debilidad estructural en China y soporte perdido. Confianza: baja",
+   "radarTexto": "RADAR: BABA cayó fuerte por balances mixtos y dudas previas, confirmado por la baja de hoy y la semana. Es probable que la apuesta al negocio de la nube e inteligencia artificial compense parcialmente los riesgos, según reportes de Reuters y Bloomber",
    "debatido": true
   }
  ]
