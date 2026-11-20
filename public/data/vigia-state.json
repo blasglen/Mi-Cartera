@@ -58,7 +58,9 @@
   "ADBE:cruce_muerte": "2026-11-20",
   "SNOW:en_soporte_3m": "2026-11-20",
   "CRM:en_soporte_3m": "2026-11-20",
-  "CRM:rompe_soporte_3m": "2026-11-20"
+  "CRM:rompe_soporte_3m": "2026-11-20",
+  "SPY:minimo_6m": "2026-11-20",
+  "GOOGL:minimo_6m": "2026-11-20"
  },
  "log": [
   {
@@ -4332,6 +4334,38 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca ruptura de soporte y el papel opera bajista, mientras RADAR confirma problemas internos y de ciberseguridad. Plan: entrada US$ 10,00 · stop US$ 9,00 · objetivo US$ 14,00 Riesgo: Alto por tendencia bajista y pérdida de mínimos previos sin soporte claro cercano. Confianza: baja",
    "radarTexto": "RADAR al habla. Confirmado: la caída responde a recortes de personal, un ciberataque y bajas generalizadas en tecnológicas. Probable: dudas sobre la sustentabilidad del negocio, pese a que algunos ven valor por castigo excesivo.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T16:45:21.804Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 12.54,
+   "rsi14": 34.87,
+   "message_id": 369,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta por tendencia bajista y ruptura de soportes, agravado por venta masiva de tecnológicas y tensión geopolítica. Plan: Vender la posición marginal en Argentina para simplificar y usar los 250 dólares del mes para acumular SPY en la zona de mínimos de 12.50. Riesgo: Profundización de la corrección global y escalada bélica en Medio Oriente que rompa el soporte de largo plazo. Confianza: baja",
+   "radarTexto": "RADAR REPORTA: Confirmado por titulares: venta masiva de tecnológicas (Anthropic), caídas consecutivas arrastradas por tensión geopolítica (Irán) y 4 semanas a la baja. Probable: ajuste técnico de mercado y definición clave en zonas de soporte.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T16:45:22.341Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 5.07,
+   "rsi14": 34.22,
+   "message_id": 370,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍaseñala venta por tendencia bajista total, y aunque tocó mínimos de seis meses a cinco con siete, la salida a bolsa de Anthropic presiona el precio sin freno claro. Plan: Vender toda la posición en GOOGL para simplificar y recomprar si consolida arriba de la media de cincuenta o si cae el veinticinco por ciento adicional pactado. Riesgo: Volatilidad alta y pérdida temporal del rebote si el mercado absorbe rá",
+   "radarTexto": "RADAR: GOOGL cotiza a US$ 5,07 MEP (-3% hoy, -19,2% mensual) tocando mínimos de 6 meses. Los titulares confirman caída por la salida a bolsa de Anthropic que revalúa la participación de Google y división de opiniones sobre si la baja de 30% desde máx",
    "debatido": true
   }
  ]
