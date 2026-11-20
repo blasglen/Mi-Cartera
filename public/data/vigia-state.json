@@ -3,7 +3,6 @@
  "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
-  "CEPU:stop_ppc_20": "2026-11-07",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
   "NVDA:rsi_sobrevendido": "2026-11-11",
@@ -65,7 +64,36 @@
   "NFLX:en_soporte_3m": "2026-11-20",
   "TSM:rsi_sobrevendido": "2026-11-20",
   "VIST:minimo_6m": "2026-11-20",
-  "CEPU:minimo_6m": "2026-11-20"
+  "CEPU:minimo_6m": "2026-11-20",
+  "MSFT:en_soporte_3m": "2026-11-20",
+  "MSFT:cae_fuerte": "2026-11-20",
+  "MELI:rompe_soporte_3m": "2026-11-20",
+  "MELI:minimo_6m": "2026-11-20",
+  "SPY:rsi_sobrevendido": "2026-11-20",
+  "SPY:cae_fuerte": "2026-11-20",
+  "META:rsi_sobrevendido": "2026-11-20",
+  "META:cae_fuerte": "2026-11-20",
+  "GOOGL:rsi_sobrevendido": "2026-11-20",
+  "MU:rsi_sobrevendido": "2026-11-20",
+  "CEPU:rompe_soporte_3m": "2026-11-20",
+  "CEPU:stop_ppc_30": "2026-11-20",
+  "AMZN:en_soporte_3m": "2026-11-20",
+  "AMZN:cae_fuerte": "2026-11-20",
+  "AVGO:en_soporte_3m": "2026-11-20",
+  "AVGO:cae_fuerte": "2026-11-20",
+  "PFE:en_soporte_3m": "2026-11-20",
+  "VIST:rompe_soporte_3m": "2026-11-20",
+  "AMD:cruza_abajo_sma200": "2026-11-20",
+  "AMD:cae_fuerte": "2026-11-20",
+  "QQQ:rompe_soporte_3m": "2026-11-20",
+  "QQQ:rsi_sobrevendido": "2026-11-20",
+  "QQQ:cae_fuerte": "2026-11-20",
+  "TSLA:en_soporte_3m": "2026-11-20",
+  "TSLA:cruza_abajo_sma200": "2026-11-20",
+  "TSLA:cae_fuerte": "2026-11-20",
+  "NFLX:rompe_soporte_3m": "2026-11-20",
+  "NFLX:rsi_sobrevendido": "2026-11-20",
+  "NFLX:cae_fuerte": "2026-11-20"
  },
  "log": [
   {
@@ -4518,6 +4546,227 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGIA marca venta y rompió mínimos de seis meses a 1,04 dólares en medio del derrumbe general de activos locales. Plan: Vender toda la posición en CEPU ahora mismo para simplificar cartera y salir de Argentina, liberando ese capital. Riesgo: Materializar una pérdida en mínimos si el papel rebota por fundamentales corporativos ajenos al contexto político. Confianza: media",
    "radarTexto": "RADAR reporta: CEPU opera en mínimos de 6 meses a US$ 1,04 MEP, cayendo 3,4% hoy y 19,1% en el mes, con tendencia fuertemente bajista. Según los titulares, está confirmado el retroceso general de las acciones argentinas (hasta un 7%) en un contexto d",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-20T20:30:22.778Z",
+   "ticker": "MSFT",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 16.69,
+   "rsi14": 35.48,
+   "message_id": 380,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en 35, mientras el mercado exagera el ruido sobre Anthropic y Azure. Plan: entrada US$ 16,69 · stop US$ 15,20 · objetivo US$ 19,50 Riesgo: Volatilidad de corto plazo por rotación tecnológica y competencia en inteligencia artificial. Confianza: media",
+   "radarTexto": "Confirmado por titulares: la baja coincide con la presión por el debut de Anthropic que pone el foco en el pacto de Azure y con un sesgo bajista por débil momento. Probable: dudas sobre qué puede frenar su marcha y el impacto de nuevas estrategias en",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T20:30:23.484Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 11.63,
+   "rsi14": 22.8,
+   "message_id": 381,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta tras romper soporte y tocar mínimos de 6 meses, y la noticia confirma castigo al papel pese al crecimiento. Plan: Vender toda la posición en MELI ahora mismo para simplificar cartera, sin recomprar por ahora. Riesgo: Vender en el mínimo de 6 meses con un RSI en sobreventa extrema (22.8) y perder un rebote técnico. Confianza: media",
+   "radarTexto": "RADAR informando. Los titulares muestran caídas recientes y mínimos, vinculándolas con un desplome del 28 por ciento pese a crecer las ventas un 44 por ciento y con dudas sobre si evitar el papel. Confirmado por titulares: el derrumbe tras reportar e",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T20:30:23.724Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 11.93,
+   "rsi14": 27.54,
+   "message_id": 383,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI sobrevendido y baja fuerte por desarme temporal en inteligencia artificial, ideal para largo plazo. Plan: entrada US$ 11,93 · stop US$ 10,50 · objetivo US$ 14,50 Riesgo: volatilidad elevada de corto plazo y ruptura temporal de soportes clave en Wall Street. Confianza: media",
+   "radarTexto": "RADAR AL AIRE. Confirmado según titulares: caida general de Wall Street impulsada por un fuerte desarme de posiciones en acciones de inteligencia artificial que arrastra a los principales indices hacia correcciones. Probable: ajuste que profundiza el",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T20:30:23.962Z",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 24.15,
+   "rsi14": 29.89,
+   "message_id": 384,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA da compra por RSI sobrevendido y fuerte caída, y aunque hay venta de insiders y tendencia bajista, el papel está cerca de soportes y descontado. Plan: entrada US$ 24,15 · stop US$ 21,50 · objetivo US$ 33,95 Riesgo: Alta volatilidad de corto plazo y presión vendedora institucional. Confianza: baja",
+   "radarTexto": "RADAR informando. Los titulares confirman ventas de insiders por más de cinco millones y una corrección técnica bajista con dominio de vendedores. Es probable que influya un enfriamiento tras su suba de cinco años y dudas sobre la monetización, aunqu",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T20:30:25.358Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 4.74,
+   "rsi14": 28.16,
+   "message_id": 385,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:28.747Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 122.96,
+   "rsi14": 29.35,
+   "message_id": 386,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:29.250Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "stop_ppc_30"
+   ],
+   "precio": 1.01,
+   "rsi14": 31.36,
+   "message_id": 387,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:29.491Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 1.77,
+   "rsi14": 41.17,
+   "message_id": 389,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:29.730Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 8.04,
+   "rsi14": 40.29,
+   "message_id": 390,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:29.966Z",
+   "ticker": "PFE",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 7.14,
+   "rsi14": 32.28,
+   "message_id": 391,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:36.441Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 17.28,
+   "rsi14": 23.21,
+   "message_id": 392,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:36.905Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 43.89,
+   "rsi14": 39.05,
+   "message_id": 393,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:37.165Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 31.67,
+   "rsi14": 28.14,
+   "message_id": 394,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:37.401Z",
+   "ticker": "TSLA",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "en_soporte_3m",
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 23.81,
+   "rsi14": 37.63,
+   "message_id": 395,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-20T20:30:37.647Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "cae_fuerte"
+   ],
+   "precio": 1.22,
+   "rsi14": 27.54,
+   "message_id": 396,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
