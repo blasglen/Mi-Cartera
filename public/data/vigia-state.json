@@ -62,7 +62,9 @@
   "UBER:cae_fuerte": "2026-11-20",
   "MELI:en_soporte_3m": "2026-11-20",
   "VIST:en_soporte_3m": "2026-11-20",
-  "NFLX:en_soporte_3m": "2026-11-20"
+  "NFLX:en_soporte_3m": "2026-11-20",
+  "TSM:rsi_sobrevendido": "2026-11-20",
+  "VIST:minimo_6m": "2026-11-20"
  },
  "log": [
   {
@@ -4466,6 +4468,38 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 31 sobre soporte trimestral clave, con castigo irracional de mercado por compresión de múltiplos. Plan: entrada US$ 1,28 · stop US$ 1,15 · objetivo US$ 1,75 Riesgo: Tendencia bajista macro y posible prolongación del desarme fiscal de fin de año en Wall Street. Confianza: media",
    "radarTexto": "RADAR informando. Los titulares confirman bajas de Wall Street, mínimos de varios años y recortes de múltiplos a la mitad por menor margen de streaming. Es probable que Wall Street se equivoque y que la baja sirva para impuestos, según analistas.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T18:15:27.360Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 37.93,
+   "rsi14": 29.78,
+   "message_id": 377,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema y desplome por ruido geopolítico que ignora fundamentos sólidos y compra de insiders. Plan: entrada US$ 37,93 · stop US$ 34,00 · objetivo US$ 50,00 Riesgo: Tensión geopolítica con China y escalada regulatoria de EE.UU. que profundice la baja. Confianza: media",
+   "radarTexto": "RADAR acá. Movimiento confirmado por desplome del mercado taiwanés (peor semana desde 1990), nuevas reglas de EE.UU. frenando pedidos a China, flujo institucional negativo e impacto por la IPO de Anthropic; es probable que el papel esté barato frente",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T18:15:27.738Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 17.84,
+   "rsi14": 24.84,
+   "message_id": 378,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta por tendencia bajista profunda, aunque la noticia del ingreso de Peter Thiel asoma como posible rebote técnico. Plan: Vender toda la posición para limpiar Argentina y simplificar, redirigiendo los fondos a crecimiento global; no hay precio de recompra. Riesgo: Vender en mínimo histórico reciente de seis meses y perder un rebote impulsado por grandes inversores. Confianza: baja",
+   "radarTexto": "RADAR: VIST cotiza a US$ 17,84 (-0,1% hoy, -8,9% semanal, -28,4% mensual) tocando mínimos de 6 meses y con RSI sobrevendido (24,84). Confirmado por titulares: Peter Thiel amplió su inversión en la petrolera de Vaca Muerta en casi 59%, alcanzando US$ ",
    "debatido": true
   }
  ]

@@ -6604,6 +6604,34 @@
    ],
    "precio": 1.28,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T18:15:27.360Z",
+   "fecha": "2026-11-20",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "sombra": false,
+   "analista": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 37.93,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-20T18:15:27.738Z",
+   "fecha": "2026-11-20",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 17.84,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -6898,44 +6926,44 @@
    "PFE": 7.28
   },
   "2026-11-20": {
-   "SPY": 12.52,
-   "BBAR": 3.09,
-   "ORCL": 36.59,
-   "PANW": 7.52,
-   "MU": 129,
-   "NVDA": 6.06,
-   "AMD": 46.46,
-   "BMA": 5.38,
-   "COST": 24.85,
-   "MA": 20.41,
-   "ABNB": 12.3,
-   "MELI": 12.24,
-   "META": 25.43,
-   "YPFD": 3.5,
+   "SPY": 12.4,
+   "BBAR": 3.07,
+   "ORCL": 36.22,
+   "PANW": 7.43,
+   "MU": 127.59,
+   "NVDA": 6,
+   "AMD": 46.07,
+   "BMA": 5.35,
+   "COST": 24.68,
+   "MA": 20.29,
+   "ABNB": 12.22,
+   "MELI": 12.13,
+   "META": 25.15,
+   "YPFD": 3.48,
    "CEPU": 1.05,
-   "VIST": 17.99,
-   "GGAL": 2.7,
-   "AVGO": 8.4,
-   "QQQ": 33.3,
-   "TSM": 38.46,
-   "AMZN": 1.85,
-   "LLY": 25.85,
-   "TSLA": 25.09,
-   "AAPL": 18.52,
-   "BABA": 9.8,
-   "NFLX": 1.28,
-   "GOOGL": 5.05,
-   "SNOW": 9.21,
-   "CRM": 11.02,
-   "ADBE": 5.48,
-   "UBER": 34.92,
-   "PFE": 7.36
+   "VIST": 17.84,
+   "GGAL": 2.69,
+   "AVGO": 8.32,
+   "QQQ": 32.93,
+   "TSM": 37.93,
+   "AMZN": 1.84,
+   "LLY": 25.69,
+   "TSLA": 24.83,
+   "AAPL": 18.33,
+   "BABA": 9.72,
+   "NFLX": 1.27,
+   "GOOGL": 4.98,
+   "SNOW": 9.09,
+   "CRM": 10.89,
+   "ADBE": 5.41,
+   "UBER": 34.67,
+   "PFE": 7.32
   }
  },
  "ultimoResumen": "2026-11-13",
  "resumen": {
-  "actualizado": "2026-11-20T18:02:14.786Z",
-  "senales": 288,
+  "actualizado": "2026-11-20T18:15:45.349Z",
+  "senales": 290,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
