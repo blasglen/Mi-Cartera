@@ -37,22 +37,22 @@
   "YPFD:stop_ppc_30": "2026-11-19",
   "YPFD:cae_fuerte": "2026-11-19",
   "NVDA:stop_ppc_30": "2026-11-19",
-  "BABA:rompe_soporte_3m": "2026-11-19",
   "UBER:en_soporte_3m": "2026-11-19",
   "UBER:cae_fuerte": "2026-11-19",
   "GOOGL:minimo_6m": "2026-11-19",
   "BABA:rsi_sobrevendido": "2026-11-19",
-  "SPY:cruza_abajo_sma200": "2026-11-19",
   "GOOGL:stop_ppc_20": "2026-11-19",
-  "SNOW:en_soporte_3m": "2026-11-19",
   "SNOW:cae_fuerte": "2026-11-19",
-  "GOOGL:rompe_soporte_3m": "2026-11-19",
-  "GOOGL:cae_fuerte": "2026-11-19",
   "TSM:rompe_soporte_3m": "2026-11-20",
   "TSM:stop_ppc_20": "2026-11-20",
   "TSM:cae_fuerte": "2026-11-20",
   "MU:en_soporte_3m": "2026-11-20",
-  "MU:cae_fuerte": "2026-11-20"
+  "MU:cae_fuerte": "2026-11-20",
+  "GOOGL:en_soporte_3m": "2026-11-20",
+  "CEPU:en_soporte_3m": "2026-11-20",
+  "CEPU:cae_fuerte": "2026-11-20",
+  "BABA:en_soporte_3m": "2026-11-20",
+  "QQQ:en_soporte_3m": "2026-11-20"
  },
  "log": [
   {
@@ -4130,6 +4130,71 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Tocó soporte crítico de tres meses con RSI en zona de sobreventa y toma de ganancias temporal en IA. Plan: entrada US$ 139.93 · stop US$ 130.00 · objetivo US$ 170.00 Riesgo: Alta volatilidad sectorial y posible ruptura del soporte si profundiza la baja. Confianza: media",
    "radarTexto": "RADAR al habla. Los titulares confirman toma de ganancias en tecnológicas de IA y dudas sobre precios de memoria, mientras que mencionan como probable un rebote por recompra de acciones y balances de diciembre.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:00:28.404Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.02,
+   "rsi14": 33.13,
+   "message_id": 355,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 5,07 perforándolo levemente con RSI en zona de sobreventa (33) y ruido mediático exagerado por Anthropic. Plan: entrada US$ 5,02 · stop US$ 4,70 · objetivo US$ 5,90 Riesgo: Tendencia bajista de corto plazo consolidada bajo todas las medias móviles con volatilidad sostenida. Confianza: media",
+   "radarTexto": "RADAR reportando. El movimiento bajista se explica por la salida a bolsa de Anthropic que impactó en la valuación de Google según los medios. Es probable que haya oportunidades de rebote técnico aunque persisten dudas sobre si la caída del treinta po",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:00:28.924Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 1.06,
+   "rsi14": 35.54,
+   "message_id": 356,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Cotiza a 1,06 dólares tocando soporte de tres meses en plena baja del mercado local por suba del riesgo país. Plan: Mantener lo que tiene y vender todo si pierde el soporte de 1,04 dólares. Riesgo: Alta exposición al riesgo regulatorio y macroeconómico argentino. Confianza: baja",
+   "radarTexto": "RADAR: CEPU cotiza a US$ 1,06 MEP (-4,8% hoy) tocando soporte de 3 meses. Los titulares confirman que el mercado accionario argentino operó en baja y con fuertes retrocesos recientes. Es probable que esta caída general, junto a la suba del riesgo paí",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:00:29.184Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.95,
+   "rsi14": 29.73,
+   "message_id": 357,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 9.95 con RSI en sobreventa extrema (29.7) y castigo excesivo del mercado tras un balance mixto pero sólido en nube de IA. Plan: entrada US$ 9.95 · stop US$ 9.00 · objetivo US$ 12.24 Riesgo: Alta volatilidad regulatoria china y ruptura del soporte que invalide la tesis de rebote. Confianza: media",
+   "radarTexto": "RADAR ALERTA BABA. Confirmado: batió estimaciones de ingresos por la nube de IA y subió el beneficio por ganancias de inversión, aunque el balance generó opiniones mixtas. Probable: la caída responde al temor de que la IA sea un riesgo o a la toma de",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T14:00:29.446Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 34.06,
+   "rsi14": 36.04,
+   "message_id": 358,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa, a pesar de la presión inflacionaria y la caída de semiconductores. Plan: entrada US$ 34,06 · stop US$ 32,50 · objetivo US$ 39,80 Riesgo: Volatilidad por datos de inflación y debilidad técnica de corto plazo. Confianza: media",
+   "radarTexto": "RADAR: El Nasdaq cayó por presión vendedora y datos de inflación más calientes confirmados, junto con la fuerte baja de chips como AMD y TSMC. Es probable que el mercado también refleje cautela y nerviosismo por el debut de la OPI de Anthropic.",
    "debatido": true
   }
  ]
