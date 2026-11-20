@@ -32,8 +32,6 @@
   "CRM:rompe_soporte_3m": "2026-11-19",
   "YPFD:rompe_soporte_3m": "2026-11-19",
   "BABA:minimo_6m": "2026-11-19",
-  "TSM:en_soporte_3m": "2026-11-19",
-  "QQQ:en_soporte_3m": "2026-11-19",
   "SPY:rompe_soporte_3m": "2026-11-19",
   "TSM:minimo_6m": "2026-11-19",
   "YPFD:stop_ppc_30": "2026-11-19",
@@ -49,7 +47,12 @@
   "SNOW:en_soporte_3m": "2026-11-19",
   "SNOW:cae_fuerte": "2026-11-19",
   "GOOGL:rompe_soporte_3m": "2026-11-19",
-  "GOOGL:cae_fuerte": "2026-11-19"
+  "GOOGL:cae_fuerte": "2026-11-19",
+  "TSM:rompe_soporte_3m": "2026-11-20",
+  "TSM:stop_ppc_20": "2026-11-20",
+  "TSM:cae_fuerte": "2026-11-20",
+  "MU:en_soporte_3m": "2026-11-20",
+  "MU:cae_fuerte": "2026-11-20"
  },
  "log": [
   {
@@ -4092,6 +4095,41 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en 34 y tocando soporte de corto plazo tras una toma de ganancias sin cambios en fundamentos. Plan: entrada US$ 7,22 · stop US$ 6,95 · objetivo US$ 8,10 Riesgo: Volatilidad sectorial y perforación de la media de 200 ruedas. Confianza: media",
    "radarTexto": "RADAR reportando. Según los titulares, es probable que la baja sea una toma de ganancias tras su reciente rally y volumen alto, mientras que se debate si sus nuevos productos, adquisiciones y fuerte caja podrán revivir su crecimiento y sostener el di",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T13:45:18.499Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "stop_ppc_20",
+    "cae_fuerte"
+   ],
+   "precio": 39.17,
+   "rsi14": 31.79,
+   "message_id": 352,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y se rompieron soportes por restricciones de EE.UU. a China, aunque los directores estén comprando. Plan: Vender toda la posición en TSM y arbitrar el capital hacia SPY; recomprar si recupera la media de 200 ruedas. Riesgo: Escalada geopolítica con China y profundización de la tendencia bajista en tecnológicas. Confianza: baja",
+   "radarTexto": "RADAR reporta: TSMC cae un 9,1% hoy y rompe mínimos de 3 meses arrastrada por la suspensión de pedidos a China por nuevas reglas de EE.UU. y el impacto del IPO de Anthropic en tecnológicas asiáticas. Confirmado: nuevas restricciones en China y caída ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T13:45:18.797Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 139.93,
+   "rsi14": 34.05,
+   "message_id": 354,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Tocó soporte crítico de tres meses con RSI en zona de sobreventa y toma de ganancias temporal en IA. Plan: entrada US$ 139.93 · stop US$ 130.00 · objetivo US$ 170.00 Riesgo: Alta volatilidad sectorial y posible ruptura del soporte si profundiza la baja. Confianza: media",
+   "radarTexto": "RADAR al habla. Los titulares confirman toma de ganancias en tecnológicas de IA y dudas sobre precios de memoria, mientras que mencionan como probable un rebote por recompra de acciones y balances de diciembre.",
    "debatido": true
   }
  ]
