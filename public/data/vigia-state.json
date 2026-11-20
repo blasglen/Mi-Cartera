@@ -64,7 +64,8 @@
   "VIST:en_soporte_3m": "2026-11-20",
   "NFLX:en_soporte_3m": "2026-11-20",
   "TSM:rsi_sobrevendido": "2026-11-20",
-  "VIST:minimo_6m": "2026-11-20"
+  "VIST:minimo_6m": "2026-11-20",
+  "CEPU:minimo_6m": "2026-11-20"
  },
  "log": [
   {
@@ -4500,6 +4501,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta por tendencia bajista profunda, aunque la noticia del ingreso de Peter Thiel asoma como posible rebote técnico. Plan: Vender toda la posición para limpiar Argentina y simplificar, redirigiendo los fondos a crecimiento global; no hay precio de recompra. Riesgo: Vender en mínimo histórico reciente de seis meses y perder un rebote impulsado por grandes inversores. Confianza: baja",
    "radarTexto": "RADAR: VIST cotiza a US$ 17,84 (-0,1% hoy, -8,9% semanal, -28,4% mensual) tocando mínimos de 6 meses y con RSI sobrevendido (24,84). Confirmado por titulares: Peter Thiel amplió su inversión en la petrolera de Vaca Muerta en casi 59%, alcanzando US$ ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-20T19:30:18.920Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 1.04,
+   "rsi14": 34.19,
+   "message_id": 379,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGIA marca venta y rompió mínimos de seis meses a 1,04 dólares en medio del derrumbe general de activos locales. Plan: Vender toda la posición en CEPU ahora mismo para simplificar cartera y salir de Argentina, liberando ese capital. Riesgo: Materializar una pérdida en mínimos si el papel rebota por fundamentales corporativos ajenos al contexto político. Confianza: media",
+   "radarTexto": "RADAR reporta: CEPU opera en mínimos de 6 meses a US$ 1,04 MEP, cayendo 3,4% hoy y 19,1% en el mes, con tendencia fuertemente bajista. Según los titulares, está confirmado el retroceso general de las acciones argentinas (hasta un 7%) en un contexto d",
    "debatido": true
   }
  ]
