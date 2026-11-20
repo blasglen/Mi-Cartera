@@ -4400,7 +4400,11 @@
    ],
    "precio": 5.03,
    "rsi14": 33.36,
-   "message_id": 372
+   "message_id": 372,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y cotiza abajo de todas las medias, aunque el castigo por Anthropic acerca un posible piso. Plan: Vender todo por señal técnica y comprar más solo si la cartera total cae un 25 por ciento. Riesgo: Continuar la tendencia bajista perforando el soporte actual de 5 dólares. Confianza: baja",
+   "radarTexto": "RADAR al habla. Confirmado: Las acciones cayeron por la salida a bolsa de Anthropic que revalorizó la participación de Google y por la baja general que la dejó debajo de Nvidia en valuación. Probable: Analistas como Jim Cramer y medios ven señales de",
+   "debatido": true
   },
   {
    "ts": "2026-11-20T17:15:19.887Z",
@@ -4413,7 +4417,11 @@
    ],
    "precio": 34.84,
    "rsi14": 41.29,
-   "message_id": 373
+   "message_id": 373,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con fuerte baja diaria y sin noticias negativas propias que invaliden el negocio. Plan: entrada US$ 34,81 · stop US$ 32,50 · objetivo US$ 41,74 Riesgo: Tendencia bajista de corto plazo y presión general del mercado que puede romper soportes. Confianza: baja",
+   "radarTexto": "RADAR: Los titulares no explican la caída fuerte de hoy. Probable: ajuste de mercado general a pesar de sumar aliados como Amazon y McDonald's. Confirmado: la acción sigue operando bajo presión y busca sostenerse en mínimos de tres meses.",
+   "debatido": true
   }
  ]
 }
