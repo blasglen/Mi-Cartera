@@ -769,12 +769,12 @@ let MOVIMIENTOS = [
 const SPLITS_DE_REFERENCIA = MOVIMIENTOS.filter((m) => m.tipo === "Split");
 
 const CATS = [
-  { key: "Acciones", color: "#4FA184", icon: Landmark },
-  { key: "CEDEARs", color: "#6C8FC7", icon: Globe },
-  { key: "Bonos", color: "#C89B3C", icon: FileText },
-  { key: "Obligaciones Negociables", color: "#B3654A", icon: Coins },
-  { key: "Fondos", color: "#A87CC8", icon: Layers },
-  { key: "Cripto", color: "#E8964F", icon: Bitcoin },
+  { key: "Acciones", color: "#14A1A6", icon: Landmark },
+  { key: "CEDEARs", color: "#3F6FDB", icon: Globe },
+  { key: "Bonos", color: "#8B6FDD", icon: FileText },
+  { key: "Obligaciones Negociables", color: "#D9822B", icon: Coins },
+  { key: "Fondos", color: "#4FA36A", icon: Layers },
+  { key: "Cripto", color: "#E2A31F", icon: Bitcoin },
 ];
 
 function computeBrokerList() {
@@ -1479,12 +1479,15 @@ const BROKERS = [
   { name: "Buenbit", status: "sin conectar", tipo: "API (solo lectura)" },
 ];
 
+// Formato argentino: punto de miles, coma decimal, signo menos adelante.
 function fmt(n, currency, fxRate) {
-  if (currency === "USD") {
-    const usd = n / fxRate;
-    return "US$" + usd.toLocaleString("en-US", { maximumFractionDigits: usd >= 1000 ? 0 : 2 });
-  }
-  return "$" + Math.round(n).toLocaleString("es-AR");
+  if (n == null || !isFinite(n)) return "—";
+  const v = currency === "USD" ? n / fxRate : n;
+  const abs = Math.abs(v);
+  const dec = currency === "USD" && abs < 1000 ? 2 : 0;
+  const txt = abs.toLocaleString("es-AR", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  const signo = v < 0 && Number(txt.replace(/\./g, "").replace(",", ".")) !== 0 ? "−" : "";
+  return `${signo}${currency === "USD" ? "US$" : "$"}\u00A0${txt}`;
 }
 
 // Formato corto para las etiquetas del eje (ej: "1,2M" en vez de "1234567").
@@ -1547,34 +1550,40 @@ const NAV = [
   { key: "config", label: "Configuración", icon: Settings },
 ];
 
+// Paleta "libro contable": tinta azul sobre papel frío. `gold` quedó como
+// nombre histórico del color de acento (hoy es el azul tinta).
 const DARK = {
-  bg: "#10161C",
-  surface: "#182029",
-  border: "#26313C",
-  text: "#EFEAE0",
-  muted: "#8B95A1",
-  faint: "#5C6773",
-  gold: "#C89B3C",
-  gain: "#4FA184",
-  loss: "#C1584A",
-  rowLine: "#1C2B25",
-  chipActive: "#2A2416",
-  scrollbar: "#2A3D34",
+  bg: "#0C1524",
+  surface: "#131F33",
+  border: "#22324B",
+  text: "#E7EDF6",
+  muted: "#9AA8BD",
+  faint: "#66768E",
+  gold: "#7FA4FF",
+  gain: "#3BC48E",
+  loss: "#FF6F61",
+  rowLine: "#1A2840",
+  chipActive: "#1C2D4D",
+  scrollbar: "#2A3B57",
+  ink: "#E7EDF6",
+  accentSoft: "#1A2A47",
 };
 
 const LIGHT = {
-  bg: "#F5F1E8",
+  bg: "#EDF1F6",
   surface: "#FFFFFF",
-  border: "#E1D9C8",
-  text: "#1E2620",
-  muted: "#6B6255",
-  faint: "#9A9280",
-  gold: "#A87C1F",
-  gain: "#2F7A5C",
-  loss: "#B23F32",
-  rowLine: "#EEE7D8",
-  chipActive: "#F1E4C0",
-  scrollbar: "#E1D9C8",
+  border: "#D9E0EA",
+  text: "#172A46",
+  muted: "#5C6B80",
+  faint: "#98A4B5",
+  gold: "#2B59C3",
+  gain: "#0E7F5A",
+  loss: "#C2392E",
+  rowLine: "#EEF2F7",
+  chipActive: "#E3EBFB",
+  scrollbar: "#D9E0EA",
+  ink: "#172A46",
+  accentSoft: "#E8EEFB",
 };
 
 function translateFirebaseError(code) {
@@ -1620,10 +1629,10 @@ function LoginView({ C }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, fontFamily: "'IBM Plex Sans', sans-serif", padding: 20 }}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');`}</style>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, fontFamily: "'Geist', system-ui, sans-serif", padding: 20 }}>
+      
       <div style={{ width: "100%", maxWidth: 380, padding: "32px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16 }}>
-        <div style={{ fontFamily: "'Fraunces', serif", fontSize: 24, fontWeight: 600, marginBottom: 4, textAlign: "center", color: C.text }}>Cartera Personal</div>
+        <div style={{ fontFamily: "'Geist', sans-serif", letterSpacing: "-0.02em", fontSize: 24, fontWeight: 600, marginBottom: 4, textAlign: "center", color: C.text }}>Cartera Personal</div>
         <div style={{ fontSize: 13, color: C.faint, textAlign: "center", marginBottom: 24 }}>
           {mode === "login" ? "Iniciá sesión para ver tu cartera" : mode === "signup" ? "Creá tu cuenta" : "Recuperar contraseña"}
         </div>
@@ -1701,7 +1710,7 @@ function LoginView({ C }) {
 
 function LoadingScreen({ C, text }) {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, color: C.faint, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 13 }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.bg, color: C.faint, fontFamily: "'Geist', system-ui, sans-serif", fontSize: 13 }}>
       {text}
     </div>
   );
@@ -1764,7 +1773,7 @@ export default function AuthGate() {
 
   if (dataError) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: C.bg, color: C.loss, fontFamily: "'IBM Plex Sans', sans-serif", fontSize: 13, padding: 20, textAlign: "center" }}>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: C.bg, color: C.loss, fontFamily: "'Geist', system-ui, sans-serif", fontSize: 13, padding: 20, textAlign: "center" }}>
         <div>No pudimos cargar tus datos: {dataError}</div>
         <button onClick={() => signOut(auth)} style={{ padding: "8px 16px", borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent", color: C.text, fontSize: 12, cursor: "pointer" }}>
           Cerrar sesión e intentar de nuevo
@@ -2054,12 +2063,43 @@ function InvestmentDashboard({ user }) {
   const dayAbs = currentTotal - yesterdayTotal;
   const dayPct = pct(currentTotal, yesterdayTotal);
 
+  // --- "¿Cómo estoy hoy?" ---
+  // Variación del día: si tenemos la variación % de la mayoría de la cartera
+  // (IOL / data912), la sumamos activo por activo -- es más exacta que
+  // comparar contra el último punto del histórico.
+  const resumen = useMemo(() => {
+    const filas = consolidateByName(byBroker).map((h) => {
+      const value = h.qty * h.price;
+      const usaUsd = currency === "USD" && h.avgCostUsd != null;
+      const cost = usaUsd ? h.avgCostUsd * h.qty * fx : h.qty * h.avgCost;
+      const pctDia = livePctChange[h.name];
+      const impacto = pctDia != null && isFinite(pctDia) ? value * (pctDia / (100 + pctDia)) : null;
+      return { name: h.name, cat: h.cat, value, cost, pctDia, impacto };
+    });
+    const total = filas.reduce((a, r) => a + r.value, 0);
+    const costo = filas.reduce((a, r) => a + r.cost, 0);
+    const conDato = filas.filter((r) => r.impacto != null);
+    const cobertura = total > 0 ? conDato.reduce((a, r) => a + r.value, 0) / total : 0;
+    const hoyAbs = cobertura >= 0.5 ? conDato.reduce((a, r) => a + r.impacto, 0) : dayAbs;
+    const hoyPct = cobertura >= 0.5 ? (hoyAbs / (total - hoyAbs)) * 100 : dayPct;
+    const ordenados = [...conDato].filter((r) => Math.abs(r.pctDia) >= 0.05).sort((a, b) => b.impacto - a.impacto);
+    const suben = ordenados.filter((r) => r.impacto > 0).slice(0, 3);
+    const bajan = ordenados.filter((r) => r.impacto < 0).reverse().slice(0, 3);
+    const porCat = CATS.map((c) => ({ ...c, value: filas.filter((r) => r.cat === c.key).reduce((a, r) => a + r.value, 0) })).filter((c) => c.value > 0);
+    const brokers = [...new Set(holdingsLive.map((h) => h.broker))].map((b) => ({ name: b, value: holdingsLive.filter((h) => h.broker === b).reduce((a, h) => a + h.qty * h.price, 0) })).filter((b) => b.value > 0).sort((a, b) => b.value - a.value);
+    return { total, costo, ganancia: total - costo, gananciaPct: pct(total, costo), hoyAbs, hoyPct, suben, bajan, porCat, brokers, cantidad: filas.length };
+  }, [byBroker, holdingsLive, livePctChange, currency, fx, dayAbs, dayPct]);
+  const BROKER_COLORES = themeMode === "dark" ? ["#7FA4FF", "#4FD1C5", "#B79CFF", "#F2B35B", "#8FD18F", "#F08BA0"] : ["#2B59C3", "#14A1A6", "#8B6FDD", "#D9822B", "#4FA36A", "#C2577A"];
+  const mercadoAbierto = mercadoAbiertoAR();
+
   return (
-    <div style={{ fontFamily: "'IBM Plex Sans', sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
+    <div style={{ fontFamily: "'Geist', system-ui, sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-        .tabular { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
-        .display { font-family: 'Fraunces', serif; }
+        .tabular { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+        .display { font-family: 'Geist', system-ui, sans-serif; letter-spacing: -0.02em; }
+        button, select, input { font-family: inherit; }
+        button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid ${C.gold}; outline-offset: 2px; }
+        .total-doble { border-bottom: 3px double ${C.text}; padding-bottom: 4px; display: inline-block; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .recharts-wrapper:focus, .recharts-surface:focus { outline: none; }
         ::-webkit-scrollbar { height: 6px; width: 6px; }
@@ -2072,7 +2112,10 @@ function InvestmentDashboard({ user }) {
           .mobile-nav { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); }
           .mobile-more { display: block; position: fixed; left: 0; right: 0; bottom: 64px; z-index: 39; }
           .hide-m { display: none !important; }
-          .total-grande { font-size: 28px !important; }
+          .total-grande { font-size: 38px !important; }
+          .hero-hoy { padding: 20px 16px 18px !important; }
+          .hero-cols { grid-template-columns: 1fr 1fr !important; }
+          .hero-cols > div:nth-child(3) { display: none; }
         }
       `}</style>
 
@@ -2166,36 +2209,9 @@ function InvestmentDashboard({ user }) {
 
           {view === "inicio" && (
             <>
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
                 <div>
-                  <div className="display" style={{ fontSize: 13, letterSpacing: "0.08em", color: C.muted, textTransform: "uppercase", marginBottom: 4 }}>
-                    Cartera personal
-                  </div>
-                  <div className="display tabular total-grande" style={{ fontSize: 34, fontWeight: 600, lineHeight: 1 }}>
-                    {f(currentTotal)}
-                  </div>
-                  <div className="tabular" style={{ fontSize: 13, marginTop: 6, color: dayAbs >= 0 ? C.gain : C.loss }}>
-                    {dayAbs >= 0 ? "+" : ""}{f(dayAbs)} ({dayPct >= 0 ? "+" : ""}{dayPct.toFixed(1)}%) vs. ayer
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: liveStatus === "ok" ? C.gain : C.faint, marginTop: 4 }}>
-                    <span style={{ width: 5, height: 5, borderRadius: 999, background: liveStatus === "ok" ? C.gain : C.faint, display: "inline-block" }} />
-                    {liveStatus === "ok"
-                      ? `Dólar en vivo · ${Object.keys(livePrices).length > 0 ? `${Object.keys(livePrices).length} activos con precio en vivo` : "precios de mercado sin conectar todavía"}`
-                      : liveStatus === "cargando"
-                      ? "Conectando cotizaciones…"
-                      : "Estimado — sin conexión a las fuentes de cotización"}
-                  </div>
-                  {iolLive.status !== "off" && (
-                    <div title={iolLive.error || ""} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: iolLive.status === "ok" ? C.gain : C.faint, marginTop: 2 }}>
-                      <span style={{ width: 5, height: 5, borderRadius: 999, background: iolLive.status === "ok" ? C.gain : iolLive.status === "error" ? C.loss : C.faint, display: "inline-block" }} />
-                      {iolLive.status === "ok"
-                        ? `IOL en vivo · ${Object.keys(iolLive.prices).length} de tus activos · ${new Date(iolLive.updatedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}${mercadoAbiertoAR() ? " · se actualiza cada minuto" : " · mercado cerrado"}`
-                        : iolLive.status === "cargando"
-                        ? "Conectando con IOL…"
-                        : "IOL no respondió — usando data912"}
-                    </div>
-                  )}
-                  <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <select
                       value={brokerFilter}
                       onChange={(e) => { setBrokerFilter(e.target.value); setConfirmandoBorradoCartera(false); }}
@@ -2284,11 +2300,116 @@ function InvestmentDashboard({ user }) {
                 </div>
               </div>
 
+              {/* -------- ¿Cómo estoy hoy? -------- */}
+              <section aria-label="Resumen de hoy" className="hero-hoy" style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, padding: "26px 28px 22px", marginBottom: 20 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
+                  <h1 style={{ margin: 0, fontSize: 15, fontWeight: 500, color: C.muted }}>
+                    {brokerFilter === "Todas" ? "Todas tus inversiones" : `Cartera ${brokerFilter}`}
+                  </h1>
+                  <span style={{ fontSize: 12, color: C.faint }}>
+                    {new Date().toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" })}
+                    {mercadoAbierto ? ", mercado abierto" : ", mercado cerrado"}
+                  </span>
+                </div>
+
+                <div className="display tabular total-grande" style={{ fontSize: 52, fontWeight: 600, lineHeight: 1.05, marginTop: 10, color: C.text }}>
+                  <span className="total-doble">{f(resumen.total)}</span>
+                </div>
+
+                <div className="hero-cols" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 0, marginTop: 22, borderTop: `1px solid ${C.border}` }}>
+                  {[
+                    { label: mercadoAbierto ? "Hoy" : "Última rueda", abs: resumen.hoyAbs, pc: resumen.hoyPct },
+                    { label: "Ganancia desde que invertiste", abs: resumen.ganancia, pc: resumen.gananciaPct },
+                    { label: "Lo que pusiste", abs: resumen.costo, neutral: true, nota: `${resumen.cantidad} activos` },
+                  ].map((col, i) => (
+                    <div key={col.label} style={{ padding: "14px 16px 4px", paddingLeft: i === 0 ? 0 : 16, borderLeft: i === 0 ? "none" : `1px solid ${C.border}` }}>
+                      <div style={{ fontSize: 12, color: C.muted }}>{col.label}</div>
+                      <div className="tabular" style={{ fontSize: 22, fontWeight: 600, marginTop: 4, color: col.neutral ? C.text : col.abs >= 0 ? C.gain : C.loss }}>
+                        {col.neutral ? f(col.abs) : `${col.abs >= 0 ? "+" : "−"}${f(Math.abs(col.abs))}`}
+                      </div>
+                      <div className="tabular" style={{ fontSize: 13, marginTop: 2, color: col.neutral ? C.faint : col.abs >= 0 ? C.gain : C.loss }}>
+                        {col.neutral ? col.nota : `${col.pc >= 0 ? "+" : "−"}${Math.abs(col.pc || 0).toFixed(2).replace(".", ",")}%`}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Dónde está tu plata: por broker y por tipo */}
+                {resumen.total > 0 && (
+                  <div style={{ marginTop: 22 }}>
+                    {(brokerFilter === "Todas" && resumen.brokers.length > 1 ? [
+                      { titulo: "Por broker", items: resumen.brokers.map((b, i) => ({ key: b.name, label: b.name, value: b.value, color: BROKER_COLORES[i % BROKER_COLORES.length], onClick: () => setBrokerFilter(b.name) })) },
+                    ] : []).concat([
+                      { titulo: "Por tipo de activo", items: resumen.porCat.map((c) => ({ key: c.key, label: c.key === "Obligaciones Negociables" ? "ONs" : c.key, value: c.value, color: c.color, onClick: () => setCatFilter(catFilter === c.key ? "Todas" : c.key), activo: catFilter === c.key })) },
+                    ]).map((grupo) => {
+                      const tot = grupo.items.reduce((a, x) => a + x.value, 0) || 1;
+                      return (
+                        <div key={grupo.titulo} style={{ marginTop: 14 }}>
+                          <div style={{ fontSize: 12, color: C.muted, marginBottom: 7 }}>{grupo.titulo}</div>
+                          <div style={{ display: "flex", height: 12, borderRadius: 6, overflow: "hidden", gap: 2, background: C.rowLine }}>
+                            {grupo.items.map((x) => (
+                              <button key={x.key} onClick={x.onClick} title={`${x.label}: ${f(x.value)} (${((x.value / tot) * 100).toFixed(1)}%)`}
+                                style={{ flex: `${x.value} 1 0`, minWidth: 3, background: x.color, border: "none", padding: 0, cursor: "pointer", opacity: catFilter !== "Todas" && grupo.titulo === "Por tipo de activo" && !x.activo ? 0.3 : 1 }} />
+                            ))}
+                          </div>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 16px", marginTop: 8 }}>
+                            {grupo.items.map((x) => (
+                              <button key={x.key} onClick={x.onClick} style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: 12, color: C.text }}>
+                                <span style={{ width: 8, height: 8, borderRadius: 2, background: x.color }} />
+                                {x.label}
+                                <span className="tabular" style={{ color: C.muted }}>{((x.value / tot) * 100).toFixed(0)}%</span>
+                                <span className="tabular hide-m" style={{ color: C.faint }}>{f(x.value)}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", marginTop: 18, fontSize: 11, color: C.faint }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 5 }} title={iolLive.error || ""}>
+                    <span style={{ width: 6, height: 6, borderRadius: 999, background: iolLive.status === "ok" ? C.gain : iolLive.status === "error" ? C.loss : C.faint }} />
+                    {iolLive.status === "ok"
+                      ? `Precios de IOL a las ${new Date(iolLive.updatedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}${mercadoAbierto ? ", se actualizan cada minuto" : ""}`
+                      : iolLive.status === "cargando" ? "Conectando con IOL…"
+                      : iolLive.status === "error" ? "IOL no respondió: precios de data912"
+                      : liveStatus === "ok" ? "Precios de data912" : "Sin precios en vivo: valores estimados"}
+                  </span>
+                  <span>Dólar {activeFxRates[fxType].label} {fmt(fx, "ARS")}</span>
+                </div>
+              </section>
+
+              {/* Lo que más se movió */}
+              {(resumen.suben.length > 0 || resumen.bajan.length > 0) && (
+                <section aria-label="Lo que más se movió" className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+                  {[
+                    { titulo: mercadoAbierto ? "Lo que más te sumó hoy" : "Lo que más te sumó en la última rueda", lista: resumen.suben, color: C.gain },
+                    { titulo: mercadoAbierto ? "Lo que más te restó hoy" : "Lo que más te restó en la última rueda", lista: resumen.bajan, color: C.loss },
+                  ].map((g) => (
+                    <div key={g.titulo} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 14, padding: "14px 18px" }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 6 }}>{g.titulo}</div>
+                      {g.lista.length === 0 && <div style={{ fontSize: 12, color: C.faint, padding: "6px 0" }}>Nada para mostrar.</div>}
+                      {g.lista.map((r) => (
+                        <button key={r.name} onClick={() => goToAsset(r.name)} style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", padding: "8px 0", border: "none", borderTop: `1px solid ${C.rowLine}`, background: "none", cursor: "pointer", color: C.text, fontSize: 13 }}>
+                          <span style={{ fontWeight: 600 }}>{r.name}</span>
+                          <span className="tabular" style={{ display: "flex", gap: 12, color: g.color }}>
+                            <span>{r.pctDia >= 0 ? "+" : "−"}{Math.abs(r.pctDia).toFixed(1).replace(".", ",")}%</span>
+                            <span style={{ minWidth: 80, textAlign: "right", fontWeight: 600 }}>{r.impacto >= 0 ? "+" : "−"}{f(Math.abs(r.impacto))}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ))}
+                </section>
+              )}
+
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "20px 20px 8px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16, marginBottom: 8 }}>
                   <div>
                     <div style={{ fontSize: 12, color: C.muted, marginBottom: 6 }}>
-                      Ganancia neta (valor actual vs. invertido) {useCustom ? `· al ${to}` : ""}
+                      Cómo viene tu cartera en el período {useCustom ? `(al ${to})` : ""}
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                       {pnlAbs >= 0 ? <TrendingUp size={22} color={C.gain} /> : <TrendingDown size={22} color={C.loss} />}
@@ -2423,44 +2544,7 @@ function InvestmentDashboard({ user }) {
                 </div>
               </div>
 
-              <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "minmax(220px, 260px) 1fr", gap: 12, marginTop: 20, alignItems: "stretch" }}>
-                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "18px 18px 14px", display: "flex", flexDirection: "column" }}>
-                  <span style={{ fontSize: 12, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 }}>Composición</span>
-                  <div style={{ position: "relative", height: 160 }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={CATS.map((c) => ({ name: c.key, value: byBroker.filter((h) => h.cat === c.key).reduce((s, h) => s + h.qty * h.price, 0) }))}
-                          dataKey="value" nameKey="name" innerRadius={50} outerRadius={68} paddingAngle={3} stroke="none"
-                          onClick={(d) => setCatFilter(catFilter === d.name ? "Todas" : d.name)} cursor="pointer"
-                        >
-                          {CATS.map((c) => <Cell key={c.key} fill={c.color} opacity={catFilter === "Todas" || catFilter === c.key ? 1 : 0.25} />)}
-                        </Pie>
-                        <Tooltip contentStyle={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12 }} labelStyle={{ color: C.text }} formatter={(v) => f(v)} />
-                      </PieChart>
-                    </ResponsiveContainer>
-                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", pointerEvents: "none" }}>
-                      <div className="tabular" style={{ fontSize: 14, fontWeight: 600 }}>{f(currentTotal)}</div>
-                      <div style={{ fontSize: 10, color: C.faint }}>total</div>
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 6 }}>
-                    {CATS.map((c) => {
-                      const value = byBroker.filter((h) => h.cat === c.key).reduce((s, h) => s + h.qty * h.price, 0);
-                      const share = (value / currentTotal) * 100;
-                      return (
-                        <div key={c.key} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-                          <span style={{ display: "flex", alignItems: "center", gap: 6, color: C.muted }}>
-                            <span style={{ width: 8, height: 8, borderRadius: 999, background: c.color, display: "inline-block" }} />
-                            {c.key}
-                          </span>
-                          <span className="tabular" style={{ color: C.text }}>{share.toFixed(0)}%</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
+              <div style={{ marginTop: 20 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
                   {CATS.map((c) => {
                     const items = byBroker.filter((h) => h.cat === c.key);
@@ -2472,7 +2556,7 @@ function InvestmentDashboard({ user }) {
                       <button key={c.key} onClick={() => setCatFilter(catFilter === c.key ? "Todas" : c.key)} style={{ textAlign: "left", background: C.surface, border: catFilter === c.key ? `1px solid ${c.color}` : `1px solid ${C.border}`, borderRadius: 12, padding: "16px 18px", cursor: "pointer" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                           <Icon size={16} color={c.color} />
-                          <span style={{ fontSize: 12, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em" }}>{c.key}</span>
+                          <span style={{ fontSize: 12, color: C.muted, textTransform: "none" }}>{c.key}</span>
                         </div>
                         <div className="tabular" style={{ fontSize: 20, fontWeight: 600, marginBottom: 4 }}>{f(value)}</div>
                         <div className="tabular" style={{ fontSize: 12, color: p >= 0 ? C.gain : C.loss }}>{p >= 0 ? "+" : ""}{p.toFixed(1)}% desde costo</div>
@@ -2545,7 +2629,10 @@ function InvestmentDashboard({ user }) {
                                 </div>
                               </td>
                               <td className="tabular hide-m" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
+                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>
+                                {f(value)}
+                                {totalValueTenencias > 0 && <div style={{ fontSize: 11, color: C.faint, marginTop: 1 }}>{((value / totalValueTenencias) * 100).toFixed(1).replace(".", ",")}% del total</div>}
+                              </td>
                               <td className="tabular hide-m" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.cost)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }} title={h.usaCostoUsdReal ? "Costo en dólares reales de cada fecha de compra" : ""}>
                                 {h.usaCostoUsdReal ? f(h.avgCostUsd * fx) : f(h.avgCost)}
@@ -2561,7 +2648,7 @@ function InvestmentDashboard({ user }) {
                                   </div>
                                 )}
                               </td>
-                              <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: p >= 0 ? C.gain : C.loss }}>{p >= 0 ? "+" : ""}{p.toFixed(1)}%</td>
+                              <td className="tabular" style={{ padding: "10px 18px", textAlign: "right", color: p >= 0 ? C.gain : C.loss, fontWeight: 600 }}>{p >= 0 ? "+" : "−"}{Math.abs(p).toFixed(1).replace(".", ",")}%</td>
                             </tr>
                           );
                         })}
@@ -3130,25 +3217,25 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
             return (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 16 }}>
                 <div>
-                  <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4 }}>Cantidad</div>
+                  <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 4 }}>Cantidad</div>
                   <div className="tabular" style={{ fontSize: 16, fontWeight: 600 }}>{held.qty}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4 }}>PPC</div>
+                  <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 4 }}>PPC</div>
                   <div className="tabular" style={{ fontSize: 16, fontWeight: 600 }}>{f(held.avgCost)}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4 }}>Plata ahora</div>
+                  <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 4 }}>Plata ahora</div>
                   <div className="tabular" style={{ fontSize: 16, fontWeight: 600 }}>{f(valorAhora)}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4 }}>Ganancia</div>
+                  <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 4 }}>Ganancia</div>
                   <div className="tabular" style={{ fontSize: 16, fontWeight: 600, color: ganAbs >= 0 ? C.gain : C.loss }}>
                     {ganAbs >= 0 ? "+" : ""}{f(ganAbs)}
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4 }}>%</div>
+                  <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 4 }}>%</div>
                   <div className="tabular" style={{ fontSize: 16, fontWeight: 600, color: ganPct >= 0 ? C.gain : C.loss }}>
                     {ganPct >= 0 ? "+" : ""}{ganPct.toFixed(1)}%
                   </div>
@@ -3697,17 +3784,17 @@ function AnalisisView({ tenencias, f, C }) {
         <>
           <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 20 }}>
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 16 }}>
-              <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Valor total</div>
+              <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 6 }}>Valor total</div>
               <div style={{ fontSize: 20, fontWeight: 700 }}>{f(totalValue)}</div>
             </div>
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 16 }}>
-              <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Ganancia / Pérdida</div>
+              <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 6 }}>Ganancia / Pérdida</div>
               <div style={{ fontSize: 20, fontWeight: 700, color: gananciaAbs >= 0 ? C.gain : C.loss }}>
                 {gananciaAbs >= 0 ? "+" : ""}{f(gananciaAbs)} ({gananciaPct >= 0 ? "+" : ""}{gananciaPct.toFixed(1)}%)
               </div>
             </div>
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 16 }}>
-              <div style={{ fontSize: 11, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Activos distintos</div>
+              <div style={{ fontSize: 11, color: C.faint, textTransform: "none", marginBottom: 6 }}>Activos distintos</div>
               <div style={{ fontSize: 20, fontWeight: 700 }}>{tenencias.filter((h) => h.value > 0).length}</div>
             </div>
           </div>
@@ -4653,7 +4740,14 @@ function ChipVeredicto({ v, C, small }) {
 }
 
 function AvisosMesaCard({ C, mesa, onVer }) {
-  const avisos = mesa.log.filter((a) => a.veredicto && a.veredicto !== "MANTENER").slice(-8).reverse();
+  // Último aviso de cada activo (sin repetir), los 8 más recientes
+  const vistos = new Set();
+  const avisos = [];
+  for (const a of [...mesa.log].reverse()) {
+    if (!a.veredicto || a.veredicto === "MANTENER" || vistos.has(a.ticker)) continue;
+    vistos.add(a.ticker); avisos.push(a);
+    if (avisos.length >= 8) break;
+  }
   if (!mesa.log.length) return null;
   return (
     <div style={{ marginTop: 24, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
@@ -4688,7 +4782,7 @@ function SenalesMesaPanel({ C, sym, mesa }) {
   const tendColor = t?.tendencia?.startsWith("alcista") ? C.gain : t?.tendencia?.startsWith("bajista") ? C.loss : C.text;
   const Dato = ({ label, children, color }) => (
     <div style={{ minWidth: 110 }}>
-      <div style={{ fontSize: 10, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</div>
+      <div style={{ fontSize: 10, color: C.faint, textTransform: "none" }}>{label}</div>
       <div className="tabular" style={{ fontSize: 13, marginTop: 2, color: color || C.text, fontWeight: 500 }}>{children}</div>
     </div>
   );
@@ -5322,7 +5416,7 @@ function ImportarView({ C, user, fx }) {
       {IOL_WORKER_URL && <IolSyncCard C={C} user={user} />}
 
       <div style={{ marginBottom: 22 }}>
-        <div style={{ fontSize: 12, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Origen del archivo</div>
+        <div style={{ fontSize: 12, color: C.muted, textTransform: "none", marginBottom: 10 }}>Origen del archivo</div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {["Balanz", "IOL"].map((b) => (
             <span
