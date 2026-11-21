@@ -1539,14 +1539,11 @@ function closestPoint(dateStr) {
 
 const NAV = [
   { key: "inicio", label: "Inicio", icon: Home },
+  { key: "mesa", label: "La Mesa", icon: Bell },
   { key: "analisis", label: "Análisis de cartera", icon: Sparkles },
   { key: "buscar", label: "Buscar activo", icon: Search },
-  { key: "novedades", label: "Novedades de mi cartera", icon: Bell },
-  { key: "calculadora", label: "Calculadora", icon: Calculator },
-  { key: "importar", label: "Importar archivos", icon: Upload },
-  { key: "pnl", label: "P&L de fecha específica", icon: CalendarRange },
   { key: "movimientos", label: "Movimientos", icon: History },
-  { key: "manual", label: "Activos manuales", icon: PlusCircle },
+  { key: "importar", label: "Cargar y sincronizar", icon: Upload },
   { key: "config", label: "Configuración", icon: Settings },
 ];
 
@@ -2192,7 +2189,7 @@ function InvestmentDashboard({ user }) {
         {[...NAV.slice(0, 4), { key: "__mas", label: "Más", icon: MoreHorizontal }].map((item) => {
           const Icon = item.icon;
           const active = item.key === "__mas" ? mobileMore || NAV.slice(4).some((n) => n.key === view) : view === item.key && !mobileMore;
-          const corto = { inicio: "Inicio", analisis: "Análisis", buscar: "Buscar", novedades: "Novedades" }[item.key] || item.label;
+          const corto = { inicio: "Inicio", mesa: "Mesa", analisis: "Análisis", buscar: "Buscar" }[item.key] || item.label;
           return (
             <button key={item.key} onClick={() => (item.key === "__mas" ? setMobileMore((m) => !m) : (setView(item.key), setMobileMore(false)))}
               style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, flex: 1, padding: "6px 2px", border: "none", background: "transparent", color: active ? C.gold : C.muted, fontSize: 10, fontWeight: active ? 600 : 500, cursor: "pointer" }}>
@@ -2673,14 +2670,11 @@ function InvestmentDashboard({ user }) {
             </>
           )}
 
-          {view === "novedades" && <NovedadesView C={C} f={f} fx={fx} />}
+          {view === "mesa" && <MesaView C={C} mesa={mesa} onVer={goToAsset} />}
           {view === "analisis" && <AnalisisView tenencias={tenenciasCompletas} f={f} C={C} />}
-          {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} user={user} fx={fx} />}
           {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} cedearsViaIol={cedearsViaIol} initialSymbol={jumpSymbol} mesa={mesa} />}
-          {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} cedearsViaIol={cedearsViaIol} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
-          {view === "manual" && <ManualView f={f} C={C} />}
           {view === "config" && <ConfigView currency={currency} setCurrency={setCurrency} fxType={fxType} setFxType={setFxType} C={C} fxRates={activeFxRates} liveStatus={liveStatus} livePrices={livePrices} user={user} />}
         </div>
       </div>
@@ -4693,13 +4687,17 @@ function cruzarPortafolioIOL(filasTradicional, filasMep, catByTicker = {}) {
 // actualiza cada 15 min sin volver a publicar la web, así siempre están frescas.
 const MESA_RAW = "https://raw.githubusercontent.com/blasglen/Mi-Cartera/main/public/data";
 async function fetchMesa() {
-  const [sig, vig] = await Promise.allSettled([
+  const [sig, vig, apo, cfg] = await Promise.allSettled([
     fetchWithTimeout(`${MESA_RAW}/signals.json`, 10000).then((r) => r.json()),
     fetchWithTimeout(`${MESA_RAW}/vigia-state.json`, 10000).then((r) => r.json()),
+    fetchWithTimeout(`${MESA_RAW}/aporte-state.json`, 10000).then((r) => r.json()),
+    fetchWithTimeout("https://raw.githubusercontent.com/blasglen/Mi-Cartera/main/scripts/vigia-config.json", 10000).then((r) => r.json()),
   ]);
   return {
     signals: sig.status === "fulfilled" ? sig.value : null,
     log: vig.status === "fulfilled" && Array.isArray(vig.value?.log) ? vig.value.log : [],
+    aporte: apo.status === "fulfilled" ? apo.value : null,
+    config: cfg.status === "fulfilled" ? cfg.value : null,
   };
 }
 
@@ -4824,6 +4822,146 @@ function SenalesMesaPanel({ C, sym, mesa }) {
         </div>
       )}
       <div style={{ fontSize: 10, color: C.faint, marginTop: 10 }}>Lectura técnica automática, no es asesoramiento. Vos decidís.</div>
+    </div>
+  );
+}
+
+// --- La Mesa: aporte del mes, semáforo de tu cartera y candidatos -------
+function MesaView({ C, mesa, onVer }) {
+  const [filtro, setFiltro] = useState("cartera");
+  const sig = mesa.signals?.tickers || {};
+  const cfg = mesa.config || {};
+  const ultimo = ultimosAvisos(mesa.log, 14);
+  const usd = (n) => (n == null ? "—" : `US$ ${n.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+  const pc = (n) => (n == null ? "—" : `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1).replace(".", ",")}%`);
+  const ap = mesa.aporte;
+  const mesActual = new Date().toISOString().slice(0, 7);
+  const planMes = ap?.plan?.find((p) => p.mes === mesActual) || ap?.plan?.[0];
+  const planProx = ap?.plan?.find((p) => p.mes > mesActual);
+  const spyHecho = ap?.spy?.fecha?.startsWith(mesActual);
+  const libreHecho = ap?.libre?.fecha?.startsWith(mesActual);
+  const fechaCorta = (f) => (f ? new Date(f + (f.length === 10 ? "T12:00:00" : "")).toLocaleDateString("es-AR", { day: "numeric", month: "short" }) : "");
+
+  const listas = {
+    cartera: { titulo: "Tu cartera", tickers: cfg.cartera || [] },
+    candidatos: { titulo: "Candidatos para el aporte", tickers: cfg.candidatos || [] },
+  };
+  const filas = (listas[filtro]?.tickers || []).map((t) => {
+    const x = sig[t];
+    // Niveles SIN la vela de hoy (los de "soporte_3m" incluyen el precio actual y nunca se rompen)
+    const sop = x?.previo?.soporte_3m ?? x?.soporte_3m, res = x?.previo?.resistencia_3m ?? x?.resistencia_3m;
+    return {
+      t, x, aviso: ultimo[t],
+      vsSoporte: x?.precio && sop ? ((x.precio / sop) - 1) * 100 : null,
+      vsResist: x?.precio && res ? ((x.precio / res) - 1) * 100 : null,
+    };
+  }).filter((r) => r.x);
+  const tendCorta = (t) => (!t ? "—" : t.startsWith("alcista con") ? "alcista, retrocede" : t.startsWith("alcista") ? "alcista" : t.startsWith("bajista con") ? "bajista, rebota" : t.startsWith("bajista") ? "bajista" : t.startsWith("corrección") ? "corrige en alza" : t.startsWith("rebote") ? "rebota en baja" : "lateral");
+  const tendColor = (t) => (!t ? C.muted : t.startsWith("alcista") || t.startsWith("corrección") ? C.gain : t.startsWith("bajista") || t.startsWith("rebote") ? C.loss : C.muted);
+
+  const historial = [...mesa.log].filter((a) => a.veredicto).reverse().slice(0, 30);
+
+  return (
+    <div>
+      <SectionTitle C={C} sub="Lo que ven los bots de la Mesa sobre tu cartera y los candidatos. Lectura técnica automática: vos decidís.">La Mesa</SectionTitle>
+
+      {/* Aporte del mes */}
+      {ap && planMes && (
+        <section style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, padding: "20px 22px", marginBottom: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
+            <h2 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>Aporte de {new Date(planMes.mes + "-15").toLocaleDateString("es-AR", { month: "long" })}</h2>
+            <span className="tabular" style={{ fontSize: 13, color: C.muted }}>Total {usd(planMes.total)}</span>
+          </div>
+          <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 14 }}>
+            {[
+              { titulo: `SPY · ${usd(planMes.spy)}`, hecho: spyHecho, detalle: spyHecho ? `Comprado el ${fechaCorta(ap.spy.fecha)} a ${usd(ap.spy.precio)}` : "Pendiente: VIGÍA avisa el mejor día del mes" },
+              { titulo: `Libre · ${usd(planMes.libre)}`, hecho: libreHecho, detalle: libreHecho ? `${ap.libre.ticker} a ${usd(ap.libre.precio)}` : ap.sugeridoLibre ? `Solo si aparece una entrada excelente. Hoy la Mesa mira ${ap.sugeridoLibre}.` : "Solo si aparece una entrada excelente" },
+            ].map((b) => (
+              <div key={b.titulo} style={{ border: `1px solid ${b.hecho ? C.gain : C.border}`, borderRadius: 12, padding: "12px 14px", background: b.hecho ? C.accentSoft : "transparent" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600 }}>
+                  <span style={{ width: 18, height: 18, borderRadius: 999, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#fff", background: b.hecho ? C.gain : C.faint }}>{b.hecho ? "✓" : ""}</span>
+                  <span className="tabular">{b.titulo}</span>
+                </div>
+                <div style={{ fontSize: 12, color: C.muted, marginTop: 6 }}>{b.detalle}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontSize: 12, color: C.faint, marginTop: 12 }}>
+            {ap.regla}{planProx ? ` El mes que viene: ${usd(planProx.total)}.` : ""}
+          </div>
+        </section>
+      )}
+
+      {/* Semáforo */}
+      <section style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
+          <h2 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>Cómo está cada uno</h2>
+          <div role="tablist" style={{ display: "flex", border: `1px solid ${C.border}`, borderRadius: 999, overflow: "hidden" }}>
+            {Object.entries(listas).map(([k, v]) => (
+              <button key={k} role="tab" aria-selected={filtro === k} onClick={() => setFiltro(k)} style={{ padding: "5px 14px", fontSize: 12, fontWeight: 600, border: "none", cursor: "pointer", background: filtro === k ? C.gold : "transparent", color: filtro === k ? C.bg : C.muted }}>{v.titulo}</button>
+            ))}
+          </div>
+        </div>
+        {!mesa.signals && <div style={{ padding: 18, fontSize: 13, color: C.faint }}>Cargando las señales…</div>}
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <thead>
+              <tr style={{ color: C.faint, textAlign: "right", fontSize: 12 }}>
+                <th style={{ textAlign: "left", padding: "10px 18px", fontWeight: 500 }}>Activo</th>
+                <th style={{ padding: "10px 10px", fontWeight: 500 }}>Precio</th>
+                <th style={{ padding: "10px 10px", fontWeight: 500 }}>Semana</th>
+                <th style={{ textAlign: "left", padding: "10px 10px", fontWeight: 500 }} className="hide-m">Tendencia</th>
+                <th style={{ padding: "10px 10px", fontWeight: 500 }}>RSI</th>
+                <th style={{ padding: "10px 10px", fontWeight: 500 }} className="hide-m">Sobre soporte</th>
+                <th style={{ textAlign: "left", padding: "10px 18px", fontWeight: 500 }}>Último aviso</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filas.map(({ t, x, aviso, vsSoporte }) => (
+                <tr key={t} onClick={() => onVer(t)} style={{ borderTop: `1px solid ${C.rowLine}`, cursor: "pointer", textAlign: "right" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = C.rowLine)} onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
+                  <td style={{ textAlign: "left", padding: "10px 18px", fontWeight: 600 }}>{t}</td>
+                  <td className="tabular" style={{ padding: "10px 10px" }}>{usd(x.precio)}</td>
+                  <td className="tabular" style={{ padding: "10px 10px", color: (x.var_1s_pct ?? 0) >= 0 ? C.gain : C.loss }}>{pc(x.var_1s_pct)}</td>
+                  <td className="hide-m" style={{ textAlign: "left", padding: "10px 10px", color: tendColor(x.tendencia) }}>{tendCorta(x.tendencia)}</td>
+                  <td className="tabular" style={{ padding: "10px 10px", color: x.rsi14 <= 30 ? C.gain : x.rsi14 >= 70 ? C.loss : C.text }}>{x.rsi14 != null ? Math.round(x.rsi14) : "—"}</td>
+                  <td className="tabular hide-m" style={{ padding: "10px 10px", color: vsSoporte == null ? C.muted : vsSoporte < 0 ? C.loss : vsSoporte < 3 ? C.gold : C.muted, fontWeight: vsSoporte != null && vsSoporte < 3 ? 600 : 400 }}>{vsSoporte != null && vsSoporte < 0 ? "lo perdió" : pc(vsSoporte)}</td>
+                  <td style={{ textAlign: "left", padding: "10px 18px" }}>
+                    {aviso ? <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ChipVeredicto v={aviso.veredicto} C={C} small /><span style={{ fontSize: 11, color: C.faint }}>{fechaCorta(aviso.ts.slice(0, 10))}</span></span> : <span style={{ color: C.faint, fontSize: 12 }}>sin avisos</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ fontSize: 11, color: C.faint, padding: "10px 18px", borderTop: `1px solid ${C.rowLine}` }}>
+          RSI bajo 30: sobrevendido (verde). Sobre 70: sobrecomprado (rojo). "Sobre soporte": cuánto está por encima del piso de los últimos 3 meses (resaltado si está a menos del 3%, en rojo si lo perdió). Precios en dólares MEP.
+        </div>
+      </section>
+
+      {/* Historial */}
+      <section style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
+        <div style={{ padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
+          <h2 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>Historial de avisos</h2>
+        </div>
+        {historial.length === 0 && <div style={{ padding: 18, fontSize: 13, color: C.faint }}>Todavía no hay avisos.</div>}
+        {historial.map((a, i) => (
+          <details key={i} style={{ borderTop: i ? `1px solid ${C.rowLine}` : "none", padding: "10px 18px", fontSize: 13 }}>
+            <summary style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", listStyle: "none" }}>
+              <span style={{ fontWeight: 600, minWidth: 52 }}>{a.ticker}</span>
+              <ChipVeredicto v={a.veredicto} C={C} small />
+              <span style={{ color: C.muted, flex: 1 }}>{(a.eventos || []).map(eventoTexto).join(", ")}</span>
+              <span className="tabular" style={{ color: C.faint, fontSize: 12 }}>{new Date(a.ts).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })} · {usd(a.precio)}</span>
+            </summary>
+            {(a.analistaTexto || a.radarTexto) && (
+              <div style={{ marginTop: 8, color: C.muted, lineHeight: 1.5, fontSize: 12, maxWidth: 720 }}>
+                {a.analistaTexto && <p style={{ margin: "0 0 6px" }}><strong style={{ color: C.text }}>ANALISTA:</strong> {a.analistaTexto.replace(/^VEREDICTO:\s*[^P]*?(?=Por qué:)/, "")}</p>}
+                {a.radarTexto && <p style={{ margin: 0 }}><strong style={{ color: C.text }}>RADAR:</strong> {a.radarTexto}</p>}
+              </div>
+            )}
+          </details>
+        ))}
+      </section>
     </div>
   );
 }
@@ -5411,7 +5549,7 @@ function ImportarView({ C, user, fx }) {
 
   return (
     <div>
-      <SectionTitle C={C} sub="Subí el estado de cuenta o histórico de movimientos exportado desde tu broker o exchange.">Importar archivos</SectionTitle>
+      <SectionTitle C={C} sub="IOL se sincroniza solo desde su API. Para Balanz y otros brokers, subí el archivo de movimientos.">Cargar y sincronizar</SectionTitle>
 
       {IOL_WORKER_URL && <IolSyncCard C={C} user={user} />}
 
