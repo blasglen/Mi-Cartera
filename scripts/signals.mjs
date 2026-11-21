@@ -5,7 +5,9 @@
 //
 // Corre:
 //  - cada hora con el mercado abierto (workflow signals.yml), pidiendo el
-//    precio en vivo a data912 / CoinGecko para que la última vela sea la de hoy;
+//    precio en vivo para que la última vela sea la de hoy: primero a la API
+//    nueva de IOL (api.iolinversiones.com, para la lista de VIGÍA), y para el
+//    resto o si IOL falla, a data912. Cripto, a CoinGecko;
 //  - al final de la actualización diaria (update-prices.yml).
 // No modifica history.json ni live.json.
 
@@ -51,6 +53,73 @@ async function fetchLive() {
     await sleep(500);
   }
   return prices;
+}
+
+// ---------- IOL (API nueva: api.iolinversiones.com) ----------
+// Precio en vivo oficial para la lista de VIGÍA (cartera + candidatos +
+// argentina). Necesita los secrets IOL_USERNAME / IOL_PASSWORD. Solo LEE
+// cotizaciones: nunca se usan los endpoints de operar.
+// Ojo: IOL responde 403 si el pedido no lleva un User-Agent "normal".
+const IOL_API = "https://api.iolinversiones.com";
+
+async function iolToken() {
+  const username = process.env.IOL_USERNAME, password = process.env.IOL_PASSWORD;
+  if (!username || !password) { console.log("  [IOL] faltan IOL_USERNAME / IOL_PASSWORD -- sigo con data912"); return null; }
+  try {
+    const res = await fetch(`${IOL_API}/auth/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json", "User-Agent": UA },
+      body: JSON.stringify({ grant_type: "password", username, password }),
+    });
+    if (!res.ok) { console.log(`  [IOL] login falló, status ${res.status} -- ${(await res.text()).slice(0, 200)}`); return null; }
+    const tok = (await res.json())?.data?.access_token;
+    if (!tok) console.log("  [IOL] login ok pero sin access_token");
+    return tok || null;
+  } catch (err) {
+    console.log(`  [IOL] excepción en el login: ${err.message}`);
+    return null;
+  }
+}
+
+async function iolQuote(token, sym) {
+  for (const term of ["T1", "T0"]) {
+    try {
+      const res = await fetch(`${IOL_API}/broker/market-data/${encodeURIComponent(sym)}/quote?market=BCBA&term=${term}`, {
+        headers: { Authorization: `Bearer ${token}`, Accept: "application/json", "User-Agent": UA },
+      });
+      if (res.status === 429) { console.log("  [IOL] 429 (demasiados pedidos) -- freno"); return "STOP"; }
+      if (!res.ok) continue;
+      const d = (await res.json())?.data;
+      const px = d?.prices?.current;
+      if (typeof px === "number" && px > 0) {
+        return { px, max: d.prices.high ?? null, min: d.prices.low ?? null, prevClose: d.prices.previous_close ?? null, volumen: d.volume?.amount ?? null, at: d.last_updated ?? null };
+      }
+    } catch {}
+  }
+  return null;
+}
+
+async function fetchIolLive(symbols) {
+  const out = {};
+  const token = await iolToken();
+  if (!token) return out;
+  for (let i = 0; i < symbols.length; i += 4) {
+    const batch = symbols.slice(i, i + 4);
+    const res = await Promise.all(batch.map((s) => iolQuote(token, s)));
+    if (res.includes("STOP")) break;
+    batch.forEach((s, k) => { if (res[k]) out[s] = res[k]; });
+    await sleep(300);
+  }
+  const faltan = symbols.filter((s) => !out[s]);
+  console.log(`  [IOL] precios en vivo: ${Object.keys(out).length} de ${symbols.length}${faltan.length ? ` (sin dato: ${faltan.join(", ")})` : ""}`);
+  return out;
+}
+
+async function vigiaSymbols() {
+  try {
+    const cfg = JSON.parse(await fs.readFile(path.join(process.cwd(), "scripts", "vigia-config.json"), "utf8"));
+    return [...new Set([...(cfg.cartera || []), ...(cfg.candidatos || []), ...(cfg.argentina || [])])].filter((s) => !CRYPTO_IDS[s]);
+  } catch { return []; }
 }
 
 async function fetchFx() {
@@ -156,7 +225,7 @@ function adjustSplits(series) {
   return { series: out, ajustes: adj.reverse() };
 }
 
-function analyze(rawSeries, livePx) {
+function analyze(rawSeries, livePx, liveLabel = "en vivo") {
   const { series: clean, ajustes } = adjustSplits(rawSeries);
   if (clean.length < 30) return null;
   let closes = clean.map((p) => p.price);
@@ -176,7 +245,7 @@ function analyze(rawSeries, livePx) {
   const max6 = Math.max(...w6), min6 = Math.min(...w6);
   return {
     precio: r2(px),
-    fuente: usedLive ? "en vivo" : `cierre ${clean.at(-1).date}`,
+    fuente: usedLive ? liveLabel : `cierre ${clean.at(-1).date}`,
     tendencia: trendLabel(px, s20, s50, s200),
     sma20: r2(s20), sma50: r2(s50), sma200: r2(s200),
     rsi14: r2(r), rsi_lectura: rsiLabel(r),
@@ -213,12 +282,15 @@ async function main() {
   const cryptoMep = fxFile?.mep?.value ?? null;
 
   let fx = fxFile ? Object.fromEntries(Object.entries(fxFile).map(([k, v]) => [k, v?.value ?? v])) : null;
-  let liveArs = {}, cryptoUsd = {};
+  let liveArs = {}, cryptoUsd = {}, iolLive = {};
   if (live) {
     fx = (await fetchFx()) || fx;
     liveArs = await fetchLive();
+    iolLive = await fetchIolLive((await vigiaSymbols()).filter((s) => hist[s]));
+    // IOL tiene prioridad sobre data912 para los tickers que consiguió
+    for (const [s, q] of Object.entries(iolLive)) liveArs[s] = q.px;
     cryptoUsd = await fetchCryptoUsd();
-    console.log(`Precios en vivo: ${Object.keys(liveArs).length} + ${Object.keys(cryptoUsd).length} cripto`);
+    console.log(`Precios en vivo: ${Object.keys(liveArs).length} (${Object.keys(iolLive).length} vía IOL) + ${Object.keys(cryptoUsd).length} cripto`);
   }
   const mepHist = await fetchMepHistory();
   const usd = mepHist.length > 0;
@@ -243,7 +315,17 @@ async function main() {
     } else {
       livePx = isCrypto ? (cryptoUsd[sym] && liveMep ? cryptoUsd[sym] * liveMep : null) : liveArs[sym] ?? null;
     }
-    const a = analyze(series, livePx);
+    const iq = iolLive[sym];
+    const a = analyze(series, livePx, iq ? "en vivo (IOL)" : "en vivo (data912)");
+    if (a && iq && a.fuente === "en vivo (IOL)") {
+      // Datos extra del día que da IOL (en la misma moneda que el resto)
+      // f: misma escala que "precio" (pasa a USD MEP y corrige bonos por 100 VN)
+      const f = a.precio / iq.px;
+      a.dia = {
+        maximo: r2(iq.max * f), minimo: r2(iq.min * f), cierre_anterior: r2(iq.prevClose * f),
+        volumen_ars: iq.volumen, actualizado: iq.at,
+      };
+    }
     if (a) tickers[sym] = a;
   }
 

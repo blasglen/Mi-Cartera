@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 24
       - name: Calcular señales con precios en vivo
+        env:
+          IOL_USERNAME: ${{ secrets.IOL_USERNAME }}
+          IOL_PASSWORD: ${{ secrets.IOL_PASSWORD }}
         run: node scripts/signals.mjs --live
       - name: Guardar signals.json
         # Push con el GITHUB_TOKEN por defecto: a propósito NO dispara el

@@ -62,7 +62,7 @@ async function main() {
   const tickers = new Set([...reg.senales.map((s) => s.ticker), "SPY"]);
   const d = hoy();
   const dia = reg.precios[d] || {};
-  for (const t of tickers) { const x = sig.tickers[t]; if (x?.precio && x.fuente === "en vivo") dia[t] = x.precio; }
+  for (const t of tickers) { const x = sig.tickers[t]; if (x?.precio && String(x.fuente || "").startsWith("en vivo")) dia[t] = x.precio; }
   if (Object.keys(dia).length) reg.precios[d] = dia;
 
   // 3) resultados

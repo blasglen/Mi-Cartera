@@ -255,7 +255,7 @@ async function main() {
   for (const sym of vigilados) {
     const t = sig.tickers[sym];
     if (!t) continue;
-    if (t.fuente !== "en vivo" && !TEST) continue; // fuera de horario o sin precio de hoy
+    if (!String(t.fuente || "").startsWith("en vivo") && !TEST) continue; // fuera de horario o sin precio de hoy
     const enCartera = cartera.includes(sym);
     let evs = eventos(t, sym);
     // Menos ruido: de los candidatos solo interesan las señales de compra y las
