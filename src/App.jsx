@@ -1921,6 +1921,13 @@ function InvestmentDashboard({ user }) {
           const pos = r?.positions?.[cuenta];
           if (pos && Array.isArray(pos.positions)) for (const p of pos.positions) if (p.quantity > 0) lista.push(mapIolPosicion(p, null));
         }
+        // Activos en pesos (ej. CONIOLA): IOL calcula su ganancia en dólares
+        // pasando cada compra al MEP de ESE día. Hacemos lo mismo con tus
+        // movimientos para que la ganancia coincida con la de IOL.
+        if (lista.some((p) => !p.enUsd)) {
+          const mepHist = await fetchMepHistorico().catch(() => []);
+          for (const p of lista) if (!p.enUsd) p.avgCostUsd = costoUsdHistorico(p.name, iolBrokerDe(), mepHist) ?? p.avgCostUsd;
+        }
         if (!cancelled && lista.length) setIolPos({ lista, at: r.updatedAt });
       } catch { /* sin API: queda lo cargado por archivo */ }
     };
@@ -1928,7 +1935,7 @@ function InvestmentDashboard({ user }) {
     const id = setInterval(() => { if (document.visibilityState === "visible" && mercadoAbiertoAR()) cargar(); }, 300000);
     return () => { cancelled = true; clearInterval(id); };
   }, [user]);
-  const iolBroker = BROKER_LIST.find((b) => /iol/i.test(b)) || "IOL";
+  const iolBroker = iolBrokerDe();
 
   const activeFxRates = { ...FX_RATES, ...(liveFxRates || {}) };
   const fx = activeFxRates[fxType].value;
@@ -1941,7 +1948,7 @@ function InvestmentDashboard({ user }) {
     const prevIol = HOLDINGS.filter((h) => h.broker === iolBroker);
     const deIol = iolPos.lista.map((p) => {
       const prev = prevIol.find((h) => h.name === p.name);
-      const avgCostUsd = p.enUsd ? p.avgCostUsd : prev?.avgCostUsd ?? null;
+      const avgCostUsd = p.enUsd ? p.avgCostUsd : p.avgCostUsd ?? prev?.avgCostUsd ?? null;
       return {
         name: p.name,
         cat: prev?.cat || p.cat,
@@ -5018,6 +5025,43 @@ function MesaView({ C, mesa, onVer }) {
 // en la app de IOL) y las compara con lo que tiene cargado esta app. Con un
 // click reemplaza las tenencias de esa cartera por las de IOL. No toca tus
 // movimientos (el gráfico histórico sigue saliendo de ellos).
+function iolBrokerDe() { return BROKER_LIST.find((b) => /iol/i.test(b)) || "IOL"; }
+
+// MEP histórico (dólar bolsa, venta) por fecha -- una sola vez por sesión.
+let MEP_HIST_CACHE = null;
+async function fetchMepHistorico() {
+  if (MEP_HIST_CACHE) return MEP_HIST_CACHE;
+  const res = await fetchWithTimeout("https://api.argentinadatos.com/v1/cotizaciones/dolares/bolsa", 15000);
+  const data = await res.json();
+  MEP_HIST_CACHE = (Array.isArray(data) ? data : [])
+    .map((d) => ({ date: String(d.fecha).slice(0, 10), mep: d.venta ?? d.compra }))
+    .filter((d) => d.mep > 0)
+    .sort((a, b) => (a.date < b.date ? -1 : 1));
+  return MEP_HIST_CACHE;
+}
+function mepEnFecha(hist, date) {
+  let lo = 0, hi = hist.length - 1, ans = null;
+  while (lo <= hi) { const m = (lo + hi) >> 1; if (hist[m].date <= date) { ans = hist[m].mep; lo = m + 1; } else hi = m - 1; }
+  return ans;
+}
+// PPC en dólares de un activo en pesos, con el MEP del día de cada compra
+// (costo promedio ponderado; las ventas sacan costo a ese promedio).
+function costoUsdHistorico(ticker, broker, mepHist) {
+  const trades = MOVIMIENTOS.filter((m) => m.activo === ticker && m.broker === broker && (m.tipo === "Compra" || m.tipo === "Venta" || m.tipo === "Split"))
+    .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  let qty = 0, costUsd = 0;
+  for (const t of trades) {
+    if (t.tipo === "Venta") {
+      if (qty > 0) { const sale = Math.min(t.cantidad, qty); costUsd -= sale * (costUsd / qty); qty -= sale; }
+      continue;
+    }
+    const usd = t.precioUsd ?? (t.precio > 0 ? t.precio / (mepEnFecha(mepHist, t.fecha) || NaN) : 0);
+    if (!isFinite(usd)) return null; // falta el MEP de alguna fecha: mejor no inventar
+    qty += t.cantidad; costUsd += t.cantidad * usd;
+  }
+  return qty > 0 ? costUsd / qty : null;
+}
+
 function mapIolPosicion(p, mep) {
   const ins = p.instrument || {};
   const base = p.parent_instrument || ins;
