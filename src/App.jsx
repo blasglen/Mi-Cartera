@@ -20,6 +20,7 @@ import {
 } from "recharts";
 import {
   TrendingUp,
+  MoreHorizontal,
   TrendingDown,
   Bitcoin,
   Landmark,
@@ -1040,11 +1041,78 @@ async function fetchLivePrices() {
 
 // Histórico de TODA la cartera (42 tickers) -- este sí queda cacheado,
 // generado una vez al día por .github/workflows/update-prices.yml.
+// Primero la versión compacta (history.min.json, ~10 veces más liviana,
+// generada por scripts/compact-history.mjs); si no está, la completa.
+function expandirHistoriaCompacta(h) {
+  const DAY = 86400000;
+  const out = {};
+  for (const [sym, s] of Object.entries(h || {})) {
+    let t = Date.parse(s.d0 + "T00:00:00Z");
+    const serie = new Array(s.p.length);
+    for (let i = 0; i < s.p.length; i++) {
+      if (i > 0) t += s.dd[i - 1] * DAY;
+      serie[i] = { date: new Date(t).toISOString().slice(0, 10), price: s.p[i] };
+    }
+    out[sym] = serie;
+  }
+  return out;
+}
+
 async function fetchHistoryCache() {
-  const res = await fetchWithTimeout(dataUrl("history.json"));
+  try {
+    const rMin = await fetchWithTimeout(dataUrl("history.min.json"), 15000);
+    if (rMin.ok) {
+      const d = await rMin.json();
+      if (d?.v === 1 && d.h) return { history: expandirHistoriaCompacta(d.h), coverage: d.coverage || null, cedearsViaIol: d.cedearsViaIol || [] };
+    }
+  } catch { /* sigue con la completa */ }
+  const res = await fetchWithTimeout(dataUrl("history.json"), 30000);
   if (!res.ok) return { history: {}, coverage: null, cedearsViaIol: [] };
   const data = await res.json();
   return { history: data.history || {}, coverage: data.coverage || null, cedearsViaIol: data.cedearsViaIol || [] };
+}
+
+// --- IOL en vivo (vía el Worker de Cloudflare "iol-cartera") -------------
+// El Worker guarda la clave de IOL como secret y solo atiende a usuarios
+// logueados en esta app (token de Firebase). Si no está configurado o falla,
+// la app sigue con data912 como siempre.
+const IOL_WORKER_URL = (import.meta.env.VITE_IOL_WORKER_URL || "https://iol-cartera.blascunninghamglen.workers.dev").replace(/\/$/, "");
+
+async function iolWorkerGet(user, ruta, ms = 15000) {
+  if (!IOL_WORKER_URL || !user) throw new Error("IOL no configurado");
+  const token = await user.getIdToken();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(`${IOL_WORKER_URL}${ruta}`, { headers: { Authorization: `Bearer ${token}` }, signal: controller.signal });
+    const body = await res.json().catch(() => null);
+    if (!res.ok) throw new Error(body?.error || `IOL respondió ${res.status}`);
+    return body;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Precios en vivo de IOL para una lista de tickers. Devuelve el mismo
+// formato que data912 (pesos; bonos/ONs cada 100 VN) para poder pisarlo.
+async function fetchIolQuotes(user, symbols) {
+  if (!symbols.length) return { prices: {}, pctChanges: {}, updatedAt: null };
+  const body = await iolWorkerGet(user, `/quotes?symbols=${encodeURIComponent(symbols.join(","))}`);
+  const prices = {}, pctChanges = {}, detalle = {};
+  for (const [sym, q] of Object.entries(body?.prices || {})) {
+    if (!(q?.price > 0) || (q.currency && q.currency !== "ARS")) continue;
+    prices[sym] = q.price;
+    if (q.pct != null) pctChanges[sym] = q.pct;
+    detalle[sym] = q;
+  }
+  return { prices, pctChanges, detalle, updatedAt: body?.updatedAt || new Date().toISOString() };
+}
+
+// Horario de BYMA (lunes a viernes, 11 a 17 hs AR) con un margen.
+function mercadoAbiertoAR(d = new Date()) {
+  const ar = new Date(d.toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" }));
+  const dia = ar.getDay(), min = ar.getHours() * 60 + ar.getMinutes();
+  return dia >= 1 && dia <= 5 && min >= 10 * 60 + 55 && min <= 17 * 60 + 15;
 }
 
 const COINGECKO_IDS = {
@@ -1681,6 +1749,16 @@ export default function AuthGate() {
   const hour = new Date().getHours();
   const C = hour >= 7 && hour < 20 ? LIGHT : DARK;
 
+  // Solo en desarrollo local (npm run dev): ?demo muestra la app con los
+  // datos de ejemplo, sin login. En la web publicada esto no existe.
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).has("demo")) {
+    BROKER_LIST = computeBrokerList();
+    AUTO_ASSETS = computeAutoAssets();
+    ASSET_UNIVERSE_FULL = [...ASSET_UNIVERSE, ...AUTO_ASSETS];
+    EARLIEST_TRADE_DATE = computeEarliestTradeDate();
+    return <InvestmentDashboard key="demo" user={{ uid: "demo", email: "demo", getIdToken: async () => "" }} />;
+  }
+
   if (authUser === undefined) return <LoadingScreen C={C} text="Cargando..." />;
   if (authUser === null) return <LoginView C={C} />;
 
@@ -1717,6 +1795,7 @@ function InvestmentDashboard({ user }) {
   const goToAsset = (symbol) => { setJumpSymbol(symbol); setView("buscar"); };
   const [hoverDot, setHoverDot] = useState(null); // { x, y, text } en píxeles del gráfico
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileMore, setMobileMore] = useState(false);
   const [themeMode, setThemeMode] = useState(() => {
     const hour = new Date().getHours();
     return hour >= 7 && hour < 20 ? "light" : "dark"; // de día (7-20hs) claro, de noche oscuro
@@ -1737,8 +1816,13 @@ function InvestmentDashboard({ user }) {
   const [fxType, setFxType] = useState("mep");
 
   const [liveFxRates, setLiveFxRates] = useState(null); // null hasta que carguen
-  const [livePrices, setLivePrices] = useState({});
-  const [livePctChange, setLivePctChange] = useState({});
+  const [livePrices912, setLivePrices] = useState({});
+  const [livePctChange912, setLivePctChange] = useState({});
+  // Precios de IOL (más confiables y al instante) pisan a data912 para tus
+  // tenencias; data912 queda para el resto del universo y de respaldo.
+  const [iolLive, setIolLive] = useState({ prices: {}, pctChanges: {}, detalle: {}, updatedAt: null, status: IOL_WORKER_URL ? "cargando" : "off", error: null });
+  const livePrices = useMemo(() => ({ ...livePrices912, ...iolLive.prices }), [livePrices912, iolLive.prices]);
+  const livePctChange = useMemo(() => ({ ...livePctChange912, ...iolLive.pctChanges }), [livePctChange912, iolLive.pctChanges]);
   const [liveCatalog, setLiveCatalog] = useState([]);
   const [cryptoUsd, setCryptoUsd] = useState({});
   const [historyCache, setHistoryCache] = useState({});
@@ -1783,6 +1867,38 @@ function InvestmentDashboard({ user }) {
       });
     return () => { cancelled = true; };
   }, []);
+
+  // Señales de la Mesa: al entrar y cada 5 min con el mercado abierto.
+  const [mesa, setMesa] = useState({ signals: null, log: [] });
+  React.useEffect(() => {
+    let cancelled = false;
+    const cargar = () => fetchMesa().then((m) => { if (!cancelled) setMesa(m); }).catch(() => {});
+    cargar();
+    const id = setInterval(() => { if (document.visibilityState === "visible" && mercadoAbiertoAR()) cargar(); }, 300000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, []);
+  const avisosPorTicker = useMemo(() => ultimosAvisos(mesa.log, 7), [mesa.log]);
+
+  // IOL en vivo: al entrar, y cada 60 s mientras el mercado está abierto y
+  // la pestaña está a la vista.
+  React.useEffect(() => {
+    if (!IOL_WORKER_URL) return;
+    let cancelled = false;
+    const symbols = [...new Set(HOLDINGS.filter((h) => h.cat !== "Cripto").map((h) => h.name))];
+    const cargar = async () => {
+      try {
+        const r = await fetchIolQuotes(user, symbols);
+        if (!cancelled) setIolLive({ ...r, status: "ok", error: null });
+      } catch (e) {
+        if (!cancelled) setIolLive((prev) => ({ ...prev, status: "error", error: e.message }));
+      }
+    };
+    cargar();
+    const id = setInterval(() => {
+      if (document.visibilityState === "visible" && mercadoAbiertoAR()) cargar();
+    }, 60000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [user]);
 
   const activeFxRates = { ...FX_RATES, ...(liveFxRates || {}) };
   const fx = activeFxRates[fxType].value;
@@ -1948,15 +2064,21 @@ function InvestmentDashboard({ user }) {
         .recharts-wrapper:focus, .recharts-surface:focus { outline: none; }
         ::-webkit-scrollbar { height: 6px; width: 6px; }
         ::-webkit-scrollbar-thumb { background: ${C.scrollbar}; border-radius: 4px; }
+        .mobile-nav, .mobile-more { display: none; }
         @media (max-width: 640px) {
           .comp-grid { grid-template-columns: 1fr !important; }
-          .sidebar-expanded { width: 168px !important; }
+          .sidebar { display: none !important; }
+          .contenido { padding: 16px 12px 96px !important; }
+          .mobile-nav { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); }
+          .mobile-more { display: block; position: fixed; left: 0; right: 0; bottom: 64px; z-index: 39; }
+          .hide-m { display: none !important; }
+          .total-grande { font-size: 28px !important; }
         }
       `}</style>
 
       {/* -------- Sidebar -------- */}
       <div
-        className={!collapsed ? "sidebar-expanded" : ""}
+        className={`sidebar${!collapsed ? " sidebar-expanded" : ""}`}
         style={{
           width: collapsed ? 60 : 200,
           flexShrink: 0,
@@ -2007,8 +2129,39 @@ function InvestmentDashboard({ user }) {
         </div>
       </div>
 
+      {/* -------- Navegación del celular (abajo) -------- */}
+      {mobileMore && (
+        <div className="mobile-more" onClick={() => setMobileMore(false)}>
+          <div style={{ margin: "0 10px 8px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 14, padding: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.18)" }}>
+            {NAV.slice(4).map((item) => {
+              const Icon = item.icon;
+              return (
+                <button key={item.key} onClick={() => { setView(item.key); setMobileMore(false); }}
+                  style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 12px", border: "none", background: view === item.key ? C.rowLine : "transparent", color: view === item.key ? C.gold : C.text, fontSize: 14, borderRadius: 10, cursor: "pointer", textAlign: "left" }}>
+                  <Icon size={18} /> {item.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      <nav className="mobile-nav" style={{ background: C.surface, borderTop: `1px solid ${C.border}` }}>
+        {[...NAV.slice(0, 4), { key: "__mas", label: "Más", icon: MoreHorizontal }].map((item) => {
+          const Icon = item.icon;
+          const active = item.key === "__mas" ? mobileMore || NAV.slice(4).some((n) => n.key === view) : view === item.key && !mobileMore;
+          const corto = { inicio: "Inicio", analisis: "Análisis", buscar: "Buscar", novedades: "Novedades" }[item.key] || item.label;
+          return (
+            <button key={item.key} onClick={() => (item.key === "__mas" ? setMobileMore((m) => !m) : (setView(item.key), setMobileMore(false)))}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, flex: 1, padding: "6px 2px", border: "none", background: "transparent", color: active ? C.gold : C.muted, fontSize: 10, fontWeight: active ? 600 : 500, cursor: "pointer" }}>
+              <Icon size={20} />
+              {corto}
+            </button>
+          );
+        })}
+      </nav>
+
       {/* -------- Contenido -------- */}
-      <div style={{ flex: 1, padding: "24px 20px 48px", minWidth: 0 }}>
+      <div className="contenido" style={{ flex: 1, padding: "24px 20px 48px", minWidth: 0 }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
 
           {view === "inicio" && (
@@ -2018,7 +2171,7 @@ function InvestmentDashboard({ user }) {
                   <div className="display" style={{ fontSize: 13, letterSpacing: "0.08em", color: C.muted, textTransform: "uppercase", marginBottom: 4 }}>
                     Cartera personal
                   </div>
-                  <div className="display tabular" style={{ fontSize: 34, fontWeight: 600, lineHeight: 1 }}>
+                  <div className="display tabular total-grande" style={{ fontSize: 34, fontWeight: 600, lineHeight: 1 }}>
                     {f(currentTotal)}
                   </div>
                   <div className="tabular" style={{ fontSize: 13, marginTop: 6, color: dayAbs >= 0 ? C.gain : C.loss }}>
@@ -2032,6 +2185,16 @@ function InvestmentDashboard({ user }) {
                       ? "Conectando cotizaciones…"
                       : "Estimado — sin conexión a las fuentes de cotización"}
                   </div>
+                  {iolLive.status !== "off" && (
+                    <div title={iolLive.error || ""} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: iolLive.status === "ok" ? C.gain : C.faint, marginTop: 2 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: 999, background: iolLive.status === "ok" ? C.gain : iolLive.status === "error" ? C.loss : C.faint, display: "inline-block" }} />
+                      {iolLive.status === "ok"
+                        ? `IOL en vivo · ${Object.keys(iolLive.prices).length} de tus activos · ${new Date(iolLive.updatedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}${mercadoAbiertoAR() ? " · se actualiza cada minuto" : " · mercado cerrado"}`
+                        : iolLive.status === "cargando"
+                        ? "Conectando con IOL…"
+                        : "IOL no respondió — usando data912"}
+                    </div>
+                  )}
                   <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
                     <select
                       value={brokerFilter}
@@ -2319,6 +2482,8 @@ function InvestmentDashboard({ user }) {
                 </div>
               </div>
 
+              <AvisosMesaCard C={C} mesa={mesa} onVer={goToAsset} />
+
               <div style={{ marginTop: 24, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
                   <span className="display" style={{ fontSize: 15, fontWeight: 600 }}>Tenencias {catFilter !== "Todas" ? `· ${catFilter}` : ""}</span>
@@ -2330,15 +2495,16 @@ function InvestmentDashboard({ user }) {
                       <tr style={{ color: C.faint, textAlign: "left" }}>
                         {[
                           { key: "name", label: "Activo", align: "left", pad: "10px 18px" },
-                          { key: "qty", label: "Cantidad", align: "right", pad: "10px 12px" },
+                          { key: "qty", label: "Cantidad", align: "right", pad: "10px 12px", cls: "hide-m" },
                           { key: "value", label: "Valor actual", align: "right", pad: "10px 12px" },
-                          { key: "cost", label: "Valor inicial", align: "right", pad: "10px 12px" },
+                          { key: "cost", label: "Valor inicial", align: "right", pad: "10px 12px", cls: "hide-m" },
                           { key: "avgCost", label: "PPC", align: "right", pad: "10px 12px" },
                           { key: "price", label: "Precio", align: "right", pad: "10px 12px" },
                           { key: "pl", label: "P&L", align: "right", pad: "10px 18px" },
                         ].map((col) => (
                           <th
                             key={col.key}
+                            className={col.cls}
                             onClick={() =>
                               setTenenciasSort((prev) =>
                                 prev.key === col.key ? { key: col.key, dir: -prev.dir } : { key: col.key, dir: -1 }
@@ -2372,10 +2538,15 @@ function InvestmentDashboard({ user }) {
                               onMouseEnter={(e) => (e.currentTarget.style.background = C.rowLine)}
                               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                             >
-                              <td style={{ padding: "10px 18px", fontWeight: 500 }}>{h.name}</td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</td>
+                              <td style={{ padding: "10px 18px", fontWeight: 500 }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                                  {h.name}
+                                  {avisosPorTicker[h.name] && avisosPorTicker[h.name].veredicto !== "MANTENER" && <ChipVeredicto v={avisosPorTicker[h.name].veredicto} C={C} small />}
+                                </div>
+                              </td>
+                              <td className="tabular hide-m" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{h.qty.toLocaleString("es-AR", { maximumFractionDigits: 3 })}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(value)}</td>
-                              <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.cost)}</td>
+                              <td className="tabular hide-m" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(h.cost)}</td>
                               <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }} title={h.usaCostoUsdReal ? "Costo en dólares reales de cada fecha de compra" : ""}>
                                 {h.usaCostoUsdReal ? f(h.avgCostUsd * fx) : f(h.avgCost)}
                               </td>
@@ -2398,9 +2569,9 @@ function InvestmentDashboard({ user }) {
                     <tfoot>
                       <tr style={{ borderTop: `2px solid ${C.border}`, fontWeight: 600 }}>
                         <td style={{ padding: "10px 18px" }}>Total{catFilter !== "Todas" ? ` · ${catFilter}` : ""}</td>
-                        <td></td>
+                        <td className="hide-m"></td>
                         <td className="tabular" style={{ padding: "10px 12px", textAlign: "right" }}>{f(totalValueTenencias)}</td>
-                        <td className="tabular" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(totalCostTenencias)}</td>
+                        <td className="tabular hide-m" style={{ padding: "10px 12px", textAlign: "right", color: C.muted }}>{f(totalCostTenencias)}</td>
                         <td className="tabular" colSpan={2} style={{ padding: "10px 12px", textAlign: "center", color: gananciaAbsTenencias >= 0 ? C.gain : C.loss }}>
                           {gananciaAbsTenencias >= 0 ? "+" : "-"}{f(Math.abs(gananciaAbsTenencias))}
                         </td>
@@ -2419,7 +2590,7 @@ function InvestmentDashboard({ user }) {
           {view === "analisis" && <AnalisisView tenencias={tenenciasCompletas} f={f} C={C} />}
           {view === "calculadora" && <CalculadoraView currency={currency} fx={fx} f={f} C={C} livePrices={livePrices} cryptoUsd={cryptoUsd} historyCache={historyCache} />}
           {view === "importar" && <ImportarView C={C} user={user} fx={fx} />}
-          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} cedearsViaIol={cedearsViaIol} initialSymbol={jumpSymbol} />}
+          {view === "buscar" && <BuscarView key={jumpSymbol || "default"} currency={currency} fx={fx} f={f} C={C} Cinv={Cinv} livePrices={livePrices} liveCatalog={liveCatalog} cryptoUsd={cryptoUsd} historyCache={historyCache} cedearsViaIol={cedearsViaIol} initialSymbol={jumpSymbol} mesa={mesa} />}
           {view === "pnl" && <PnlFechaView currency={currency} fx={fx} f={f} C={C} historyCache={historyCache} livePrices={livePrices} cryptoUsd={cryptoUsd} cedearsViaIol={cedearsViaIol} />}
           {view === "movimientos" && <MovimientosView f={f} C={C} />}
           {view === "manual" && <ManualView f={f} C={C} />}
@@ -2430,7 +2601,7 @@ function InvestmentDashboard({ user }) {
   );
 }
 
-function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoUsd, historyCache, cedearsViaIol, initialSymbol }) {
+function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoUsd, historyCache, cedearsViaIol, initialSymbol, mesa }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(() => ASSET_UNIVERSE_FULL.find((a) => a.symbol === initialSymbol) || ASSET_UNIVERSE_FULL[0]);
   const [rangeIdx, setRangeIdx] = useState(1);
@@ -2934,6 +3105,8 @@ function BuscarView({ currency, fx, f, C, Cinv, livePrices, liveCatalog, cryptoU
           </div>
         )}
       </div>
+
+      {mesa && <SenalesMesaPanel C={C} sym={selected.symbol} mesa={mesa} />}
 
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, marginTop: 16, overflow: "hidden" }}>
         <div
@@ -4428,6 +4601,325 @@ function cruzarPortafolioIOL(filasTradicional, filasMep, catByTicker = {}) {
   return { encontrados, revisar };
 }
 
+// --- Señales de la Mesa (signals.json + avisos de VIGÍA) -----------------
+// Salen del mismo repo, pero de raw.githubusercontent: GitHub Actions las
+// actualiza cada 15 min sin volver a publicar la web, así siempre están frescas.
+const MESA_RAW = "https://raw.githubusercontent.com/blasglen/Mi-Cartera/main/public/data";
+async function fetchMesa() {
+  const [sig, vig] = await Promise.allSettled([
+    fetchWithTimeout(`${MESA_RAW}/signals.json`, 10000).then((r) => r.json()),
+    fetchWithTimeout(`${MESA_RAW}/vigia-state.json`, 10000).then((r) => r.json()),
+  ]);
+  return {
+    signals: sig.status === "fulfilled" ? sig.value : null,
+    log: vig.status === "fulfilled" && Array.isArray(vig.value?.log) ? vig.value.log : [],
+  };
+}
+
+const VEREDICTO_ESTILO = {
+  "SEÑAL DE COMPRA": { emoji: "🟢", corto: "Compra", tono: "gain" },
+  "SEÑAL DE VENTA": { emoji: "🔴", corto: "Venta", tono: "loss" },
+  "SEÑAL DE VENTA PARCIAL": { emoji: "🟠", corto: "Venta parcial", tono: "loss" },
+  "NO COMPRAR": { emoji: "⛔", corto: "No comprar", tono: "loss" },
+  ESPERAR: { emoji: "🟡", corto: "Esperar", tono: "gold" },
+  MANTENER: { emoji: "⚪", corto: "Mantener", tono: "muted" },
+};
+const EVENTO_TEXTO = {
+  rsi_sobrevendido: "RSI sobrevendido", rsi_sobrecomprado: "RSI sobrecomprado", en_soporte_3m: "en soporte de 3 meses",
+  rompe_soporte_3m: "rompió soporte de 3 meses", rompe_resistencia_3m: "rompió resistencia de 3 meses", minimo_6m: "mínimo de 6 meses",
+  maximo_6m: "máximo de 6 meses", cae_fuerte: "caída fuerte", sube_fuerte: "suba fuerte", cruza_abajo_sma200: "perdió la media de 200",
+  cruza_arriba_sma200: "recuperó la media de 200", cruce_dorado: "cruce dorado (50 sobre 200)", cruce_muerte: "cruce de la muerte (50 bajo 200)",
+  en_resistencia_3m: "en resistencia de 3 meses",
+};
+const eventoTexto = (e) => EVENTO_TEXTO[e] || (e.startsWith("stop_ppc_") ? `pierde ${e.split("_")[2]}% vs. tu PPC` : e.replace(/_/g, " "));
+
+// Último aviso de VIGÍA para cada ticker (de los últimos `dias` días).
+function ultimosAvisos(log, dias = 7) {
+  const desde = Date.now() - dias * 86400000;
+  const out = {};
+  for (const a of log) if (a.veredicto && new Date(a.ts).getTime() >= desde) out[a.ticker] = a;
+  return out;
+}
+
+function ChipVeredicto({ v, C, small }) {
+  const e = VEREDICTO_ESTILO[v];
+  if (!e) return null;
+  const color = C[e.tono] || C.muted;
+  return (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 3, fontSize: small ? 10 : 11, padding: small ? "1px 6px" : "2px 8px", borderRadius: 999, border: `1px solid ${color}`, color, whiteSpace: "nowrap", fontWeight: 600 }}>
+      {e.emoji} {e.corto}
+    </span>
+  );
+}
+
+function AvisosMesaCard({ C, mesa, onVer }) {
+  const avisos = mesa.log.filter((a) => a.veredicto && a.veredicto !== "MANTENER").slice(-8).reverse();
+  if (!mesa.log.length) return null;
+  return (
+    <div style={{ marginTop: 24, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
+        <span className="display" style={{ fontSize: 15, fontWeight: 600 }}>Últimos avisos de la Mesa</span>
+        <span style={{ fontSize: 11, color: C.faint }}>VIGÍA · cada 15 min con el mercado abierto</span>
+      </div>
+      {avisos.length === 0 && <div style={{ padding: "14px 18px", fontSize: 12, color: C.faint }}>Sin avisos recientes.</div>}
+      {avisos.map((a, i) => (
+        <div key={i} onClick={() => onVer(a.ticker)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 18px", borderTop: i ? `1px solid ${C.rowLine}` : "none", cursor: "pointer", fontSize: 12 }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = C.rowLine)} onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
+          <span style={{ fontWeight: 600, minWidth: 52 }}>{a.ticker}</span>
+          <ChipVeredicto v={a.veredicto} C={C} small />
+          <span style={{ color: C.muted, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{(a.eventos || []).map(eventoTexto).join(" · ")}</span>
+          <span className="tabular" style={{ color: C.faint, whiteSpace: "nowrap" }}>
+            {new Date(a.ts).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Panel "Lectura de la Mesa" para un activo (en Buscar activo).
+function SenalesMesaPanel({ C, sym, mesa }) {
+  const t = mesa.signals?.tickers?.[sym];
+  const avisos = mesa.log.filter((a) => a.ticker === sym && a.veredicto).slice(-3).reverse();
+  if (!t && !avisos.length) return null;
+  const usd = (n) => (n == null ? "—" : `US$ ${n.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+  const pctTxt = (n) => (n == null ? "—" : `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`);
+  const rsiColor = t?.rsi14 == null ? C.muted : t.rsi14 <= 30 ? C.gain : t.rsi14 >= 70 ? C.loss : C.text;
+  const tendColor = t?.tendencia?.startsWith("alcista") ? C.gain : t?.tendencia?.startsWith("bajista") ? C.loss : C.text;
+  const Dato = ({ label, children, color }) => (
+    <div style={{ minWidth: 110 }}>
+      <div style={{ fontSize: 10, color: C.faint, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</div>
+      <div className="tabular" style={{ fontSize: 13, marginTop: 2, color: color || C.text, fontWeight: 500 }}>{children}</div>
+    </div>
+  );
+  return (
+    <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, marginTop: 16, padding: 18 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
+        <span className="display" style={{ fontSize: 15, fontWeight: 600 }}>Lectura de la Mesa</span>
+        {t && <span style={{ fontSize: 11, color: C.faint }}>En dólares MEP · {t.fuente}{mesa.signals?.updatedAt ? ` · ${new Date(mesa.signals.updatedAt).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}` : ""}</span>}
+      </div>
+      {t && (
+        <>
+          <div style={{ fontSize: 13, color: tendColor, marginBottom: 12 }}>Tendencia {t.tendencia}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "14px 22px" }}>
+            <Dato label="Precio">{usd(t.precio)}</Dato>
+            <Dato label="RSI 14" color={rsiColor}>{t.rsi14 ?? "—"}{t.rsi_lectura ? ` · ${t.rsi_lectura}` : ""}</Dato>
+            <Dato label="Semana / mes">{pctTxt(t.var_1s_pct)} / {pctTxt(t.var_1m_pct)}</Dato>
+            <Dato label="12 meses">{pctTxt(t.var_12m_pct)}</Dato>
+            <Dato label="Soporte 3m">{usd(t.soporte_3m)}</Dato>
+            <Dato label="Resistencia 3m">{usd(t.resistencia_3m)}</Dato>
+            <Dato label="Media 50 / 200">{usd(t.sma50)} / {usd(t.sma200)}</Dato>
+            <Dato label="Vs. máximo 6m">{pctTxt(t.dist_max_6m_pct)}</Dato>
+            {t.dia && <Dato label="Rango de hoy">{usd(t.dia.minimo)} – {usd(t.dia.maximo)}</Dato>}
+          </div>
+        </>
+      )}
+      {avisos.length > 0 && (
+        <div style={{ marginTop: 16, borderTop: `1px solid ${C.rowLine}`, paddingTop: 12 }}>
+          <div style={{ fontSize: 11, color: C.faint, marginBottom: 8 }}>Últimos avisos de VIGÍA</div>
+          {avisos.map((a, i) => (
+            <div key={i} style={{ marginBottom: 10, fontSize: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <ChipVeredicto v={a.veredicto} C={C} small />
+                <span style={{ color: C.muted }}>{(a.eventos || []).map(eventoTexto).join(" · ")}</span>
+                <span className="tabular" style={{ color: C.faint }}>{new Date(a.ts).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })} · {usd(a.precio)}</span>
+              </div>
+              {a.analistaTexto && <div style={{ color: C.muted, marginTop: 4, lineHeight: 1.45 }}>{a.analistaTexto.replace(/^VEREDICTO:\s*[^P]*?(?=Por qué:)/, "")}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+      <div style={{ fontSize: 10, color: C.faint, marginTop: 10 }}>Lectura técnica automática, no es asesoramiento. Vos decidís.</div>
+    </div>
+  );
+}
+
+// --- Sincronizar con IOL (API) ------------------------------------------
+// Lee tus tenencias reales de IOL (cantidad y PPC exactos, el mismo que ves
+// en la app de IOL) y las compara con lo que tiene cargado esta app. Con un
+// click reemplaza las tenencias de esa cartera por las de IOL. No toca tus
+// movimientos (el gráfico histórico sigue saliendo de ellos).
+function mapIolPosicion(p, mep) {
+  const ins = p.instrument || {};
+  const base = p.parent_instrument || ins;
+  const tipo = String(ins.type || "").toUpperCase();
+  const cat = tipo.includes("CEDEAR") ? "CEDEARs"
+    : tipo.includes("ACCION") ? "Acciones"
+    : tipo.includes("PUBLIC") ? "Bonos"
+    : tipo.includes("OBLIGAC") ? "Obligaciones Negociables"
+    : tipo.includes("FONDO") ? "Fondos"
+    : "CEDEARs";
+  const div = ins.lot_size === 100 ? 100 : 1; // bonos y ONs cotizan cada 100 VN
+  const enUsd = ins.currency === "USD";
+  const avg = (p.cost_basis?.average_entry_price ?? 0) / div;
+  const px = (p.market_value?.current_price ?? 0) / div;
+  // Los fondos en pesos (CONIOLA) se llaman igual en las dos monedas; el
+  // resto viene como su especie "D" (MEP) con el ticker en pesos en parent.
+  return {
+    name: base.symbol,
+    nombreLargo: base.name || ins.name || base.symbol,
+    cat,
+    qty: p.quantity ?? 0,
+    avgCostUsd: enUsd ? avg : mep ? avg / mep : null,
+    avgCostArs: enUsd ? (mep ? avg * mep : null) : avg,
+    priceArs: enUsd ? (mep ? px * mep : null) : px,
+    plPct: p.profit_loss?.unrealized_pl_percent ?? null,
+    enUsd,
+  };
+}
+
+function IolSyncCard({ C, user }) {
+  const carteras = [...new Set(HOLDINGS.map((h) => h.broker))];
+  const [cartera, setCartera] = useState(carteras.find((b) => /iol/i.test(b)) || "IOL");
+  const [estado, setEstado] = useState("inicio"); // inicio | cargando | listo | guardando | error
+  const [error, setError] = useState(null);
+  const [datos, setDatos] = useState(null); // { posiciones, mep, saldos }
+
+  const leer = async () => {
+    setEstado("cargando"); setError(null);
+    try {
+      const [r, fxs] = await Promise.all([iolWorkerGet(user, "/positions", 20000), fetchFxRates().catch(() => ({}))]);
+      const mep = fxs.mep?.value || null;
+      const lista = [];
+      for (const cuenta of ["AR", "US"]) {
+        const pos = r?.positions?.[cuenta];
+        if (pos && Array.isArray(pos.positions)) for (const p of pos.positions) lista.push({ ...mapIolPosicion(p, mep), cuenta });
+      }
+      const saldoAr = r?.balances?.AR || {};
+      const saldos = { ars: saldoAr.ars?.available_for_withdrawal ?? 0, usd: (saldoAr.usd?.available_for_withdrawal ?? 0) + (r?.balances?.US?.usd?.available_for_withdrawal ?? 0) };
+      setDatos({ posiciones: lista, mep, saldos });
+      setEstado("listo");
+    } catch (e) {
+      setError(e.message); setEstado("error");
+    }
+  };
+
+  const filas = useMemo(() => {
+    if (!datos) return [];
+    const app = consolidateByName(HOLDINGS.filter((h) => h.broker === cartera));
+    const nombres = [...new Set([...datos.posiciones.map((p) => p.name), ...app.map((h) => h.name)])];
+    return nombres.map((n) => {
+      const iol = datos.posiciones.find((p) => p.name === n);
+      const h = app.find((x) => x.name === n);
+      const ppcApp = h ? (h.avgCostUsd ?? (datos.mep ? h.avgCost / datos.mep : null)) : null;
+      let estadoFila = "igual";
+      if (!h) estadoFila = "nuevo";
+      else if (!iol) estadoFila = "ya no está";
+      else if (Math.abs(h.qty - iol.qty) > 1e-6) estadoFila = "cantidad distinta";
+      else if (ppcApp && iol.avgCostUsd && Math.abs(ppcApp / iol.avgCostUsd - 1) > 0.02) estadoFila = "PPC distinto";
+      return { name: n, cat: iol?.cat || h?.cat, qtyApp: h?.qty ?? 0, qtyIol: iol?.qty ?? 0, ppcApp, ppcIol: iol?.avgCostUsd ?? null, valorUsd: iol && datos.mep ? (iol.qty * iol.priceArs) / datos.mep : null, estado: estadoFila };
+    }).sort((a, b) => (b.valorUsd || 0) - (a.valorUsd || 0));
+  }, [datos, cartera]);
+  const diferencias = filas.filter((f) => f.estado !== "igual").length;
+
+  const aplicar = async () => {
+    if (!datos) return;
+    setEstado("guardando");
+    try {
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      const data = snap.exists() ? snap.data() : {};
+      const prevHoldings = Array.isArray(data.holdings) ? data.holdings : [];
+      const prevDeCartera = prevHoldings.filter((h) => h.broker === cartera);
+      const nuevas = datos.posiciones.filter((p) => p.qty > 0).map((p) => {
+        const prev = prevDeCartera.find((h) => h.name === p.name);
+        // Si la cantidad no cambió, el costo en pesos histórico que calculó la
+        // app a partir de tus movimientos es mejor que "PPC en dólares × MEP
+        // de hoy" -- lo conservamos. El PPC en dólares siempre es el de IOL.
+        const mismoQty = prev && Math.abs(prev.qty - p.qty) < 1e-6;
+        return {
+          name: p.name,
+          cat: prev?.cat || p.cat,
+          qty: p.qty,
+          avgCost: mismoQty && prev.avgCost ? prev.avgCost : (p.avgCostArs ?? prev?.avgCost ?? 0),
+          ...(p.avgCostUsd != null ? { avgCostUsd: p.avgCostUsd } : {}),
+          price: p.priceArs ?? prev?.price ?? 0,
+          broker: cartera,
+          manual: false,
+        };
+      });
+      const holdingsFinal = [...prevHoldings.filter((h) => h.broker !== cartera), ...nuevas];
+      await setDoc(ref, { holdings: holdingsFinal, iolSync: { fecha: new Date().toISOString(), cartera } }, { merge: true });
+      window.location.reload();
+    } catch (e) {
+      setError(e.message); setEstado("error");
+    }
+  };
+
+  const usd = (n, d = 2) => (n == null ? "—" : `US$ ${n.toLocaleString("es-AR", { minimumFractionDigits: d, maximumFractionDigits: d })}`);
+  const colorEstado = { igual: C.faint, nuevo: C.gain, "ya no está": C.loss, "cantidad distinta": C.gold, "PPC distinto": C.gold };
+
+  return (
+    <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18, marginBottom: 22 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        <div>
+          <div style={{ fontSize: 14, fontWeight: 600 }}>Sincronizar con IOL (automático)</div>
+          <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>Lee tus tenencias y el PPC exacto directo de tu cuenta de IOL. Sin archivos ni PDFs.</div>
+        </div>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          {carteras.length > 1 && (
+            <select value={cartera} onChange={(e) => setCartera(e.target.value)} style={{ padding: "6px 10px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.surface, color: C.text, fontSize: 12 }}>
+              {[...new Set([cartera, ...carteras])].map((b) => <option key={b} value={b}>{b}</option>)}
+            </select>
+          )}
+          <button onClick={leer} disabled={estado === "cargando" || estado === "guardando"} style={{ padding: "8px 14px", borderRadius: 8, border: `1px solid ${C.gold}`, background: "transparent", color: C.gold, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+            {estado === "cargando" ? "Leyendo IOL…" : datos ? "Volver a leer" : "Leer mi cuenta de IOL"}
+          </button>
+        </div>
+      </div>
+
+      {error && <div style={{ marginTop: 12, fontSize: 12, color: C.loss }}>No se pudo leer IOL: {error}</div>}
+
+      {datos && (
+        <div style={{ marginTop: 14 }}>
+          <div style={{ fontSize: 12, color: C.muted, marginBottom: 8 }}>
+            {datos.posiciones.length} activos en IOL · saldo disponible {`$ ${Math.round(datos.saldos.ars).toLocaleString("es-AR")}`} + {usd(datos.saldos.usd)} · MEP {datos.mep ? `$ ${datos.mep.toLocaleString("es-AR")}` : "—"}
+          </div>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+              <thead>
+                <tr style={{ color: C.faint, textAlign: "right" }}>
+                  <th style={{ textAlign: "left", padding: "6px 4px" }}>Activo</th>
+                  <th style={{ padding: "6px 4px" }}>Cant. app</th>
+                  <th style={{ padding: "6px 4px" }}>Cant. IOL</th>
+                  <th style={{ padding: "6px 4px" }}>PPC app</th>
+                  <th style={{ padding: "6px 4px" }}>PPC IOL</th>
+                  <th style={{ padding: "6px 4px" }}>Valor</th>
+                  <th style={{ textAlign: "left", padding: "6px 4px" }}>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filas.map((r) => (
+                  <tr key={r.name} style={{ borderTop: `1px solid ${C.rowLine}`, textAlign: "right" }} className="tabular">
+                    <td style={{ textAlign: "left", padding: "6px 4px", fontWeight: 600 }}>{r.name} <span style={{ color: C.faint, fontWeight: 400 }}>{r.cat}</span></td>
+                    <td style={{ padding: "6px 4px" }}>{r.qtyApp ? r.qtyApp.toLocaleString("es-AR") : "—"}</td>
+                    <td style={{ padding: "6px 4px" }}>{r.qtyIol ? r.qtyIol.toLocaleString("es-AR") : "—"}</td>
+                    <td style={{ padding: "6px 4px" }}>{usd(r.ppcApp)}</td>
+                    <td style={{ padding: "6px 4px" }}>{usd(r.ppcIol)}</td>
+                    <td style={{ padding: "6px 4px" }}>{usd(r.valorUsd, 0)}</td>
+                    <td style={{ textAlign: "left", padding: "6px 4px", color: colorEstado[r.estado] }}>{r.estado}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, gap: 12, flexWrap: "wrap" }}>
+            <div style={{ fontSize: 12, color: diferencias ? C.gold : C.gain }}>
+              {diferencias ? `${diferencias} diferencia${diferencias > 1 ? "s" : ""} con lo cargado en "${cartera}".` : `"${cartera}" ya coincide con IOL.`}
+            </div>
+            {diferencias > 0 && (
+              <button onClick={aplicar} disabled={estado === "guardando"} style={{ padding: "8px 14px", borderRadius: 8, border: "none", background: C.gold, color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                {estado === "guardando" ? "Guardando…" : `Actualizar "${cartera}" con los datos de IOL`}
+              </button>
+            )}
+          </div>
+          <div style={{ fontSize: 11, color: C.faint, marginTop: 8 }}>Reemplaza solo las tenencias de esa cartera (cantidad y PPC). Tus movimientos no se tocan.</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ImportarView({ C, user, fx }) {
   const [dragOver, setDragOver] = useState(false);
   const [broker, setBroker] = useState(null); // qué plataforma/parser -- ej "Balanz"
@@ -4826,6 +5318,8 @@ function ImportarView({ C, user, fx }) {
   return (
     <div>
       <SectionTitle C={C} sub="Subí el estado de cuenta o histórico de movimientos exportado desde tu broker o exchange.">Importar archivos</SectionTitle>
+
+      {IOL_WORKER_URL && <IolSyncCard C={C} user={user} />}
 
       <div style={{ marginBottom: 22 }}>
         <div style={{ fontSize: 12, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Origen del archivo</div>
@@ -5827,11 +6321,11 @@ function ConfigView({ currency, setCurrency, fxType, setFxType, C, fxRates, live
         <div style={{ fontSize: 11, color: Object.keys(livePrices).length > 0 ? C.gain : C.faint, marginTop: 6, display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 6, height: 6, borderRadius: 999, background: Object.keys(livePrices).length > 0 ? C.gain : C.faint, display: "inline-block" }} />
           {Object.keys(livePrices).length > 0
-            ? `Precios de mercado: ${Object.keys(livePrices).length} activos desde la caché diaria (data912).`
+            ? `Precios de mercado: ${Object.keys(livePrices).length} activos (data912 en vivo${IOL_WORKER_URL ? "; tus tenencias, directo de IOL" : ""}).`
             : "Precios de mercado: sin datos cacheados todavía — usando estimados."}
         </div>
         <div style={{ fontSize: 10, color: C.faint, marginTop: 8 }}>
-          Todo esto se actualiza una vez al día vía GitHub Actions, no en vivo desde tu navegador — así no se satura la fuente de datos gratuita.
+          El histórico se actualiza una vez al día vía GitHub Actions. Los precios de hoy se piden en vivo al abrir la app{IOL_WORKER_URL ? " (y los de IOL, cada minuto con el mercado abierto)" : ""}.
         </div>
       </div>
 

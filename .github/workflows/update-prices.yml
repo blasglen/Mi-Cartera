@@ -33,6 +33,8 @@ jobs:
           IOL_PASSWORD: ${{ secrets.IOL_PASSWORD }}
       - name: Calcular señales (cierre diario)
         run: node scripts/signals.mjs
+      - name: Histórico compacto para la app (carga rápida)
+        run: node scripts/compact-history.mjs
       - name: Guardar los cambios en el repo
         run: |
           git config user.name "github-actions[bot]"
