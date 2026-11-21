@@ -1906,12 +1906,58 @@ function InvestmentDashboard({ user }) {
     return () => { cancelled = true; clearInterval(id); };
   }, [user]);
 
+  // Tenencias de IOL leídas directo de la API (cantidad, precio y PPC
+  // exactos, los mismos que muestra la web de IOL). Reemplazan en pantalla a
+  // lo cargado por archivo para esa cartera. No se guarda nada.
+  const [iolPos, setIolPos] = useState(null); // { lista, at } | null
+  React.useEffect(() => {
+    if (!IOL_WORKER_URL) return;
+    let cancelled = false;
+    const cargar = async () => {
+      try {
+        const r = await iolWorkerGet(user, "/positions", 20000);
+        const lista = [];
+        for (const cuenta of ["AR", "US"]) {
+          const pos = r?.positions?.[cuenta];
+          if (pos && Array.isArray(pos.positions)) for (const p of pos.positions) if (p.quantity > 0) lista.push(mapIolPosicion(p, null));
+        }
+        if (!cancelled && lista.length) setIolPos({ lista, at: r.updatedAt });
+      } catch { /* sin API: queda lo cargado por archivo */ }
+    };
+    cargar();
+    const id = setInterval(() => { if (document.visibilityState === "visible" && mercadoAbiertoAR()) cargar(); }, 300000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [user]);
+  const iolBroker = BROKER_LIST.find((b) => /iol/i.test(b)) || "IOL";
+
   const activeFxRates = { ...FX_RATES, ...(liveFxRates || {}) };
   const fx = activeFxRates[fxType].value;
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
-  const holdingsLive = useMemo(() => HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol) })), [livePrices, fx, cryptoUsd, historyCache, cedearsViaIol]);
+  const holdingsLive = useMemo(() => {
+    const base = HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol) }));
+    if (!iolPos) return base;
+    const prevIol = HOLDINGS.filter((h) => h.broker === iolBroker);
+    const deIol = iolPos.lista.map((p) => {
+      const prev = prevIol.find((h) => h.name === p.name);
+      const avgCostUsd = p.enUsd ? p.avgCostUsd : prev?.avgCostUsd ?? null;
+      return {
+        name: p.name,
+        cat: prev?.cat || p.cat,
+        qty: p.qty,
+        // Los activos en dólares se valúan con el precio en dólares que da IOL
+        // x el dólar elegido: con MEP, el total coincide con la web de IOL.
+        price: p.enUsd ? p.pxNativo * fx : p.pxNativo,
+        avgCost: prev && Math.abs(prev.qty - p.qty) < 1e-6 && prev.avgCost ? prev.avgCost : p.enUsd ? p.avgCostUsd * fx : p.avgCostArs,
+        ...(avgCostUsd != null ? { avgCostUsd } : {}),
+        broker: iolBroker,
+        manual: false,
+        fuente: "IOL API",
+      };
+    });
+    return [...base.filter((h) => h.broker !== iolBroker), ...deIol];
+  }, [livePrices, fx, cryptoUsd, historyCache, cedearsViaIol, iolPos, iolBroker]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
@@ -2374,6 +2420,7 @@ function InvestmentDashboard({ user }) {
                       : iolLive.status === "error" ? "IOL no respondió: precios de data912"
                       : liveStatus === "ok" ? "Precios de data912" : "Sin precios en vivo: valores estimados"}
                   </span>
+                  {iolPos && <span>Cartera de IOL leída de tu cuenta a las {new Date(iolPos.at).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}</span>}
                   <span>Dólar {activeFxRates[fxType].label} {fmt(fx, "ARS")}</span>
                 </div>
               </section>
@@ -4995,6 +5042,7 @@ function mapIolPosicion(p, mep) {
     avgCostUsd: enUsd ? avg : mep ? avg / mep : null,
     avgCostArs: enUsd ? (mep ? avg * mep : null) : avg,
     priceArs: enUsd ? (mep ? px * mep : null) : px,
+    pxNativo: px, // en la moneda del instrumento (USD MEP para las especies "D")
     plPct: p.profit_loss?.unrealized_pl_percent ?? null,
     enUsd,
   };
