@@ -1937,13 +1937,55 @@ function InvestmentDashboard({ user }) {
   }, [user]);
   const iolBroker = iolBrokerDe();
 
+  // Binance por API (solo lectura, vía el mismo Worker): saldos de Spot,
+  // Funding y Earn valuados en USD. Si no está configurado, no muestra nada.
+  const [binance, setBinance] = useState(null); // { activos, at, error }
+  React.useEffect(() => {
+    if (!IOL_WORKER_URL) return;
+    let cancelled = false;
+    const cargar = async () => {
+      try {
+        const r = await iolWorkerGet(user, "/binance", 20000);
+        if (!cancelled) setBinance({ activos: r.activos || [], at: r.updatedAt, error: null, avisos: r.avisos || [] });
+      } catch (e) {
+        if (!cancelled) setBinance((prev) => ({ ...(prev || { activos: [] }), error: e.message }));
+      }
+    };
+    cargar();
+    const id = setInterval(() => { if (document.visibilityState === "visible") cargar(); }, 300000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [user]);
+  const binanceBroker = BROKER_LIST.find((b) => /binance/i.test(b)) || "Binance";
+  if (binance?.activos?.length && !BROKER_LIST.includes(binanceBroker)) BROKER_LIST = [...BROKER_LIST, binanceBroker];
+
   const activeFxRates = { ...FX_RATES, ...(liveFxRates || {}) };
   const fx = activeFxRates[fxType].value;
   const f = (n) => fmt(n, currency, fx);
   const priceFor = (h) => livePrices[h.name] ?? h.price;
 
   const holdingsLive = useMemo(() => {
-    const base = HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol) }));
+    let base = HOLDINGS.map((h) => ({ ...h, price: liveAdjustedPrice(h, livePrices, fx, cryptoUsd, historyCache, cedearsViaIol) }));
+    if (binance?.activos?.length) {
+      const prevBn = HOLDINGS.filter((h) => h.broker === binanceBroker);
+      const deBinance = binance.activos.filter((a) => a.precioUsd != null && a.cantidad > 0).map((a) => {
+        const prev = prevBn.find((h) => h.name === a.asset);
+        const price = a.precioUsd * fx;
+        return {
+          name: a.asset,
+          cat: "Cripto",
+          qty: a.cantidad,
+          price,
+          // Binance no informa a cuánto compraste: usamos tu PPC cargado si
+          // existe; si no, el precio de hoy (ganancia 0 hasta que lo cargues).
+          avgCost: prev?.avgCost ?? price,
+          ...(prev?.avgCostUsd != null ? { avgCostUsd: prev.avgCostUsd } : !prev ? { avgCostUsd: a.precioUsd } : {}),
+          broker: binanceBroker,
+          manual: false,
+          fuente: "Binance API",
+        };
+      });
+      base = [...base.filter((h) => h.broker !== binanceBroker), ...deBinance];
+    }
     if (!iolPos) return base;
     const prevIol = HOLDINGS.filter((h) => h.broker === iolBroker);
     const deIol = iolPos.lista.map((p) => {
@@ -1964,7 +2006,7 @@ function InvestmentDashboard({ user }) {
       };
     });
     return [...base.filter((h) => h.broker !== iolBroker), ...deIol];
-  }, [livePrices, fx, cryptoUsd, historyCache, cedearsViaIol, iolPos, iolBroker]);
+  }, [livePrices, fx, cryptoUsd, historyCache, cedearsViaIol, iolPos, iolBroker, binance, binanceBroker]);
 
   const byBroker = useMemo(
     () => (brokerFilter === "Todas" ? holdingsLive : holdingsLive.filter((h) => h.broker === brokerFilter)),
@@ -2427,6 +2469,8 @@ function InvestmentDashboard({ user }) {
                       : iolLive.status === "error" ? "IOL no respondió: precios de data912"
                       : liveStatus === "ok" ? "Precios de data912" : "Sin precios en vivo: valores estimados"}
                   </span>
+                  {binance?.activos?.length > 0 && <span>Binance leído de tu cuenta a las {new Date(binance.at).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}</span>}
+                  {binance?.error && !/faltan BINANCE/.test(binance.error) && <span style={{ color: C.loss }} title={binance.error}>Binance no respondió</span>}
                   {iolPos && <span>Cartera de IOL leída de tu cuenta a las {new Date(iolPos.at).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}</span>}
                   <span>Dólar {activeFxRates[fxType].label} {fmt(fx, "ARS")}</span>
                 </div>

@@ -12,10 +12,13 @@
 //   IOL_USERNAME        (Secret) tu usuario de IOL
 //   IOL_PASSWORD        (Secret) tu clave de IOL
 //   EMAILS_PERMITIDOS   (Text)   mails de la app que pueden usarlo, separados por coma
+//   BINANCE_API_KEY     (Secret) clave de API de Binance, SOLO LECTURA (opcional)
+//   BINANCE_API_SECRET  (Secret) secreto de esa clave (opcional)
 //
 // Endpoints:
 //   GET /quotes?symbols=SPY,GGAL,AL30   -> precios en vivo (pesos, como data912)
 //   GET /positions                      -> tenencias y saldos de tu cuenta IOL
+//   GET /binance                        -> saldos de Binance (spot + Funding + Earn) en USD
 //   GET /                               -> "IOL en línea" (prueba)
 
 const IOL_API = "https://api.iolinversiones.com";
@@ -58,6 +61,10 @@ export default {
           lote.forEach((s, k) => { if (res[k] && res[k] !== "STOP") prices[s] = res[k]; });
         }
         return json({ updatedAt: new Date().toISOString(), fuente: "IOL", prices });
+      }
+
+      if (url.pathname === "/binance") {
+        return json(await binanceSaldos(env));
       }
 
       if (url.pathname === "/positions") {
@@ -163,3 +170,62 @@ function b64urlBytes(s) {
   return Uint8Array.from(b, (c) => c.charCodeAt(0));
 }
 function b64urlText(s) { return new TextDecoder().decode(b64urlBytes(s)); }
+
+// ---------- Binance (solo lectura) ----------
+// Usa una clave de API con permiso "Enable Reading" únicamente. Junta los
+// saldos de Spot, Funding y Simple Earn, y los valúa en USD con el precio
+// contra USDT.
+const BINANCE = "https://api.binance.com";
+const ESTABLES = new Set(["USDT", "USDC", "FDUSD", "BUSD", "TUSD", "USDP", "DAI"]);
+
+async function binanceFirmado(env, ruta, params = {}, method = "GET") {
+  const qs = new URLSearchParams({ ...params, recvWindow: "10000", timestamp: String(Date.now()) }).toString();
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(env.BINANCE_API_SECRET), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const firma = [...new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(qs)))].map((b) => b.toString(16).padStart(2, "0")).join("");
+  const r = await fetch(`${BINANCE}${ruta}?${qs}&signature=${firma}`, { method, headers: { "X-MBX-APIKEY": env.BINANCE_API_KEY, "User-Agent": UA } });
+  const body = await r.json().catch(() => null);
+  if (!r.ok) throw new Error(`Binance ${ruta}: ${body?.msg || r.status}`);
+  return body;
+}
+
+async function binanceSaldos(env) {
+  if (!env.BINANCE_API_KEY || !env.BINANCE_API_SECRET) throw new Error("faltan BINANCE_API_KEY / BINANCE_API_SECRET en el Worker");
+  const totales = {}; // asset -> { spot, funding, earn }
+  const sumar = (asset, donde, n) => {
+    const a = String(asset || "").replace(/^LD(?=[A-Z0-9]{2,})/, ""); // LDBTC = BTC en Earn flexible (formato viejo)
+    const x = Number(n);
+    if (!a || !(x > 0)) return;
+    totales[a] = totales[a] || { spot: 0, funding: 0, earn: 0 };
+    totales[a][donde] += x;
+  };
+  const avisos = [];
+
+  const cuenta = await binanceFirmado(env, "/api/v3/account", { omitZeroBalances: "true" });
+  for (const b of cuenta.balances || []) sumar(b.asset, String(b.asset).startsWith("LD") ? "earn" : "spot", Number(b.free) + Number(b.locked));
+
+  try {
+    const fund = await binanceFirmado(env, "/sapi/v1/asset/get-funding-asset", {}, "POST");
+    for (const b of fund || []) sumar(b.asset, "funding", Number(b.free) + Number(b.locked) + Number(b.freeze || 0));
+  } catch (e) { avisos.push(`Funding: ${e.message}`); }
+
+  for (const tipo of ["flexible", "locked"]) {
+    try {
+      const earn = await binanceFirmado(env, `/sapi/v1/simple-earn/${tipo}/position`, { size: "100" });
+      for (const r of earn?.rows || []) sumar(r.asset, "earn", r.totalAmount ?? r.amount);
+    } catch (e) { avisos.push(`Earn ${tipo}: ${e.message}`); }
+  }
+
+  // Precios en USD (contra USDT)
+  const precios = {};
+  const tick = await fetch(`${BINANCE}/api/v3/ticker/price`, { headers: { "User-Agent": UA } }).then((r) => r.json()).catch(() => []);
+  for (const t of Array.isArray(tick) ? tick : []) if (t.symbol.endsWith("USDT")) precios[t.symbol.slice(0, -4)] = Number(t.price);
+
+  const activos = Object.entries(totales).map(([asset, t]) => {
+    const cantidad = t.spot + t.funding + t.earn;
+    const precioUsd = ESTABLES.has(asset) ? 1 : precios[asset] ?? null;
+    return { asset, cantidad, precioUsd, valorUsd: precioUsd != null ? cantidad * precioUsd : null, detalle: t };
+  }).filter((a) => a.valorUsd == null || a.valorUsd >= 0.5) // saca el "polvo" de centavos
+    .sort((a, b) => (b.valorUsd || 0) - (a.valorUsd || 0));
+
+  return { updatedAt: new Date().toISOString(), fuente: "Binance", totalUsd: activos.reduce((s, a) => s + (a.valorUsd || 0), 0), activos, avisos };
+}
