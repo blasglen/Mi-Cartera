@@ -1,6 +1,6 @@
 {
- "fecha": "2026-11-20",
- "apertura": true,
+ "fecha": "2026-11-23",
+ "apertura": false,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "GGAL:stop_ppc_30": "2026-11-07",
@@ -34,34 +34,18 @@
   "TSM:rompe_soporte_3m": "2026-11-20",
   "TSM:stop_ppc_20": "2026-11-20",
   "TSM:cae_fuerte": "2026-11-20",
-  "MU:en_soporte_3m": "2026-11-20",
   "MU:cae_fuerte": "2026-11-20",
-  "GOOGL:en_soporte_3m": "2026-11-20",
-  "CEPU:en_soporte_3m": "2026-11-20",
   "CEPU:cae_fuerte": "2026-11-20",
-  "BABA:en_soporte_3m": "2026-11-20",
-  "QQQ:en_soporte_3m": "2026-11-20",
-  "SPY:cruza_abajo_sma200": "2026-11-20",
   "GOOGL:rompe_soporte_3m": "2026-11-20",
   "GOOGL:cae_fuerte": "2026-11-20",
   "BABA:rompe_soporte_3m": "2026-11-20",
   "MU:rompe_soporte_3m": "2026-11-20",
   "MU:minimo_6m": "2026-11-20",
-  "ADBE:en_soporte_3m": "2026-11-20",
-  "ADBE:cruce_muerte": "2026-11-20",
-  "SNOW:en_soporte_3m": "2026-11-20",
-  "CRM:en_soporte_3m": "2026-11-20",
   "CRM:rompe_soporte_3m": "2026-11-20",
   "SPY:minimo_6m": "2026-11-20",
   "GOOGL:minimo_6m": "2026-11-20",
-  "COST:rompe_resistencia_3m": "2026-11-20",
-  "COST:rsi_sobrecomprado": "2026-11-20",
   "GOOGL:stop_ppc_20": "2026-11-20",
-  "UBER:en_soporte_3m": "2026-11-20",
   "UBER:cae_fuerte": "2026-11-20",
-  "MELI:en_soporte_3m": "2026-11-20",
-  "VIST:en_soporte_3m": "2026-11-20",
-  "NFLX:en_soporte_3m": "2026-11-20",
   "TSM:rsi_sobrevendido": "2026-11-20",
   "VIST:minimo_6m": "2026-11-20",
   "CEPU:minimo_6m": "2026-11-20",
@@ -89,15 +73,12 @@
   "QQQ:rsi_sobrevendido": "2026-11-20",
   "QQQ:cae_fuerte": "2026-11-20",
   "TSLA:en_soporte_3m": "2026-11-20",
-  "TSLA:cruza_abajo_sma200": "2026-11-20",
   "TSLA:cae_fuerte": "2026-11-20",
   "NFLX:rompe_soporte_3m": "2026-11-20",
   "NFLX:rsi_sobrevendido": "2026-11-20",
   "NFLX:cae_fuerte": "2026-11-20",
-  "PFE:rompe_soporte_3m": "2026-11-20",
-  "PFE:rsi_sobrevendido": "2026-11-20",
   "PFE:cae_fuerte": "2026-11-20",
-  "AMD:en_soporte_3m": "2026-11-20"
+  "AMZN:cruza_abajo_sma200": "2026-11-23"
  },
  "log": [
   {
@@ -4804,6 +4785,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 42,68 dólares y oversold relativo tras el castigo injustificado por short report. Plan: entrada US$ 43,39 · stop US$ 41,50 · objetivo US$ 54,00 Riesgo: Volatilidad extrema a corto plazo por contagio sectorial y presión bajista general. Confianza: baja",
    "radarTexto": "RADAR reporta: AMD se desplomó 17% hoy por una combinación confirmada en titulares de un reporte en contra de la empresa (short report) y la caída relacionada con Anthropic, además de la presión bajista general del sector. No hay información confirma",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-23T13:00:31.335Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200"
+   ],
+   "precio": 1.76,
+   "rsi14": 40,
+   "message_id": 399,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: VIGIA dio venta por cruzar abajo la SMA200 y el papel sufre por castigo general al Nasdaq y ventas de Bezos. Plan: Vender la mitad de AMZN ahora para reducir riesgo en tecnología y recomprar si consolida arriba de 1.88. Riesgo: Mayor presión vendedora en tecnológicas si el mercado profundiza la corrección general. Confianza: media",
+   "radarTexto": "RADAR REPORTE AMZN Confirmado: La baja responde a una venta masiva de tecnológicas y de la bolsa en general (Nasdaq en caída libre) y a fuertes ventas/donaciones de acciones de Jeff Bezos. Probable: Las dudas del mercado frente al sector de inteligen",
    "debatido": true
   }
  ]
