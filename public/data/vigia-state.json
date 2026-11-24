@@ -47,7 +47,11 @@
   "YPFD:minimo_6m": "2026-11-24",
   "VIST:rsi_sobrevendido": "2026-11-24",
   "AMD:en_soporte_3m": "2026-11-24",
-  "QQQ:en_soporte_3m": "2026-11-24"
+  "QQQ:en_soporte_3m": "2026-11-24",
+  "GOOGL:en_soporte_3m": "2026-11-24",
+  "VIST:minimo_6m": "2026-11-24",
+  "BABA:rsi_sobrevendido": "2026-11-24",
+  "BABA:minimo_6m": "2026-11-24"
  },
  "log": [
   {
@@ -5156,7 +5160,11 @@
    ],
    "precio": 43.2,
    "rsi14": 38.39,
-   "message_id": 429
+   "message_id": 429,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte técnico clave de tres meses en 42,68 dólares en medio de una caída por toma de ganancias en semiconductores y venta de grandes fondos. Plan: entrada US$ 42,73 · stop US$ 40,00 · objetivo US$ 55,00 Riesgo: Volatilidad alta por tendencia bajista de corto plazo y presión vendedora institucional en el sector. Confianza: media",
+   "radarTexto": "RADAR al habla. Confirmado: caída general por retroceso en semiconductores e IA, venta de acciones por parte de Coatue Management y registro masivo para reventa vinculado a warrants de OpenAI y Meta. Probable: pánico del mercado tras un rally de Nvid",
+   "debatido": true
   },
   {
    "ts": "2026-11-24T15:30:28.242Z",
@@ -5168,7 +5176,57 @@
    ],
    "precio": 33.73,
    "rsi14": 36.09,
-   "message_id": 430
+   "message_id": 430,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T15:45:45.226Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.05,
+   "rsi14": 35.53,
+   "message_id": 431,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza en soporte crítico de tres meses con RSI de 35, apoyada por sólidos ingresos trimestrales y demanda de IA pese al contexto bajista. Plan: entrada US$ 5,05 · stop US$ 4,80 · objetivo US$ 6,40 Riesgo: Que la tendencia bajista general rompa el soporte y profundice la corrección tech. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares confirman que Google subió por un rally general del mercado impulsado por la IA de Nvidia, fuerte demanda de inteligencia artificial y sólidos ingresos trimestrales. Es probable que también influya la preferencia de an",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T15:45:45.609Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 17.8,
+   "rsi14": 26.25,
+   "message_id": 432,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y perforó mínimos por factores macro sin fundamentos que la contradigan. Plan: Vender toda la posición en Vist ahora y reasignar esos fondos a tecnología en EEUU. Riesgo: Alta exposición a volatilidad local y pérdida de tendencia de mediano plazo. Confianza: media",
+   "radarTexto": "RADAR al habla. Los titulares confirman que las acciones argentinas sufrieron fuertes caídas de hasta 25% y un salto del riesgo país por una semana muy negativa en Wall Street, aunque también mencionan rebotes aislados y dudas sobre la apuesta intern",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T15:45:45.824Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rsi_sobrevendido",
+    "minimo_6m"
+   ],
+   "precio": 9.86,
+   "rsi14": 29.1,
+   "message_id": 433,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por mínimo de seis meses y RSI sobrevendido, y Radar confirma sanciones de EE.UU. y demanda por fraude. Plan: Vender toda la posición en BABA para limpiar cartera argentina y simplificar, sin recomra prevista. Riesgo: Riesgo regulatorio extremo en EE.UU., sangría continua y posible salida de BYMA. Confianza: media",
+   "radarTexto": "Confirmado: la baja se explica por la inclusión de una subsidiaria de Alibaba en la lista negra de EE.UU. por temas de IA y una demanda colectiva por fraude de valores. Probable: la presión vendedora por el impacto de estas sanciones en su negocio y ",
+   "debatido": true
   }
  ]
 }
