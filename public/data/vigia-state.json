@@ -25,13 +25,8 @@
   "SPY:rompe_soporte_3m": "2026-11-19",
   "YPFD:stop_ppc_30": "2026-11-19",
   "BABA:rsi_sobrevendido": "2026-11-19",
-  "SNOW:cae_fuerte": "2026-11-19",
-  "MU:cae_fuerte": "2026-11-20",
-  "CEPU:cae_fuerte": "2026-11-20",
   "GOOGL:rompe_soporte_3m": "2026-11-20",
   "BABA:rompe_soporte_3m": "2026-11-20",
-  "MU:rompe_soporte_3m": "2026-11-20",
-  "MU:minimo_6m": "2026-11-20",
   "CRM:rompe_soporte_3m": "2026-11-20",
   "SPY:minimo_6m": "2026-11-20",
   "GOOGL:minimo_6m": "2026-11-20",
@@ -41,9 +36,6 @@
   "CEPU:minimo_6m": "2026-11-20",
   "MSFT:en_soporte_3m": "2026-11-20",
   "MSFT:cae_fuerte": "2026-11-20",
-  "MU:rsi_sobrevendido": "2026-11-20",
-  "CEPU:rompe_soporte_3m": "2026-11-20",
-  "CEPU:stop_ppc_30": "2026-11-20",
   "AMZN:en_soporte_3m": "2026-11-20",
   "AMZN:cae_fuerte": "2026-11-20",
   "AVGO:en_soporte_3m": "2026-11-20",
@@ -57,7 +49,15 @@
   "PFE:cae_fuerte": "2026-11-20",
   "MELI:en_soporte_3m": "2026-11-24",
   "NVDA:stop_ppc_20": "2026-11-24",
-  "NVDA:sube_fuerte": "2026-11-24"
+  "NVDA:sube_fuerte": "2026-11-24",
+  "MELI:minimo_6m": "2026-11-24",
+  "SPY:rsi_sobrevendido": "2026-11-24",
+  "CEPU:en_soporte_3m": "2026-11-24",
+  "CEPU:stop_ppc_20": "2026-11-24",
+  "AVGO:minimo_6m": "2026-11-24",
+  "AMD:cruza_abajo_sma200": "2026-11-24",
+  "AMD:cae_fuerte": "2026-11-24",
+  "ORCL:en_soporte_3m": "2026-11-24"
  },
  "log": [
   {
@@ -4814,6 +4814,97 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y la SEC investiga a la empresa, sumando ruido al desplome técnico bajo las medias. Plan: Vender todo por regla de simplificación y tendencia bajista, recompra evaluando estabilización sobre SMA200. Riesgo: Volatilidad regulatoria extrema y caída adicional por debajo del soporte de 5.78 dólares. Confianza: baja",
    "radarTexto": "RADAR: El salto y posterior caída de NVDA responde al tumultuoso regreso de Jensen Huang como CEO y a revelaciones sobre inversiones de Donald Trump. Es confirmado el rally inicial por la vuelta de Huang seguido de toma de ganancias y fuertes bajas, ",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-24T13:45:23.099Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 11.98,
+   "rsi14": 26.76,
+   "message_id": 403,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR reportando. El castigo a MELI se explica por una mezcla de ingresos al alza con caída de operativa y recortes de precios objetivo (confirmado), sumado a dudas sobre sostenibilidad de crecimiento en Argentina y competencia con Sea Limited (proba",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T13:45:23.690Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 12.15,
+   "rsi14": 29.31,
+   "message_id": 404,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI sobrevendido en 29.31 y precio tocando el piso de 12.15 por tensiones en Medio Oriente y corrección de mercado. Plan: entrada US$ 12,15 · stop US$ 11,50 · objetivo US$ 13,50 Riesgo: Volatilidad geopolítica y posible profundización de la tendencia bajista a corto plazo. Confianza: media",
+   "radarTexto": "RADAR informando. Confirmado por titulares: caídas por nuevas sanciones a Irán y bloqueo en Ormuz, además de entrar oficialmente en territorio de corrección. Probable: más pérdidas según Reuters y clima general de futuros a la baja.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T13:45:23.968Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "stop_ppc_20"
+   ],
+   "precio": 1.03,
+   "rsi14": 32.75,
+   "message_id": 405,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y CEPU perforó el soporte de 1.04 con tendencia bajista furiosa sin respaldo en las noticias locales. Plan: Vender toda la posición hoy mismo para bajar exposición a Argentina y simplificar cartera, sin planes de recompra rápida. Riesgo: Quedarse atrapado en un cuchillo que cae o cometer error de timing si hay un rebote gato muerto por arbitraje. Confianza: media",
+   "radarTexto": "Confirmado por titulares: rebote general de acciones argentinas y riesgo país arriba de 1000 puntos en medio de feriado. Probable: búsqueda de oportunidades de compra ante bajas. Los titulares no explican el desplome particular de CEPU.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T13:45:24.247Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 7.85,
+   "rsi14": 38.72,
+   "message_id": 406,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y rompió mínimos de seis meses con el papel en 7,85, y aunque el ruido de IA es temporal, la tendencia es bajista. Plan: Vender toda la posición en AVGO para simplificar la cartera y sacar el remanente de Argentina, esperando estabilización arriba de 9,00 para volver a entrar. Riesgo: Volatilidad alta y posible pérdida de rebote si el mercado absorbe rápido el ruido de Nvidia. Confianza: baja",
+   "radarTexto": "RADAR: La baja de Broadcom se explica por temores vinculados a inteligencia artificial (TPU Scare) y ruido de mercado por movimientos en Nvidia. Es probable que se trate de una toma de ganancias y corrección profunda, mientras que no hay datos confir",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T13:45:24.521Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 43.93,
+   "rsi14": 38.95,
+   "message_id": 407,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T13:45:31.060Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 37.35,
+   "rsi14": 35.6,
+   "message_id": 408,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
