@@ -56,7 +56,8 @@
   "MU:en_soporte_3m": "2026-11-24",
   "VIST:rompe_soporte_3m": "2026-11-24",
   "AMD:minimo_6m": "2026-11-24",
-  "BABA:rompe_soporte_3m": "2026-11-24"
+  "BABA:rompe_soporte_3m": "2026-11-24",
+  "AMD:rompe_soporte_3m": "2026-11-24"
  },
  "log": [
   {
@@ -5309,6 +5310,22 @@
    "rsi14": 28.46,
    "message_id": 438,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T16:15:26.935Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 42.08,
+   "rsi14": 37.55,
+   "message_id": 439,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca rotura de soporte en 42.68 con tendencia bajista y presión vendedora por salida de fondos en semiconductores. Plan: Vender toda la posición actual de AMD para simplificar cartera y reasignar liquidez a tecnología global. Riesgo: Volatilidad alta en semiconductores y posible profundización de la baja si pierde mínimos de 6 meses. Confianza: media",
+   "radarTexto": "RADAR informando. La baja se explica por un repliegue general en semiconductores e inteligencia artificial y por la venta de acciones de un fondo multimillonario, sumado a la salida de papeles vinculados a warrants de OpenAI y Meta. Es probable que i",
+   "debatido": true
   }
  ]
 }
