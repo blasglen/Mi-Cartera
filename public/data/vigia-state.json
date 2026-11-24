@@ -57,7 +57,10 @@
   "AVGO:minimo_6m": "2026-11-24",
   "AMD:cruza_abajo_sma200": "2026-11-24",
   "AMD:cae_fuerte": "2026-11-24",
-  "ORCL:en_soporte_3m": "2026-11-24"
+  "ORCL:en_soporte_3m": "2026-11-24",
+  "CEPU:rompe_soporte_3m": "2026-11-24",
+  "CEPU:stop_ppc_30": "2026-11-24",
+  "CEPU:cae_fuerte": "2026-11-24"
  },
  "log": [
   {
@@ -4905,6 +4908,24 @@
    "rsi14": 35.6,
    "message_id": 408,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:00:53.810Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "stop_ppc_30",
+    "cae_fuerte"
+   ],
+   "precio": 1.02,
+   "rsi14": 31.54,
+   "message_id": 409,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses operando a 1,02 dólares con tendencia bajista clara y castigo local por riesgo país. Plan: Vender toda la posición en CEPU para simplificar y sacar exposición a Argentina; recomprar solo si estabiliza arriba de 1,25 dólares. Riesgo: Volatilidad local y profundización de la caída por debajo del mínimo de seis meses. Confianza: baja",
+   "radarTexto": "Titulares: Los titulares no explican el movimiento propio de CEPU ni mencionan a la empresa. Confirmado: Riesgo país por encima de 1000 puntos y rebotes dispares en Wall Street durante feriado local. Probable: Contexto macro local adverso afectando a",
+   "debatido": true
   }
  ]
 }
