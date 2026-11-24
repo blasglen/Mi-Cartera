@@ -51,7 +51,12 @@
   "GOOGL:en_soporte_3m": "2026-11-24",
   "VIST:minimo_6m": "2026-11-24",
   "BABA:rsi_sobrevendido": "2026-11-24",
-  "BABA:minimo_6m": "2026-11-24"
+  "BABA:minimo_6m": "2026-11-24",
+  "MELI:stop_ppc_20": "2026-11-24",
+  "MU:en_soporte_3m": "2026-11-24",
+  "VIST:rompe_soporte_3m": "2026-11-24",
+  "AMD:minimo_6m": "2026-11-24",
+  "BABA:rompe_soporte_3m": "2026-11-24"
  },
  "log": [
   {
@@ -5227,6 +5232,83 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por mínimo de seis meses y RSI sobrevendido, y Radar confirma sanciones de EE.UU. y demanda por fraude. Plan: Vender toda la posición en BABA para limpiar cartera argentina y simplificar, sin recomra prevista. Riesgo: Riesgo regulatorio extremo en EE.UU., sangría continua y posible salida de BYMA. Confianza: media",
    "radarTexto": "Confirmado: la baja se explica por la inclusión de una subsidiaria de Alibaba en la lista negra de EE.UU. por temas de IA y una demanda colectiva por fraude de valores. Probable: la presión vendedora por el impacto de estas sanciones en su negocio y ",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-24T16:00:31.645Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 12.53,
+   "rsi14": 32.75,
+   "message_id": 434,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta técnica y el papel rompió todos los soportes con caída mensual del 23 por ciento, a pesar de que el negocio sigue creciendo con fuerza. Plan: Vender todo ahora para simplificar cartera y salir de Argentina, para recomprar abajo si cae un 25 por ciento adicional. Riesgo: Volatilidad extrema del mercado local y tendencia bajista profunda que puede acelerarse. Confianza: media",
+   "radarTexto": "Titulares recientes: • MercadoLibre Tokenized bStocks price today, MELIB to USD chart, marketcap and volume - CryptoSlate (CryptoSlate) • MercadoLibre Grew Revenue 45% as Operating Income Fell 6%. Is It “a Gift at These Prices”? - TIKR.com (TIKR.com)",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T16:00:32.165Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 131.82,
+   "rsi14": 32.41,
+   "message_id": 435,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Estás en soporte técnico clave de tres meses operando sobreventa con RSI en 32, mientras el castigo al sector semiconductores por escrutinio a Nvidia genera una caída exagerada y temporal. Plan: entrada US$ 131.82 · stop US$ 120.00 · objetivo US$ 170.00 Riesgo: Alta volatilidad sectorial y posible profundización de la tendencia bajista general de los chipmakers. Confianza: baja",
+   "radarTexto": "RADAR reportando. Según titulares, lo probable es presión por escrutinio a Nvidia y castigo general a chipmakers; lo confirmado es volatilidad fuerte con rebotes aislados y caídas tras subas.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T16:00:32.383Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 17.6,
+   "rsi14": 25.61,
+   "message_id": 436,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca ruptura de soporte con la acción en mínimo de seis meses y RSI en sobreventa, sin noticias que justifiquen la caída local más allá del clima externo. Plan: Vender todo por regla de simplificación de cartera menor al 1% y buscar recompra técnica recién si consolida recuperación arriba de US$ 21.60. Riesgo: Volatilidad y contagio bajista local que acelere pérdidas antes de ver un piso real. Confianza: ",
+   "radarTexto": "RADAR informa. Los titulares confirman un clima bursátil muy volatil con fuertes caídas locales contagiadas por Wall Street y subas puntuales por rebotes globales. Es probable que esto responda a una menor apuesta externa por activos argentinos, aunq",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T16:01:57.831Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 42.34,
+   "rsi14": 37.74,
+   "message_id": 437,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y cotiza en mínimos de seis meses a 42,34 dólares, quebrado el soporte clave por fuerte liquidación institucional y presión de oferta de warrants. Plan: Vender toda la posición actual de AMD, no sumar hoy pese a tu regla de caída del 25% porque perforó la media de 200 y no hay piso técnico claro; recomprar solo si recupera y consolida sobre 44,21 dólares. Riesgo: Profundización de la corrección",
+   "radarTexto": "RADAR reporta: AMD se hunde a mínimos de 6 meses (-8.4% hoy) por toma de ganancias en semiconductores e IA y la venta masiva de grandes fondos (confirmado). Es probable que influya el registro de 337M de acciones para reventa atadas a warrants de Ope",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T16:01:58.227Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 9.77,
+   "rsi14": 28.46,
+   "message_id": 438,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
