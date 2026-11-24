@@ -8,45 +8,13 @@
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "MELI:rsi_sobrevendido": "2026-11-17",
   "VIST:rsi_sobrevendido": "2026-11-17",
   "GGAL:rsi_sobrevendido": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "GGAL:minimo_6m": "2026-11-18",
-  "BBAR:minimo_6m": "2026-11-18",
-  "MELI:stop_ppc_20": "2026-11-19",
-  "YPFD:minimo_6m": "2026-11-19",
-  "GGAL:rompe_soporte_3m": "2026-11-19",
-  "BBAR:rompe_soporte_3m": "2026-11-19",
   "CRM:rsi_sobrevendido": "2026-11-19",
   "BABA:stop_ppc_20": "2026-11-19",
-  "YPFD:rompe_soporte_3m": "2026-11-19",
-  "BABA:minimo_6m": "2026-11-19",
-  "SPY:rompe_soporte_3m": "2026-11-19",
   "YPFD:stop_ppc_30": "2026-11-19",
-  "BABA:rsi_sobrevendido": "2026-11-19",
-  "GOOGL:rompe_soporte_3m": "2026-11-20",
-  "BABA:rompe_soporte_3m": "2026-11-20",
-  "CRM:rompe_soporte_3m": "2026-11-20",
-  "SPY:minimo_6m": "2026-11-20",
-  "GOOGL:minimo_6m": "2026-11-20",
-  "GOOGL:stop_ppc_20": "2026-11-20",
-  "UBER:cae_fuerte": "2026-11-20",
-  "VIST:minimo_6m": "2026-11-20",
-  "CEPU:minimo_6m": "2026-11-20",
-  "MSFT:en_soporte_3m": "2026-11-20",
-  "MSFT:cae_fuerte": "2026-11-20",
-  "AMZN:en_soporte_3m": "2026-11-20",
-  "AMZN:cae_fuerte": "2026-11-20",
-  "AVGO:en_soporte_3m": "2026-11-20",
-  "AVGO:cae_fuerte": "2026-11-20",
-  "PFE:en_soporte_3m": "2026-11-20",
-  "VIST:rompe_soporte_3m": "2026-11-20",
-  "QQQ:rompe_soporte_3m": "2026-11-20",
-  "NFLX:rompe_soporte_3m": "2026-11-20",
-  "NFLX:rsi_sobrevendido": "2026-11-20",
-  "NFLX:cae_fuerte": "2026-11-20",
-  "PFE:cae_fuerte": "2026-11-20",
   "MELI:en_soporte_3m": "2026-11-24",
   "NVDA:stop_ppc_20": "2026-11-24",
   "NVDA:sube_fuerte": "2026-11-24",
@@ -60,7 +28,21 @@
   "ORCL:en_soporte_3m": "2026-11-24",
   "CEPU:rompe_soporte_3m": "2026-11-24",
   "CEPU:stop_ppc_30": "2026-11-24",
-  "CEPU:cae_fuerte": "2026-11-24"
+  "CEPU:cae_fuerte": "2026-11-24",
+  "SPY:en_soporte_3m": "2026-11-24",
+  "SPY:cruza_arriba_sma200": "2026-11-24",
+  "YPFD:en_soporte_3m": "2026-11-24",
+  "VIST:en_soporte_3m": "2026-11-24",
+  "BABA:en_soporte_3m": "2026-11-24",
+  "GGAL:en_soporte_3m": "2026-11-24",
+  "BBAR:en_soporte_3m": "2026-11-24",
+  "TSLA:cruza_arriba_sma200": "2026-11-24",
+  "TSLA:sube_fuerte": "2026-11-24",
+  "NFLX:en_soporte_3m": "2026-11-24",
+  "UBER:en_soporte_3m": "2026-11-24",
+  "CRM:en_soporte_3m": "2026-11-24",
+  "ADBE:en_soporte_3m": "2026-11-24",
+  "SNOW:en_soporte_3m": "2026-11-24"
  },
  "log": [
   {
@@ -4926,6 +4908,175 @@
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de tres meses operando a 1,02 dólares con tendencia bajista clara y castigo local por riesgo país. Plan: Vender toda la posición en CEPU para simplificar y sacar exposición a Argentina; recomprar solo si estabiliza arriba de 1,25 dólares. Riesgo: Volatilidad local y profundización de la caída por debajo del mínimo de seis meses. Confianza: baja",
    "radarTexto": "Titulares: Los titulares no explican el movimiento propio de CEPU ni mencionan a la empresa. Confirmado: Riesgo país por encima de 1000 puntos y rebotes dispares en Wall Street durante feriado local. Probable: Contexto macro local adverso afectando a",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-24T14:15:24.419Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cruza_arriba_sma200"
+   ],
+   "precio": 12.76,
+   "rsi14": 40.25,
+   "message_id": 411,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: El SPY rebota en zona de soporte técnico de 12.56 y cruza arriba la media de 200, neutralizando el ruido bajista de entrada en corrección. Plan: entrada US$ 12,76 · stop US$ 12,10 · objetivo US$ 13,72 Riesgo: Volatilidad de corto plazo por mercado en zona de corrección y ajuste cambiario del MEP. Confianza: media",
+   "radarTexto": "Titulares recientes: • SharkNinja Stock to Join the S&P 500 as AES Leaves - Barron's (Barron's) • The S&P 500 Stock Market Index Entered Correction Territory Last Friday. Here's What Could Happen Next. - The Motley Fool (The Motley Fool) • Market Tim",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T14:15:24.944Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.6,
+   "rsi14": 26.17,
+   "message_id": 412,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte técnico en 3,53 dólares con RSI sobrevendido, mientras los medios debaten si la caída libre es oportunidad. Plan: Mantener lo que tiene y vender entero si perfora los 3,53 dólares para sacar el riesgo argentino. Riesgo: Volatilidad local extrema con tendencia bajista estructural confirmada por debajo de todas las medias. Confianza: baja",
+   "radarTexto": "Titulares recientes: • Precio de acciones, noticias, cotización e historial de YPF Sociedad Anónima (YPFD.BA) - Yahoo (Yahoo) • ¿Es momento de comprar acciones argentinas? - Ambito (Ambito) • Acciones argentinas en caída libre: ¿llegó el momento de c",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T14:15:25.200Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 18.16,
+   "rsi14": 27.73,
+   "message_id": 413,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Cotiza en soporte crítico de 17.85 dólares con sobreventa extrema RSI en 27.73, mientras el mercado local rebaja riesgo país y busca precio tras la baja. Plan: Mantener la posición actual de VIST en cartera y vender entera si pierde el soporte de 17.85 dólares para simplificar exposición a Argentina. Riesgo: Volatilidad local y continuación de la tendencia bajista de corto plazo si perfora los mínimos de 3 meses. Conf",
+   "radarTexto": "RADAR reporta: Los titulares confirman un rebote general de acciones argentinas y baja del riesgo país contagiadas por Wall Street. Es probable que busquen precio de compra tras fuertes caídas previas. VIST cotiza a USD 18,16 MEP, con tendencia bajis",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T14:15:25.458Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.95,
+   "rsi14": 30.48,
+   "message_id": 414,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR: La baja responde a sanciones de EE.UU. a una subsidiaria de Alibaba y demandas colectivas a inversores (confirmado). Es probable que esto afecte sus ambiciones en inteligencia artificial y genere mayor presión sobre el precio de la acción.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T14:15:25.717Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 2.75,
+   "rsi14": 24.45,
+   "message_id": 415,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:30.169Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.21,
+   "rsi14": 25.66,
+   "message_id": 416,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:30.695Z",
+   "ticker": "TSLA",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 27.23,
+   "rsi14": 52.21,
+   "message_id": 417,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:30.948Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.29,
+   "rsi14": 34.2,
+   "message_id": 418,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:31.206Z",
+   "ticker": "UBER",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 34.16,
+   "rsi14": 37.87,
+   "message_id": 419,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:31.463Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 10.95,
+   "rsi14": 28.27,
+   "message_id": 420,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:35.836Z",
+   "ticker": "ADBE",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.36,
+   "rsi14": 38.54,
+   "message_id": 421,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T14:15:36.356Z",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.44,
+   "rsi14": 39.61,
+   "message_id": 422,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
