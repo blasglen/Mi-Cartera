@@ -56,7 +56,8 @@
   "VIST:rompe_soporte_3m": "2026-11-24",
   "AMD:minimo_6m": "2026-11-24",
   "BABA:rompe_soporte_3m": "2026-11-24",
-  "AMD:rompe_soporte_3m": "2026-11-24"
+  "AMD:rompe_soporte_3m": "2026-11-24",
+  "BBAR:rsi_sobrevendido": "2026-11-24"
  },
  "log": [
   {
@@ -5324,6 +5325,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca rotura de soporte en 42.68 con tendencia bajista y presión vendedora por salida de fondos en semiconductores. Plan: Vender toda la posición actual de AMD para simplificar cartera y reasignar liquidez a tecnología global. Riesgo: Volatilidad alta en semiconductores y posible profundización de la baja si pierde mínimos de 6 meses. Confianza: media",
    "radarTexto": "RADAR informando. La baja se explica por un repliegue general en semiconductores e inteligencia artificial y por la venta de acciones de un fondo multimillonario, sumado a la salida de papeles vinculados a warrants de OpenAI y Meta. Es probable que i",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T18:45:21.865Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.3,
+   "rsi14": 29.56,
+   "message_id": 440,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI sobrevendido da rebote técnico pero RADAR confirma fuerte tendencia bajista y riesgo país alto. Plan: Mantener BBAR; si pierde el soporte de 3,18 se vende entera por regla de simplificación. Riesgo: Alta exposición a volatilidad local y pérdida de tendencia de mediano plazo. Confianza: baja",
+   "radarTexto": "RADAR informando. Confirmado: las acciones argentinas y los ADR sufren fuertes caídas anuales acompañadas por la volatilidad del riesgo país, que oscila en torno a los 1.030-1.050 puntos, a pesar de rebotes puntuales impulsados por Wall Street. Proba",
    "debatido": true
   }
  ]
