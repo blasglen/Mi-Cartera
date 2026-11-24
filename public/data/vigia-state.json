@@ -8,7 +8,6 @@
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "VIST:rsi_sobrevendido": "2026-11-17",
   "GGAL:rsi_sobrevendido": "2026-11-18",
   "BBAR:rsi_sobrevendido": "2026-11-18",
   "BABA:stop_ppc_20": "2026-11-19",
@@ -40,7 +39,10 @@
   "UBER:en_soporte_3m": "2026-11-24",
   "CRM:en_soporte_3m": "2026-11-24",
   "ADBE:en_soporte_3m": "2026-11-24",
-  "SNOW:en_soporte_3m": "2026-11-24"
+  "SNOW:en_soporte_3m": "2026-11-24",
+  "LLY:en_resistencia_3m": "2026-11-24",
+  "CRM:cruza_arriba_sma200": "2026-11-24",
+  "CRM:sube_fuerte": "2026-11-24"
  },
  "log": [
   {
@@ -5075,6 +5077,37 @@
    "rsi14": 39.61,
    "message_id": 422,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-24T15:00:31.955Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m"
+   ],
+   "precio": 27,
+   "rsi14": 62.29,
+   "message_id": 424,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "Titulares recientes: • LLY Stock Quote Price and Forecast - CNN (CNN) • Eli Lilly and Co Stock (LLY) Opened Up by 3.02% on Nov 24: Key Drivers Unveiled - TradingKey (TradingKey) • Eli Lilly vs. Vertex Pharmaceuticals: Which Healthcare Stock Is a Bett",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T15:00:32.428Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 11.52,
+   "rsi14": 37.02,
+   "message_id": 425,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR al habla. Lo probable: recortes de precios objetivos por analistas y dudas sobre el negocio de la nube y la IA. Lo confirmado: compras de un director y rebote técnico desde zona de sobreventa tras caídas recientes.",
+   "debatido": true
   }
  ]
 }
