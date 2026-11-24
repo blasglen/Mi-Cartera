@@ -1,6 +1,6 @@
 {
- "fecha": "2026-11-23",
- "apertura": true,
+ "fecha": "2026-11-24",
+ "apertura": false,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "GGAL:stop_ppc_30": "2026-11-07",
