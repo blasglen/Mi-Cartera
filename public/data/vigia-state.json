@@ -57,7 +57,9 @@
   "AMD:minimo_6m": "2026-11-24",
   "BABA:rompe_soporte_3m": "2026-11-24",
   "AMD:rompe_soporte_3m": "2026-11-24",
-  "BBAR:rsi_sobrevendido": "2026-11-24"
+  "BBAR:rsi_sobrevendido": "2026-11-24",
+  "GGAL:rompe_soporte_3m": "2026-11-24",
+  "GGAL:minimo_6m": "2026-11-24"
  },
  "log": [
   {
@@ -5341,6 +5343,23 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI sobrevendido da rebote técnico pero RADAR confirma fuerte tendencia bajista y riesgo país alto. Plan: Mantener BBAR; si pierde el soporte de 3,18 se vende entera por regla de simplificación. Riesgo: Alta exposición a volatilidad local y pérdida de tendencia de mediano plazo. Confianza: baja",
    "radarTexto": "RADAR informando. Confirmado: las acciones argentinas y los ADR sufren fuertes caídas anuales acompañadas por la volatilidad del riesgo país, que oscila en torno a los 1.030-1.050 puntos, a pesar de rebotes puntuales impulsados por Wall Street. Proba",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-24T19:30:24.372Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 2.73,
+   "rsi14": 24.1,
+   "message_id": 441,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 3 meses y toca mínimo de 6 meses con RSI sobrevendido en 24, presionado por la suba del riesgo país. Plan: Vender toda la posición de GGAL para simplificar y sacar lo poco que queda de Argentina. Riesgo: Volatilidad local y riesgo regulatorio. Confianza: media",
+   "radarTexto": "RADAR: Los titulares no explican el movimiento bajista de hoy en GGAL. Como confirmado: el riesgo país oscila en torno a los 1.027-1.050 puntos y los ADR muestran caídas. Como probable: la baja general de acciones argentinas en el año (más del 16%) y",
    "debatido": true
   }
  ]
