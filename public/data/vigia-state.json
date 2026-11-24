@@ -45,7 +45,9 @@
   "CRM:sube_fuerte": "2026-11-24",
   "YPFD:rompe_soporte_3m": "2026-11-24",
   "YPFD:minimo_6m": "2026-11-24",
-  "VIST:rsi_sobrevendido": "2026-11-24"
+  "VIST:rsi_sobrevendido": "2026-11-24",
+  "AMD:en_soporte_3m": "2026-11-24",
+  "QQQ:en_soporte_3m": "2026-11-24"
  },
  "log": [
   {
@@ -5143,6 +5145,30 @@
    "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
    "radarTexto": "RADAR reportando. Los titulares confirman un rebote general de las acciones argentinas y caída del riesgo país contagiadas por el repunte global y Wall Street. Es probable que los analistas evalúen si las fuertes caídas acumuladas representan un atra",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-24T15:30:27.735Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 43.2,
+   "rsi14": 38.39,
+   "message_id": 429
+  },
+  {
+   "ts": "2026-11-24T15:30:28.242Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 33.73,
+   "rsi14": 36.09,
+   "message_id": 430
   }
  ]
 }
