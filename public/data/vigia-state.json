@@ -68,7 +68,8 @@
   "QQQ:rsi_sobrevendido": "2026-11-25",
   "NFLX:rompe_soporte_3m": "2026-11-25",
   "NFLX:rsi_sobrevendido": "2026-11-25",
-  "CRM:en_soporte_3m": "2026-11-25"
+  "CRM:en_soporte_3m": "2026-11-25",
+  "MELI:rsi_sobrevendido": "2026-11-25"
  },
  "log": [
   {
@@ -5822,6 +5823,21 @@
    "rsi14": 30.09,
    "message_id": 478,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T15:00:32.034Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 12.33,
+   "rsi14": 29.67,
+   "message_id": 479,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "Titulares recientes: • MercadoLibre vs. Target: Which Stock Looks More Compelling Now? - The Globe and Mail (The Globe and Mail) • How Amazon.com Stacks Up Against MercadoLibre And eBay, And The Rest Of The Broadline Retail Sector. - Benzinga (Benzin",
+   "debatido": true
   }
  ]
 }
