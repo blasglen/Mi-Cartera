@@ -69,7 +69,10 @@
   "NFLX:rompe_soporte_3m": "2026-11-25",
   "NFLX:rsi_sobrevendido": "2026-11-25",
   "CRM:en_soporte_3m": "2026-11-25",
-  "MELI:rsi_sobrevendido": "2026-11-25"
+  "MELI:rsi_sobrevendido": "2026-11-25",
+  "NFLX:en_soporte_3m": "2026-11-25",
+  "CRM:cruza_arriba_sma200": "2026-11-25",
+  "CRM:sube_fuerte": "2026-11-25"
  },
  "log": [
   {
@@ -5837,6 +5840,39 @@
    "message_id": 479,
    "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
    "radarTexto": "Titulares recientes: • MercadoLibre vs. Target: Which Stock Looks More Compelling Now? - The Globe and Mail (The Globe and Mail) • How Amazon.com Stacks Up Against MercadoLibre And eBay, And The Rest Of The Broadline Retail Sector. - Benzinga (Benzin",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T15:15:22.143Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.28,
+   "rsi14": 31.63,
+   "message_id": 480,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de tres meses con RSI en zona de sobreventa, a pesar de la salida de Ark y las dudas del mercado tech. Plan: entrada US$ 1.28 · stop US$ 1.20 · objetivo US$ 1.75 Riesgo: Volatilidad alta y tendencia bajista plm, puede romper el soporte si sigue el castigo a tecnológicas. Confianza: media",
+   "radarTexto": "RADAR informando. Confirmado: Ark de Cathie Wood vendió acciones de Netflix y la empresa compró el histórico lote de Seinfeld. Probable: la caída reflejaría dudas sobre valoraciones frente a competidores y el castigo general a tecnológicas, mientras ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T15:15:22.536Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 11.44,
+   "rsi14": 36.05,
+   "message_id": 481,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota desde la media de 200 y zona de sobreventa, impulsada por rotación sectorial fuera de chips antes de balances. Plan: entrada US$ 11,44 · stop US$ 10,80 · objetivo US$ 13,40 Riesgo: Alta volatilidad técnica y quiebre de soporte crítico en 11,41. Confianza: media",
+   "radarTexto": "RADAR reporta: CRM a US$ 11,44 MEP (+5,0%). Confirmado por titulares: rebote porque los inversores rotan fuera de chips de IA y la ven barata antes de balances. Probable: busca recuperar tras caer a zona de sobreventa con pronósticos alcistas de anal",
    "debatido": true
   }
  ]
