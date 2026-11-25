@@ -72,7 +72,8 @@
   "MELI:rsi_sobrevendido": "2026-11-25",
   "NFLX:en_soporte_3m": "2026-11-25",
   "CRM:cruza_arriba_sma200": "2026-11-25",
-  "CRM:sube_fuerte": "2026-11-25"
+  "CRM:sube_fuerte": "2026-11-25",
+  "UBER:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5873,6 +5874,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota desde la media de 200 y zona de sobreventa, impulsada por rotación sectorial fuera de chips antes de balances. Plan: entrada US$ 11,44 · stop US$ 10,80 · objetivo US$ 13,40 Riesgo: Alta volatilidad técnica y quiebre de soporte crítico en 11,41. Confianza: media",
    "radarTexto": "RADAR reporta: CRM a US$ 11,44 MEP (+5,0%). Confirmado por titulares: rebote porque los inversores rotan fuera de chips de IA y la ven barata antes de balances. Probable: busca recuperar tras caer a zona de sobreventa con pronósticos alcistas de anal",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T16:45:23.604Z",
+   "ticker": "UBER",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 34.16,
+   "rsi14": 37.85,
+   "message_id": 482,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de seis meses con RSI en zona de sobreventa y ruido de mercado infundado sobre robotaxis. Plan: entrada US$ 34,16 · stop US$ 32,50 · objetivo US$ 41,70 Riesgo: Alta volatilidad sectorial y presión bajista de corto plazo si perfora mínimos. Confianza: media",
+   "radarTexto": "Titulares: El debate sobre robotaxis, alianzas y flujo de caja mantiene la valuación en foco. Confirmado: Ninguno explica la baja puntual. Probable: La cautela del mercado ante la competencia autónoma y la expansión a delivery de autopartes.",
    "debatido": true
   }
  ]
