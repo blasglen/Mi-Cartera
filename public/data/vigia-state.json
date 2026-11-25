@@ -15,9 +15,6 @@
   "CEPU:stop_ppc_20": "2026-11-24",
   "AMD:cruza_abajo_sma200": "2026-11-24",
   "AMD:cae_fuerte": "2026-11-24",
-  "SPY:en_soporte_3m": "2026-11-24",
-  "BBAR:en_soporte_3m": "2026-11-24",
-  "TSLA:cruza_arriba_sma200": "2026-11-24",
   "TSLA:sube_fuerte": "2026-11-24",
   "NFLX:en_soporte_3m": "2026-11-24",
   "YPFD:rompe_soporte_3m": "2026-11-24",
@@ -56,7 +53,11 @@
   "BABA:rsi_sobrevendido": "2026-11-25",
   "BABA:minimo_6m": "2026-11-25",
   "ORCL:en_soporte_3m": "2026-11-25",
-  "SNOW:en_soporte_3m": "2026-11-25"
+  "SNOW:en_soporte_3m": "2026-11-25",
+  "SPY:rompe_soporte_3m": "2026-11-25",
+  "TSM:minimo_6m": "2026-11-25",
+  "GOOGL:rsi_sobrevendido": "2026-11-25",
+  "BBAR:rompe_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5626,6 +5627,67 @@
    "rsi14": 38.55,
    "message_id": 464,
    "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T14:00:32.519Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 12.43,
+   "rsi14": 32.92,
+   "message_id": 465,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "Titulares recientes: • Bank of America sees the S&P 500 climbing to 7,800 next year, making up lost ground - CNBC (CNBC) • POLL Bruised S&P 500 seen gaining more than 12% by end-2027: Reuters poll - Reuters (Reuters) • Stock Market Today: Dow, S&P 50",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:00:33.154Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 38.57,
+   "rsi14": 30.61,
+   "message_id": 466,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "Titulares recientes: • Taiwan Semiconductor Manufacturing Is Down Nearly 30% From Its High. Is It a Bargain Buy? - Yahoo Finance (Yahoo Finance) • Taiwan Semiconductor Manufacturing Is Down Nearly 30% From Its High. Is It a Bargain Buy? - The Motley ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:00:33.473Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 4.82,
+   "rsi14": 29.17,
+   "message_id": 467,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa extrema (29.17) bajo medias pero castigada por ruido de capex en IA que no invalida el negocio. Plan: entrada US$ 4,82 · stop US$ 4,30 · objetivo US$ 6,40 Riesgo: Mayor quema de caja en IA antes de ver retornos claros. Confianza: media",
+   "radarTexto": "RADAR: GOOGL cotiza a US$ 4,82 MEP (-3,3% hoy, -21,1% mensual) con RSI sobrevendido (29.17) y tendencia bajista bajo medias. Confirmado por titulares: el mercado reacciona con temor ante un gasto billonario en inteligencia artificial y flujo de caja ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:00:33.769Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 3.13,
+   "rsi14": 23.09,
+   "message_id": 468,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR AL HABLA. Confirmado: BBAR cae por malos resultados del tercer trimestre al no alcanzar previsiones de BPA y un contexto general de bajas en acciones argentinas en 2026. Probable: arrastre por la tendencia bajista del sector y análisis técnicos",
+   "debatido": true
   }
  ]
 }
