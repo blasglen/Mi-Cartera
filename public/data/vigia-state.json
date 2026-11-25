@@ -77,7 +77,8 @@
   "GGAL:en_soporte_3m": "2026-11-25",
   "SPY:cruza_arriba_sma200": "2026-11-25",
   "TSLA:cruza_arriba_sma200": "2026-11-25",
-  "TSLA:sube_fuerte": "2026-11-25"
+  "TSLA:sube_fuerte": "2026-11-25",
+  "BBAR:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5991,6 +5992,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota sobre la SMA50 y cruza la SMA200 impulsada por optimización del FSD y rumores de fusión con SpaceX. Plan: entrada US$ 26,77 · stop US$ 23,70 · objetivo US$ 30,46 Riesgo: Alta volatilidad y dependencia de noticias corporativas complejas. Confianza: media",
    "radarTexto": "RADAR ALERTA TSLA. El movimiento responde a temores por una posible fusión con SpaceX (probable) y a la optimización del FSD Versión 15 (confirmado).",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T19:00:30.671Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.15,
+   "rsi14": 23.34,
+   "message_id": 489,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: BBAR rompió soporte cotizando a 3,15 por mal balance del 3T 2026 y salto del riesgo país. Plan: Vender toda la posición ya que pesa menos del 1% y busca bajar exposición a Argentina. Riesgo: Volatilidad local extrema y profundización de la tendencia bajista general. Confianza: media",
+   "radarTexto": "Confirmado: la caída responde al mal balance del 3T 2026, donde BBVA Argentina decepcionó al no alcanzar las previsiones de BPA. Probable: el desplome también se profundiza por el salto del riesgo país por encima de los 1.120 puntos y la suba del dól",
    "debatido": true
   }
  ]
