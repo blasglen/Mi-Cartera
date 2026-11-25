@@ -11,25 +11,18 @@
   "GGAL:rsi_sobrevendido": "2026-11-18",
   "BABA:stop_ppc_20": "2026-11-19",
   "YPFD:stop_ppc_30": "2026-11-19",
-  "NVDA:stop_ppc_20": "2026-11-24",
   "NVDA:sube_fuerte": "2026-11-24",
   "CEPU:stop_ppc_20": "2026-11-24",
   "AMD:cruza_abajo_sma200": "2026-11-24",
   "AMD:cae_fuerte": "2026-11-24",
   "SPY:en_soporte_3m": "2026-11-24",
-  "SPY:cruza_arriba_sma200": "2026-11-24",
-  "VIST:en_soporte_3m": "2026-11-24",
-  "BABA:en_soporte_3m": "2026-11-24",
   "BBAR:en_soporte_3m": "2026-11-24",
   "TSLA:cruza_arriba_sma200": "2026-11-24",
   "TSLA:sube_fuerte": "2026-11-24",
   "NFLX:en_soporte_3m": "2026-11-24",
-  "UBER:en_soporte_3m": "2026-11-24",
-  "CRM:sube_fuerte": "2026-11-24",
   "YPFD:rompe_soporte_3m": "2026-11-24",
   "YPFD:minimo_6m": "2026-11-24",
   "VIST:rsi_sobrevendido": "2026-11-24",
-  "QQQ:en_soporte_3m": "2026-11-24",
   "VIST:minimo_6m": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
   "GGAL:rompe_soporte_3m": "2026-11-24",
@@ -40,7 +33,30 @@
   "AVGO:cae_fuerte": "2026-11-25",
   "AMD:en_soporte_3m": "2026-11-25",
   "AMD:minimo_6m": "2026-11-25",
-  "BBAR:minimo_6m": "2026-11-25"
+  "BBAR:minimo_6m": "2026-11-25",
+  "MELI:stop_ppc_20": "2026-11-25",
+  "SPY:minimo_6m": "2026-11-25",
+  "TSM:en_soporte_3m": "2026-11-25",
+  "TSM:stop_ppc_20": "2026-11-25",
+  "GOOGL:rompe_soporte_3m": "2026-11-25",
+  "GOOGL:minimo_6m": "2026-11-25",
+  "MU:rompe_soporte_3m": "2026-11-25",
+  "MU:rsi_sobrevendido": "2026-11-25",
+  "MU:minimo_6m": "2026-11-25",
+  "MU:cae_fuerte": "2026-11-25",
+  "CEPU:en_soporte_3m": "2026-11-25",
+  "AMZN:en_soporte_3m": "2026-11-25",
+  "NVDA:rsi_sobrevendido": "2026-11-25",
+  "NVDA:stop_ppc_30": "2026-11-25",
+  "AVGO:rompe_soporte_3m": "2026-11-25",
+  "AVGO:minimo_6m": "2026-11-25",
+  "VIST:rompe_soporte_3m": "2026-11-25",
+  "AMD:rompe_soporte_3m": "2026-11-25",
+  "BABA:rompe_soporte_3m": "2026-11-25",
+  "BABA:rsi_sobrevendido": "2026-11-25",
+  "BABA:minimo_6m": "2026-11-25",
+  "ORCL:en_soporte_3m": "2026-11-25",
+  "SNOW:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5407,6 +5423,209 @@
    "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
    "radarTexto": "RADAR AL TOQUE: Confirmado, el BBVA Argentina no alcanzó las previsiones de beneficios por acción en el tercer trimestre. Es probable que esto golpee al papel, sumándose a la caída general de las acciones argentinas en lo que va del 2026.",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:45:35.697Z",
+   "ticker": "MELI",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 12.54,
+   "rsi14": 32.96,
+   "message_id": 447,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta por tendencia bajista y pérdida de soportes, sumado a dudas del mercado por fuerte gasto logístico. Plan: Vender toda la posición en MELI por regla de simplificación y recomprar si consolida arriba de la media de 20 en 13.76 dólares. Riesgo: Mayor presión vendedora por costos logísticos y caída general del sector tecnológico. Confianza: baja",
+   "radarTexto": "Titulares recientes: • MercadoLibre vs. Target: Which Stock Looks More Compelling Now? - The Globe and Mail (The Globe and Mail) • How Investors May Respond To MercadoLibre (MELI) Logistics Spending Push - Yahoo Finance (Yahoo Finance) • MercadoLibre",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:45:36.322Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 12.47,
+   "rsi14": 33.43,
+   "message_id": 448,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y los futuros caen por presión de tasas de la Fed y Trump, rompiendo soportes clave. Plan: Vender la posición local si rinde menos del 1% y destinar los 250 dólares del mes enteramente a SPY promediando la baja. Riesgo: Mayor volatilidad de corto plazo en Wall Street si la Fed endurece su discurso. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado por titulares: caen los futuros por apuestas de suba de tasas de la Fed en diciembre y temores sobre Trump. Probable: corrección de mercado tras fuertes bajas recientes y mínimos anuales, pese a pronósticos alcistas lejan",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:45:36.610Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "stop_ppc_20"
+   ],
+   "precio": 39.05,
+   "rsi14": 31.65,
+   "message_id": 449,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta y rige stop técnico por derrumbe del 23 mensual ante shock arancelario de Trump. Plan: Vender todo TSM ahora y recomprar en escala si consolida rebote sobre US$ 42. Riesgo: Volatilidad geopolítica extrema en Taiwán y pérdida total de medias móviles clave. Confianza: baja",
+   "radarTexto": "Confirmado por titulares: El shock arancelario de Trump y la caída general de acciones en Taiwán golpearon al papel. Probable: El mercado debate si es una oportunidad de compra tras caer casi 30 por ciento desde sus máximos.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:45:37.224Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 4.89,
+   "rsi14": 30.43,
+   "message_id": 450,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta porque perforó soporte tras caer un veinte por ciento mensual y RADAR confirma dudas por gasto masivo en inteligencia artificial. Plan: Vender todo por regla de simplificación de menos del uno por ciento y recomprar recién al superar medias móviles. Riesgo: El mercado castiga la estrategia de IA y la tendencia sigue bajista bajo todas las medias. Confianza: media",
+   "radarTexto": "RADAR alerta. Confirmado por titulares: el mercado castiga a Alphabet por dudas sobre su estrategia de inteligencia artificial, cuestionamientos a su ejecución y un gasto masivo superior a un billón de dólares con flujo de caja negativo. Probable: te",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:45:37.883Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "minimo_6m",
+    "cae_fuerte"
+   ],
+   "precio": 123.34,
+   "rsi14": 29.33,
+   "message_id": 452,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:41.283Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.06,
+   "rsi14": 36.62,
+   "message_id": 454,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:41.579Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 1.8,
+   "rsi14": 42.37,
+   "message_id": 455,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:41.869Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rsi_sobrevendido",
+    "stop_ppc_30"
+   ],
+   "precio": 6.46,
+   "rsi14": 28.87,
+   "message_id": 456,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:42.454Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 7.76,
+   "rsi14": 38.16,
+   "message_id": 457,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:42.741Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 17.65,
+   "rsi14": 25.75,
+   "message_id": 459,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:47.150Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m"
+   ],
+   "precio": 41,
+   "rsi14": 36.78,
+   "message_id": 460,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:48.076Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido",
+    "minimo_6m"
+   ],
+   "precio": 9.7,
+   "rsi14": 27.98,
+   "message_id": 461,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:48.380Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 36.56,
+   "rsi14": 33.46,
+   "message_id": 463,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T13:45:48.679Z",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.35,
+   "rsi14": 38.55,
+   "message_id": 464,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
