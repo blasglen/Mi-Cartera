@@ -73,7 +73,8 @@
   "NFLX:en_soporte_3m": "2026-11-25",
   "CRM:cruza_arriba_sma200": "2026-11-25",
   "CRM:sube_fuerte": "2026-11-25",
-  "UBER:en_soporte_3m": "2026-11-25"
+  "UBER:en_soporte_3m": "2026-11-25",
+  "BABA:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5890,6 +5891,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de seis meses con RSI en zona de sobreventa y ruido de mercado infundado sobre robotaxis. Plan: entrada US$ 34,16 · stop US$ 32,50 · objetivo US$ 41,70 Riesgo: Alta volatilidad sectorial y presión bajista de corto plazo si perfora mínimos. Confianza: media",
    "radarTexto": "Titulares: El debate sobre robotaxis, alianzas y flujo de caja mantiene la valuación en foco. Confirmado: Ninguno explica la baja puntual. Probable: La cautela del mercado ante la competencia autónoma y la expansión a delivery de autopartes.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T17:15:29.329Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.94,
+   "rsi14": 30.34,
+   "message_id": 483,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses con RSI en sobreventa de 30 y VIGÍA da compra, pese al castigo por lista negra de EE.UU. y presión de emisión por IA. Plan: entrada US$ 9,94 · stop US$ 9,50 · objetivo US$ 12,10 Riesgo: geopolítico por restricciones de chips y demanda colectiva en EE.UU., con tendencia general bajista. Confianza: baja",
+   "radarTexto": "BABA cae a US$ 9,94 en MEP (+0,6% hoy, -10,9% semanal), tocando soporte de 3 meses con RSI en 30 (sobreventa). Confirmado: EE.UU. metió en lista negra a una empresa de Alibaba por restricciones de chips y enfrenta una demanda colectiva por controles ",
    "debatido": true
   }
  ]
