@@ -20,7 +20,6 @@
   "VIST:rsi_sobrevendido": "2026-11-24",
   "VIST:minimo_6m": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
-  "GGAL:rompe_soporte_3m": "2026-11-24",
   "GGAL:minimo_6m": "2026-11-24",
   "GOOGL:en_soporte_3m": "2026-11-25",
   "GOOGL:stop_ppc_20": "2026-11-25",
@@ -75,7 +74,9 @@
   "CRM:sube_fuerte": "2026-11-25",
   "UBER:en_soporte_3m": "2026-11-25",
   "BABA:en_soporte_3m": "2026-11-25",
-  "QQQ:en_soporte_3m": "2026-11-25"
+  "QQQ:en_soporte_3m": "2026-11-25",
+  "VIST:en_soporte_3m": "2026-11-25",
+  "GGAL:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5924,6 +5925,38 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa operando en soporte trimestral clave, a pesar del pánico vendedor por IA y aranceles. Plan: entrada US$ 33,06 · stop US$ 31,50 · objetivo US$ 39,80 Riesgo: Alta volatilidad por entrada en posible mercado bajista y tensiones macroeconómicas globales. Confianza: media",
    "radarTexto": "RADAR reporta: Confirmado por titulares, la caída del Nasdaq 100 responde a la fuerte presión vendedora en tecnología, temores sobre ganancias en inteligencia artificial (AI) y tensiones por aranceles. Es probable que el índice esté entrando en merca",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T18:00:34.606Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 17.76,
+   "rsi14": 26.1,
+   "message_id": 485,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Toca soporte de tres meses con RSI sobrevendido en 26, resistiendo pese al castigo general a activos argentinos y el derrumbe de Wall Street. Plan: Mantener la posición actual de VIST sin sumar capital, aplicando stop loss si perfora los 17.50 dólares. Riesgo: Alta volatilidad sistémica local y persistencia de la tendencia bajista general del mercado argentino en el exterior. Confianza: baja",
+   "radarTexto": "RADAR REPORTE VIST: Titulares confirmados: golpe a pesos pesados de Vaca Muerta y derrumbe bursátil arrastrado por una semana muy negativa en Wall Street. Probable: contagio por la alta volatilidad general de activos argentinos en el exterior.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T18:00:35.050Z",
+   "ticker": "GGAL",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 2.76,
+   "rsi14": 24.56,
+   "message_id": 486,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Está en soporte crítico de 2,76 dólares con RSI de 24 en sobreventa extrema, aguantando el castigo del riesgo país y el balance flojo. Plan: Mantener GGAL en cartera y evaluar salida total si perfora los 2,70 dólares para cumplir la regla de simplificar si no rinde. Riesgo: Volatilidad local extrema y deterioro del sector financiero argentino. Confianza: baja",
+   "radarTexto": "RADAR reporta: Confirmado, las acciones caen por el alza del riesgo país sobre 1.130 puntos y un BPA del Q3 2026 por debajo de estimados. Probable, la baja también responde a una menor mora en el tercer trimestre y a la caída general de los títulos a",
    "debatido": true
   }
  ]
