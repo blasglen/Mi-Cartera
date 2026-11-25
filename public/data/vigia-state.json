@@ -57,7 +57,8 @@
   "SPY:rompe_soporte_3m": "2026-11-25",
   "TSM:minimo_6m": "2026-11-25",
   "GOOGL:rsi_sobrevendido": "2026-11-25",
-  "BBAR:rompe_soporte_3m": "2026-11-25"
+  "BBAR:rompe_soporte_3m": "2026-11-25",
+  "SPY:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5687,6 +5688,21 @@
    "message_id": 468,
    "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
    "radarTexto": "RADAR AL HABLA. Confirmado: BBAR cae por malos resultados del tercer trimestre al no alcanzar previsiones de BPA y un contexto general de bajas en acciones argentinas en 2026. Probable: arrastre por la tendencia bajista del sector y análisis técnicos",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:15:19.774Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 12.45,
+   "rsi14": 33.23,
+   "message_id": 469,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "Titulares recientes: • Bank of America sees the S&P 500 climbing to 7,800 next year, making up lost ground - CNBC (CNBC) • POLL Bruised S&P 500 seen gaining more than 12% by end-2027: Reuters poll - Reuters (Reuters) • Stock Market Today: Dow, S&P 50",
    "debatido": true
   }
  ]
