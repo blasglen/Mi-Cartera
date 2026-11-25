@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-25",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "GGAL:stop_ppc_30": "2026-11-07",
@@ -15,7 +15,6 @@
   "CEPU:stop_ppc_20": "2026-11-24",
   "AMD:cruza_abajo_sma200": "2026-11-24",
   "AMD:cae_fuerte": "2026-11-24",
-  "NFLX:en_soporte_3m": "2026-11-24",
   "YPFD:rompe_soporte_3m": "2026-11-24",
   "YPFD:minimo_6m": "2026-11-24",
   "VIST:rsi_sobrevendido": "2026-11-24",
@@ -57,7 +56,19 @@
   "TSM:minimo_6m": "2026-11-25",
   "GOOGL:rsi_sobrevendido": "2026-11-25",
   "BBAR:rompe_soporte_3m": "2026-11-25",
-  "SPY:en_soporte_3m": "2026-11-25"
+  "SPY:en_soporte_3m": "2026-11-25",
+  "MSFT:en_soporte_3m": "2026-11-25",
+  "TSM:rompe_soporte_3m": "2026-11-25",
+  "TSM:rsi_sobrevendido": "2026-11-25",
+  "AMZN:rompe_soporte_3m": "2026-11-25",
+  "AMZN:cruza_abajo_sma200": "2026-11-25",
+  "AMZN:cae_fuerte": "2026-11-25",
+  "AMD:stop_ppc_20": "2026-11-25",
+  "QQQ:rompe_soporte_3m": "2026-11-25",
+  "QQQ:rsi_sobrevendido": "2026-11-25",
+  "NFLX:rompe_soporte_3m": "2026-11-25",
+  "NFLX:rsi_sobrevendido": "2026-11-25",
+  "CRM:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5703,6 +5714,114 @@
    "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
    "radarTexto": "Titulares recientes: • Bank of America sees the S&P 500 climbing to 7,800 next year, making up lost ground - CNBC (CNBC) • POLL Bruised S&P 500 seen gaining more than 12% by end-2027: Reuters poll - Reuters (Reuters) • Stock Market Today: Dow, S&P 50",
    "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:45:24.047Z",
+   "ticker": "MSFT",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 16.84,
+   "rsi14": 36.08,
+   "message_id": 471,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de tres meses con RSI en zona de sobreventa, mientras la baja por gasto en IA y fallas técnicas es ruido de corto plazo en una tendencia alcista estructural. Plan: entrada US$ 16,84 · stop US$ 15,20 · objetivo US$ 19,60 Riesgo: Volatilidad por presión en flujos de caja y ruptura de la media de 200 ruedas. Confianza: media",
+   "radarTexto": "RADAR reporta: El movimiento a la baja responde, como probable, al castigo por el gasto en inteligencia artificial que presiona el flujo de caja y a la reciente caída tras una falla técnica que obligó a declarar código rojo. No hay causas confirmadas",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:45:24.357Z",
+   "ticker": "TSM",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 38.07,
+   "rsi14": 29.89,
+   "message_id": 472,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta tras romper soporte y caer 25 por ciento mensual por pánico en Taiwán, aunque la noticia debate si es piso. Plan: Vender todo por disciplina de tendencia y regla de simplificación, recomprando solo al recuperar medias. Riesgo: Volatilidad geopolítica asiática y profundización del daño técnico. Confianza: baja",
+   "radarTexto": "RADAR ALERTA. Titulares confirman: caídas en Taiwán por derrumbe bursátil del 8 por ciento y desvanecimiento del efecto Jensen Huang. Probable: analistas discuten si el desplome de casi treinta por ciento desde máximos es una oportunidad de compra o ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:45:24.975Z",
+   "ticker": "AMZN",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "rompe_soporte_3m",
+    "cruza_abajo_sma200",
+    "cae_fuerte"
+   ],
+   "precio": 1.74,
+   "rsi14": 38.62,
+   "message_id": 473,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 1.77 y la media de 200, sumado a ventas masivas de ejecutivos que golpean la confianza. Plan: Vender todo ahora mismo; recompraría si consolida arriba de 1.88 con volumen. Riesgo: Mayor presión bajista a corto plazo si el mercado profundiza dudas sobre el plan de crecimiento. Confianza: media",
+   "radarTexto": "Radar informando. Confirmado por titulares: venta masiva de acciones por parte de altos ejecutivos de Amazon, incluidos el CEO, CFO y el jefe de AWS. Probable: dudas en el mercado sobre los riesgos en el plan de crecimiento y la competencia en califi",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:45:25.285Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 39.73,
+   "rsi14": 35.91,
+   "message_id": 475,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y las noticias confirman temores de dilución masiva y castigo al sector tech. Plan: Vender todo por señal técnica y riesgo de dilución, recomprar solo si rompe al alza la media de 200 o tras corrección profunda. Riesgo: Alta volatilidad por venta masiva de inteligencia artificial y pérdida de soporte clave. Confianza: media",
+   "radarTexto": "Según los titulares, está confirmado que la caída se debe a una presentación de reventa de 337 millones de acciones que genera temores de dilución y se suma a la venta masiva de inteligencia artificial. Es probable que el mercado haya perdido el sent",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T14:45:28.703Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 32.23,
+   "rsi14": 29.4,
+   "message_id": 476,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T14:45:29.022Z",
+   "ticker": "NFLX",
+   "enCartera": false,
+   "veredicto": "NO COMPRAR",
+   "eventos": [
+    "rompe_soporte_3m",
+    "rsi_sobrevendido"
+   ],
+   "precio": 1.25,
+   "rsi14": 29.43,
+   "message_id": 477,
+   "debatido": "salteado (límite por corrida)"
+  },
+  {
+   "ts": "2026-11-25T14:45:29.324Z",
+   "ticker": "CRM",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 11.05,
+   "rsi14": 30.09,
+   "message_id": 478,
+   "debatido": "salteado (límite por corrida)"
   }
  ]
 }
