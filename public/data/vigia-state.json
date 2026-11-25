@@ -8,16 +8,9 @@
   "BMA:rompe_soporte_3m": "2026-11-11",
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
-  "GGAL:rsi_sobrevendido": "2026-11-18",
   "BABA:stop_ppc_20": "2026-11-19",
   "YPFD:stop_ppc_30": "2026-11-19",
-  "NVDA:sube_fuerte": "2026-11-24",
   "CEPU:stop_ppc_20": "2026-11-24",
-  "AMD:cruza_abajo_sma200": "2026-11-24",
-  "AMD:cae_fuerte": "2026-11-24",
-  "YPFD:rompe_soporte_3m": "2026-11-24",
-  "YPFD:minimo_6m": "2026-11-24",
-  "VIST:rsi_sobrevendido": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
   "GOOGL:en_soporte_3m": "2026-11-25",
   "GOOGL:stop_ppc_20": "2026-11-25",
@@ -78,7 +71,9 @@
   "SPY:cruza_arriba_sma200": "2026-11-25",
   "TSLA:cruza_arriba_sma200": "2026-11-25",
   "TSLA:sube_fuerte": "2026-11-25",
-  "BBAR:en_soporte_3m": "2026-11-25"
+  "BBAR:en_soporte_3m": "2026-11-25",
+  "VIST:cruce_muerte": "2026-11-25",
+  "VIST:sube_fuerte": "2026-11-25"
  },
  "log": [
   {
@@ -6008,6 +6003,23 @@
    "analista": "VENTA PARCIAL",
    "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: BBAR rompió soporte cotizando a 3,15 por mal balance del 3T 2026 y salto del riesgo país. Plan: Vender toda la posición ya que pesa menos del 1% y busca bajar exposición a Argentina. Riesgo: Volatilidad local extrema y profundización de la tendencia bajista general. Confianza: media",
    "radarTexto": "Confirmado: la caída responde al mal balance del 3T 2026, donde BBVA Argentina decepcionó al no alcanzar las previsiones de BPA. Probable: el desplome también se profundiza por el salto del riesgo país por encima de los 1.120 puntos y la suba del dól",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T19:15:31.356Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "cruce_muerte",
+    "sube_fuerte"
+   ],
+   "precio": 17.94,
+   "rsi14": 30.86,
+   "message_id": 490,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y el papel rompió todas las medias con tendencia bajista, a pesar del rebote técnico de hoy. Plan: Vender toda la posición en VIST por debajo del 1 por ciento para simplificar cartera y reasignar a tecnología. Riesgo: Alta exposición a volatilidad local y pérdida de soporte clave en 17.20 dólares. Confianza: media",
+   "radarTexto": "RADAR REPORTE: VIST sube 4,3% a USD 17,94 en un rebote alcista que acompaña la recuperación general de activos argentinos contagiados por Wall Street (confirmado). Es probable que influya la búsqueda de oportunidades tras la fuerte caída reciente del",
    "debatido": true
   }
  ]
