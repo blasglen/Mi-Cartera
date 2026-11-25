@@ -74,7 +74,8 @@
   "BBAR:en_soporte_3m": "2026-11-25",
   "VIST:cruce_muerte": "2026-11-25",
   "VIST:sube_fuerte": "2026-11-25",
-  "VIST:rsi_sobrevendido": "2026-11-25"
+  "VIST:rsi_sobrevendido": "2026-11-25",
+  "YPFD:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -6037,6 +6038,22 @@
    "analista": "MANTENER",
    "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en 29.4 por castigo local general sin noticias operativas negativas en VIST. Plan: Mantener la posición actual; vender entera si pierde el soporte de US$ 17.20. Riesgo: Volatilidad regulatoria argentina y contagio externo de Wall Street. Confianza: baja",
    "radarTexto": "RADAR reportando. El movimiento responde a la volatilidad general de las acciones argentinas y Wall Street tras una semana de fuertes caídas y rebotes. Probable: contagio del clima externo y baja del riesgo país. Confirmado: no hay factores operativo",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T20:45:22.901Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 3.33,
+   "rsi14": 22.22,
+   "message_id": 492,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: RSI en 22 indica sobreventa extrema en soporte, pero la demanda de Burford por 14.400 millones destruye la tesis de valor argentina. Plan: Vender YPFD entera ya que representa menos del 1 por ciento y no cumple la tesis de bajar exposición local. Riesgo: Embargos internacionales y presión bajista persistente del Merval. Confianza: media",
+   "radarTexto": "RADAR reporta: El desplome se explica por la confirmación de una nueva demanda del fondo Burford ante el CIADI exigiendo 14.400 millones de dólares y por la caída general del Merval. Es probable que este juicio y el arrastre del mercado local presion",
    "debatido": true
   }
  ]
