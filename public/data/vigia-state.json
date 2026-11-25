@@ -74,7 +74,8 @@
   "CRM:cruza_arriba_sma200": "2026-11-25",
   "CRM:sube_fuerte": "2026-11-25",
   "UBER:en_soporte_3m": "2026-11-25",
-  "BABA:en_soporte_3m": "2026-11-25"
+  "BABA:en_soporte_3m": "2026-11-25",
+  "QQQ:en_soporte_3m": "2026-11-25"
  },
  "log": [
   {
@@ -5907,6 +5908,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses con RSI en sobreventa de 30 y VIGÍA da compra, pese al castigo por lista negra de EE.UU. y presión de emisión por IA. Plan: entrada US$ 9,94 · stop US$ 9,50 · objetivo US$ 12,10 Riesgo: geopolítico por restricciones de chips y demanda colectiva en EE.UU., con tendencia general bajista. Confianza: baja",
    "radarTexto": "BABA cae a US$ 9,94 en MEP (+0,6% hoy, -10,9% semanal), tocando soporte de 3 meses con RSI en 30 (sobreventa). Confirmado: EE.UU. metió en lista negra a una empresa de Alibaba por restricciones de chips y enfrenta una demanda colectiva por controles ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T17:45:21.880Z",
+   "ticker": "QQQ",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 33.06,
+   "rsi14": 32.11,
+   "message_id": 484,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: RSI en sobreventa operando en soporte trimestral clave, a pesar del pánico vendedor por IA y aranceles. Plan: entrada US$ 33,06 · stop US$ 31,50 · objetivo US$ 39,80 Riesgo: Alta volatilidad por entrada en posible mercado bajista y tensiones macroeconómicas globales. Confianza: media",
+   "radarTexto": "RADAR reporta: Confirmado por titulares, la caída del Nasdaq 100 responde a la fuerte presión vendedora en tecnología, temores sobre ganancias en inteligencia artificial (AI) y tensiones por aranceles. Es probable que el índice esté entrando en merca",
    "debatido": true
   }
  ]
