@@ -33,7 +33,14 @@
   "VIST:minimo_6m": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
   "GGAL:rompe_soporte_3m": "2026-11-24",
-  "GGAL:minimo_6m": "2026-11-24"
+  "GGAL:minimo_6m": "2026-11-24",
+  "GOOGL:en_soporte_3m": "2026-11-25",
+  "GOOGL:stop_ppc_20": "2026-11-25",
+  "AVGO:en_soporte_3m": "2026-11-25",
+  "AVGO:cae_fuerte": "2026-11-25",
+  "AMD:en_soporte_3m": "2026-11-25",
+  "AMD:minimo_6m": "2026-11-25",
+  "BBAR:minimo_6m": "2026-11-25"
  },
  "log": [
   {
@@ -5334,6 +5341,71 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Rompió soporte de 3 meses y toca mínimo de 6 meses con RSI sobrevendido en 24, presionado por la suba del riesgo país. Plan: Vender toda la posición de GGAL para simplificar y sacar lo poco que queda de Argentina. Riesgo: Volatilidad local y riesgo regulatorio. Confianza: media",
    "radarTexto": "RADAR: Los titulares no explican el movimiento bajista de hoy en GGAL. Como confirmado: el riesgo país oscila en torno a los 1.027-1.050 puntos y los ADR muestran caídas. Como probable: la baja general de acciones argentinas en el año (más del 16%) y",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:30:26.253Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "stop_ppc_20"
+   ],
+   "precio": 4.98,
+   "rsi14": 32.52,
+   "message_id": 443,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca venta técnica bajo medias y en mínimos con RSI en 32, mientras RADAR confirma pánico por sobreinversión en IA y flujo negativo. Plan: Vender todo ahora mismo para simplificar y sacar a Google de cartera; recompraría recién si rompe la resistencia de US$ 6,40 al alza. Riesgo: Que el mercado exagere el castigo a la IA y la acción rebote fuerte desde este soporte técnico exacto de US$ 4,98. Confianza: m",
+   "radarTexto": "RADAR reportando. Los titulares confirman pánico en el mercado por una factura en inteligencia artificial superior a un billón de dólares y flujo de caja negativo, además de dudas sobre la estrategia de Google frente a competidores como Meta. Es prob",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:30:26.750Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m",
+    "cae_fuerte"
+   ],
+   "precio": 7.96,
+   "rsi14": 39.51,
+   "message_id": 444,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: El precio toca soporte técnico de tres meses tras una caída fuerte por venta de Tepper y presión en semiconductores. Plan: entrada US$ 7,96 · stop US$ 7,10 · objetivo US$ 9,50 Riesgo: Alta volatilidad sectorial y posible profundización de la tendencia bajista general de chips. Confianza: baja",
+   "radarTexto": "RADAR reporta: Confirmado, las acciones de chips caen por presión sobre el comercio de inteligencia artificial junto a Nvidia y AMD. Probable, Tepper liquidó su posición en Broadcom y el mercado reacciona a una tendencia bajista general.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:30:27.012Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "minimo_6m"
+   ],
+   "precio": 42.48,
+   "rsi14": 37.84,
+   "message_id": 445,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR informa: Los titulares confirman que la caída se debe al retroceso general en semiconductores e inteligencia artificial, la presión por registro de acciones para reventa y la volatilidad del mercado. Es probable que también influya el impacto d",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-25T13:30:27.290Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "minimo_6m"
+   ],
+   "precio": 3.16,
+   "rsi14": 23.51,
+   "message_id": 446,
+   "analistaTexto": "Hoy no pude pensar: la IA gratuita no respondió (cupo agotado o error). Vuelvo en la próxima corrida.",
+   "radarTexto": "RADAR AL TOQUE: Confirmado, el BBVA Argentina no alcanzó las previsiones de beneficios por acción en el tercer trimestre. Es probable que esto golpee al papel, sumándose a la caída general de las acciones argentinas en lo que va del 2026.",
    "debatido": true
   }
  ]
