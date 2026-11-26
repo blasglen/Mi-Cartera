@@ -2,7 +2,6 @@
  "fecha": "2026-11-26",
  "apertura": true,
  "activos": {
-  "YPFD:rsi_sobrevendido": "2026-11-05",
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
   "BMA:rompe_soporte_3m": "2026-11-11",
