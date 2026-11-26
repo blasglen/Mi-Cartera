@@ -16,15 +16,18 @@
   "AMZN:en_soporte_3m": "2026-11-25",
   "ORCL:en_soporte_3m": "2026-11-25",
   "SNOW:en_soporte_3m": "2026-11-25",
-  "CRM:cruza_arriba_sma200": "2026-11-25",
-  "CRM:sube_fuerte": "2026-11-25",
   "VIST:cruce_muerte": "2026-11-25",
   "NVDA:stop_ppc_20": "2026-11-26",
   "AVGO:en_soporte_3m": "2026-11-26",
   "MSFT:en_soporte_3m": "2026-11-26",
   "SPY:cruza_arriba_sma200": "2026-11-26",
   "GOOGL:en_soporte_3m": "2026-11-26",
-  "MU:en_soporte_3m": "2026-11-26"
+  "MU:en_soporte_3m": "2026-11-26",
+  "VIST:rsi_sobrevendido": "2026-11-26",
+  "AMD:en_soporte_3m": "2026-11-26",
+  "ADBE:en_soporte_3m": "2026-11-26",
+  "MA:rompe_resistencia_3m": "2026-11-26",
+  "MA:sube_fuerte": "2026-11-26"
  },
  "log": [
   {
@@ -6099,6 +6102,71 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de 3 meses con RSI en 31 tras una caída brutal del 31% en un mes, mientras el sector mantiene escasez estructural de memoria hasta 2028. Plan: entrada US$ 128,59 · stop US$ 115,00 · objetivo US$ 164,00 Riesgo: Volatilidad extrema en tecnológicas y posible ruptura del soporte si el mercado profundiza el ajuste. Confianza: media",
    "radarTexto": "Confirmado por titulares: caída arrastrada por el sector de IA y presión sobre acciones tecnológicas. Probable: ajuste tras perder la mitad de su valor desde junio, a pesar de que HPE anticipa escasez de memoria hasta 2028 y se evalúa el impacto de p",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:00:29.894Z",
+   "ticker": "VIST",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 17.71,
+   "rsi14": 28.92,
+   "message_id": 499,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI sobrevendido en 28.92 y soporte en 17.2, sumado a la fuerte apuesta de Peter Thiel, contrarrestan el castigo local. Plan: Mantener VIST en cartera mientras respete el soporte clave de 17.2 dólares. Riesgo: Volatilidad alta y contagio por el deterioro del riesgo país argentino. Confianza: media",
+   "radarTexto": "RADAR reportando. Los titulares confirman un contexto local adverso con fuerte suba del riesgo país y caída generalizada de activos argentinos. Como dato propio, Peter Thiel amplió su apuesta en Vista Energy con fuerte inversión, lo que es probable i",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:00:30.438Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 43.42,
+   "rsi14": 38.95,
+   "message_id": 500,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 42,68 dólares con RSI en zona de sobreventa, absorbiendo la fuerte venta masiva de fondos institucionales. Plan: entrada US$ 43,42 · stop US$ 41,50 · objetivo US$ 57,50 Riesgo: Volatilidad alta por divergencia entre grandes fondos y ruptura reciente de medias móviles. Confianza: media",
+   "radarTexto": "RADAR al habla. Confirmado por titulares: fuerte caída reciente del 9 por ciento por venta masiva de fondos de milmillonarios y desconcierto del mercado ante movidas de la competencia. Probable: división entre fondos pesados sobre si conviene comprar",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:00:30.706Z",
+   "ticker": "ADBE",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.41,
+   "rsi14": 40.33,
+   "message_id": 501,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza en soporte de tres meses con RSI en zona de recuperación, y la baja diaria responde a ruido de mercado sobre IA sin fundamentos confirmados. Plan: entrada US$ 5,41 · stop US$ 5,10 · objetivo US$ 6,90 Riesgo: Tendencia bajista de fondo y alta volatilidad por competencia tecnológica. Confianza: media",
+   "radarTexto": "RADAR: Los titulares no explican el movimiento bajista de hoy. Probable: ruido por competencia en IA con estrategia freemium y análisis sobre si puede rebotar 30 por ciento o cuánto valdrá en 2030. Nada confirmado en las noticias para la baja diaria.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:00:30.971Z",
+   "ticker": "MA",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 21.89,
+   "rsi14": 66.28,
+   "message_id": 502,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: Vigía marca pausa y el papel rompió resistencia por alianzas con inteligencia artificial y stablecoins, pero está en máximos con RSI alto. Plan: Mantener lo existente y esperar una corrección técnica para sumar. Riesgo: Volatilidad de corto plazo por sobrecompra tras la suba fuerte. Confianza: media",
+   "radarTexto": "Radar al habla. El salto se explica de forma confirmada por una rueda de fuerte operatoria, nuevas alianzas de pagos, cobertura alcista de analistas y subas de precios objetivo impulsadas por inteligencia artificial, mientras que es probable que infl",
    "debatido": true
   }
  ]
