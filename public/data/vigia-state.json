@@ -12,14 +12,11 @@
   "YPFD:stop_ppc_30": "2026-11-19",
   "CEPU:stop_ppc_20": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
-  "GOOGL:en_soporte_3m": "2026-11-25",
-  "GOOGL:stop_ppc_20": "2026-11-25",
   "AMD:en_soporte_3m": "2026-11-25",
   "AMD:minimo_6m": "2026-11-25",
   "MU:rompe_soporte_3m": "2026-11-25",
   "MU:minimo_6m": "2026-11-25",
   "AMZN:en_soporte_3m": "2026-11-25",
-  "NVDA:stop_ppc_30": "2026-11-25",
   "ORCL:en_soporte_3m": "2026-11-25",
   "SNOW:en_soporte_3m": "2026-11-25",
   "SPY:en_soporte_3m": "2026-11-25",
@@ -29,7 +26,9 @@
   "BBAR:en_soporte_3m": "2026-11-25",
   "VIST:cruce_muerte": "2026-11-25",
   "VIST:rsi_sobrevendido": "2026-11-25",
-  "YPFD:en_soporte_3m": "2026-11-25"
+  "YPFD:en_soporte_3m": "2026-11-25",
+  "NVDA:stop_ppc_20": "2026-11-26",
+  "AVGO:en_soporte_3m": "2026-11-26"
  },
  "log": [
   {
@@ -6008,6 +6007,38 @@
    "analista": "VENTA PARCIAL",
    "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: RSI en 22 indica sobreventa extrema en soporte, pero la demanda de Burford por 14.400 millones destruye la tesis de valor argentina. Plan: Vender YPFD entera ya que representa menos del 1 por ciento y no cumple la tesis de bajar exposición local. Riesgo: Embargos internacionales y presión bajista persistente del Merval. Confianza: media",
    "radarTexto": "RADAR reporta: El desplome se explica por la confirmación de una nueva demanda del fondo Burford ante el CIADI exigiendo 14.400 millones de dólares y por la caída general del Merval. Es probable que este juicio y el arrastre del mercado local presion",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T13:30:37.016Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 6.8,
+   "rsi14": 34.5,
+   "message_id": 493,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta y la cotización rompió abajo de todas las medias con fuerte presión política sobre Jensen Huang. Plan: Vender todo ahora mismo; recompraría si estabiliza arriba de la media de 200 en 8,78 dólares. Riesgo: Volatilidad extrema en tecnológicas y persistencia de la tendencia bajista actual. Confianza: media",
+   "radarTexto": "RADAR: NVDA sube hoy a US$ 6,80 pero sigue bajista. Confirmado: la caída reciente viene por la fuerte presión política con Jensen Huang en el Capitolio y temores generales en tecnológicas. Probable: ruidos por supuestas apuestas bursátiles millonaria",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T13:30:37.639Z",
+   "ticker": "AVGO",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 7.99,
+   "rsi14": 39.71,
+   "message_id": 494,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca compra por estar en soporte de tres meses a pesar del ruido bajista por Google y Cathie Wood. Plan: entrada US$ 7.99 · stop US$ 7.50 · objetivo US$ 10.11 Riesgo: Volatilidad alta por deuda y desarme institucional que rompa el soporte técnico actual. Confianza: media",
+   "radarTexto": "RADAR reporta: La caída se explica por titulares sobre un recorte confirmado de pedidos de Google y la venta masiva de Cathie Wood, sumado a temores probables por su carga de deuda y la reacción del mercado.",
    "debatido": true
   }
  ]
