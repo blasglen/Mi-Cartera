@@ -12,23 +12,19 @@
   "YPFD:stop_ppc_30": "2026-11-19",
   "CEPU:stop_ppc_20": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
-  "AMD:en_soporte_3m": "2026-11-25",
-  "AMD:minimo_6m": "2026-11-25",
-  "MU:rompe_soporte_3m": "2026-11-25",
   "MU:minimo_6m": "2026-11-25",
   "AMZN:en_soporte_3m": "2026-11-25",
   "ORCL:en_soporte_3m": "2026-11-25",
   "SNOW:en_soporte_3m": "2026-11-25",
-  "SPY:en_soporte_3m": "2026-11-25",
   "CRM:cruza_arriba_sma200": "2026-11-25",
   "CRM:sube_fuerte": "2026-11-25",
-  "QQQ:en_soporte_3m": "2026-11-25",
-  "BBAR:en_soporte_3m": "2026-11-25",
   "VIST:cruce_muerte": "2026-11-25",
-  "VIST:rsi_sobrevendido": "2026-11-25",
-  "YPFD:en_soporte_3m": "2026-11-25",
   "NVDA:stop_ppc_20": "2026-11-26",
-  "AVGO:en_soporte_3m": "2026-11-26"
+  "AVGO:en_soporte_3m": "2026-11-26",
+  "MSFT:en_soporte_3m": "2026-11-26",
+  "SPY:cruza_arriba_sma200": "2026-11-26",
+  "GOOGL:en_soporte_3m": "2026-11-26",
+  "MU:en_soporte_3m": "2026-11-26"
  },
  "log": [
   {
@@ -6039,6 +6035,70 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca compra por estar en soporte de tres meses a pesar del ruido bajista por Google y Cathie Wood. Plan: entrada US$ 7.99 · stop US$ 7.50 · objetivo US$ 10.11 Riesgo: Volatilidad alta por deuda y desarme institucional que rompa el soporte técnico actual. Confianza: media",
    "radarTexto": "RADAR reporta: La caída se explica por titulares sobre un recorte confirmado de pedidos de Google y la venta masiva de Cathie Wood, sumado a temores probables por su carga de deuda y la reacción del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T13:45:21.775Z",
+   "ticker": "MSFT",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 17.08,
+   "rsi14": 38.1,
+   "message_id": 495,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: El papel toca soporte de tres meses con RSI en 38, absorbiendo bien el ruido de corto plazo por el capex en inteligencia artificial. Plan: entrada US$ 17,08 · stop US$ 15,34 · objetivo US$ 19,66 Riesgo: Volatilidad por presión en flujos de caja y revisiones de analistas. Confianza: media",
+   "radarTexto": "RADAR informando. Movimiento explicado por dudas sobre el capex en IA y su impacto en el flujo de caja, más bajas de calificación. Confirmado: recortes de rating y presión por inversiones en IA. Probable: debilidad temporal frente a competidores y vo",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T13:45:22.267Z",
+   "ticker": "SPY",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200"
+   ],
+   "precio": 12.81,
+   "rsi14": 43.21,
+   "message_id": 496,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebote técnico en zona de soporte con cruce alcista de SMA200 sin ruidos operativos en noticias. Plan: entrada US$ 12,81 · stop US$ 12,39 · objetivo US$ 13,72 Riesgo: Volatilidad de corto plazo y ruptura de medias móviles. Confianza: media",
+   "radarTexto": "RADAR informando. Los titulares no explican el movimiento del día, solo mencionan máximos de algunas acciones, recompras y rumores sobre Anthropic sin confirmar impacto directo. Confirmado: no hay causas operativas claras en la noticia. Probable: reb",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T13:45:22.519Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 5.05,
+   "rsi14": 35.71,
+   "message_id": 497,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses con RSI en 35.7 y presión bajista por salida de Druckenmiller. Plan: entrada US$ 5.05 · stop US$ 4.90 · objetivo US$ 6.00 Riesgo: Volatilidad alta por dudas sobre el motor de ingresos y tendencia de corto plazo perforada. Confianza: baja",
+   "radarTexto": "RADAR reporta GOOGL a US$ 5,05 MEP, bajista y tocando soporte de 3 meses. Confirmado: Druckenmiller vendió todas sus acciones en Q3 y Google se bajó de un acuerdo de noticias en Australia. Probable: la caída se profundiza por presión general del merc",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T13:45:22.772Z",
+   "ticker": "MU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 128.59,
+   "rsi14": 31,
+   "message_id": 498,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte de 3 meses con RSI en 31 tras una caída brutal del 31% en un mes, mientras el sector mantiene escasez estructural de memoria hasta 2028. Plan: entrada US$ 128,59 · stop US$ 115,00 · objetivo US$ 164,00 Riesgo: Volatilidad extrema en tecnológicas y posible ruptura del soporte si el mercado profundiza el ajuste. Confianza: media",
+   "radarTexto": "Confirmado por titulares: caída arrastrada por el sector de IA y presión sobre acciones tecnológicas. Probable: ajuste tras perder la mitad de su valor desde junio, a pesar de que HPE anticipa escasez de memoria hasta 2028 y se evalúa el impacto de p",
    "debatido": true
   }
  ]
