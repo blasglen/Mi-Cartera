@@ -12,7 +12,6 @@
   "CEPU:stop_ppc_20": "2026-11-24",
   "BBAR:rsi_sobrevendido": "2026-11-24",
   "MU:minimo_6m": "2026-11-25",
-  "AMZN:en_soporte_3m": "2026-11-25",
   "VIST:cruce_muerte": "2026-11-25",
   "NVDA:stop_ppc_20": "2026-11-26",
   "AVGO:en_soporte_3m": "2026-11-26",
@@ -27,7 +26,8 @@
   "MA:sube_fuerte": "2026-11-26",
   "AAPL:rompe_resistencia_3m": "2026-11-26",
   "AAPL:sube_fuerte": "2026-11-26",
-  "CRM:cruza_arriba_sma200": "2026-11-26"
+  "CRM:cruza_arriba_sma200": "2026-11-26",
+  "GOOGL:stop_ppc_20": "2026-11-26"
  },
  "log": [
   {
@@ -6200,6 +6200,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: rebota desde la media de 200 ruedas impulsada por rotación hacia software antes de balances. Plan: entrada US$ 11,42 · stop US$ 10,80 · objetivo US$ 13,30 Riesgo: volatilidad del sector tecnológico y posible quiebre del soporte de corto plazo. Confianza: media",
    "radarTexto": "RADAR. CRM sube hoy un 3,1% a US$ 11,42 MEP y cruza al alza la SMA200 (11,4). Confirmado en titulares: rebote por rotación de inversores saliendo de chips de IA hacia software y compras previas a balances. Probable: la acción luce barata y aguanta el",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:30:24.659Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20"
+   ],
+   "precio": 5.03,
+   "rsi14": 34.84,
+   "message_id": 505,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca salida y Druckenmiller vende, con el papel abajo de todas las medias y testeando mínimos. Plan: Vender todo GOOGL ahora mismo, considerando que tu posición rinde poco y simplifica cartera bajando riesgo, para recomprar si consolida arriba de la SMA50 en US$ 5,84. Riesgo: Pierdas el rebote técnico inmediato por sobreventa y el costo de oportunidad. Confianza: media",
+   "radarTexto": "RADAR reportando. GOOGL opera a US$ 5,03 MEP (+1,1% hoy, −14,6% mensual) bajo todas sus medias con tendencia bajista y RSI en 34,84 cerca de soportes. Confirmado por titulares: caídas recientes y venta masiva de acciones de Alphabet por parte de gran",
    "debatido": true
   }
  ]
