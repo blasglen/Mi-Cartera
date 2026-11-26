@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-26",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "YPFD:rsi_sobrevendido": "2026-11-05",
   "GGAL:stop_ppc_30": "2026-11-07",
@@ -27,7 +27,12 @@
   "AAPL:rompe_resistencia_3m": "2026-11-26",
   "AAPL:sube_fuerte": "2026-11-26",
   "CRM:cruza_arriba_sma200": "2026-11-26",
-  "GOOGL:stop_ppc_20": "2026-11-26"
+  "GOOGL:stop_ppc_20": "2026-11-26",
+  "LLY:en_resistencia_3m": "2026-11-26",
+  "LLY:sube_fuerte": "2026-11-26",
+  "BABA:stop_ppc_20": "2026-11-26",
+  "BABA:sube_fuerte": "2026-11-26",
+  "ORCL:en_soporte_3m": "2026-11-26"
  },
  "log": [
   {
@@ -6216,6 +6221,56 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: VIGÍA marca salida y Druckenmiller vende, con el papel abajo de todas las medias y testeando mínimos. Plan: Vender todo GOOGL ahora mismo, considerando que tu posición rinde poco y simplifica cartera bajando riesgo, para recomprar si consolida arriba de la SMA50 en US$ 5,84. Riesgo: Pierdas el rebote técnico inmediato por sobreventa y el costo de oportunidad. Confianza: media",
    "radarTexto": "RADAR reportando. GOOGL opera a US$ 5,03 MEP (+1,1% hoy, −14,6% mensual) bajo todas sus medias con tendencia bajista y RSI en 34,84 cerca de soportes. Confirmado por titulares: caídas recientes y venta masiva de acciones de Alphabet por parte de gran",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:45:29.191Z",
+   "ticker": "LLY",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "en_resistencia_3m",
+    "sube_fuerte"
+   ],
+   "precio": 27.06,
+   "rsi14": 62.15,
+   "message_id": 507,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: Sube fuerte un 4,1 por ciento chocando con la resistencia de 27,39 sin noticias frescas que lo justifiquen pero con tendencia alcista sólida. Plan: Mantener lo que ya tiene y dejar correr la ganancia sin tocar nada. Riesgo: Rechazo en la zona de resistencia actual y corrección temporal de corto plazo. Confianza: media",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:45:29.485Z",
+   "ticker": "BABA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20",
+    "sube_fuerte"
+   ],
+   "precio": 10.34,
+   "rsi14": 38.17,
+   "message_id": 508,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por tendencia bajista profunda, y Radar no reporta noticias positivas que la salven. Plan: Vender toda la posición en BABA por regla de simplificación y reasignar a tecnología global, sin recompra prevista. Riesgo: Continuar perdiendo terreno frente a sectores de crecimiento más dinámicos y líquidos. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T14:45:29.798Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 36.98,
+   "rsi14": 35.32,
+   "message_id": 509,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses tras fuerte castigo y sin noticias bajistas propias, ideal para perfil de crecimiento. Plan: entrada US$ 37.00 · stop US$ 34.50 · objetivo US$ 46.00 Riesgo: Alta volatilidad sectorial y tendencia general bajista que puede romper el piso actual. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
    "debatido": true
   }
  ]
