@@ -29,7 +29,8 @@
   "LLY:sube_fuerte": "2026-11-26",
   "BABA:stop_ppc_20": "2026-11-26",
   "BABA:sube_fuerte": "2026-11-26",
-  "ORCL:en_soporte_3m": "2026-11-26"
+  "ORCL:en_soporte_3m": "2026-11-26",
+  "META:cruza_arriba_sma200": "2026-11-26"
  },
  "log": [
   {
@@ -6268,6 +6269,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Toca soporte crítico de 3 meses tras fuerte castigo y sin noticias bajistas propias, ideal para perfil de crecimiento. Plan: entrada US$ 37.00 · stop US$ 34.50 · objetivo US$ 46.00 Riesgo: Alta volatilidad sectorial y tendencia general bajista que puede romper el piso actual. Confianza: baja",
    "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-26T19:30:25.533Z",
+   "ticker": "META",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200"
+   ],
+   "precio": 27.25,
+   "rsi14": 47.11,
+   "message_id": 510,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Vigía da compra técnica cruzando la sma200 y Radar confirma acuerdo con Walmart y menor temor al gasto en inteligencia artificial. Plan: entrada US$ 27,25 · stop US$ 24,60 · objetivo US$ 33,90 Riesgo: Volatilidad por financiamiento de inteligencia artificial y juicios pendientes. Confianza: media",
+   "radarTexto": "RADAR reportando. Confirmado: la suba responde al acuerdo con Walmart, charlas con Amazon por Muse AI Agent y lecturas que ven exagerado el temor por el gasto en IA. Probable: la consolidación del precio se deba a dudas por financiamiento de IA y dem",
    "debatido": true
   }
  ]
