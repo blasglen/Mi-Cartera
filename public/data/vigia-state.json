@@ -20,7 +20,9 @@
   "CEPU:stop_ppc_20": "2026-11-27",
   "CEPU:sube_fuerte": "2026-11-27",
   "NVDA:stop_ppc_30": "2026-11-27",
-  "AMD:en_soporte_3m": "2026-11-27"
+  "AMD:en_soporte_3m": "2026-11-27",
+  "MSFT:en_soporte_3m": "2026-11-27",
+  "ORCL:en_soporte_3m": "2026-11-27"
  },
  "log": [
   {
@@ -6391,6 +6393,38 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza a 42.77 dólares testeando soporte de tres meses tras una caída semanal del 24.4 por ciento, lo que compensa la rebaja de Erste Group. Plan: entrada US$ 42,77 · stop US$ 40,00 · objetivo US$ 55,00 Riesgo: Volatilidad alta por tendencia bajista de corto plazo y posible ruptura del soporte crítico. Confianza: media",
    "radarTexto": "RADAR reporta: AMD sube 1,0% hoy cotizando a US$ 42,77 MEP, testeando soporte de 3 meses. Probable: rebote técnico tras castigo semanal (-24,4%) impulsado por análisis de centros de datos de IA y atractivo por precio bajo. Confirmado: rebaja de calif",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T15:15:22.248Z",
+   "ticker": "MSFT",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 17.3,
+   "rsi14": 41,
+   "message_id": 519,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca rebote en soporte de tres meses a 16.98 con RSI en 41, absorbiendo el castigo al sector tech por gastos en IA. Plan: entrada US$ 17.30 · stop US$ 16.50 · objetivo US$ 19.50 Riesgo: Mayor presión vendedora a corto plazo si la Reserva Federal profundiza el freno a valoraciones altas. Confianza: media",
+   "radarTexto": "RADAR reportando. El movimiento bajista se explica por la toma de ganancias y caídas en tecnológicas debido al escrutinio sobre la sostenibilidad de márgenes por gasto en IA y advertencias de la Fed sobre precios altos. Confirmado: castigo al sector ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T15:15:22.818Z",
+   "ticker": "ORCL",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 37.11,
+   "rsi14": 36.53,
+   "message_id": 520,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca soporte crítico en 36,43 dólares y RSI en sobreventa, a pesar de que RADAR advierte dudas estructurales en inteligencia artificial. Plan: entrada US$ 37,11 · stop US$ 34,50 · objetivo US$ 48,00 Riesgo: Alta volatilidad por pérdida de tendencia y fuerte castigo de mercado en el sector tecnológico. Confianza: baja",
+   "radarTexto": "RADAR informa: Los titulares confirman que Oracle sufre una fuerte caída superior al 50 por ciento por desplomes recientes, riesgos de concentración en inteligencia artificial y dudas sobre sus millonarios respaldos. Es probable que la baja responda ",
    "debatido": true
   }
  ]
