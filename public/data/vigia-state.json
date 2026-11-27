@@ -23,7 +23,8 @@
   "AMD:en_soporte_3m": "2026-11-27",
   "MSFT:en_soporte_3m": "2026-11-27",
   "ORCL:en_soporte_3m": "2026-11-27",
-  "MA:rompe_resistencia_3m": "2026-11-27"
+  "MA:rompe_resistencia_3m": "2026-11-27",
+  "BBAR:rsi_sobrevendido": "2026-11-27"
  },
  "log": [
   {
@@ -6442,6 +6443,22 @@
    "analista": "ESPERAR",
    "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca pausa tras romper resistencia por rotación a pagos y alianza en inteligencia artificial. Plan: Mantener posición actual sin sumar nuevo capital hasta consolidar niveles. Riesgo: Corrección técnica de corto plazo por sobrecompra relativa tras la suba. Confianza: baja",
    "radarTexto": "RADAR al habla. Confirmado: sube por rotación desde el sector tecnológico hacia redes de pago y fuerza propia frente a competidores. Probable: pesa la alianza con Debia en inteligencia artificial y la buena performance bursátil general.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T17:00:28.382Z",
+   "ticker": "BBAR",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido"
+   ],
+   "precio": 3.26,
+   "rsi14": 29.6,
+   "message_id": 522,
+   "analista": "VENTA PARCIAL",
+   "analistaTexto": "VEREDICTO: VENTA PARCIAL Por qué: El papel está bajista bajo todas las medias con RSI sobrevendido, castigado por el riesgo país y el contexto electoral que golpea a los bancos. Plan: Vender la totalidad de BBAR para limpiar la cartera de posiciones menores al uno por ciento y bajar la exposición a Argentina. Riesgo: Volatilidad local y deterioro de márgenes bancarios en el corto plazo. Confianza: media",
+   "radarTexto": "Confirmado por titulares: la suba del riesgo país y la presión sobre la deuda y acciones argentinas, con caídas generalizadas y alta volatilidad. Probable: el balance del Q3 de BBVA con menores márgenes y el contexto de riesgo electoral.",
    "debatido": true
   }
  ]
