@@ -19,7 +19,8 @@
   "GOOGL:stop_ppc_20": "2026-11-27",
   "CEPU:stop_ppc_20": "2026-11-27",
   "CEPU:sube_fuerte": "2026-11-27",
-  "NVDA:stop_ppc_30": "2026-11-27"
+  "NVDA:stop_ppc_30": "2026-11-27",
+  "AMD:en_soporte_3m": "2026-11-27"
  },
  "log": [
   {
@@ -6374,6 +6375,22 @@
    "analista": "SEÑAL DE VENTA",
    "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y el precio cotiza abajo de todas las medias con tendencia bajista clara. Plan: Vender todo por señal técnica y buscar recomprar cerca del soporte en 5.78 dólares. Riesgo: Caída adicional hacia el soporte de 5.78 dólares y pérdida del capital invertido. Confianza: media",
    "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T15:00:33.128Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 42.77,
+   "rsi14": 38.31,
+   "message_id": 518,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Cotiza a 42.77 dólares testeando soporte de tres meses tras una caída semanal del 24.4 por ciento, lo que compensa la rebaja de Erste Group. Plan: entrada US$ 42,77 · stop US$ 40,00 · objetivo US$ 55,00 Riesgo: Volatilidad alta por tendencia bajista de corto plazo y posible ruptura del soporte crítico. Confianza: media",
+   "radarTexto": "RADAR reporta: AMD sube 1,0% hoy cotizando a US$ 42,77 MEP, testeando soporte de 3 meses. Probable: rebote técnico tras castigo semanal (-24,4%) impulsado por análisis de centros de datos de IA y atractivo por precio bajo. Confirmado: rebaja de calif",
    "debatido": true
   }
  ]
