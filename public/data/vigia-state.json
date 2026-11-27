@@ -22,7 +22,8 @@
   "NVDA:stop_ppc_30": "2026-11-27",
   "AMD:en_soporte_3m": "2026-11-27",
   "MSFT:en_soporte_3m": "2026-11-27",
-  "ORCL:en_soporte_3m": "2026-11-27"
+  "ORCL:en_soporte_3m": "2026-11-27",
+  "MA:rompe_resistencia_3m": "2026-11-27"
  },
  "log": [
   {
@@ -6425,6 +6426,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: VIGÍA marca soporte crítico en 36,43 dólares y RSI en sobreventa, a pesar de que RADAR advierte dudas estructurales en inteligencia artificial. Plan: entrada US$ 37,11 · stop US$ 34,50 · objetivo US$ 48,00 Riesgo: Alta volatilidad por pérdida de tendencia y fuerte castigo de mercado en el sector tecnológico. Confianza: baja",
    "radarTexto": "RADAR informa: Los titulares confirman que Oracle sufre una fuerte caída superior al 50 por ciento por desplomes recientes, riesgos de concentración en inteligencia artificial y dudas sobre sus millonarios respaldos. Es probable que la baja responda ",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T15:45:20.612Z",
+   "ticker": "MA",
+   "enCartera": false,
+   "veredicto": "ESPERAR",
+   "eventos": [
+    "rompe_resistencia_3m"
+   ],
+   "precio": 21.5,
+   "rsi14": 63.83,
+   "message_id": 521,
+   "analista": "ESPERAR",
+   "analistaTexto": "VEREDICTO: ESPERAR Por qué: VIGÍA marca pausa tras romper resistencia por rotación a pagos y alianza en inteligencia artificial. Plan: Mantener posición actual sin sumar nuevo capital hasta consolidar niveles. Riesgo: Corrección técnica de corto plazo por sobrecompra relativa tras la suba. Confianza: baja",
+   "radarTexto": "RADAR al habla. Confirmado: sube por rotación desde el sector tecnológico hacia redes de pago y fuerza propia frente a competidores. Probable: pesa la alianza con Debia en inteligencia artificial y la buena performance bursátil general.",
    "debatido": true
   }
  ]
