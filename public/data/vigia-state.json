@@ -12,7 +12,8 @@
   "SPY:cruza_arriba_sma200": "2026-11-26",
   "META:cruza_arriba_sma200": "2026-11-26",
   "AMD:cruza_arriba_sma200": "2026-11-27",
-  "AMD:sube_fuerte": "2026-11-27"
+  "AMD:sube_fuerte": "2026-11-27",
+  "SNOW:en_soporte_3m": "2026-11-27"
  },
  "log": [
   {
@@ -6284,6 +6285,22 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota fuerte 6,3% desde mínimos y cruza la SMA200 tras una caída semanal del 20,5% sin noticias negativas de fondo. Plan: entrada US$ 45,01 · stop US$ 42,36 · objetivo US$ 57,32 Riesgo: Volatilidad alta en tecnología y ruptura del soporte de 6 meses. Confianza: media",
    "radarTexto": "RADAR ALERTA AMD. Hoy sube fuerte 6,3% a US$ 45,01 MEP, rebotando desde mínimos de 6 meses y cruzando la SMA200. Probable: rebote técnico tras la baja semanal (-20,5%) y debate sobre si sus centros de datos ya están priceados o baratija, con opinione",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T14:00:34.225Z",
+   "ticker": "SNOW",
+   "enCartera": false,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "en_soporte_3m"
+   ],
+   "precio": 9.43,
+   "rsi14": 39.69,
+   "message_id": 512,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota en soporte de tres meses con RSI de 39 y aval de Citi por IA. Plan: entrada US$ 9,43 · stop US$ 9,00 · objetivo US$ 11,00 Riesgo: Alta volatilidad sectorial y ruptura del soporte de 9,26 dólares. Confianza: media",
+   "radarTexto": "Titulares: Probable rebote por impulso de IA y optimismo de analistas (Citi ve 76 por ciento de suba), a pesar de caídas recientes por venta general de tecnología. Confirmado: no hay hechos concretos que expliquen el movimiento diario de hoy.",
    "debatido": true
   }
  ]
