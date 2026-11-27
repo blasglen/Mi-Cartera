@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-27",
- "apertura": false,
+ "apertura": true,
  "activos": {
   "GGAL:stop_ppc_30": "2026-11-07",
   "BBAR:stop_ppc_30": "2026-11-07",
@@ -8,12 +8,18 @@
   "BMA:minimo_6m": "2026-11-11",
   "BMA:en_soporte_3m": "2026-11-11",
   "YPFD:stop_ppc_30": "2026-11-19",
-  "NVDA:stop_ppc_20": "2026-11-26",
   "SPY:cruza_arriba_sma200": "2026-11-26",
   "META:cruza_arriba_sma200": "2026-11-26",
   "AMD:cruza_arriba_sma200": "2026-11-27",
   "AMD:sube_fuerte": "2026-11-27",
-  "SNOW:en_soporte_3m": "2026-11-27"
+  "SNOW:en_soporte_3m": "2026-11-27",
+  "YPFD:rsi_sobrevendido": "2026-11-27",
+  "YPFD:sube_fuerte": "2026-11-27",
+  "GOOGL:en_soporte_3m": "2026-11-27",
+  "GOOGL:stop_ppc_20": "2026-11-27",
+  "CEPU:stop_ppc_20": "2026-11-27",
+  "CEPU:sube_fuerte": "2026-11-27",
+  "NVDA:stop_ppc_30": "2026-11-27"
  },
  "log": [
   {
@@ -6301,6 +6307,73 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota en soporte de tres meses con RSI de 39 y aval de Citi por IA. Plan: entrada US$ 9,43 · stop US$ 9,00 · objetivo US$ 11,00 Riesgo: Alta volatilidad sectorial y ruptura del soporte de 9,26 dólares. Confianza: media",
    "radarTexto": "Titulares: Probable rebote por impulso de IA y optimismo de analistas (Citi ve 76 por ciento de suba), a pesar de caídas recientes por venta general de tecnología. Confirmado: no hay hechos concretos que expliquen el movimiento diario de hoy.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T14:45:26.839Z",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido",
+    "sube_fuerte"
+   ],
+   "precio": 3.49,
+   "rsi14": 28.64,
+   "message_id": 514,
+   "analista": "MANTENER",
+   "analistaTexto": "VEREDICTO: MANTENER Por qué: RSI en sobreventa extrema y rebote diario de 4,6 por ciento sin noticias frescas que justifiquen la caída previa de treinta y cuatro por ciento mensual. Plan: Mantener la posición actual, vender si pierde el soporte de US$ 3,29 para cumplir la regla de simplificar si no rinde. Riesgo: Tendencia bajista consolidada bajo todas las medias móviles con alta volatilidad local. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T14:45:27.077Z",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "stop_ppc_20"
+   ],
+   "precio": 5.04,
+   "rsi14": 35.82,
+   "message_id": 515,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por rotura de medias y tendencia bajista, sin noticias macroeconómicas que contradigan el movimiento técnico. Plan: Vender toda la posición en Google para simplificar cartera y eliminar exposición local, recomprando solo si consolidad soporte firme. Riesgo: Profundización de la caída sectorial tecnológica y pérdida temporal de capital en el corto plazo. Confianza: baja",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T14:45:27.289Z",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20",
+    "sube_fuerte"
+   ],
+   "precio": 1.17,
+   "rsi14": 52.49,
+   "message_id": 516,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía da venta por ruptura de medias y tendencia bajista de doce meses, sin noticias que respalden el rebote de hoy. Plan: Vender todo por debajo del umbral del uno por ciento de la cartera para simplificar, sin recompra prevista en Argentina. Riesgo: Exposición bajista local en un perfil de crecimiento global. Confianza: media",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T14:45:27.511Z",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30"
+   ],
+   "precio": 6.56,
+   "rsi14": 31.74,
+   "message_id": 517,
+   "analista": "SEÑAL DE VENTA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE VENTA Por qué: Vigía marca venta y el precio cotiza abajo de todas las medias con tendencia bajista clara. Plan: Vender todo por señal técnica y buscar recomprar cerca del soporte en 5.78 dólares. Riesgo: Caída adicional hacia el soporte de 5.78 dólares y pérdida del capital invertido. Confianza: media",
+   "radarTexto": "No encontré noticias de los últimos 3 días que expliquen el movimiento: puede ser arrastre del sector o del mercado.",
    "debatido": true
   }
  ]

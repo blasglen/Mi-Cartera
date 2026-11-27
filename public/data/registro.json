@@ -10450,6 +10450,65 @@
    ],
    "precio": 9.43,
    "resultado": {}
+  },
+  {
+   "ts": "2026-11-27T14:45:26.839Z",
+   "fecha": "2026-11-27",
+   "ticker": "YPFD",
+   "enCartera": true,
+   "veredicto": "MANTENER",
+   "sombra": false,
+   "analista": "MANTENER",
+   "eventos": [
+    "rsi_sobrevendido",
+    "sube_fuerte"
+   ],
+   "precio": 3.49,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-27T14:45:27.077Z",
+   "fecha": "2026-11-27",
+   "ticker": "GOOGL",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "en_soporte_3m",
+    "stop_ppc_20"
+   ],
+   "precio": 5.04,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-27T14:45:27.289Z",
+   "fecha": "2026-11-27",
+   "ticker": "CEPU",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_20",
+    "sube_fuerte"
+   ],
+   "precio": 1.17,
+   "resultado": {}
+  },
+  {
+   "ts": "2026-11-27T14:45:27.511Z",
+   "fecha": "2026-11-27",
+   "ticker": "NVDA",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE VENTA",
+   "sombra": false,
+   "analista": "SEÑAL DE VENTA",
+   "eventos": [
+    "stop_ppc_30"
+   ],
+   "precio": 6.56,
+   "resultado": {}
   }
  ],
  "precios": {
@@ -10919,45 +10978,45 @@
    "MSFT": 17.41
   },
   "2026-11-27": {
-   "SPY": 12.9,
-   "BBAR": 3.42,
-   "ORCL": 37.98,
-   "PANW": 7.4,
-   "MU": 134.3,
-   "NVDA": 6.72,
-   "AMD": 44.54,
-   "BMA": 5.71,
-   "COST": 24.1,
-   "MA": 21.42,
-   "ABNB": 12.37,
+   "SPY": 12.81,
+   "BBAR": 3.35,
+   "ORCL": 37.21,
+   "PANW": 7.22,
+   "MU": 130.7,
+   "NVDA": 6.56,
+   "AMD": 43.59,
+   "BMA": 5.59,
+   "COST": 24.26,
+   "MA": 21.36,
+   "ABNB": 12.49,
    "MELI": 13.53,
-   "META": 27.94,
-   "YPFD": 3.62,
-   "CEPU": 1.19,
-   "VIST": 19,
-   "GGAL": 3.06,
-   "AVGO": 8.43,
-   "QQQ": 34.39,
-   "TSM": 42.01,
-   "AMZN": 1.84,
-   "LLY": 26.3,
-   "TSLA": 27.89,
-   "AAPL": 19.06,
-   "BABA": 10.7,
-   "NFLX": 1.33,
-   "GOOGL": 5.11,
-   "SNOW": 9.65,
-   "CRM": 11.7,
-   "ADBE": 5.64,
-   "UBER": 35.72,
+   "META": 27.57,
+   "YPFD": 3.49,
+   "CEPU": 1.17,
+   "VIST": 18.62,
+   "GGAL": 3.03,
+   "AVGO": 8.39,
+   "QQQ": 34.04,
+   "TSM": 41.02,
+   "AMZN": 1.85,
+   "LLY": 26.57,
+   "TSLA": 27.65,
+   "AAPL": 18.94,
+   "BABA": 10.64,
+   "NFLX": 1.35,
+   "GOOGL": 5.04,
+   "SNOW": 9.56,
+   "CRM": 11.73,
+   "ADBE": 5.67,
+   "UBER": 35.5,
    "PFE": 7.58,
-   "MSFT": 17.81
+   "MSFT": 17.51
   }
  },
  "ultimoResumen": "2026-11-20",
  "resumen": {
-  "actualizado": "2026-11-27T14:30:22.586Z",
-  "senales": 410,
+  "actualizado": "2026-11-27T14:46:18.225Z",
+  "senales": 414,
   "porVeredicto": {
    "SEÑAL DE COMPRA": {
     "1": {
