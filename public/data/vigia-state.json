@@ -9,12 +9,12 @@
   "BMA:en_soporte_3m": "2026-11-11",
   "YPFD:stop_ppc_30": "2026-11-19",
   "CEPU:stop_ppc_20": "2026-11-24",
-  "BBAR:rsi_sobrevendido": "2026-11-24",
   "NVDA:stop_ppc_20": "2026-11-26",
   "SPY:cruza_arriba_sma200": "2026-11-26",
   "MA:rompe_resistencia_3m": "2026-11-26",
-  "AAPL:rompe_resistencia_3m": "2026-11-26",
-  "META:cruza_arriba_sma200": "2026-11-26"
+  "META:cruza_arriba_sma200": "2026-11-26",
+  "AMD:cruza_arriba_sma200": "2026-11-27",
+  "AMD:sube_fuerte": "2026-11-27"
  },
  "log": [
   {
@@ -6269,6 +6269,23 @@
    "analista": "SEÑAL DE COMPRA",
    "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Vigía da compra técnica cruzando la sma200 y Radar confirma acuerdo con Walmart y menor temor al gasto en inteligencia artificial. Plan: entrada US$ 27,25 · stop US$ 24,60 · objetivo US$ 33,90 Riesgo: Volatilidad por financiamiento de inteligencia artificial y juicios pendientes. Confianza: media",
    "radarTexto": "RADAR reportando. Confirmado: la suba responde al acuerdo con Walmart, charlas con Amazon por Muse AI Agent y lecturas que ven exagerado el temor por el gasto en IA. Probable: la consolidación del precio se deba a dudas por financiamiento de IA y dem",
+   "debatido": true
+  },
+  {
+   "ts": "2026-11-27T13:30:32.394Z",
+   "ticker": "AMD",
+   "enCartera": true,
+   "veredicto": "SEÑAL DE COMPRA",
+   "eventos": [
+    "cruza_arriba_sma200",
+    "sube_fuerte"
+   ],
+   "precio": 45.01,
+   "rsi14": 41.27,
+   "message_id": 511,
+   "analista": "SEÑAL DE COMPRA",
+   "analistaTexto": "VEREDICTO: SEÑAL DE COMPRA Por qué: Rebota fuerte 6,3% desde mínimos y cruza la SMA200 tras una caída semanal del 20,5% sin noticias negativas de fondo. Plan: entrada US$ 45,01 · stop US$ 42,36 · objetivo US$ 57,32 Riesgo: Volatilidad alta en tecnología y ruptura del soporte de 6 meses. Confianza: media",
+   "radarTexto": "RADAR ALERTA AMD. Hoy sube fuerte 6,3% a US$ 45,01 MEP, rebotando desde mínimos de 6 meses y cruzando la SMA200. Probable: rebote técnico tras la baja semanal (-20,5%) y debate sobre si sus centros de datos ya están priceados o baratija, con opinione",
    "debatido": true
   }
  ]
